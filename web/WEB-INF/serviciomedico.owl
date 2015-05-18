@@ -1,0 +1,450 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.serviciomedico.org/ontologies/2014/serviciomedico"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.serviciomedico.org/ontologies/2014/serviciomedico">
+    <Prefix name="" IRI="http://www.serviciomedico.org/ontologies/2014/serviciomedico#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Direccion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EnfermedadCronica"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Especialidad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InstitutoDeSalud"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Privado"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Publico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sector"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#esAtendidaPor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#esEstudiadaPor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#esTratadaPor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#estudiaA"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#perteneceA"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#seAtiende"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#seTieneUn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#seUbicaEn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#seUbicaUn"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#codigoHospital"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#coordenadaX"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#coordenadaY"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#nombreEnfermedad"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#nombreEspecialidad"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#nombreInstituto"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#numeroEspecialidad"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Direccion"/>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EnfermedadCronica"/>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Especialidad"/>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Especialidad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#estudiaA"/>
+            <Class IRI="#EnfermedadCronica"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InstitutoDeSalud"/>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InstitutoDeSalud"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perteneceA"/>
+            <Class IRI="#Sector"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InstitutoDeSalud"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#seAtiende"/>
+            <Class IRI="#EnfermedadCronica"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InstitutoDeSalud"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#seEspecializaEn"/>
+            <Class IRI="#Especialidad"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#InstitutoDeSalud"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty IRI="#seUbicaEn"/>
+            <Class IRI="#Direccion"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Privado"/>
+        <Class IRI="#Sector"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Publico"/>
+        <Class IRI="#Sector"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sector"/>
+        <Class IRI="#BusquedaServicioMedico"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Direccion"/>
+        <Class IRI="#EnfermedadCronica"/>
+        <Class IRI="#Especialidad"/>
+        <Class IRI="#InstitutoDeSalud"/>
+        <Class IRI="#Sector"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#Cancer"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Especialidad"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Direccion"/>
+        <NamedIndividual IRI="#DireccionISSTE"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Direccion"/>
+        <NamedIndividual IRI="#DireccionRAZA"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#Hipertension"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#InstitutoDeSalud"/>
+        <NamedIndividual IRI="#ISSTE"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Especialidad"/>
+        <NamedIndividual IRI="#Oncologia"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#InstitutoDeSalud"/>
+        <NamedIndividual IRI="#RAZA"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+        <NamedIndividual IRI="#Hipertension"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seAtiende"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <NamedIndividual IRI="#Cancer"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seAtiende"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <NamedIndividual IRI="#Hipertension"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <NamedIndividual IRI="#Oncologia"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seUbicaEn"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <NamedIndividual IRI="#DireccionISSTE"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Oncologia"/>
+        <NamedIndividual IRI="#Cancer"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <NamedIndividual IRI="#RAZA"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <NamedIndividual IRI="#RAZA"/>
+        <NamedIndividual IRI="#Oncologia"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#seUbicaEn"/>
+        <NamedIndividual IRI="#RAZA"/>
+        <NamedIndividual IRI="#DireccionRAZA"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#Cancer"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Cancer</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Cardiologia</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#coordenadaX"/>
+        <NamedIndividual IRI="#DireccionISSTE"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">2</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#coordenadaY"/>
+        <NamedIndividual IRI="#DireccionISSTE"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">3</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#coordenadaX"/>
+        <NamedIndividual IRI="#DireccionRAZA"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">-99.14379029999998</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#coordenadaY"/>
+        <NamedIndividual IRI="#DireccionRAZA"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">19.4675743</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#Hipertension"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Hipertension</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreInstituto"/>
+        <NamedIndividual IRI="#ISSTE"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">ISSTE</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <NamedIndividual IRI="#Oncologia"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Oncologia</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreInstituto"/>
+        <NamedIndividual IRI="#RAZA"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">RAZA</Literal>
+    </DataPropertyAssertion>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#seAtiende"/>
+        <ObjectProperty IRI="#esAtendidaPor"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#esEstudiadaPor"/>
+        <ObjectProperty IRI="#estudiaA"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <ObjectProperty IRI="#esTratadaPor"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#perteneceA"/>
+        <ObjectProperty IRI="#seTieneUn"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#seUbicaEn"/>
+        <ObjectProperty IRI="#seUbicaUn"/>
+    </InverseObjectProperties>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#seUbicaEn"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#seUbicaUn"/>
+    </FunctionalObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#esAtendidaPor"/>
+        <Class IRI="#EnfermedadCronica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#esEstudiadaPor"/>
+        <Class IRI="#EnfermedadCronica"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#esTratadaPor"/>
+        <Class IRI="#Especialidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#estudiaA"/>
+        <Class IRI="#Especialidad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#perteneceA"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#seAtiende"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#seTieneUn"/>
+        <Class IRI="#Sector"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#seUbicaEn"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#seUbicaUn"/>
+        <Class IRI="#Direccion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#esAtendidaPor"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#esEstudiadaPor"/>
+        <Class IRI="#Especialidad"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#esTratadaPor"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#estudiaA"/>
+        <Class IRI="#EnfermedadCronica"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#perteneceA"/>
+        <Class IRI="#Sector"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#seAtiende"/>
+        <Class IRI="#EnfermedadCronica"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#seEspecializaEn"/>
+        <Class IRI="#Especialidad"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#seTieneUn"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#seUbicaEn"/>
+        <Class IRI="#Direccion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#seUbicaUn"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="#coordenadaX"/>
+        <Class IRI="#Direccion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#coordenadaY"/>
+        <Class IRI="#Direccion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <Class IRI="#EnfermedadCronica"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <Class IRI="#Especialidad"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#nombreInstituto"/>
+        <Class IRI="#InstitutoDeSalud"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#codigoHospital"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#coordenadaX"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#coordenadaY"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#nombreInstituto"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#numeroEspecialidad"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.3) http://owlapi.sourceforge.net -->
+
