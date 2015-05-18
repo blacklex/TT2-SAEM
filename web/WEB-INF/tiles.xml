@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+   <!-- INICIA DEFINICION DEL LAYOUT BASE  -->
+   <definition name="baseLayout" template="/baseLayout.jsp">
+      <put-attribute name="title"  value="Sistema"/>
+      <put-attribute name="header" value="/header.jsp"/>
+      <put-attribute name="menu"   value="/menu.jsp"/>
+      <put-attribute name="body"   value="/body.jsp"/>
+      <put-attribute name="footer"   value="/footer.jsp"/>
+   </definition>
+   <!-- FIN DEFINICION DEL LAYOUT BASE  -->
+   
+   <!-- INICIA PANTALLAS DE INICIO PARA CADA TIPO DE USUARIO -->
+   <definition name="pantallaInicioAdministrador" extends="baseLayout">
+      <put-attribute name="title"  value="Ejemplo"/>
+      <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+      <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
+   </definition>
+   
+   <definition name="pantallaInicioPaciente" extends="baseLayout">
+      <put-attribute name="title"  value="Ejemplo"/>
+      <put-attribute name="menu"   value="/menuPaciente.jsp"/>
+      <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
+   </definition>
+   
+   <definition name="pantallaInicioHospital" extends="baseLayout">
+      <put-attribute name="title"  value="Ejemplo"/>
+      <put-attribute name="menu"   value="/menuHospital.jsp"/>
+      <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
+   </definition>
+    <!-- FIN PANTALLAS DE INICIO PARA CADA TIPO DE USUARIO -->
+   
+    <definition name="pantallaRegistroHospital" extends="baseLayout">
+      <put-attribute name="title"  value="Alta Hospital"/>
+      <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+      <put-attribute name="body"   value="/hospitalRegistro.jsp"/>      
+   </definition>
+   
+   <definition name="pantallaModifcarEliminarHospital" extends="baseLayout">
+      <put-attribute name="title"  value="Modificar Hospital"/>
+      <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+      <put-attribute name="body"   value="/hospitalModificarEliminar.jsp"/>      
+   </definition>
+   
+   <definition name="pantallaConsultarHospitales" extends="baseLayout">
+      <put-attribute name="title"  value="Modificar Hospital"/>
+      <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+      <put-attribute name="body"   value="/hospitalConsultar.jsp"/>      
+   </definition>
+</tiles-definitions>

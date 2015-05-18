@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-mar-2015 22:58:35 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="pacientes" name="com.hibernate.model.DatosClinicos" optimistic-lock="version" table="datos_clinicos">
+    <id name="noHistorial" type="long">
+      <column name="no_historial"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="com.hibernate.model.Pacientes" fetch="select" name="pacientes">
+      <column length="15" name="Pacientes_nss" not-null="true"/>
+    </many-to-one>
+    <property name="usoDrogas" type="boolean">
+      <column name="uso_drogas" not-null="true"/>
+    </property>
+    <property name="usoAlcohol" type="boolean">
+      <column name="uso_alcohol" not-null="true"/>
+    </property>
+    <property name="fumador" type="boolean">
+      <column name="fumador" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="enfermedadesCronicases" table="enfermedades_cronicas">
+      <key>
+        <column name="Datos_Clinicos_no_historial" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.EnfermedadesCronicas"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="medicacions" table="medicacion">
+      <key>
+        <column name="Datos_Clinicos_no_historial" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Medicacion"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="discapacidadeses" table="discapacidades">
+      <key>
+        <column name="Datos_Clinicos_no_historial" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Discapacidades"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="alergiases" table="alergias">
+      <key>
+        <column name="Datos_Clinicos_no_historial" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Alergias"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="cirujiases" table="cirujias">
+      <key>
+        <column name="Datos_Clinicos_no_historial" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Cirujias"/>
+    </set>
+  </class>
+</hibernate-mapping>

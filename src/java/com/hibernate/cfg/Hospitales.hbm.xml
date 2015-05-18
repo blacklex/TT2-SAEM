@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-mar-2015 22:58:35 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="pacientes" name="com.hibernate.model.Hospitales" optimistic-lock="version" table="hospitales">
+    <id name="codigoHospital" type="int">
+      <column name="codigo_hospital"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="com.hibernate.model.Usuarios" fetch="select" name="usuarios">
+      <column length="20" name="Usuarios_nombre_usuario" not-null="true"/>
+    </many-to-one>
+    <property name="nombre" type="string">
+      <column length="45" name="nombre" not-null="true"/>
+    </property>
+    <property name="telefono" type="string">
+      <column length="15" name="telefono" not-null="true"/>
+    </property>
+    <property name="lada" type="string">
+      <column length="4" name="lada" not-null="true"/>
+    </property>
+    <property name="EMail" type="string">
+      <column length="45" name="`e-mail`" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="domicilioHospitaleses" table="domicilio_hospitales">
+      <key>
+        <column name="Hospitales_codigo_hospital" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.DomicilioHospitales"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="pacienteses" table="pacientes">
+      <key>
+        <column name="Hospitales_codigo_hospital" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Pacientes"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="especialidadesHasHospitaleses" table="especialidades_has_hospitales">
+      <key>
+        <column name="Hospitales_codigo_hospital" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.EspecialidadesHasHospitales"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="directivos" table="directivo">
+      <key>
+        <column name="Hospitales_codigo_hospital" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.Directivo"/>
+    </set>
+  </class>
+</hibernate-mapping>

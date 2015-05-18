@@ -1,0 +1,142 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    
+    <!-- ESTA LÍNEA SE AGREGA POR RECOMENDACIÓN DE LOS DESARROLLADORES DE STRUTS2 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value= "false" />
+    <!-- ESTA LÍNEA SE AGREGA PARA CAMBIAR EL RESULT PATH QUE SE ESTABLECE POR DEFAULT -->
+    <constant name="struts.convention.result.path" value="/" /> 
+      
+    <!-- ESTA LÍNEA SE AGREGA PARA QUE SE RECONOZCA EL PAQUETE POR DEFAULT UTILIZADO -->
+    <constant name="struts.convention.default.parent.package" value="basicstruts2"/>
+    <!-- Configuration for the default package. -->
+    <package name="basicstruts2" namespace="/" extends="struts-default,json-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+            <result-type name="dispatcher" default="true" class="org.apache.struts2.dispatcher.ServletDispatcherResult" />
+        </result-types>
+      
+        <global-results>
+            <result name="login" type="dispatcher">login.jsp</result>
+        </global-results>
+        
+        <action name="Login" method="execute" class="com.saem.actions.Login">
+            <result name="pantallaInicioAdministrador" type="tiles">pantallaInicioAdministrador</result>
+            <result name="pantallaInicioPaciente" type="tiles">pantallaInicioPaciente</result>
+            <result name="pantallaInicioHospital" type="tiles">pantallaInicioHospital</result>
+        </action>
+        
+        <!-- ****************************** REGISTRAR HOSPITAL ********************************************* -->
+        <action name="pantallaRegistroHospital" method="execute" class="com.saem.actions.RegistroHospital">
+            <result name="pantallaRegistroHospital" type="tiles">pantallaRegistroHospital</result>
+        </action>
+        
+        <action name="registrarHospital" method="registrarHospital" class="com.saem.actions.RegistroHospital">
+            <result name="pantallaRegistroHospital" type="tiles">pantallaRegistroHospital</result>
+        </action>
+        
+        <action name="recuperarMensajeEstatus" method="recuperarEstatus" class="com.saem.actions.RegistroHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarEspecialidades" method="recuperarEspecialidades" class="com.saem.actions.RegistroHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="validarNombreUsuario" method="validarNombreUsuario" class="com.saem.actions.RegistroHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ****************************** FIN REGISTRO HOSPITAL ******************************************* -->
+        
+        <!-- ****************************** MODIFICAR ELIMINIAR HOSPITAL ************************************ -->
+        <action name="pantallaModificarEliminarHospital" method="execute" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+        
+        <action name="ajaxLlenarListaHospitalesME" method="llenarGridHospitalME" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <!-- _______________________________________________________________________________________________ -->
+        <action name="recuperarMensajeEstatusMEHospital" method="recuperarEstatusMEHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosFormSesion" method="recuperarDatosFormSesion" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosFormHospital" method="recuperarDatosFormHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosFormDireccion" method="recuperarDatosFormDireccion" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosFormDirectivo" method="recuperarDatosFormDirectivo" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- _______________________________________________________________________________________________ -->
+        <action name="ajaxEliminarHospital" method="eliminarHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- _______________________________________________________________________________________________ -->
+        <action name="modificarDatosSesionHospital" method="modificarDatosSesionHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+        
+        <action name="modificarDatosHospital" method="modificarDatosHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+        
+        <action name="modificarDatosDireccionHospital" method="modificarDatosDireccionHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+        
+        <action name="modificarDatosDirectivoHospital" method="modificarDatosDirectivoHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+        
+        <action name="modificarDatosEspecialidadesHospital" method="modificarDatosEspecialidadesHospital" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="pantallaModifcarEliminarHospital" type="tiles">pantallaModifcarEliminarHospital</result>
+        </action>
+      <!-- ****************************** FIN MODIFICAR ELIMINIAR HOSPITAL ********************************** -->
+      
+      <!-- ************************************ CONSULTAR HOSPITAL ****************************************** -->
+        <action name="pantallaConsultarHospitales" method="execute" class="com.saem.actions.ConsultarHospital">
+            <result name="pantallaConsultarHospitales" type="tiles">pantallaConsultarHospitales</result>
+        </action>
+        
+        <action name="ajaxLlenarListaConsultarHospitales" method="llenarGridHospitalConsultar" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <!-- _______________________________________________________________________________________________ -->
+        <action name="recuperarMensajeEstatusConsultarHospital" method="recuperarEstatusConsultarHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosConsultaSesion" method="recuperarDatosConsultaSesion" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosConsultaHospital" method="recuperarDatosConsultaHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosConsultaDireccion" method="recuperarDatosConsultaDireccion" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosConsultaDirectivo" method="recuperarDatosConsultaDirectivo" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- _______________________________________________________________________________________________ -->
+        
+      <!-- ******************************** FIN MODIFICAR ELIMINIAR HOSPITAL ******************************* -->
+        
+    </package>
+</struts>
