@@ -267,7 +267,7 @@ public class RegistroHospital implements SessionAware {
      */
     private Boolean guardarEnOntologia(ArrayList<Especialidades> listaEspec) {
 
-        String ONTOLOGIA = "/Users/Alejandro/Desktop/serviciomedico - copia.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
         
         

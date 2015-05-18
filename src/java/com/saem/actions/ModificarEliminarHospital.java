@@ -20,6 +20,8 @@ import com.sun.org.apache.bcel.internal.generic.D2F;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 /**
@@ -59,7 +61,7 @@ public class ModificarEliminarHospital implements SessionAware {
     private String textoAlert = "";
     private String estatusMensaje = "";
 
-    //HttpServletRequest request = ServletActionContext.getRequest();
+    HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
 
     @Override
@@ -306,7 +308,8 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String recuperarDatosFormDireccion() {
-        String ONTOLOGIA = "/Users/Alejandro/Desktop/serviciomedico - copia.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
+        
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
         
         HospitalDAO hospitalDAO = new HospitalDAO();

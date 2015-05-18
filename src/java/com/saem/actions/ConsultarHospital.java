@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 /**
@@ -55,7 +57,7 @@ public class ConsultarHospital implements SessionAware {
     private String textoAlert = "";
     private String estatusMensaje = "";
 
-    //HttpServletRequest request = ServletActionContext.getRequest();
+    HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
 
     @Override
@@ -112,7 +114,7 @@ public class ConsultarHospital implements SessionAware {
     }
 
     public String recuperarDatosConsultaDireccion() {
-        String ONTOLOGIA = "/Users/Alejandro/Desktop/serviciomedico - copia.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
             
         HospitalDAO hospitalDAO = new HospitalDAO();
