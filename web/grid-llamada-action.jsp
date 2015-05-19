@@ -96,6 +96,7 @@
         <sjg:gridColumn editable="true" name="city" index="city" title="Ciudad" sortable="false"/>
         <sjg:gridColumn editable="true" name="creditLimit" index="Liminte de Credito" title="Credit Limit" formatter="integer" sortable="false"/>
     </sjg:grid>
+ Hola
  -->
 </div>
 
