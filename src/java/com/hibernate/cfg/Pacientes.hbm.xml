@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-mar-2015 22:58:35 by Hibernate Tools 4.3.1 -->
+<!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="pacientes" name="com.hibernate.model.Pacientes" optimistic-lock="version" table="pacientes">
+  <class catalog="Pacientes" name="com.hibernate.model.Pacientes" optimistic-lock="version" table="Pacientes">
     <id name="nss" type="string">
       <column length="15" name="nss"/>
       <generator class="assigned"/>
@@ -31,31 +31,31 @@
     <property name="imagen" type="binary">
       <column name="imagen"/>
     </property>
-    <set fetch="select" inverse="true" lazy="true" name="domicilioPacienteses" table="domicilio_pacientes">
+    <set fetch="select" inverse="true" lazy="true" name="domicilioPacienteses" table="Domicilio_Pacientes">
       <key>
         <column length="15" name="Pacientes_nss" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.DomicilioPacientes"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="telefonosPacienteses" table="telefonos_pacientes">
+    <set fetch="select" inverse="true" lazy="true" name="telefonosPacienteses" table="Telefonos_Pacientes">
       <key>
         <column length="15" name="Pacientes_nss" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.TelefonosPacientes"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="datosPersonaleses" table="datos_personales">
-      <key>
-        <column length="15" name="Pacientes_nss" not-null="true"/>
-      </key>
-      <one-to-many class="com.hibernate.model.DatosPersonales"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="datosClinicoses" table="datos_clinicos">
+    <set fetch="select" inverse="true" lazy="true" name="datosClinicoses" table="Datos_Clinicos">
       <key>
         <column length="15" name="Pacientes_nss" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.DatosClinicos"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="contactoses" table="contactos">
+    <set fetch="select" inverse="true" lazy="true" name="datosPersonaleses" table="Datos_Personales">
+      <key>
+        <column length="15" name="Pacientes_nss" not-null="true"/>
+      </key>
+      <one-to-many class="com.hibernate.model.DatosPersonales"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="contactoses" table="Contactos">
       <key>
         <column length="15" name="Pacientes_nss" not-null="true"/>
       </key>
