@@ -37,7 +37,19 @@
           <ul class="sidebar-menu">
             <li class="header">MENU</li>
             
-           
+            <!--  INICIA MENU ADMINISTRADORES CRUD    -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-adn"></i> <span>Administradores</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="pantallaAltaAdministrador"><i class="fa fa-circle-o"></i> Registrar</a></li>
+                        <li><a href="pantallaModificarEliminarAdministrador"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
+                        <li><a href="pantallaConsultarAdministrador"><i class="fa fa-circle-o"></i> Consultar</a></li>
+                    </ul>
+                </li>
+            <!--  FIN MENU ADMINISTRADORES CRUD    -->
+            
             <!--  INICIA MENU HOSPITALES CRUD    -->
             <li class="treeview">
               <a href="#">
