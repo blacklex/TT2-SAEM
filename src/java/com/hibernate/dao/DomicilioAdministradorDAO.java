@@ -35,6 +35,21 @@ public class DomicilioAdministradorDAO extends HibernateUtil {
 		}
 	}
          
+         public Boolean update(DomicilioAdministradores transientInstance) {
+		//log.debug("saving TblAbwUsuario instance");
+		try {
+			Session s = getSession();
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+			//log.debug("save successful");
+                        return true;
+		} catch (RuntimeException re) {
+			//log.error("save failed", re);  
+                    return false;
+		}
+	}
+         
         public Boolean delete(DomicilioAdministradores transientInstance) {
 		//log.debug("saving TblAbwUsuario instance");
 		try {
@@ -62,7 +77,20 @@ public class DomicilioAdministradorDAO extends HibernateUtil {
 		}
 	}
          
-        
+        public DomicilioAdministradores findByClaveForanea(String id) {
+		//log.debug("getting TblAbwUsuario instance with id: " + id);
+		try {
+			DomicilioAdministradores domAdmins;
+			Session s = getSession();
+                        s.beginTransaction();
+                        domAdmins = (DomicilioAdministradores) s.createQuery("from DomicilioAdministradores where Administradores_tel_particular = '"+id+"'").uniqueResult();
+                        s.getTransaction().commit();
+                        return domAdmins;
+		} catch(Exception e)
+        {
+            return null;
+        }
+	}
       
 
 }

@@ -12,9 +12,11 @@ package com.hibernate.dao;
 
 
 import com.hibernate.cfg.HibernateUtil;
+import static com.hibernate.cfg.HibernateUtil.getSession;
 import com.hibernate.model.Administradores;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -104,6 +106,70 @@ public class UsuarioDAO extends HibernateUtil {
 			return false;
 		}
         }
+        
+        public boolean deleteAdmin(String nombreUsuarioEdit) {
+        try {
+			Session s = getSession();
+                        s.beginTransaction();
+                        Query q = s.createQuery("from Usuarios where nombre_usuario = :nombre_usuario");
+                        q.setParameter("nombre_usuario", nombreUsuarioEdit);
+                        Usuarios usuario = (Usuarios)q.list().get(0);
+                        s.delete(usuario);
+                        s.getTransaction().commit();
+			//log.debug("save successful");
+                        return true;
+		} catch (RuntimeException re) {
+			//log.error("save failed", re);
+                    return false;
+		}
+        
+    }
+        
+        public List<Usuarios> listarById(String id) {
+        try
+        {
+           System.err.println("Bandera 1");
+          Session s = getSession();
+           System.err.println("Bandera 2");
+           s.beginTransaction();
+           System.err.println("Bandera 3");
+           List<Usuarios> listUsuarios = (List<Usuarios>)s.createQuery("from Usuarios where nombreUsuario='"+id+"'").list();
+           System.err.println("Bandera 4");
+           s.getTransaction().commit();
+           System.err.println("Bandera 5");
+           return listUsuarios;
+           
+          
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+
+}
+        
+        public List<Usuarios> listar(int from, int to) {
+        try
+        {
+           System.err.println("Bandera 1");
+          Session s = getSession();
+           System.err.println("Bandera 2");
+           s.beginTransaction();
+           System.err.println("Bandera 3");
+           List<Usuarios> listUsuarios = (List<Usuarios>)s.createQuery("from Usuarios").list();
+           System.err.println("Bandera 4");
+           s.getTransaction().commit();
+           System.err.println("Bandera 5");
+           return listUsuarios;
+           
+          
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+
+}
          
         
       

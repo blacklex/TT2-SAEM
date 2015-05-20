@@ -123,6 +123,7 @@ function buscarUsuarioPorFiltroUsuario() {
 
                 $("#divAlertErrorEliminar").slideDown('slow').delay(2500).slideUp('slow');
                 $("#barraCargarEliminar").slideUp(100);
+                $("#nombreUsuarioPorFiltro").focus();
             }           
         });
     }

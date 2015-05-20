@@ -138,5 +138,143 @@
         
       <!-- ******************************** FIN MODIFICAR ELIMINIAR HOSPITAL ******************************* -->
         
+        <!-- ********************************************* MENU ADMINISTRADOR********************************************************-->
+        <action name="pantallaAltaAdministrador" method="altaAdministrador" class="com.saem.actions.MenuAdministradorAction">
+            <result name="pantallaAltaAdministrador" type="tiles">pantallaAltaAdministrador</result>
+        </action>
+
+        <action name="pantallaModificarEliminarAdministrador" method="modElmAdministrador" class="com.saem.actions.MenuAdministradorAction">
+            <result name="pantallaModificarEliminarAdministrador" type="tiles">pantallaModificarEliminarAdministrador</result>
+        </action>
+
+        <action name="pantallaConsultarAdministrador" method="consultarAdministrador" class="com.saem.actions.MenuAdministradorAction">
+            <result name="pantallaConsultarAdministrador" type="tiles">pantallaConsultarAdministrador</result>
+        </action>
+        <!-- ******************************************* FIN MENU ADMINISTRADOR *********************************************** -->
+        
+        <!-- ******************************************** REGISTRAR ADMINISTRADOR **************************************-->
+        <!-- Registar Administrador -->
+        <action name="registrarAdministrador" method="registrarAdministrador" class="com.saem.actions.RegistrarAdministradorAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaAltaAdministrador" type="tiles">pantallaAltaAdministrador</result>
+        </action>
+        <!-- Fin Registar Administrador -->
+
+        <!-- Validar usuario -->
+        <action name="validarNombreUsuarioAdmin" method="validarNombreUsuarioAdmin" class="com.saem.actions.RegistrarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Validar usuario -->
+
+        <!-- Recuperar Msjs de Registro-->
+        <action name="recuperarMensajeEstatusAdmin" method="recuperarEstatusAdmin" class="com.saem.actions.RegistrarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Recuperar Msjs -->
+        <!-- ******************************************** FIN REGISTRAR ADMINISTRADOR **********************************-->
+
+        <!-- ******************************************** ELIMINAR ADMINISTRADOR *******************************************************************-->
+        <!-- Eliminar Administrador -->
+        <action name="eliminarAdministrador" method="eliminarAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="pantallaModificarEliminarAdministrador" type="json">JSON</result>
+        </action>
+        
+        <action name="eliminarAdministradorPorFiltro" method="eliminarAdministradorPorFiltro" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="pantallaModificarEliminarAdministrador" type="json">JSON</result>
+        </action>
+        <!-- Fin Eliminar Administrador -->
+        <!-- ******************************************** FIN ELIMINAR ADMINISTRADOR ****************************************************************-->
+        
+        <!-- ******************************************** BUSCAR DATOS PARA EDITAR ADMINISTRADOR ****************************************************************-->
+        <action name="buscarDatosPersonalesAdministrador" method="buscarDatosPersonalesAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+
+        <action name="buscarDatosDireccionAdministrador" method="buscarDatosDireccionAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDatosPorFiltro" method="buscarDatosPorFiltro" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ******************************************** FIN BUSCAR DATOS PARA EDITAR ADMINISTRADOR ****************************************************************-->
+
+        <!-- ******************************************** EDITAR ADMINISTRADOR ****************************************************************-->
+        <!-- Editar Acceso Administrador -->
+        <action name="editarAccesoAdministrador" method="editarAccesoAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="pantallaModificarEliminarAdministrador" type="tiles">pantallaModificarEliminarAdministrador</result>
+        </action>
+        <!-- Fin Editar Acceso Administrador -->
+        
+        <!-- Editar Datos Persoanles Administrador -->
+        <action name="editarDatosPersonalesAdministrador" method="editarDatosPersonalesAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaModificarEliminarAdministrador" type="tiles">pantallaModificarEliminarAdministrador</result>
+        </action>
+        <!-- Fin Editar Datos Personales Administrador -->
+        <!-- Editar Acceso Administrador -->
+        <action name="editarDireccionAdministrador" method="editarDireccionAdministrador" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="pantallaModificarEliminarAdministrador" type="tiles">pantallaModificarEliminarAdministrador</result>
+        </action>
+        <!-- Fin Editar Acceso Administrador -->
+        <!-- Editar Datos Persoanles Administrador -->
+        <action name="editarAdminPorFiltro" method="editarAdminPorFiltro" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaModificarEliminarAdministrador" type="tiles">pantallaModificarEliminarAdministrador</result>
+        </action>
+        <!-- Fin Editar Datos Personales Administrador -->
+        <!-- ******************************************** FIN EDITAR ADMINISTRADOR ****************************************************************-->
+        
+        <!-- ******************************************** BUSCAR DATOS PARA CONSULTAR ADMINISTRADOR ****************************************************************-->
+        <action name="verDatosPersonalesAdministrador" method="buscarDatosPersonalesAdministrador" class="com.saem.actions.ConsultarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+
+        <action name="verDatosDireccionAdministrador" method="buscarDatosDireccionAdministrador" class="com.saem.actions.ConsultarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDatosMostrarFiltro" method="buscarDatosMostrarFiltro" class="com.saem.actions.ConsultarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ******************************************** FIN BUSCAR DATOS PARA CONSULTAR ADMINISTRADOR ****************************************************************-->
+        
+        <!-- ******************************************** RECUPERAR MSJ ADMINISTRADOR ****************************************************************-->                
+        <!-- Recuperar Msjs de Edicion-->
+        <action name="recuperarMensajeEstatusEditar" method="recuperarEstatusEditar" class="com.saem.actions.ModificarEliminarAdministradorAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Recuperar Msjs -->
+<!--         ******************************************** FIN RECUPERAR MSJ ADMINISTRADOR ****************************************************************                
+        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
+            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
+        </action>
+         ******************************************** OPERACIONES SOBRE PACIENTE ****************************************************************                -->
+        
+        <!-- ListaAdministradores Grid -->
+        <action name="Listado" class="com.saem.actions.GridRegistroAdministradoresAction">
+            <result name="success" type="json">
+                <param name="includeProperties">JSON,gridModel.*,page,records,rows,sidx,sord,total</param>
+            </result>
+        </action>
+        <!-- Fin ListaAdministradores Grid -->
     </package>
 </struts>
