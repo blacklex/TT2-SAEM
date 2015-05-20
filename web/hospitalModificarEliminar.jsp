@@ -306,11 +306,11 @@
 <script src="plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 <!--Script google maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
-<script src="js/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
 
 <!--Script creados -->
-<script src="js/funcionesModificarEliminarHospital.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesModificarEliminarHospital.js" type="text/javascript"></script>
 <script src="bootstrap/js/jquery.modal.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="bootstrap/css/jquery.modal.css"/>
 
