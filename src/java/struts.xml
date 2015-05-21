@@ -3,14 +3,15 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-    
     <!-- ESTA LÍNEA SE AGREGA POR RECOMENDACIÓN DE LOS DESARROLLADORES DE STRUTS2 -->
     <constant name="struts.enable.DynamicMethodInvocation" value= "false" />
     <!-- ESTA LÍNEA SE AGREGA PARA CAMBIAR EL RESULT PATH QUE SE ESTABLECE POR DEFAULT -->
-    <constant name="struts.convention.result.path" value="/" /> 
-      
+    <constant name="struts.convention.result.path" value="/" />   
     <!-- ESTA LÍNEA SE AGREGA PARA QUE SE RECONOZCA EL PAQUETE POR DEFAULT UTILIZADO -->
     <constant name="struts.convention.default.parent.package" value="basicstruts2"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    
     <!-- Configuration for the default package. -->
     <package name="basicstruts2" namespace="/" extends="struts-default,json-default">
         <result-types>
