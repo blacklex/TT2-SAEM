@@ -6,11 +6,11 @@
 
 $(document).ready(function () {
     $.getJSON("recuperarMensajeEstatusConsultarHospital");
-    
+
 
     $(document).ajaxSuccess(function (event, request, settings) {
 
-        
+
         if (settings.url.match('recuperarMensajeEstatusConsultarHospital') != null) {
 
             var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
@@ -146,7 +146,9 @@ function muestraDireccionHospital() {
                     $("#barraCargar").slideUp(100);
 
                     $("#divjGrid").slideUp('slow', function () {
-                        $("#divFormDireccionHospital").slideDown('slow',function (){inicializarMapaConsultar(msg.latitudY,msg.longitudX);});
+                        $("#divFormDireccionHospital").slideDown('slow', function () {
+                            inicializarMapaConsultar(msg.latitudY, msg.longitudX);
+                        });
                     });
                 });
     } else {
@@ -189,9 +191,36 @@ function muestraFormDirectivo() {
 }
 
 function muestraFormEspecialidades() {
-    $("#divjGrid").slideUp('slow', function () {
-        $("#divFormEspecialidades").slideDown('slow');
-    });
+    if ($("#gridListaConsultaHospitales").jqGrid('getGridParam', 'selrow') != null) {
+        var s = $("#gridListaConsultaHospitales").jqGrid('getGridParam', 'selrow');
+
+        var codigoHospital = $("#gridListaConsultaHospitales").jqGrid('getCell', s, 'codigoHospital');
+
+        $("#barraCargar").slideDown(100);
+
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "ajaxRecuperarDatosEspecialidades",
+            data: {codigoHospital: codigoHospital}
+        })
+                .done(function (msg) {
+
+                    $("#divContEspecialidades").html(msg.especialidades);
+
+
+                    $("#barraCargar").slideUp(100);
+
+                    $("#divjGrid").slideUp('slow', function () {
+                        $("#divFormEspecialidades").slideDown('slow');
+                    });
+                });
+    } else {
+        alert("Seleccione un Hospital de la tabla.");
+    }
+
+
+
 }
 
 

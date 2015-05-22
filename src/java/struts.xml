@@ -80,6 +80,10 @@
         <action name="ajaxRecuperarDatosFormDirectivo" method="recuperarDatosFormDirectivo" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="ajaxRecuperarFormEspecialidades" method="recuperarDatosFormEspecialidades" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- _______________________________________________________________________________________________ -->
         <action name="ajaxEliminarHospital" method="eliminarHospital" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
@@ -133,6 +137,10 @@
         </action>
         
         <action name="ajaxRecuperarDatosConsultaDirectivo" method="recuperarDatosConsultaDirectivo" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosEspecialidades" method="recuperarDatosEspecialidades" class="com.saem.actions.ConsultarHospital">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- _______________________________________________________________________________________________ -->

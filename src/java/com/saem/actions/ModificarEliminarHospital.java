@@ -7,19 +7,26 @@ package com.saem.actions;
 
 import com.hibernate.dao.DirectivoDAO;
 import com.hibernate.dao.DomicilioHospitalDAO;
+import com.hibernate.dao.EspecialidadDAO;
+import com.hibernate.dao.EspecialidadhasHospitalesDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
+import com.hibernate.model.Especialidades;
+import com.hibernate.model.EspecialidadesHasHospitales;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.persistencia.owl.OWLConsultas;
+import com.persistencia.owl.OWLEliminarIndividuo;
 import com.sun.org.apache.bcel.internal.generic.D2F;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
@@ -57,6 +64,8 @@ public class ModificarEliminarHospital implements SessionAware {
     private String nombreDirectivo;
     //fin de campos formularo
 
+    private String especialidades;
+
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
@@ -72,93 +81,90 @@ public class ModificarEliminarHospital implements SessionAware {
     public String execute() {
         return "pantallaModifcarEliminarHospital";
     }
-    
-    public String modificarDatosSesionHospital(){
+
+    public String modificarDatosSesionHospital() {
         Usuarios usuarioTemp = new HospitalDAO().findById(Integer.parseInt(codigoHospitalEditar)).getUsuarios();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        Usuarios temp= new Usuarios();
-        
+        Usuarios temp = new Usuarios();
+
         temp.setNombreUsuario(usuarioTemp.getNombreUsuario());
         temp.setTipoUsuario(usuarioTemp.getTipoUsuario());
         temp.setClave(claveUsuario);
         temp.setFechaRegistro(usuarioTemp.getFechaRegistro());
-       
-        
-        if(usuarioDAO.update(temp)){
-            tituloAlert="Datos Editados.";
-            textoAlert ="Los datos de Sesion han sido satisfactoriamente.";
-            estatusMensaje="success";
-            
+
+        if (usuarioDAO.update(temp)) {
+            tituloAlert = "Datos Editados.";
+            textoAlert = "Los datos de Sesion han sido satisfactoriamente.";
+            estatusMensaje = "success";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-        
-        }else{
-            tituloAlert="Error Datos no Editados.";
-            textoAlert ="Los Datos de Sesion no fueron editados.";
-            estatusMensaje="error";
-            
+
+        } else {
+            tituloAlert = "Error Datos no Editados.";
+            textoAlert = "Los Datos de Sesion no fueron editados.";
+            estatusMensaje = "error";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
         }
-       
-        
-        System.out.println("--->Mod sesion "+claveUsuario+" "+codigoHospitalEditar);
+
+        System.out.println("--->Mod sesion " + claveUsuario + " " + codigoHospitalEditar);
         return "pantallaModifcarEliminarHospital";
     }
-    
-    public String modificarDatosHospital(){
+
+    public String modificarDatosHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         Hospitales hospitalBD = new HospitalDAO().findById(Integer.parseInt(codigoHospitalEditar));
         Hospitales hospitalTemp = new Hospitales();
-        
+
         String lada;
-        lada = telefonoHospital.substring(1 , 3)+telefonoHospital.substring(4,6);
-        telefonoHospital = telefonoHospital.substring(7, 12)+telefonoHospital.substring(13, telefonoHospital.length());
-        
+        lada = telefonoHospital.substring(1, 3) + telefonoHospital.substring(4, 6);
+        telefonoHospital = telefonoHospital.substring(7, 12) + telefonoHospital.substring(13, telefonoHospital.length());
+
         hospitalTemp.setCodigoHospital(hospitalBD.getCodigoHospital());
         hospitalTemp.setEMail(emailHospital);
         hospitalTemp.setNombre(nombreHospital);
         hospitalTemp.setLada(lada);
         hospitalTemp.setTelefono(telefonoHospital);
         hospitalTemp.setUsuarios(new UsuarioDAO().findById(hospitalBD.getUsuarios().getNombreUsuario()));
-        
-        if(hospitalDAO.update(hospitalTemp)){
-            tituloAlert="Datos Editados.";
-            textoAlert ="Los datos del Hospital han sido satisfactoriamente.";
-            estatusMensaje="success";
-            
+
+        if (hospitalDAO.update(hospitalTemp)) {
+            tituloAlert = "Datos Editados.";
+            textoAlert = "Los datos del Hospital han sido satisfactoriamente.";
+            estatusMensaje = "success";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-        
-        }else{
-            tituloAlert="Error Datos no Editados.";
-            textoAlert ="Los Datos del Hospital no fueron editados.";
-            estatusMensaje="error";
-            
+
+        } else {
+            tituloAlert = "Error Datos no Editados.";
+            textoAlert = "Los Datos del Hospital no fueron editados.";
+            estatusMensaje = "error";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
         }
-        
-        System.out.println("--->Mod Hosp "+nombreHospital+"  "+telefonoHospital+"  "+emailHospital+codigoHospitalEditar);
+
+        System.out.println("--->Mod Hosp " + nombreHospital + "  " + telefonoHospital + "  " + emailHospital + codigoHospitalEditar);
         return "pantallaModifcarEliminarHospital";
     }
-    
-    public String modificarDatosDireccionHospital(){
+
+    public String modificarDatosDireccionHospital() {
         DomicilioHospitalDAO domicilioHospitalDAO = new DomicilioHospitalDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         DomicilioHospitales domicilioHospitalTemp = new DomicilioHospitales();
-        
-        
+
         Iterator<DomicilioHospitales> iteratorDom = hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)).getDomicilioHospitaleses().iterator();
-        
-        while(iteratorDom.hasNext()){
+
+        while (iteratorDom.hasNext()) {
             domicilioHospitalTemp.setId(iteratorDom.next().getId());
         }
-        
+
         domicilioHospitalTemp.setCalle(calle);
         domicilioHospitalTemp.setCodigoPostal(codigoPostal);
         domicilioHospitalTemp.setColonia(colonia);
@@ -166,106 +172,143 @@ public class ModificarEliminarHospital implements SessionAware {
         domicilioHospitalTemp.setEntidadFederativa(entidadFederativa);
         domicilioHospitalTemp.setNumero(numero);
         domicilioHospitalTemp.setHospitales(hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)));
-        
-        
-        if(domicilioHospitalDAO.update(domicilioHospitalTemp)){
-            tituloAlert="Domicilio Editado.";
-            textoAlert ="Los datos del Domicilio del Hospital han sido satisfactoriamente.";
-            estatusMensaje="success";
-            
+
+        if (domicilioHospitalDAO.update(domicilioHospitalTemp)) {
+            tituloAlert = "Domicilio Editado.";
+            textoAlert = "Los datos del Domicilio del Hospital han sido satisfactoriamente.";
+            estatusMensaje = "success";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-        
-        }else{
-            tituloAlert="Error Datos no Editados.";
-            textoAlert ="La Direccion del Hospital no fue editada.";
-            estatusMensaje="error";
-            
+
+        } else {
+            tituloAlert = "Error Datos no Editados.";
+            textoAlert = "La Direccion del Hospital no fue editada.";
+            estatusMensaje = "error";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
         }
-        
-        
-        System.out.println("--->Mod Dir "+calle+" "+numero+" "+colonia+" "+delegacion+" "+entidadFederativa+" "+codigoPostal );
+
+        System.out.println("--->Mod Dir " + calle + " " + numero + " " + colonia + " " + delegacion + " " + entidadFederativa + " " + codigoPostal);
         return "pantallaModifcarEliminarHospital";
     }
-    
-    public String modificarDatosDirectivoHospital(){
+
+    public String modificarDatosDirectivoHospital() {
         System.out.println("-->Entor a mod directivo");
         DirectivoDAO directivoDAO = new DirectivoDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         Directivo directivoTemp = new Directivo();
-        
-        
+
         Iterator<Directivo> iteratorDirectivo = hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)).getDirectivos().iterator();
-        
-        while(iteratorDirectivo.hasNext()){
+
+        while (iteratorDirectivo.hasNext()) {
             directivoTemp.setId(iteratorDirectivo.next().getId());
         }
-        
+
         String lada;
-        lada = telefonoDirectivo.substring(1 , 3)+telefonoDirectivo.substring(4,6);
-        telefonoDirectivo = telefonoDirectivo.substring(7, 12)+telefonoDirectivo.substring(13, telefonoDirectivo.length());
-        
+        lada = telefonoDirectivo.substring(1, 3) + telefonoDirectivo.substring(4, 6);
+        telefonoDirectivo = telefonoDirectivo.substring(7, 12) + telefonoDirectivo.substring(13, telefonoDirectivo.length());
+
         directivoTemp.setCorreo(emailDirectivo);
         directivoTemp.setNombre(nombreDirectivo);
-        directivoTemp.setTelParticular(textoAlert);   
+        directivoTemp.setTelParticular(textoAlert);
         directivoTemp.setTelParticular(telefonoDirectivo);
         directivoTemp.setHospitales(hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)));
-        
-        if(directivoDAO.update(directivoTemp)){
-            tituloAlert="Directivo Editado.";
-            textoAlert ="Los datos del Directivo del Hospital han sido satisfactoriamente.";
-            estatusMensaje="success";
-            
+
+        if (directivoDAO.update(directivoTemp)) {
+            tituloAlert = "Directivo Editado.";
+            textoAlert = "Los datos del Directivo del Hospital han sido satisfactoriamente.";
+            estatusMensaje = "success";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-        
-        }else{
-            tituloAlert="Error Datos no Editados.";
-            textoAlert ="El Directivo del Hospital no fue editado.";
-            estatusMensaje="error";
-            
+
+        } else {
+            tituloAlert = "Error Datos no Editados.";
+            textoAlert = "El Directivo del Hospital no fue editado.";
+            estatusMensaje = "error";
+
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
         }
-        
-        System.out.println("--->Mod Directivo "+telefonoDirectivo+" "+nombreDirectivo+" "+emailDirectivo);
+
+        System.out.println("--->Mod Directivo " + telefonoDirectivo + " " + nombreDirectivo + " " + emailDirectivo);
         return "pantallaModifcarEliminarHospital";
     }
-    
-    public String modificarDatosEspecialidadesHospital(){
+
+    public String modificarDatosEspecialidadesHospital() {
+        Enumeration<String> parametros;
         System.out.println("--->Mod espec ");
+
+        parametros = request.getParameterNames();
+        ArrayList<Especialidades> listaEspec = new ArrayList<>();
+
+        while (parametros.hasMoreElements()) {
+            String nombreParametro = parametros.nextElement();
+
+            if (nombreParametro.startsWith("checkbox")) {
+                System.out.println("---> "+nombreParametro+"  "+request.getParameter(nombreParametro));
+            }
+
+        }
+
         return "pantallaModifcarEliminarHospital";
     }
-    
 
     public String eliminarHospital() {
-         HospitalDAO hospitalDAO = new HospitalDAO();
-         UsuarioDAO usuarioDAO = new UsuarioDAO();
+        HospitalDAO hospitalDAO = new HospitalDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String nombreHospTemp = hospitalDAO.findById(codigoHospitalTemp).getNombre();
+        System.out.println("--->Eliminar hospital " + codigoHospitalTemp+"  "+nombreHospTemp);
         
-        System.out.println("--->Eliminar hospital "+codigoHospitalTemp);
-        
-        if(usuarioDAO.deleteHospital(hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario())){
-            tituloAlert="Hospital Eliminado";
-            textoAlert ="Hospital eliminado satisfactoriamente.";
-            estatusMensaje="success";
-        }else{
-            tituloAlert="Error Hospital no Eliminado";
-            textoAlert ="El Hospital no fue eliminado.";
-            estatusMensaje="error";
+        if (usuarioDAO.deleteHospital(hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario())) {
+            if (eliminarHospitalDeOntologia(nombreHospTemp)) {
+                tituloAlert = "Hospital Eliminado";
+                textoAlert = "Hospital eliminado satisfactoriamente.";
+                estatusMensaje = "success";
+            } else {
+                tituloAlert = "Error Hospital no Eliminado";
+                textoAlert = "El Hospital no fue eliminado debido a un problema en la Ontologia.";
+                estatusMensaje = "error";
+
+            }
+
+        } else {
+            tituloAlert = "Error Hospital no Eliminado";
+            textoAlert = "El Hospital no fue eliminado.";
+            estatusMensaje = "error";
         }
-        
-        
+
         return Action.SUCCESS;
     }
-    
-/************************ METODOS PARA SETAR EN FORMULARIOS *********************/
+
+    Boolean eliminarHospitalDeOntologia(String nombreHospitalOnt) {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+
+        OWLEliminarIndividuo eliminarIndividuos = new OWLEliminarIndividuo(ONTOLOGIA, BASE_URI);
+
+        nombreHospitalOnt = nombreHospitalOnt.replaceAll("\\s+", "");
+
+        if (eliminarIndividuos.eliminarIndividuosDeNombreInstituto(nombreHospitalOnt)) {
+            if (eliminarIndividuos.eliminarIndividuosDeDireccion("Direccion" + nombreHospitalOnt)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * ********************** METODOS PARA SETAR EN FORMULARIOS
+     * ********************
+     */
     public String recuperarEstatusMEHospital() {
         System.out.println("-->Entro a recuperar estatus ME");
         tituloAlert = "";
@@ -308,17 +351,17 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String recuperarDatosFormDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
-        
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
-        
+
         HospitalDAO hospitalDAO = new HospitalDAO();
         int codigoHospitalTemp = Integer.parseInt(codigoHospital);
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
         String nombreHospitalTemp = hospitalTemp.getNombre();
-        
+
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
-        nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
+        nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+", "");
         while (it.hasNext()) {
             DomicilioHospitales domHospTemp = it.next();
             calle = domHospTemp.getCalle();
@@ -327,19 +370,19 @@ public class ModificarEliminarHospital implements SessionAware {
             delegacion = domHospTemp.getDelegacion();
             entidadFederativa = domHospTemp.getEntidadFederativa();
             codigoPostal = domHospTemp.getCodigoPostal();
-            
+
             OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
             consultor.hospitalseUbicaEnDireccion(nombreHospitalTemp);
-       
-            consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp);
-            latitudY = consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp).get(0);
-            longitudX = consultor.getCoordenadaXDireccion("Direccion"+nombreHospitalTemp).get(0);
-            
+
+            consultor.getCoordenadaYDireccion("Direccion" + nombreHospitalTemp);
+            latitudY = consultor.getCoordenadaYDireccion("Direccion" + nombreHospitalTemp).get(0);
+            longitudX = consultor.getCoordenadaXDireccion("Direccion" + nombreHospitalTemp).get(0);
+
         }
 
         return SUCCESS;
     }
-    
+
     public String recuperarDatosFormDirectivo() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         int codigoHospitalTemp = Integer.parseInt(codigoHospital);
@@ -349,12 +392,65 @@ public class ModificarEliminarHospital implements SessionAware {
 
         while (it.hasNext()) {
             Directivo directivoTemp = it.next();
-            
+
             telefonoDirectivo = directivoTemp.getTelParticular();
             emailDirectivo = directivoTemp.getCorreo();
             nombreDirectivo = directivoTemp.getNombre();
-            
+
         }
+
+        return SUCCESS;
+    }
+
+    public String recuperarDatosFormEspecialidades() {
+        System.out.println("--->Entro a recuperarEspecialidades modificar");
+        String html = "";
+        HospitalDAO hospitalDAO = new HospitalDAO();
+        EspecialidadDAO especialidadDAO = new EspecialidadDAO();
+        ArrayList<Especialidades> especialidadesList = (ArrayList<Especialidades>) especialidadDAO.findAll();
+
+        if (especialidadesList == null) {
+            return SUCCESS;
+        }
+
+        Set<EspecialidadesHasHospitales> especHasHosp = hospitalDAO.findById(Integer.parseInt(codigoHospital)).getEspecialidadesHasHospitaleses();
+
+        if (especHasHosp == null) {
+            return SUCCESS;
+        }
+
+        int contEspec = 0;
+        for (Especialidades especialidadTemp : especialidadesList) {
+            Boolean especialidadMarcada = false;
+            Iterator<EspecialidadesHasHospitales> iterEspecHosp = especHasHosp.iterator();
+
+            while (iterEspecHosp.hasNext()) {
+                Especialidades especTemp = iterEspecHosp.next().getEspecialidades();
+
+                if (especialidadTemp.getNoEspecilidad() == especTemp.getNoEspecilidad()) {
+                    html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
+                            + "<span class=\"input-group-addon\">"
+                            + "<input type=\"checkbox\" checked=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                            + "</span>"
+                            + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
+                            + "</div><!-- /input-group -->";
+                    especialidadMarcada = true;
+                    break;
+                }
+            }
+
+            if (!especialidadMarcada) {
+                html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
+                        + "<span class=\"input-group-addon\">"
+                        + "<input type=\"checkbox\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                        + "</span>"
+                        + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
+                        + "</div><!-- /input-group -->";
+            }
+            contEspec++;
+        }
+
+        especialidades = html;
 
         return SUCCESS;
     }
@@ -435,8 +531,6 @@ public class ModificarEliminarHospital implements SessionAware {
     public void setCodigoHospitalEditar(String codigoHospitalEditar) {
         this.codigoHospitalEditar = codigoHospitalEditar;
     }
-    
-    
 
     public String getClaveUsuario() {
         return claveUsuario;
@@ -486,8 +580,6 @@ public class ModificarEliminarHospital implements SessionAware {
         this.longitudX = longitudX;
     }
 
-    
-    
     public String getCalle() {
         return calle;
     }
@@ -558,6 +650,14 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public void setNombreDirectivo(String nombreDirectivo) {
         this.nombreDirectivo = nombreDirectivo;
+    }
+
+    public String getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(String especialidades) {
+        this.especialidades = especialidades;
     }
 
     /**

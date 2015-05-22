@@ -129,16 +129,16 @@
             </div>
 
             <div id="divNombreUsuario" class="form-group">
-                    <label for="nombreUsuario">Nombre de usuario</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
-                </div>
+                <label for="nombreUsuario">Nombre de usuario</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
+            </div>
             <div id="divClaveUsuario" class="form-group">
                 <label for="claveUsuario">Clave de Acceso</label>
                 <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="text">
             </div>
         </div><!-- /.box-body -->
 
-<button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
 
@@ -186,8 +186,8 @@
 
             <!-- /google maps -->
             <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="hidden"></input>
-                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
-                <!-- /fin google maps -->
+            <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+            <!-- /fin google maps -->
             <div id="divCalleHospital" class="form-group">
                 <label for="calle">Calle</label>
                 <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -262,9 +262,14 @@
             <div class="box-header">
                 <h3 class="box-title">Especialidades</h3>
             </div>
-
+            <div id="divContEspecialidades"></div>
+            
         </div><!-- /.box-body -->
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        
+            
+         <div class="box-footer">
+            <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        </div>
     </div>
 </section>
 

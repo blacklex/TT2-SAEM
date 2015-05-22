@@ -8,6 +8,8 @@ package com.saem.actions;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
+import com.hibernate.model.Especialidades;
+import com.hibernate.model.EspecialidadesHasHospitales;
 import com.hibernate.model.Hospitales;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -52,6 +54,8 @@ public class ConsultarHospital implements SessionAware {
     private String emailDirectivo;
     private String nombreDirectivo;
     //fin de campos formularo
+    
+    private String especialidades;
 
     private String tituloAlert = "";
     private String textoAlert = "";
@@ -160,6 +164,38 @@ public class ConsultarHospital implements SessionAware {
             
         }
 
+        return SUCCESS;
+    }
+    
+    public String recuperarDatosEspecialidades(){
+        HospitalDAO hospitalDAO = new HospitalDAO();
+        System.out.println("--->Entro a recuperarEspecialidades Consulta");
+        String html = "";
+        
+        Set<EspecialidadesHasHospitales> especialidadesHospial = hospitalDAO.findById(Integer.parseInt(codigoHospital)).getEspecialidadesHasHospitaleses();
+        if(especialidadesHospial==null)
+            return SUCCESS;
+        System.out.println("--->"+especialidadesHospial.size());
+        
+        Iterator<EspecialidadesHasHospitales> iterEspecHosp = especialidadesHospial.iterator();
+        
+       int contEspec = 0;
+        while(iterEspecHosp.hasNext()){
+        Especialidades especialidadTemp = iterEspecHosp.next().getEspecialidades();
+        
+        
+       
+            html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
+                    + "<span class=\"input-group-addon\">"
+                    + "<input type=\"checkbox\" checked=\"true\" disabled=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                    + "</span>"
+                    + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
+                    + "</div><!-- /input-group -->";
+            contEspec++;
+        
+        }
+        especialidades = html;
+    
         return SUCCESS;
     }
 
@@ -363,6 +399,16 @@ public class ConsultarHospital implements SessionAware {
     public void setNombreDirectivo(String nombreDirectivo) {
         this.nombreDirectivo = nombreDirectivo;
     }
+
+    public String getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(String especialidades) {
+        this.especialidades = especialidades;
+    }
+    
+    
 
     /**
      * ************************************************************************
