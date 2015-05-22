@@ -272,8 +272,8 @@
         
         <!-- ListaAdministradores Grid -->
         <action name="Listado" class="com.saem.actions.GridRegistroAdministradoresAction">
-            <result name="success" type="json">
-                <param name="includeProperties">JSON,gridModel.*,page,records,rows,sidx,sord,total</param>
+            <result name="success"  type="json">
+                
             </result>
         </action>
         <!-- Fin ListaAdministradores Grid -->

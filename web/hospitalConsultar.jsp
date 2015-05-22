@@ -97,20 +97,20 @@
                 }"
                 >
 
-                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"	width="100"
+                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"
                                 editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"	width="100"
+                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"	width="100"
+                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"	width="100"
+                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"	width="100"
+                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
                                  editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
             </sjg:grid> 
