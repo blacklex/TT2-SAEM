@@ -97,20 +97,20 @@
                 }"
                 >
 
-                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"	width="100"
+                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"
                                 editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"	width="100"
+                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"	width="100"
+                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"	width="100"
+                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"	width="100"
+                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
                                  editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
             </sjg:grid> 
@@ -138,7 +138,7 @@
             </div>
         </div><!-- /.box-body -->
 
-
+<button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
 
@@ -170,6 +170,7 @@
 
         </div><!-- /.box-body -->
 
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
@@ -218,6 +219,7 @@
             </div>
 
         </div><!-- /.box-body -->
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
@@ -247,7 +249,7 @@
             </div>
 
         </div><!-- /.box-body -->
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
@@ -262,7 +264,7 @@
             </div>
 
         </div><!-- /.box-body -->
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 </section>
 
@@ -273,10 +275,10 @@
 <script src="plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 <!--Script creados -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
-<script src="js/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
 
-<script src="js/funcionesConsultarHospital.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesConsultarHospital.js" type="text/javascript"></script>
 
 
 

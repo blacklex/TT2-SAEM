@@ -114,7 +114,7 @@ public class ConsultarHospital implements SessionAware {
     }
 
     public String recuperarDatosConsultaDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
             
         HospitalDAO hospitalDAO = new HospitalDAO();
@@ -132,9 +132,10 @@ public class ConsultarHospital implements SessionAware {
             entidadFederativa = domHospTemp.getEntidadFederativa();
             codigoPostal = domHospTemp.getCodigoPostal();
             
+            nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
             OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
             consultor.hospitalseUbicaEnDireccion(nombreHospitalTemp);
-       
+            System.out.println("--->"+ONTOLOGIA);
             consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp);
             latitudY = consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp).get(0);
             longitudX = consultor.getCoordenadaXDireccion("Direccion"+nombreHospitalTemp).get(0);

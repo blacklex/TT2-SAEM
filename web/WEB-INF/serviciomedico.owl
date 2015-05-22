@@ -1,4 +1,14 @@
 <?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
      xml:base="http://www.serviciomedico.org/ontologies/2014/serviciomedico"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
@@ -86,6 +96,12 @@
     <Declaration>
         <DataProperty IRI="#numeroEspecialidad"/>
     </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Cardiologia"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Hipertension"/>
+    </Declaration>
     <SubClassOf>
         <Class IRI="#Direccion"/>
         <Class IRI="#BusquedaServicioMedico"/>
@@ -165,128 +181,42 @@
         <NamedIndividual IRI="#Cardiologia"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#Direccion"/>
-        <NamedIndividual IRI="#DireccionISSTE"/>
-    </ClassAssertion>
-    <ClassAssertion>
-        <Class IRI="#Direccion"/>
-        <NamedIndividual IRI="#DireccionRAZA"/>
-    </ClassAssertion>
-    <ClassAssertion>
         <Class IRI="#EnfermedadCronica"/>
         <NamedIndividual IRI="#Hipertension"/>
-    </ClassAssertion>
-    <ClassAssertion>
-        <Class IRI="#InstitutoDeSalud"/>
-        <NamedIndividual IRI="#ISSTE"/>
     </ClassAssertion>
     <ClassAssertion>
         <Class IRI="#Especialidad"/>
         <NamedIndividual IRI="#Oncologia"/>
     </ClassAssertion>
-    <ClassAssertion>
-        <Class IRI="#InstitutoDeSalud"/>
-        <NamedIndividual IRI="#RAZA"/>
-    </ClassAssertion>
     <ObjectPropertyAssertion>
         <ObjectProperty IRI="#estudiaA"/>
         <NamedIndividual IRI="#Cardiologia"/>
         <NamedIndividual IRI="#Hipertension"/>
     </ObjectPropertyAssertion>
     <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seAtiende"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <NamedIndividual IRI="#Cancer"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seAtiende"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <NamedIndividual IRI="#Hipertension"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seEspecializaEn"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <NamedIndividual IRI="#Oncologia"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seEspecializaEn"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <NamedIndividual IRI="#Cardiologia"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seUbicaEn"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <NamedIndividual IRI="#DireccionISSTE"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
         <ObjectProperty IRI="#estudiaA"/>
         <NamedIndividual IRI="#Oncologia"/>
         <NamedIndividual IRI="#Cancer"/>
     </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seEspecializaEn"/>
-        <NamedIndividual IRI="#RAZA"/>
-        <NamedIndividual IRI="#Cardiologia"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seEspecializaEn"/>
-        <NamedIndividual IRI="#RAZA"/>
-        <NamedIndividual IRI="#Oncologia"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#seUbicaEn"/>
-        <NamedIndividual IRI="#RAZA"/>
-        <NamedIndividual IRI="#DireccionRAZA"/>
-    </ObjectPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEnfermedad"/>
         <NamedIndividual IRI="#Cancer"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Cancer</Literal>
+        <Literal datatypeIRI="&xsd;string">Cancer</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEspecialidad"/>
         <NamedIndividual IRI="#Cardiologia"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Cardiologia</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#coordenadaX"/>
-        <NamedIndividual IRI="#DireccionISSTE"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">2</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#coordenadaY"/>
-        <NamedIndividual IRI="#DireccionISSTE"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">3</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#coordenadaX"/>
-        <NamedIndividual IRI="#DireccionRAZA"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">-99.14379029999998</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#coordenadaY"/>
-        <NamedIndividual IRI="#DireccionRAZA"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">19.4675743</Literal>
+        <Literal datatypeIRI="&xsd;string">Cardiologia</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEnfermedad"/>
         <NamedIndividual IRI="#Hipertension"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Hipertension</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#nombreInstituto"/>
-        <NamedIndividual IRI="#ISSTE"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">ISSTE</Literal>
+        <Literal datatypeIRI="&xsd;string">Hipertension</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEspecialidad"/>
         <NamedIndividual IRI="#Oncologia"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Oncologia</Literal>
-    </DataPropertyAssertion>
-    <DataPropertyAssertion>
-        <DataProperty IRI="#nombreInstituto"/>
-        <NamedIndividual IRI="#RAZA"/>
-        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">RAZA</Literal>
+        <Literal datatypeIRI="&xsd;string">Oncologia</Literal>
     </DataPropertyAssertion>
     <InverseObjectProperties>
         <ObjectProperty IRI="#seAtiende"/>
@@ -446,5 +376,5 @@
 
 
 
-<!-- Generated by the OWL API (version 3.4.3) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
 

@@ -22,25 +22,25 @@
     <property name="EMail" type="string">
       <column length="45" name="`e-mail`" not-null="true"/>
     </property>
-    <set fetch="select" inverse="true" lazy="true" name="domicilioHospitaleses" table="Domicilio_Hospitales">
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="domicilioHospitaleses" table="Domicilio_Hospitales">
       <key>
         <column name="Hospitales_codigo_hospital" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.DomicilioHospitales"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="directivos" table="Directivo">
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="directivos" table="Directivo">
       <key>
         <column name="Hospitales_codigo_hospital" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.Directivo"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="especialidadesHasHospitaleses" table="Especialidades_has_Hospitales">
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="especialidadesHasHospitaleses" table="Especialidades_has_Hospitales">
       <key>
         <column name="Hospitales_codigo_hospital" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.EspecialidadesHasHospitales"/>
     </set>
-    <set fetch="select" inverse="true" lazy="true" name="pacienteses" table="Pacientes">
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="pacienteses" table="Pacientes">
       <key>
         <column name="Hospitales_codigo_hospital" not-null="true"/>
       </key>

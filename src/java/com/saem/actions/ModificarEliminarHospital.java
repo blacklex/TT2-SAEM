@@ -308,7 +308,7 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String recuperarDatosFormDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
         
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
         
@@ -318,7 +318,7 @@ public class ModificarEliminarHospital implements SessionAware {
         String nombreHospitalTemp = hospitalTemp.getNombre();
         
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
-
+        nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
         while (it.hasNext()) {
             DomicilioHospitales domHospTemp = it.next();
             calle = domHospTemp.getCalle();

@@ -52,4 +52,24 @@
       <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
       <put-attribute name="body"   value="/hospitalConsultar.jsp"/>      
    </definition>
+   
+   <!-- INICIO PANTALLAS DE MENU PARA CADA TIPO DE USUARIO -->
+    <definition name="pantallaAltaAdministrador" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/registrarAdministrador.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaModificarEliminarAdministrador" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/gridModificarEliminarAdministrador.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaConsultarAdministrador" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/gridConsultarAdministrador.jsp"/>      
+    </definition>
+    <!-- FIN PANTALLAS DE MENU PARA CADA TIPO DE USUARIO --> 
 </tiles-definitions>

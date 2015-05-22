@@ -10,7 +10,7 @@
     <property name="nombreEspecialidad" type="string">
       <column length="45" name="nombre_especialidad"/>
     </property>
-    <set fetch="select" inverse="true" lazy="true" name="especialidadesHasHospitaleses" table="Especialidades_has_Hospitales">
+    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="especialidadesHasHospitaleses" table="Especialidades_has_Hospitales">
       <key>
         <column name="Especialidades_no_especilidad" not-null="true"/>
       </key>

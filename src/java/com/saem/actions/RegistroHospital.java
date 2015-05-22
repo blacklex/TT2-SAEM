@@ -267,14 +267,16 @@ public class RegistroHospital implements SessionAware {
      */
     private Boolean guardarEnOntologia(ArrayList<Especialidades> listaEspec) {
 
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
         
         
         OWLInsercionIndividuo insercionIndividuos = new OWLInsercionIndividuo(ONTOLOGIA, BASE_URI);
+        String nombreHospitalConEspacios = nombreHospital;
+        nombreHospital = nombreHospital.replaceAll("\\s+","");
         
         insercionIndividuos.agregarHospital(nombreHospital);
-        insercionIndividuos.agregarNombreHospital(nombreHospital, nombreHospital);
+        insercionIndividuos.agregarNombreHospital(nombreHospital, nombreHospitalConEspacios);
         
         insercionIndividuos.agregarDireccion("Direccion" + nombreHospital); 
         insercionIndividuos.agregarCoordenadas("Direccion" + nombreHospital, longitudX, latitudY);
@@ -295,12 +297,9 @@ public class RegistroHospital implements SessionAware {
         consultor.hospitalseUbicaEnDireccion(nombreHospital);
         consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
         consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
+        consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
         
         
-        consultor.perteneceAClase(nombreHospital);
-        consultor.hospitalseUbicaEnDireccion(nombreHospital);
-        consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
-        consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
         
         return true;
     }
