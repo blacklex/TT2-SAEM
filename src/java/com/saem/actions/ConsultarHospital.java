@@ -97,7 +97,7 @@ public class ConsultarHospital implements SessionAware {
 
     public String recuperarDatosConsultaSesion() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         
         nombreUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario();
         claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
@@ -106,7 +106,7 @@ public class ConsultarHospital implements SessionAware {
 
     public String recuperarDatosConsultaHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
 
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
@@ -122,7 +122,7 @@ public class ConsultarHospital implements SessionAware {
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
             
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
@@ -150,7 +150,7 @@ public class ConsultarHospital implements SessionAware {
     
     public String recuperarDatosConsultaDirectivo() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
         Iterator<Directivo> it = hospitalTemp.getDirectivos().iterator();
@@ -172,7 +172,7 @@ public class ConsultarHospital implements SessionAware {
         System.out.println("--->Entro a recuperarEspecialidades Consulta");
         String html = "";
         
-        Set<EspecialidadesHasHospitales> especialidadesHospial = hospitalDAO.findById(Integer.parseInt(codigoHospital)).getEspecialidadesHasHospitaleses();
+        Set<EspecialidadesHasHospitales> especialidadesHospial = hospitalDAO.findById(codigoHospital).getEspecialidadesHasHospitaleses();
         if(especialidadesHospial==null)
             return SUCCESS;
         System.out.println("--->"+especialidadesHospial.size());

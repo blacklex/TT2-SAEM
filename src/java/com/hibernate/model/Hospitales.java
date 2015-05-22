@@ -11,7 +11,7 @@ import java.util.Set;
 public class Hospitales  implements java.io.Serializable {
 
 
-     private int codigoHospital;
+     private String codigoHospital;
      private Usuarios usuarios;
      private String nombre;
      private String telefono;
@@ -26,7 +26,7 @@ public class Hospitales  implements java.io.Serializable {
     }
 
 	
-    public Hospitales(int codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail) {
         this.codigoHospital = codigoHospital;
         this.usuarios = usuarios;
         this.nombre = nombre;
@@ -34,7 +34,7 @@ public class Hospitales  implements java.io.Serializable {
         this.lada = lada;
         this.EMail = EMail;
     }
-    public Hospitales(int codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadesHasHospitaleses, Set directivos) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadesHasHospitaleses, Set directivos) {
        this.codigoHospital = codigoHospital;
        this.usuarios = usuarios;
        this.nombre = nombre;
@@ -47,11 +47,11 @@ public class Hospitales  implements java.io.Serializable {
        this.directivos = directivos;
     }
    
-    public int getCodigoHospital() {
+    public String getCodigoHospital() {
         return this.codigoHospital;
     }
     
-    public void setCodigoHospital(int codigoHospital) {
+    public void setCodigoHospital(String codigoHospital) {
         this.codigoHospital = codigoHospital;
     }
     public Usuarios getUsuarios() {

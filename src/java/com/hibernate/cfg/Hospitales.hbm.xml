@@ -3,8 +3,8 @@
 <!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class catalog="Pacientes" name="com.hibernate.model.Hospitales" optimistic-lock="version" table="Hospitales">
-    <id name="codigoHospital" type="int">
-      <column name="codigo_hospital"/>
+    <id name="codigoHospital" type="string">
+      <column length="20" name="codigo_hospital"/>
       <generator class="assigned"/>
     </id>
     <many-to-one class="com.hibernate.model.Usuarios" fetch="select" name="usuarios">

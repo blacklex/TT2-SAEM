@@ -8,7 +8,6 @@ package com.saem.actions;
 import com.hibernate.dao.DirectivoDAO;
 import com.hibernate.dao.DomicilioHospitalDAO;
 import com.hibernate.dao.EspecialidadDAO;
-import com.hibernate.dao.EspecialidadhasHospitalesDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Directivo;
@@ -21,7 +20,6 @@ import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.persistencia.owl.OWLConsultas;
 import com.persistencia.owl.OWLEliminarIndividuo;
-import com.sun.org.apache.bcel.internal.generic.D2F;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -83,7 +81,7 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String modificarDatosSesionHospital() {
-        Usuarios usuarioTemp = new HospitalDAO().findById(Integer.parseInt(codigoHospitalEditar)).getUsuarios();
+        Usuarios usuarioTemp = new HospitalDAO().findById(codigoHospitalEditar).getUsuarios();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuarios temp = new Usuarios();
 
@@ -117,7 +115,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public String modificarDatosHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        Hospitales hospitalBD = new HospitalDAO().findById(Integer.parseInt(codigoHospitalEditar));
+        Hospitales hospitalBD = new HospitalDAO().findById(codigoHospitalEditar);
         Hospitales hospitalTemp = new Hospitales();
 
         String lada;
@@ -159,7 +157,7 @@ public class ModificarEliminarHospital implements SessionAware {
         HospitalDAO hospitalDAO = new HospitalDAO();
         DomicilioHospitales domicilioHospitalTemp = new DomicilioHospitales();
 
-        Iterator<DomicilioHospitales> iteratorDom = hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)).getDomicilioHospitaleses().iterator();
+        Iterator<DomicilioHospitales> iteratorDom = hospitalDAO.findById(codigoHospitalEditar).getDomicilioHospitaleses().iterator();
 
         while (iteratorDom.hasNext()) {
             domicilioHospitalTemp.setId(iteratorDom.next().getId());
@@ -171,7 +169,7 @@ public class ModificarEliminarHospital implements SessionAware {
         domicilioHospitalTemp.setDelegacion(delegacion);
         domicilioHospitalTemp.setEntidadFederativa(entidadFederativa);
         domicilioHospitalTemp.setNumero(numero);
-        domicilioHospitalTemp.setHospitales(hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)));
+        domicilioHospitalTemp.setHospitales(hospitalDAO.findById(codigoHospitalEditar));
 
         if (domicilioHospitalDAO.update(domicilioHospitalTemp)) {
             tituloAlert = "Domicilio Editado.";
@@ -202,7 +200,7 @@ public class ModificarEliminarHospital implements SessionAware {
         HospitalDAO hospitalDAO = new HospitalDAO();
         Directivo directivoTemp = new Directivo();
 
-        Iterator<Directivo> iteratorDirectivo = hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)).getDirectivos().iterator();
+        Iterator<Directivo> iteratorDirectivo = hospitalDAO.findById(codigoHospitalEditar).getDirectivos().iterator();
 
         while (iteratorDirectivo.hasNext()) {
             directivoTemp.setId(iteratorDirectivo.next().getId());
@@ -216,7 +214,7 @@ public class ModificarEliminarHospital implements SessionAware {
         directivoTemp.setNombre(nombreDirectivo);
         directivoTemp.setTelParticular(textoAlert);
         directivoTemp.setTelParticular(telefonoDirectivo);
-        directivoTemp.setHospitales(hospitalDAO.findById(Integer.parseInt(codigoHospitalEditar)));
+        directivoTemp.setHospitales(hospitalDAO.findById(codigoHospitalEditar));
 
         if (directivoDAO.update(directivoTemp)) {
             tituloAlert = "Directivo Editado.";
@@ -263,7 +261,7 @@ public class ModificarEliminarHospital implements SessionAware {
     public String eliminarHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         String nombreHospTemp = hospitalDAO.findById(codigoHospitalTemp).getNombre();
         System.out.println("--->Eliminar hospital " + codigoHospitalTemp+"  "+nombreHospTemp);
         
@@ -331,7 +329,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public String recuperarDatosFormSesion() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
 
         claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
         return SUCCESS;
@@ -339,7 +337,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public String recuperarDatosFormHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
 
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
@@ -356,7 +354,7 @@ public class ModificarEliminarHospital implements SessionAware {
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
 
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
         String nombreHospitalTemp = hospitalTemp.getNombre();
 
@@ -385,7 +383,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public String recuperarDatosFormDirectivo() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
         Iterator<Directivo> it = hospitalTemp.getDirectivos().iterator();
@@ -413,7 +411,7 @@ public class ModificarEliminarHospital implements SessionAware {
             return SUCCESS;
         }
 
-        Set<EspecialidadesHasHospitales> especHasHosp = hospitalDAO.findById(Integer.parseInt(codigoHospital)).getEspecialidadesHasHospitaleses();
+        Set<EspecialidadesHasHospitales> especHasHosp = hospitalDAO.findById(codigoHospital).getEspecialidadesHasHospitaleses();
 
         if (especHasHosp == null) {
             return SUCCESS;

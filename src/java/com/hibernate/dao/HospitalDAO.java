@@ -71,7 +71,7 @@ public class HospitalDAO extends HibernateUtil {
 		}
 	}
          
-        public Hospitales findById(int id) {
+        public Hospitales findById(String id) {
 		try {
 			Hospitales instance = (Hospitales) getSession().get(
 					Hospitales.class, id);
