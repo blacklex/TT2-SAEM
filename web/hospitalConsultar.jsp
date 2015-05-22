@@ -138,7 +138,7 @@
             </div>
         </div><!-- /.box-body -->
 
-
+<button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
 
@@ -170,6 +170,7 @@
 
         </div><!-- /.box-body -->
 
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
@@ -218,6 +219,7 @@
             </div>
 
         </div><!-- /.box-body -->
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
@@ -247,7 +249,7 @@
             </div>
 
         </div><!-- /.box-body -->
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
@@ -262,7 +264,7 @@
             </div>
 
         </div><!-- /.box-body -->
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 </section>
 

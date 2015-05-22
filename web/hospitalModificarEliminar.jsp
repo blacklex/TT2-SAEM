@@ -138,6 +138,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -175,6 +176,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -236,6 +238,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -273,6 +276,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -294,6 +298,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
