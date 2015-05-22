@@ -297,12 +297,9 @@ public class RegistroHospital implements SessionAware {
         consultor.hospitalseUbicaEnDireccion(nombreHospital);
         consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
         consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
+        consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
         
         
-        consultor.perteneceAClase(nombreHospital);
-        consultor.hospitalseUbicaEnDireccion(nombreHospital);
-        consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
-        consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
         
         return true;
     }

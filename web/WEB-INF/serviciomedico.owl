@@ -206,12 +206,12 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEspecialidad"/>
         <NamedIndividual IRI="#Cardiologia"/>
-        <Literal datatypeIRI="&xsd;string"></Literal>
+        <Literal datatypeIRI="&xsd;string">Cardiologia</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEnfermedad"/>
         <NamedIndividual IRI="#Hipertension"/>
-        <Literal datatypeIRI="&xsd;string"></Literal>
+        <Literal datatypeIRI="&xsd;string">Hipertension</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEspecialidad"/>
