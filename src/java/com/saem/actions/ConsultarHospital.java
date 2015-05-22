@@ -132,9 +132,10 @@ public class ConsultarHospital implements SessionAware {
             entidadFederativa = domHospTemp.getEntidadFederativa();
             codigoPostal = domHospTemp.getCodigoPostal();
             
+            nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
             OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
             consultor.hospitalseUbicaEnDireccion(nombreHospitalTemp);
-       
+            System.out.println("--->"+ONTOLOGIA);
             consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp);
             latitudY = consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp).get(0);
             longitudX = consultor.getCoordenadaXDireccion("Direccion"+nombreHospitalTemp).get(0);

@@ -272,9 +272,11 @@ public class RegistroHospital implements SessionAware {
         
         
         OWLInsercionIndividuo insercionIndividuos = new OWLInsercionIndividuo(ONTOLOGIA, BASE_URI);
+        String nombreHospitalConEspacios = nombreHospital;
+        nombreHospital = nombreHospital.replaceAll("\\s+","");
         
         insercionIndividuos.agregarHospital(nombreHospital);
-        insercionIndividuos.agregarNombreHospital(nombreHospital, nombreHospital);
+        insercionIndividuos.agregarNombreHospital(nombreHospital, nombreHospitalConEspacios);
         
         insercionIndividuos.agregarDireccion("Direccion" + nombreHospital); 
         insercionIndividuos.agregarCoordenadas("Direccion" + nombreHospital, longitudX, latitudY);
