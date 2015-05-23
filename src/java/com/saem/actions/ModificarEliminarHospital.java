@@ -13,7 +13,6 @@ import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
 import com.hibernate.model.Especialidades;
-import com.hibernate.model.EspecialidadesHasHospitales;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import com.opensymphony.xwork2.Action;
@@ -411,7 +410,7 @@ public class ModificarEliminarHospital implements SessionAware {
             return SUCCESS;
         }
 
-        Set<EspecialidadesHasHospitales> especHasHosp = hospitalDAO.findById(codigoHospital).getEspecialidadesHasHospitaleses();
+        Set<Especialidades> especHasHosp = hospitalDAO.findById(codigoHospital).getEspecialidadeses();
 
         if (especHasHosp == null) {
             return SUCCESS;
@@ -420,15 +419,15 @@ public class ModificarEliminarHospital implements SessionAware {
         int contEspec = 0;
         for (Especialidades especialidadTemp : especialidadesList) {
             Boolean especialidadMarcada = false;
-            Iterator<EspecialidadesHasHospitales> iterEspecHosp = especHasHosp.iterator();
+            Iterator<Especialidades> iterEspecHosp = especHasHosp.iterator();
 
             while (iterEspecHosp.hasNext()) {
-                Especialidades especTemp = iterEspecHosp.next().getEspecialidades();
+                Especialidades especTemp = iterEspecHosp.next();
 
-                if (especialidadTemp.getNoEspecilidad() == especTemp.getNoEspecilidad()) {
+                if (especialidadTemp.getNoEspecialidad()== especTemp.getNoEspecialidad()) {
                     html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
                             + "<span class=\"input-group-addon\">"
-                            + "<input type=\"checkbox\" checked=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                            + "<input type=\"checkbox\" checked=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad() + "\">"
                             + "</span>"
                             + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
                             + "</div><!-- /input-group -->";
@@ -440,7 +439,7 @@ public class ModificarEliminarHospital implements SessionAware {
             if (!especialidadMarcada) {
                 html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
                         + "<span class=\"input-group-addon\">"
-                        + "<input type=\"checkbox\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                        + "<input type=\"checkbox\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad() + "\">"
                         + "</span>"
                         + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
                         + "</div><!-- /input-group -->";

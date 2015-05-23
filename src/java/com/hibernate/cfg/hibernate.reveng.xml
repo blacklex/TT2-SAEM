@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="Pacientes"/>
-  <table-filter match-name="Discapacidades"/>
-  <table-filter match-name="Directivo"/>
-  <table-filter match-name="Alergias"/>
-  <table-filter match-name="Domicilio_Hospitales"/>
-  <table-filter match-name="Hospitales"/>
-  <table-filter match-name="Cirujias"/>
-  <table-filter match-name="Domicilio_Pacientes"/>
-  <table-filter match-name="Pacientes"/>
-  <table-filter match-name="Telefonos_Pacientes"/>
-  <table-filter match-name="Usuarios"/>
-  <table-filter match-name="Especialidades"/>
-  <table-filter match-name="Datos_Clinicos"/>
-  <table-filter match-name="Especialidades_has_Hospitales"/>
-  <table-filter match-name="Contactos"/>
-  <table-filter match-name="Administradores"/>
-  <table-filter match-name="Enfermedades_Cronicas"/>
-  <table-filter match-name="Datos_Personales"/>
-  <table-filter match-name="Medicacion"/>
-  <table-filter match-name="Domicilio_Administradores"/>
+  <schema-selection match-catalog="pacientes"/>
+  <table-filter match-name="contactos"/>
+  <table-filter match-name="medicacion"/>
+  <table-filter match-name="especialidades"/>
+  <table-filter match-name="cirujias"/>
+  <table-filter match-name="enfermedades_cronicas"/>
+  <table-filter match-name="hospitales"/>
+  <table-filter match-name="domicilio_hospitales"/>
+  <table-filter match-name="especialidades_has_hospitales"/>
+  <table-filter match-name="administradores"/>
+  <table-filter match-name="alergias"/>
+  <table-filter match-name="datos_clinicos"/>
+  <table-filter match-name="telefonos_pacientes"/>
+  <table-filter match-name="directivo"/>
+  <table-filter match-name="pacientes"/>
+  <table-filter match-name="usuarios"/>
+  <table-filter match-name="domicilio_administradores"/>
+  <table-filter match-name="discapacidades"/>
+  <table-filter match-name="domicilio_pacientes"/>
+  <table-filter match-name="datos_personales"/>
 </hibernate-reverse-engineering>

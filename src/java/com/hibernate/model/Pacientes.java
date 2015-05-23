@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -20,6 +20,7 @@ public class Pacientes  implements java.io.Serializable {
      private String unidadMedica;
      private String noConsultorio;
      private byte[] imagen;
+     private String pacientescol;
      private Set domicilioPacienteses = new HashSet(0);
      private Set telefonosPacienteses = new HashSet(0);
      private Set datosPersonaleses = new HashSet(0);
@@ -38,7 +39,7 @@ public class Pacientes  implements java.io.Serializable {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
     }
-    public Pacientes(String nss, Hospitales hospitales, Usuarios usuarios, String nombre, String apellidoPaterno, String apellidoMaterno, String unidadMedica, String noConsultorio, byte[] imagen, Set domicilioPacienteses, Set telefonosPacienteses, Set datosPersonaleses, Set datosClinicoses, Set contactoses) {
+    public Pacientes(String nss, Hospitales hospitales, Usuarios usuarios, String nombre, String apellidoPaterno, String apellidoMaterno, String unidadMedica, String noConsultorio, byte[] imagen, String pacientescol, Set domicilioPacienteses, Set telefonosPacienteses, Set datosPersonaleses, Set datosClinicoses, Set contactoses) {
        this.nss = nss;
        this.hospitales = hospitales;
        this.usuarios = usuarios;
@@ -48,6 +49,7 @@ public class Pacientes  implements java.io.Serializable {
        this.unidadMedica = unidadMedica;
        this.noConsultorio = noConsultorio;
        this.imagen = imagen;
+       this.pacientescol = pacientescol;
        this.domicilioPacienteses = domicilioPacienteses;
        this.telefonosPacienteses = telefonosPacienteses;
        this.datosPersonaleses = datosPersonaleses;
@@ -117,6 +119,13 @@ public class Pacientes  implements java.io.Serializable {
     
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+    public String getPacientescol() {
+        return this.pacientescol;
+    }
+    
+    public void setPacientescol(String pacientescol) {
+        this.pacientescol = pacientescol;
     }
     public Set getDomicilioPacienteses() {
         return this.domicilioPacienteses;

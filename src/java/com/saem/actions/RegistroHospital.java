@@ -8,13 +8,11 @@ package com.saem.actions;
 import com.hibernate.dao.DirectivoDAO;
 import com.hibernate.dao.DomicilioHospitalDAO;
 import com.hibernate.dao.EspecialidadDAO;
-import com.hibernate.dao.EspecialidadhasHospitalesDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
 import com.hibernate.model.Especialidades;
-import com.hibernate.model.EspecialidadesHasHospitales;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -29,6 +27,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.persistencia.owl.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
@@ -99,7 +99,7 @@ public class RegistroHospital implements SessionAware {
         } catch (ParseException ex) {
             Logger.getLogger(RegistroHospital.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String codigoHospital = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR)+""+cal.get(Calendar.MINUTE)+""+cal.get(Calendar.SECOND);
+        String codigoHospital = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND);
         System.out.println("-->T " + codigoHospital);
 
         /*if(true)
@@ -117,7 +117,24 @@ public class RegistroHospital implements SessionAware {
             hospital.setLada(lada);
             hospital.setUsuarios(usuario);
 
+            parametros = request.getParameterNames();
+            ArrayList<Especialidades> listaEspec = new ArrayList<>();
+            Set<Especialidades> setEspecialidadesHosp = new HashSet<Especialidades>();
+            while (parametros.hasMoreElements()) {
+                String nombreParametro = parametros.nextElement();
+
+                if (nombreParametro.startsWith("checkbox")) {
+                    Especialidades espcecTemp = new EspecialidadDAO().findById(Integer.parseInt(request.getParameter(nombreParametro)));
+                    listaEspec.add(espcecTemp);
+                    setEspecialidadesHosp.add(espcecTemp);
+                }
+
+            }
+            hospital.setEspecialidadeses(setEspecialidadesHosp);
+
             if (hospitalesDAO.save(hospital)) {
+                guardarEnOntologia(listaEspec);
+
                 directivo.setCorreo(emailDirectivo);
                 directivo.setNombre(nombreDirectivo);
                 directivo.setTelParticular(telefonoDirectivo);
@@ -133,28 +150,7 @@ public class RegistroHospital implements SessionAware {
                     domicilioHospital.setHospitales(hospital);
 
                     if (domiciliosHospitalDAO.save(domicilioHospital)) {
-                        EspecialidadesHasHospitales tempEspHosp = new EspecialidadesHasHospitales();
-
-                        parametros = request.getParameterNames();
-                        ArrayList<Especialidades> listaEspec = new ArrayList<>();
-                        while (parametros.hasMoreElements()) {
-                            String nombreParametro = parametros.nextElement();
-
-                            if (nombreParametro.startsWith("checkbox")) {
-                                Especialidades espcecTemp = new EspecialidadDAO().findById(Integer.parseInt(request.getParameter(nombreParametro)));
-                                listaEspec.add(espcecTemp);
-                                tempEspHosp.setHospitales(hospital);
-                                tempEspHosp.setEspecialidades(espcecTemp);
-
-                                if (new EspecialidadhasHospitalesDAO().save(tempEspHosp)) {
-                                    registroCorrecto = true;
-                                    System.out.println("--->Se guardo las espec");
-                                }
-
-                                guardarEnOntologia(listaEspec);
-                            }
-
-                        }
+                        registroCorrecto = true;
 
                     } else {
                         registroCorrecto = false;
@@ -231,7 +227,7 @@ public class RegistroHospital implements SessionAware {
         for (Especialidades especialidadTemp : especialidades) {
             html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
                     + "<span class=\"input-group-addon\">"
-                    + "<input type=\"checkbox\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecilidad() + "\">"
+                    + "<input type=\"checkbox\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad() + "\">"
                     + "</span>"
                     + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
                     + "</div><!-- /input-group -->";
@@ -267,40 +263,36 @@ public class RegistroHospital implements SessionAware {
      */
     private Boolean guardarEnOntologia(ArrayList<Especialidades> listaEspec) {
 
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
-        
-        
+
         OWLInsercionIndividuo insercionIndividuos = new OWLInsercionIndividuo(ONTOLOGIA, BASE_URI);
         String nombreHospitalConEspacios = nombreHospital;
-        nombreHospital = nombreHospital.replaceAll("\\s+","");
-        
+        nombreHospital = nombreHospital.replaceAll("\\s+", "");
+
         insercionIndividuos.agregarHospital(nombreHospital);
         insercionIndividuos.agregarNombreHospital(nombreHospital, nombreHospitalConEspacios);
-        
-        insercionIndividuos.agregarDireccion("Direccion" + nombreHospital); 
+
+        insercionIndividuos.agregarDireccion("Direccion" + nombreHospital);
         insercionIndividuos.agregarCoordenadas("Direccion" + nombreHospital, longitudX, latitudY);
-        
-        
+
         //-----------------------------------------------------------------------------
         OWLInsercionRelacion insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
-        
+
         for (Especialidades especialidadTemp : listaEspec) {
             insercionRelaciones.agregarRelacionSeEspecializaEn(nombreHospital, especialidadTemp.getNombreEspecialidad());
         }
-        
+
         insercionRelaciones.agregarRelacionSeUbicaEn(nombreHospital, "Direccion" + nombreHospital);
         //-----------------------------------------------------------------------
         OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
- 
+
         consultor.perteneceAClase(nombreHospital);
         consultor.hospitalseUbicaEnDireccion(nombreHospital);
         consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
         consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
         consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
-        
-        
-        
+
         return true;
     }
 

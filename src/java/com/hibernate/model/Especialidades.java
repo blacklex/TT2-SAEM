@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,29 +11,29 @@ import java.util.Set;
 public class Especialidades  implements java.io.Serializable {
 
 
-     private int noEspecilidad;
+     private int noEspecialidad;
      private String nombreEspecialidad;
-     private Set especialidadesHasHospitaleses = new HashSet(0);
+     private Set hospitaleses = new HashSet(0);
 
     public Especialidades() {
     }
 
 	
-    public Especialidades(int noEspecilidad) {
-        this.noEspecilidad = noEspecilidad;
+    public Especialidades(int noEspecialidad) {
+        this.noEspecialidad = noEspecialidad;
     }
-    public Especialidades(int noEspecilidad, String nombreEspecialidad, Set especialidadesHasHospitaleses) {
-       this.noEspecilidad = noEspecilidad;
+    public Especialidades(int noEspecialidad, String nombreEspecialidad, Set hospitaleses) {
+       this.noEspecialidad = noEspecialidad;
        this.nombreEspecialidad = nombreEspecialidad;
-       this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+       this.hospitaleses = hospitaleses;
     }
    
-    public int getNoEspecilidad() {
-        return this.noEspecilidad;
+    public int getNoEspecialidad() {
+        return this.noEspecialidad;
     }
     
-    public void setNoEspecilidad(int noEspecilidad) {
-        this.noEspecilidad = noEspecilidad;
+    public void setNoEspecialidad(int noEspecialidad) {
+        this.noEspecialidad = noEspecialidad;
     }
     public String getNombreEspecialidad() {
         return this.nombreEspecialidad;
@@ -42,12 +42,12 @@ public class Especialidades  implements java.io.Serializable {
     public void setNombreEspecialidad(String nombreEspecialidad) {
         this.nombreEspecialidad = nombreEspecialidad;
     }
-    public Set getEspecialidadesHasHospitaleses() {
-        return this.especialidadesHasHospitaleses;
+    public Set getHospitaleses() {
+        return this.hospitaleses;
     }
     
-    public void setEspecialidadesHasHospitaleses(Set especialidadesHasHospitaleses) {
-        this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+    public void setHospitaleses(Set hospitaleses) {
+        this.hospitaleses = hospitaleses;
     }
 
 

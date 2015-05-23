@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class Hospitales  implements java.io.Serializable {
      private String EMail;
      private Set domicilioHospitaleses = new HashSet(0);
      private Set pacienteses = new HashSet(0);
-     private Set especialidadesHasHospitaleses = new HashSet(0);
+     private Set especialidadeses = new HashSet(0);
      private Set directivos = new HashSet(0);
 
     public Hospitales() {
@@ -34,7 +34,7 @@ public class Hospitales  implements java.io.Serializable {
         this.lada = lada;
         this.EMail = EMail;
     }
-    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadesHasHospitaleses, Set directivos) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadeses, Set directivos) {
        this.codigoHospital = codigoHospital;
        this.usuarios = usuarios;
        this.nombre = nombre;
@@ -43,7 +43,7 @@ public class Hospitales  implements java.io.Serializable {
        this.EMail = EMail;
        this.domicilioHospitaleses = domicilioHospitaleses;
        this.pacienteses = pacienteses;
-       this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+       this.especialidadeses = especialidadeses;
        this.directivos = directivos;
     }
    
@@ -103,12 +103,12 @@ public class Hospitales  implements java.io.Serializable {
     public void setPacienteses(Set pacienteses) {
         this.pacienteses = pacienteses;
     }
-    public Set getEspecialidadesHasHospitaleses() {
-        return this.especialidadesHasHospitaleses;
+    public Set getEspecialidadeses() {
+        return this.especialidadeses;
     }
     
-    public void setEspecialidadesHasHospitaleses(Set especialidadesHasHospitaleses) {
-        this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+    public void setEspecialidadeses(Set especialidadeses) {
+        this.especialidadeses = especialidadeses;
     }
     public Set getDirectivos() {
         return this.directivos;
