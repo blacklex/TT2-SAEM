@@ -101,7 +101,7 @@ public class HospitalDAO extends HibernateUtil {
     }
 
     public Boolean addHospitalEspecialidad(String codigoHospital, int noEspecialidad) {
-        String query = "INSERT INTO Especialidades_Has_Hospitales (Especialidades_no_especialidad,Hospitales_codigo_hospital) "
+        String query = "INSERT INTO Especialidades_has_Hospitales (Especialidades_no_especialidad,Hospitales_codigo_hospital) "
                 + "VALUES(" + noEspecialidad + ",'" + codigoHospital + "')";
         System.out.println("--->" + query);
         Session s = getSession();
@@ -119,7 +119,7 @@ public class HospitalDAO extends HibernateUtil {
     }
 
     public Boolean deleteHospitalEspecialidad(String codigoHospital) {
-        String query = "DELETE FROM Especialidades_Has_Hospitales "
+        String query = "DELETE FROM Especialidades_has_Hospitales "
                 + "WHERE Hospitales_codigo_hospital='" + codigoHospital + "';";
         System.out.println("--->" + query);
         Session s = getSession();

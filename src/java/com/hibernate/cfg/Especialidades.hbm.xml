@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.hibernate.model.Especialidades" table="especialidades" catalog="pacientes" optimistic-lock="version">
+    <class name="com.hibernate.model.Especialidades" table="Especialidades" catalog="Pacientes" optimistic-lock="version">
         <id name="noEspecialidad" type="int">
             <column name="no_especialidad" />
             <generator class="assigned" />
