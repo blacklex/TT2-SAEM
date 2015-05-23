@@ -19,8 +19,11 @@ import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.persistencia.owl.OWLConsultas;
 import com.persistencia.owl.OWLEliminarIndividuo;
+import com.persistencia.owl.OWLInsercionIndividuo;
+import com.persistencia.owl.OWLInsercionRelacion;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -152,6 +155,7 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String modificarDatosDireccionHospital() {
+        System.out.println("---->Entro a mod Dir "+longitudX+"  "+latitudY);
         DomicilioHospitalDAO domicilioHospitalDAO = new DomicilioHospitalDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         DomicilioHospitales domicilioHospitalTemp = new DomicilioHospitales();
@@ -171,10 +175,16 @@ public class ModificarEliminarHospital implements SessionAware {
         domicilioHospitalTemp.setHospitales(hospitalDAO.findById(codigoHospitalEditar));
 
         if (domicilioHospitalDAO.update(domicilioHospitalTemp)) {
-            tituloAlert = "Domicilio Editado.";
-            textoAlert = "Los datos del Domicilio del Hospital han sido satisfactoriamente.";
-            estatusMensaje = "success";
+            if (modificarHospitalCoordenadasDeOntologia(hospitalDAO.findById(codigoHospitalEditar).getNombre(), longitudX, latitudY)) {
 
+                tituloAlert = "Domicilio Editado.";
+                textoAlert = "Los datos del Domicilio del Hospital han sido actualizados satisfactoriamente.";
+                estatusMensaje = "success";
+            } else {
+                tituloAlert = "Error Datos no Editados.";
+                textoAlert = "E2 Ont. La Direccion del Hospital no fue editada.";
+                estatusMensaje = "error";
+            }
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
@@ -239,20 +249,78 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String modificarDatosEspecialidadesHospital() {
-        Enumeration<String> parametros;
         System.out.println("--->Mod espec ");
+        textoAlert = "";
+        Enumeration<String> parametros = request.getParameterNames();
+        EspecialidadDAO especialidadDAO = new EspecialidadDAO();
+        HospitalDAO hospitalDAO = new HospitalDAO();
+        Boolean exitoQuerys = false;
+        ArrayList<Especialidades> listaEspFormulario = new ArrayList<Especialidades>();
+        Hospitales hospitalSave = new Hospitales();
+        hospitalSave = hospitalDAO.findById(codigoHospitalEditar);
+        String nombreHospitalDeBD = hospitalSave.getNombre();
 
-        parametros = request.getParameterNames();
-        ArrayList<Especialidades> listaEspec = new ArrayList<>();
-
+        //------- Se llena una lista con las especialidades del formulario
         while (parametros.hasMoreElements()) {
             String nombreParametro = parametros.nextElement();
 
             if (nombreParametro.startsWith("checkbox")) {
-                System.out.println("---> "+nombreParametro+"  "+request.getParameter(nombreParametro));
+                int codigoEspecialidadBD = Integer.parseInt(request.getParameter(nombreParametro));
+                System.out.println("---> " + nombreParametro + "  " + request.getParameter(nombreParametro));
+                Especialidades temp = especialidadDAO.findById(codigoEspecialidadBD);
+                listaEspFormulario.add(temp);
             }
 
         }
+        System.out.println("---->E " + hospitalSave.getEspecialidadeses().size());
+        Iterator<Especialidades> espHosp = hospitalSave.getEspecialidadeses().iterator();
+
+        ///-----------Eliminamos todos los registros de hospital en especialidades
+        if (hospitalDAO.deleteHospitalEspecialidad(codigoHospitalEditar)) {
+            exitoQuerys = true;
+        } else {
+            textoAlert += "E1 ";
+            exitoQuerys = false;
+
+        }
+
+        if (exitoQuerys) {
+            //------- Guardamos las especialidades del hospital que se eligieron
+            for (Especialidades especForm : listaEspFormulario) {
+                if (hospitalDAO.addHospitalEspecialidad(codigoHospitalEditar, especForm.getNoEspecialidad())) {
+                    exitoQuerys = true;
+                } else {
+                    textoAlert += "E2 ";
+                    exitoQuerys = false;
+                    break;
+                }
+            }
+        }
+
+        if (exitoQuerys) {
+            if (modificarHospitalEspecialidadesDeOntologia(nombreHospitalDeBD, listaEspFormulario)) {
+                exitoQuerys = true;
+            } else {
+                exitoQuerys = false;
+                textoAlert += "E3 Ontologia.";
+            }
+        }
+
+        //---------- Se eliminan las especialidaes de los hospitales que no se encuentrarn en ea lista del form
+        if (exitoQuerys) {
+            tituloAlert = "Especialidades Editadas.";
+            textoAlert = "Las Especialidades fueron Editadas.";
+            estatusMensaje = "success";
+        } else {
+            tituloAlert = "Error Datos no Editados.";
+            textoAlert += "Las Especialidades no fueron editadas.";
+            estatusMensaje = "error";
+
+        }
+
+        session.put("tituloAlert", tituloAlert);
+        session.put("textoAlert", textoAlert);
+        session.put(LLAVE_ESTATUS_ME, estatusMensaje);
 
         return "pantallaModifcarEliminarHospital";
     }
@@ -262,8 +330,8 @@ public class ModificarEliminarHospital implements SessionAware {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         String codigoHospitalTemp = codigoHospital;
         String nombreHospTemp = hospitalDAO.findById(codigoHospitalTemp).getNombre();
-        System.out.println("--->Eliminar hospital " + codigoHospitalTemp+"  "+nombreHospTemp);
-        
+        System.out.println("--->Eliminar hospital " + codigoHospitalTemp + "  " + nombreHospTemp);
+
         if (usuarioDAO.deleteHospital(hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario())) {
             if (eliminarHospitalDeOntologia(nombreHospTemp)) {
                 tituloAlert = "Hospital Eliminado";
@@ -297,6 +365,56 @@ public class ModificarEliminarHospital implements SessionAware {
             if (eliminarIndividuos.eliminarIndividuosDeDireccion("Direccion" + nombreHospitalOnt)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    Boolean modificarHospitalEspecialidadesDeOntologia(String nombreHospitalOnt, ArrayList<Especialidades> listaEspecialidades) {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+
+        OWLEliminarIndividuo eliminarIndividuos = new OWLEliminarIndividuo(ONTOLOGIA, BASE_URI);
+
+        String nombreHospitalOntConEspacios = nombreHospitalOnt;
+        nombreHospitalOnt = nombreHospitalOnt.replaceAll("\\s+", "");
+
+        if (eliminarIndividuos.eliminarIndividuosDeNombreInstituto(nombreHospitalOnt)) {
+
+            OWLInsercionIndividuo insercionIndividuos = new OWLInsercionIndividuo(ONTOLOGIA, BASE_URI);
+            insercionIndividuos.agregarHospital(nombreHospitalOnt);
+            insercionIndividuos.agregarNombreHospital(nombreHospitalOnt, nombreHospitalOntConEspacios);
+
+            OWLInsercionRelacion insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
+            insercionRelaciones.agregarRelacionSeUbicaEn(nombreHospitalOnt, "Direccion" + nombreHospitalOnt);
+
+            for (Especialidades especialidadTemp : listaEspecialidades) {
+                insercionRelaciones.agregarRelacionSeEspecializaEn(nombreHospitalOnt, especialidadTemp.getNombreEspecialidad());
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    Boolean modificarHospitalCoordenadasDeOntologia(String nombreHospitalOnt, String longitudXOnt, String latitudYOnt) {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+
+        OWLEliminarIndividuo eliminarIndividuos = new OWLEliminarIndividuo(ONTOLOGIA, BASE_URI);
+
+        nombreHospitalOnt = nombreHospitalOnt.replaceAll("\\s+", "");
+
+        if (eliminarIndividuos.eliminarIndividuosDeDireccion("Direccion" + nombreHospitalOnt)) {
+
+            OWLInsercionIndividuo insercionIndividuos = new OWLInsercionIndividuo(ONTOLOGIA, BASE_URI);
+            insercionIndividuos.agregarDireccion("Direccion" + nombreHospitalOnt);
+            insercionIndividuos.agregarCoordenadas("Direccion" + nombreHospitalOnt, longitudXOnt, latitudYOnt);
+
+            OWLInsercionRelacion insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
+            insercionRelaciones.agregarRelacionSeUbicaEn(nombreHospitalOnt, "Direccion" + nombreHospitalOnt);
+
+            return true;
         }
 
         return false;
@@ -423,8 +541,8 @@ public class ModificarEliminarHospital implements SessionAware {
 
             while (iterEspecHosp.hasNext()) {
                 Especialidades especTemp = iterEspecHosp.next();
-
-                if (especialidadTemp.getNoEspecialidad()== especTemp.getNoEspecialidad()) {
+                System.out.println("--->" + especialidadTemp.getNoEspecialidad() + "  " + especTemp.getNoEspecialidad());
+                if (especialidadTemp.getNoEspecialidad() == especTemp.getNoEspecialidad()) {
                     html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
                             + "<span class=\"input-group-addon\">"
                             + "<input type=\"checkbox\" checked=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad() + "\">"

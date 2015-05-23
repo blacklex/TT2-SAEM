@@ -349,7 +349,7 @@ function muestraFormEspecialidades() {
         var s = $("#gridListaHospitales").jqGrid('getGridParam', 'selrow');
 
         var codigoHospital = $("#gridListaHospitales").jqGrid('getCell', s, 'codigoHospital');
-
+        $("#codigoHEspecialidades").val(codigoHospital);
         $("#barraCargar").slideDown(100);
 
         $.ajax({

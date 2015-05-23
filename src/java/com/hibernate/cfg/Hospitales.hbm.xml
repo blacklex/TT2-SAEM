@@ -35,7 +35,7 @@
             </key>
             <one-to-many class="com.hibernate.model.Pacientes" />
         </set>
-        <set name="especialidadeses" cascade="delete" table="especialidades_has_hospitales" inverse="false" lazy="true" fetch="select">
+        <set name="especialidadeses" table="especialidades_has_hospitales" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
             </key>
