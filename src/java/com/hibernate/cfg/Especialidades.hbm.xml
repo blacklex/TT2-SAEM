@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.hibernate.model.Especialidades" table="Especialidades" catalog="Pacientes" optimistic-lock="version">
@@ -11,7 +10,7 @@
         <property name="nombreEspecialidad" type="string">
             <column name="nombre_especialidad" length="45" />
         </property>
-        <set name="hospitaleses" cascade="delete" table="especialidades_has_hospitales" inverse="false" lazy="true" fetch="select">
+        <set name="hospitaleses" cascade="delete" table="Especialidades_has_Hospitales" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="Especialidades_no_especialidad" not-null="true" />
             </key>

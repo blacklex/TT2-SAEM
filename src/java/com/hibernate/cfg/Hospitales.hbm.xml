@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.hibernate.model.Hospitales" table="Hospitales" catalog="Pacientes" optimistic-lock="version">
@@ -23,19 +22,19 @@
         <property name="EMail" type="string">
             <column name="`e-mail`" length="45" not-null="true" />
         </property>
-        <set name="domicilioHospitaleses" cascade="delete" table="domicilio_hospitales" inverse="true" lazy="true" fetch="select">
+        <set name="domicilioHospitaleses" cascade="delete" table="Domicilio_Hospitales" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
             </key>
             <one-to-many class="com.hibernate.model.DomicilioHospitales" />
         </set>
-        <set name="pacienteses" cascade="delete" table="pacientes" inverse="true" lazy="true" fetch="select">
+        <set name="pacienteses" cascade="delete" table="Pacientes" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
             </key>
             <one-to-many class="com.hibernate.model.Pacientes" />
         </set>
-        <set name="especialidadeses" table="especialidades_has_hospitales" inverse="false" lazy="true" fetch="select">
+        <set name="especialidadeses" table="Especialidades_has_Hospitales" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
             </key>
@@ -43,7 +42,7 @@
                 <column name="Especialidades_no_especialidad" not-null="true" />
             </many-to-many>
         </set>
-        <set name="directivos" cascade="delete" table="directivo" inverse="true" lazy="true" fetch="select">
+        <set name="directivos" cascade="delete" table="Directivo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
             </key>

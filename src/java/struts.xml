@@ -265,25 +265,23 @@
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ******************************************** FIN BUSCAR DATOS PARA CONSULTAR ADMINISTRADOR ****************************************************************-->
-        
+        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
+            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
+        </action>
         <!-- ******************************************** RECUPERAR MSJ ADMINISTRADOR ****************************************************************-->                
         <!-- Recuperar Msjs de Edicion-->
         <action name="recuperarMensajeEstatusEditar" method="recuperarEstatusEditar" class="com.saem.actions.ModificarEliminarAdministradorAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Recuperar Msjs -->
-<!--         ******************************************** FIN RECUPERAR MSJ ADMINISTRADOR ****************************************************************                
-        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
-            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
-        </action>
-         ******************************************** OPERACIONES SOBRE PACIENTE ****************************************************************                -->
         
         <!-- ListaAdministradores Grid -->
-        <action name="Listado" class="com.saem.actions.GridRegistroAdministradoresAction">
+        <action name="ajaxLlenarListaAdministradores" class="com.saem.actions.GridRegistroAdministradoresAction">
             <result name="success"  type="json">
                 
             </result>
         </action>
         <!-- Fin ListaAdministradores Grid -->
+        
     </package>
 </struts>
