@@ -46,11 +46,11 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary">
         <div class="box-header">
             <h3 class="box-header"><b>Hospitales Registrados</b></h3>
         </div><!-- /.box-header -->
-        <div  class="box-body" style="width: 82%">
+        <div  class="box-body">
             <sjg:grid
                 id		     ="gridListaConsultaHospitales"		gridModel	="gridListaConsultaHospitales"
                 href	     ="ajaxLlenarListaConsultarHospitales"     dataType	="json"        
