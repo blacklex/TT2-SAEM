@@ -114,7 +114,7 @@ public class ConsultarHospital implements SessionAware {
     }
 
     public String recuperarDatosConsultaDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF\\serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
             
         HospitalDAO hospitalDAO = new HospitalDAO();

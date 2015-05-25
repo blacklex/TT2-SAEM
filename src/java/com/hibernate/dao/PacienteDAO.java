@@ -14,6 +14,8 @@ package com.hibernate.dao;
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.Pacientes;
 import org.hibernate.Session;
+import java.util.List;
+import org.hibernate.Query;
 
 
 public class PacienteDAO extends HibernateUtil {
@@ -49,8 +51,26 @@ public class PacienteDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(Pacientes transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Paciente actualizado");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Paciente no actualizado");  
+                    return false;
+		}
+	}
          
-        public Pacientes findById(String id) {
+        public Pacientes findById(int id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
 			Pacientes instance = (Pacientes) getSession().get(
@@ -58,6 +78,17 @@ public class PacienteDAO extends HibernateUtil {
 			return instance;
 		} catch (RuntimeException re) {
 			//log.error("get failed", re);
+			throw re;
+		}
+	}
+        
+        public List<Pacientes> findAll() {
+		try {
+			String queryString = "from Pacientes";
+			Query queryObject = getSession().createQuery(queryString);
+                        getSession().close();
+			return queryObject.list();
+		} catch (RuntimeException re) {
 			throw re;
 		}
 	}

@@ -49,6 +49,24 @@ public class DatosPersonalesDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(DatosPersonales transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Datos personales actualizados");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Datos personales no actualizados");  
+                    return false;
+		}
+	}
          
         public DatosPersonales findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

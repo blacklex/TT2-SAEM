@@ -125,6 +125,23 @@ public class UsuarioDAO extends HibernateUtil {
         
     }
         
+        public boolean deletePaciente(String nombreUsuarioEdit) {
+        try {
+			Session s = getSession();
+                        s.beginTransaction();
+                        Query q = s.createQuery("from Usuarios where nombre_usuario = :nombre_usuario");
+                        q.setParameter("nombre_usuario", nombreUsuarioEdit);
+                        Usuarios usuario = (Usuarios)q.list().get(0);
+                        s.delete(usuario);
+                        s.getTransaction().commit();
+			//log.debug("save successful");
+                        return true;
+		} catch (RuntimeException re) {
+			//log.error("save failed", re);
+                    return false;
+		} 
+    }
+        
         public List<Usuarios> listarById(String id) {
         try
         {
