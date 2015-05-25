@@ -14,9 +14,14 @@
             <h3 class="box-header"><b>¿Dondé me encuentro?</b></h3>
         </div><!-- /.box-header -->
         <div class="box-body">
-            <div id="ubicacion"></div>
-            <div class="box-header">
-                <h3 class="box-title">Dirección</h3>
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon">
+                    <i class="fa fa-flag-o">
+                    </i>
+                </span>
+                <div id="info" class="info-box-content">
+                    
+                </div>
             </div>
             <!-- /google maps -->
             <div id="map_canvas"></div>
