@@ -173,7 +173,7 @@ public class UsuarioDAO extends HibernateUtil {
            System.err.println("Bandera 2");
            s.beginTransaction();
            System.err.println("Bandera 3");
-           List<Usuarios> listUsuarios = (List<Usuarios>)s.createQuery("from Usuarios").list();
+           List<Usuarios> listUsuarios = (List<Usuarios>)s.createQuery("from Usuarios where tipoUsuario='Administrador'").list();
            System.err.println("Bandera 4");
            s.getTransaction().commit();
            System.err.println("Bandera 5");

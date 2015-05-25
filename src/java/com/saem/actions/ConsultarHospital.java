@@ -8,6 +8,7 @@ package com.saem.actions;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
+import com.hibernate.model.Especialidades;
 import com.hibernate.model.Hospitales;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -52,6 +53,8 @@ public class ConsultarHospital implements SessionAware {
     private String emailDirectivo;
     private String nombreDirectivo;
     //fin de campos formularo
+    
+    private String especialidades;
 
     private String tituloAlert = "";
     private String textoAlert = "";
@@ -93,7 +96,7 @@ public class ConsultarHospital implements SessionAware {
 
     public String recuperarDatosConsultaSesion() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         
         nombreUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario();
         claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
@@ -102,7 +105,7 @@ public class ConsultarHospital implements SessionAware {
 
     public String recuperarDatosConsultaHospital() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
 
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
@@ -118,7 +121,7 @@ public class ConsultarHospital implements SessionAware {
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
             
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
@@ -132,9 +135,10 @@ public class ConsultarHospital implements SessionAware {
             entidadFederativa = domHospTemp.getEntidadFederativa();
             codigoPostal = domHospTemp.getCodigoPostal();
             
+            nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
             OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
             consultor.hospitalseUbicaEnDireccion(nombreHospitalTemp);
-       
+            System.out.println("--->"+ONTOLOGIA);
             consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp);
             latitudY = consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp).get(0);
             longitudX = consultor.getCoordenadaXDireccion("Direccion"+nombreHospitalTemp).get(0);
@@ -145,7 +149,7 @@ public class ConsultarHospital implements SessionAware {
     
     public String recuperarDatosConsultaDirectivo() {
         HospitalDAO hospitalDAO = new HospitalDAO();
-        int codigoHospitalTemp = Integer.parseInt(codigoHospital);
+        String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
 
         Iterator<Directivo> it = hospitalTemp.getDirectivos().iterator();
@@ -159,6 +163,38 @@ public class ConsultarHospital implements SessionAware {
             
         }
 
+        return SUCCESS;
+    }
+    
+    public String recuperarDatosEspecialidades(){
+        HospitalDAO hospitalDAO = new HospitalDAO();
+        System.out.println("--->Entro a recuperarEspecialidades Consulta");
+        String html = "";
+        
+        Set<Especialidades> especialidadesHospial = hospitalDAO.findById(codigoHospital).getEspecialidadeses();
+        if(especialidadesHospial==null)
+            return SUCCESS;
+        System.out.println("--->"+especialidadesHospial.size());
+        
+        Iterator<Especialidades> iterEspecHosp = especialidadesHospial.iterator();
+        
+       int contEspec = 0;
+        while(iterEspecHosp.hasNext()){
+        Especialidades especialidadTemp = iterEspecHosp.next();
+        
+        
+       
+            html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
+                    + "<span class=\"input-group-addon\">"
+                    + "<input type=\"checkbox\" checked=\"true\" disabled=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad()+ "\">"
+                    + "</span>"
+                    + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
+                    + "</div><!-- /input-group -->";
+            contEspec++;
+        
+        }
+        especialidades = html;
+    
         return SUCCESS;
     }
 
@@ -362,6 +398,16 @@ public class ConsultarHospital implements SessionAware {
     public void setNombreDirectivo(String nombreDirectivo) {
         this.nombreDirectivo = nombreDirectivo;
     }
+
+    public String getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(String especialidades) {
+        this.especialidades = especialidades;
+    }
+    
+    
 
     /**
      * ************************************************************************

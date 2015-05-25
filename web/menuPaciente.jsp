@@ -44,6 +44,7 @@
                 <i class="fa fa-hospital-o"></i> <span>Hospitales</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                  <li><a href="pantallaMapaPaciente"><i class="fa fa-map-marker"></i> Mi ubicación</a></li>
                 <li><a href="pantallaEnviarAlerta"><i class="fa fa-circle-o"></i> Enviar Alerta</a></li>
                 <li><a href="pantallaHospitalesCercanos"><i class="fa fa-circle-o"></i> Hospitales Cercanos</a></li>
               </ul>

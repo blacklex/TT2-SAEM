@@ -80,6 +80,10 @@
         <action name="ajaxRecuperarDatosFormDirectivo" method="recuperarDatosFormDirectivo" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="ajaxRecuperarFormEspecialidades" method="recuperarDatosFormEspecialidades" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- _______________________________________________________________________________________________ -->
         <action name="ajaxEliminarHospital" method="eliminarHospital" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
@@ -133,6 +137,10 @@
         </action>
         
         <action name="ajaxRecuperarDatosConsultaDirectivo" method="recuperarDatosConsultaDirectivo" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarDatosEspecialidades" method="recuperarDatosEspecialidades" class="com.saem.actions.ConsultarHospital">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- _______________________________________________________________________________________________ -->
@@ -257,23 +265,20 @@
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ******************************************** FIN BUSCAR DATOS PARA CONSULTAR ADMINISTRADOR ****************************************************************-->
-        
+        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
+            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
+        </action>
         <!-- ******************************************** RECUPERAR MSJ ADMINISTRADOR ****************************************************************-->                
         <!-- Recuperar Msjs de Edicion-->
         <action name="recuperarMensajeEstatusEditar" method="recuperarEstatusEditar" class="com.saem.actions.ModificarEliminarAdministradorAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Recuperar Msjs -->
-<!--         ******************************************** FIN RECUPERAR MSJ ADMINISTRADOR ****************************************************************                
-        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
-            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
-        </action>
-         ******************************************** OPERACIONES SOBRE PACIENTE ****************************************************************                -->
         
         <!-- ListaAdministradores Grid -->
-        <action name="Listado" class="com.saem.actions.GridRegistroAdministradoresAction">
-            <result name="success" type="json">
-                <param name="includeProperties">JSON,gridModel.*,page,records,rows,sidx,sord,total</param>
+        <action name="ajaxLlenarListaAdministradores" class="com.saem.actions.GridRegistroAdministradoresAction">
+            <result name="success"  type="json">
+                
             </result>
         </action>
         <!-- ******************************************* MENU PACIENTE *********************************************** -->
@@ -291,6 +296,7 @@
         <!-- ******************************************* FIN MENU PACIENTE *********************************************** -->
         
         <!-- Fin ListaAdministradores Grid -->
+<<<<<<< HEAD
         <!-- ************************************ CONSULTAR PACIENTE ****************************************** -->
         <action name="pantallaConsultarPacientes" method="execute" class="com.saem.actions.ConsultarPaciente">
             <result name="pantallaConsultarPacientes" type="tiles">pantallaConsultarPacientes</result>
@@ -496,5 +502,8 @@
         <!-- Fin Recuperar Msjs -->
 <!--         ******************************************** FIN RECUPERAR MSJ PACIENTE ****************************************************************  -->              
  
+=======
+        
+>>>>>>> 4629faa6b3b0c6c0584172a211c3393ab39c9f98
     </package>
 </struts>

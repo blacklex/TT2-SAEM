@@ -40,7 +40,7 @@
             <h3 class="box-header"><b>Modificar/Eliminar Administrador</b></h3>
         </div>
         <div id="gridAdministradores" class="box-body">
-           <s:url var="remoteurl" action="Listado"/>
+           <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
                 id="gridAdmin"

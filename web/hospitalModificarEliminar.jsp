@@ -46,11 +46,11 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary">
         <div class="box-header">
             <h3 class="box-header"><b>Hospitales Registrados</b></h3>
         </div><!-- /.box-header -->
-        <div class="box-body" style="width: 82%">
+        <div class="box-body">
         <sjg:grid
             id		     ="gridListaHospitales"		gridModel	="gridListaHospitales"
             href	     ="ajaxLlenarListaHospitalesME"     dataType	="json"        
@@ -138,6 +138,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -175,6 +176,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -189,10 +191,6 @@
             <input type="hidden" name="latitudY" id="latitudY">
             <input type="hidden" name="longitudX" id="longitudX">
             
-            <!-- /google maps -->
-                <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="textbox"></input>
-                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
-                <!-- /fin google maps -->
             
             <input type="hidden" name="codigoHospitalEditar" id="codigoHDireccion">
             <div class="box-body">
@@ -200,6 +198,11 @@
                     <h3 class="box-title">Dirección</h3>
                 </div>
 
+                <!-- /google maps -->
+                <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="textbox"></input>
+                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+                <!-- /fin google maps -->
+                
                 <div id="divCalleHospital" class="form-group">
                     <label for="calle">Calle</label>
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -236,6 +239,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -273,6 +277,7 @@
 
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>
@@ -289,11 +294,12 @@
                 <div class="box-header">
                     <h3 class="box-title">Especialidades</h3>
                 </div>
-
+                <div id="divContEspecialidades"></div>
             </div><!-- /.box-body -->
-
+            
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
             </div>
         </form>
     </div>

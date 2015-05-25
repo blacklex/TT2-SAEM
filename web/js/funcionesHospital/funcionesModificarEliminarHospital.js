@@ -345,10 +345,34 @@ function muestraFormDirectivo() {
 }
 
 function muestraFormEspecialidades() {
-    $("#divjGrid").slideUp('slow', function () {
-        //$("#codigoHEspecialidades").val(codigoHospital);
-        $("#divFormEspecialidades").slideDown('slow');
-    });
+    if ($("#gridListaHospitales").jqGrid('getGridParam', 'selrow') != null) {
+        var s = $("#gridListaHospitales").jqGrid('getGridParam', 'selrow');
+
+        var codigoHospital = $("#gridListaHospitales").jqGrid('getCell', s, 'codigoHospital');
+        $("#codigoHEspecialidades").val(codigoHospital);
+        $("#barraCargar").slideDown(100);
+
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "ajaxRecuperarFormEspecialidades",
+            data: {codigoHospital: codigoHospital}
+        })
+                .done(function (msg) {
+
+                    $("#divContEspecialidades").html(msg.especialidades);
+
+
+                    $("#barraCargar").slideUp(100);
+
+                    $("#divjGrid").slideUp('slow', function () {
+                        $("#divFormEspecialidades").slideDown('slow');
+                    });
+                });
+    } else {
+        alert("Seleccione un Hospital de la tabla.");
+    }
+
 }
 
 function eliminarHospital() {

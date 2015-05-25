@@ -8,7 +8,7 @@
       <generator class="identity"/>
     </id>
     <many-to-one class="com.hibernate.model.Hospitales" fetch="select" name="hospitales">
-      <column name="Hospitales_codigo_hospital" not-null="true"/>
+      <column name="Hospitales_codigo_hospital" length="20" not-null="true"/>
     </many-to-one>
     <property name="nombre" type="string">
       <column length="20" name="nombre" not-null="true"/>

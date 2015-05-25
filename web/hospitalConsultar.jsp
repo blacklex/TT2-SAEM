@@ -46,11 +46,11 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary">
         <div class="box-header">
             <h3 class="box-header"><b>Hospitales Registrados</b></h3>
         </div><!-- /.box-header -->
-        <div  class="box-body" style="width: 82%">
+        <div  class="box-body">
             <sjg:grid
                 id		     ="gridListaConsultaHospitales"		gridModel	="gridListaConsultaHospitales"
                 href	     ="ajaxLlenarListaConsultarHospitales"     dataType	="json"        
@@ -97,20 +97,20 @@
                 }"
                 >
 
-                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"	width="100"
+                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"
                                 editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"	width="100"
+                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"	width="100"
+                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"	width="100"
+                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"	width="100"
+                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
                                  editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
             </sjg:grid> 
@@ -129,16 +129,16 @@
             </div>
 
             <div id="divNombreUsuario" class="form-group">
-                    <label for="nombreUsuario">Nombre de usuario</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
-                </div>
+                <label for="nombreUsuario">Nombre de usuario</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
+            </div>
             <div id="divClaveUsuario" class="form-group">
                 <label for="claveUsuario">Clave de Acceso</label>
                 <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="text">
             </div>
         </div><!-- /.box-body -->
 
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
 
@@ -170,6 +170,7 @@
 
         </div><!-- /.box-body -->
 
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
@@ -185,8 +186,8 @@
 
             <!-- /google maps -->
             <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="hidden"></input>
-                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
-                <!-- /fin google maps -->
+            <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+            <!-- /fin google maps -->
             <div id="divCalleHospital" class="form-group">
                 <label for="calle">Calle</label>
                 <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -218,6 +219,7 @@
             </div>
 
         </div><!-- /.box-body -->
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
@@ -247,7 +249,7 @@
             </div>
 
         </div><!-- /.box-body -->
-
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
@@ -260,9 +262,14 @@
             <div class="box-header">
                 <h3 class="box-title">Especialidades</h3>
             </div>
-
+            <div id="divContEspecialidades"></div>
+            
         </div><!-- /.box-body -->
-
+        
+            
+         <div class="box-footer">
+            <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        </div>
     </div>
 </section>
 

@@ -121,7 +121,7 @@
                 </div>
 
                 <div id="divCodigoPostalPaciente" class="form-group">
-                    <label for="codigoPostal">Código Postal</label>
+                     <label for="codigoPostal">Código Postal</label>
                     <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text">
                 </div>
             </div><!-- /.box-body -->
