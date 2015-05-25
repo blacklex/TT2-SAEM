@@ -45,6 +45,8 @@ DistaciaWidget.prototype = new google.maps.MVCObject();
 function RadioWidget() {
     //Creamos el circulo
     var circle = new google.maps.Circle({
+                                            strokeColor: '#FF0000',
+                                            strokeOpacity: 0.8,
                                             strokeWeight: 2
                                         });
     // Establecemos la propiedad distancia, default 5km
@@ -157,6 +159,9 @@ function initialize() {
         }
         map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
         var distaciaWidget = new DistaciaWidget(map);
+        google.maps.event.addListener(distaciaWidget, 'distance_changed', function() {
+            displayInfo(distaciaWidget);
+        });
         
 //        var populationOptions = {
 //                                    strokeColor: '#FF0000',
@@ -199,4 +204,16 @@ function initialize() {
         }
     }
 }
+
+function displayInfo(widget) {
+    var info = document.getElementById('info');
+    info.innerHTML = '<span class="info-box-text">Informacion de ubicacion</span>' + 
+                     '<span class="info-box-number"> ' + Math.round(widget.get('distance')) + 'km</span>' +
+                     '<div class="progress">' +
+                     '  <div class="progress-bar" style="width: 100%">' +
+                     '  </div>' +
+                     '</div>' +
+                     '<span class="progress-description">Distancia---> Min: 1km - - - Max: 10km</span>';
+}
+      
 google.maps.event.addDomListener(window, 'load', initialize);
