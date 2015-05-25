@@ -71,6 +71,24 @@
         <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
         <put-attribute name="body"   value="/gridConsultarAdministrador.jsp"/>      
     </definition>
+    <!--Pacientes-->
+    <definition name="pantallaAltaPaciente" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteRegistro.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaModificarEliminarPaciente" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteModificarEliminar.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaConsultarPacientes" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteConsultar.jsp"/>      
+    </definition>
     <!-- FIN PANTALLAS DE MENU PARA CADA TIPO DE USUARIO --> 
     
     <!-- INICIO PANTALLAS DEL MENU PACIENTES -->

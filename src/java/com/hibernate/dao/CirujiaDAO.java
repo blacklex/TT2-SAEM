@@ -49,6 +49,24 @@ public class CirujiaDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(Cirujias transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Cirugia actualizada");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Cirugia no actualizada");  
+                    return false;
+		}
+	}
          
         public Cirujias findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

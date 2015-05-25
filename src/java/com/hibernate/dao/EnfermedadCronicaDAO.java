@@ -49,6 +49,24 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(EnfermedadesCronicas transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Enfermedades actualizadas");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Enfermedades no actualizadas");  
+                    return false;
+		}
+	}
          
         public EnfermedadesCronicas findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

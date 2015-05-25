@@ -51,6 +51,24 @@ public class AlergiaDAO extends HibernateUtil {
 		}
 	}
          
+        public Boolean update(Alergias transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Alergias actualizadas");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Alergias no actualizadas");  
+                    return false;
+		}
+	} 
+         
         public Alergias findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {

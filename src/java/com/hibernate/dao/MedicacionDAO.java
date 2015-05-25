@@ -49,6 +49,24 @@ public class MedicacionDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(Medicacion transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Medicacion actualizada");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Medicacion no actualizada");  
+                    return false;
+		}
+	}
          
         public Medicacion findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
