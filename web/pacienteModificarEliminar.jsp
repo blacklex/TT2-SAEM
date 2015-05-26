@@ -40,7 +40,7 @@
             <h3 class="box-header"><b>Modificar/Eliminar Paciente</b></h3>
         </div>
         <div id="gridPacientes" class="box-body">
-           <s:url var="remoteurl" action="Listado"/>
+           <s:url var="remoteurl" action="ajaxLlenarListaPacientes"/>
 
             <sjg:grid
                 id="gridPaciente"
