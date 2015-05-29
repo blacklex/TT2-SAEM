@@ -49,6 +49,24 @@ public class DiscapacidadDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(Discapacidades transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Discapacidades actualizadas");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Discapacidades no actualizadas");  
+                    return false;
+		}
+	}
          
         public Discapacidades findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

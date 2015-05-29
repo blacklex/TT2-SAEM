@@ -2,6 +2,7 @@ var marker;
 var cityCircle;
 var markerPaciente = 'images/markers/pacienteMarker.png';
 var markerResize = 'images/markers/resizeMarker.png';
+var markerHospital = 'images/markers/hospitalMarker.png';
 
 function DistaciaWidget(map) {
     //Estblecemos el mapa
@@ -17,7 +18,7 @@ function DistaciaWidget(map) {
                                         animation:google.maps.Animation.DROP,
                                         title:'¡Usted esta aqui!'
                                     });
-
+                                    
     // Enlazar la propiedad map del marker con la propiedad map de DistancaWidget
     marker.bindTo('map', this);
 
@@ -162,6 +163,7 @@ function initialize() {
         google.maps.event.addListener(distaciaWidget, 'distance_changed', function() {
             displayInfo(distaciaWidget);
         });
+        google.maps.event.addListener(marker, 'dblclick', hospitalesShow);
         
 //        var populationOptions = {
 //                                    strokeColor: '#FF0000',
@@ -203,6 +205,43 @@ function initialize() {
             break;
         }
     }
+}
+
+function newMarker(markerData){
+	var posSitio = new google.maps.LatLng(markerData.lt,markerData.ln);
+	var sitio = new google.maps.Marker({
+		map:map,
+		draggable:false,
+                icon: markerHospital,
+		animation: google.maps.Animation.DROP,
+		position: posSitio
+	});
+	//id="content"
+	var content = "<div><h4>" + markerData.titulo + "</h4>" + markerData.descrip + "</div>"; 
+	var infowindow = new google.maps.InfoWindow({ content: content }); 
+	google.maps.event.addListener(sitio, 'click', function(){ infowindow.open(map,sitio); }); 
+}
+
+function hospitalesShow() {
+    //hacemos una peticion asincrona de tipo GET para obtener el fichero JSON
+	var jqxhr = $.getJSON( "data/hospitales.json", function(data) {
+		//En el caso de obtener el fichero con éxito, entonces iteramos 
+		//sobre el objeto json obtenido
+		console.log( "success" ); 
+		for (i=0; i < data.length; i++) {
+		//Obtenemos cada obtejo JSON el cual contiene la información del sitio turistico
+			var sitio = data[i];
+			//Llamamos a la función newMarker para insertar un Marker indicando 
+			//la localización del sitio turistico
+			newMarker(sitio);
+		}
+	}).done(function() { 
+		console.log( "second success" ); 
+	}).fail(function() { 
+		console.log( "error" ); 
+	}).always(function() { 
+		console.log( "complete" ); 
+	});
 }
 
 function displayInfo(widget) {

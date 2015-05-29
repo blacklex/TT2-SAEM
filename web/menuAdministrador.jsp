@@ -71,7 +71,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="pantallaAltaPaciente"><i class="fa fa-circle-o"></i> Registrar</a></li>
-                <li><a href="pantallaModificarPaciente"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
+                <li><a href="pantallaModificarEliminarPaciente"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
                 <li><a href="pantallaConsultarPacientes"><i class="fa fa-circle-o"></i> Consultar</a></li>
                 
               </ul>

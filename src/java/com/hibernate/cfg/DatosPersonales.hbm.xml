@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="Pacientes" name="com.hibernate.model.DatosPersonales" optimistic-lock="version" table="Datos_Personales">
+  <class catalog="SAEMBD" name="com.hibernate.model.DatosPersonales" optimistic-lock="version" table="Datos_Personales">
     <id name="id" type="java.lang.Long">
       <column name="id"/>
       <generator class="identity"/>
@@ -33,12 +33,6 @@
     </property>
     <property name="talla" type="string">
       <column length="3" name="talla"/>
-    </property>
-    <property name="telCasa" type="string">
-      <column length="15" name="tel_casa"/>
-    </property>
-    <property name="telCel" type="string">
-      <column length="15" name="tel_cel"/>
     </property>
     <property name="correo" type="string">
       <column length="45" name="correo"/>

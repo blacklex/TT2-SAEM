@@ -49,6 +49,24 @@ public class DomicilioPacienteDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(DomicilioPacientes transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Domicilio actualizado");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Domicilio no actualizado");  
+                    return false;
+		}
+	}
          
         public DomicilioPacientes findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

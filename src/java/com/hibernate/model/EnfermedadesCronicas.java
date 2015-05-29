@@ -1,7 +1,8 @@
 package com.hibernate.model;
-// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
+// Generated 28/05/2015 03:29:27 PM by Hibernate Tools 4.3.1
 
 
+import com.hibernate.model.DatosClinicos;
 import java.util.Date;
 
 /**

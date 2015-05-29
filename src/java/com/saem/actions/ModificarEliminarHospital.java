@@ -466,8 +466,8 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String recuperarDatosFormDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
 
+        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
 
         HospitalDAO hospitalDAO = new HospitalDAO();

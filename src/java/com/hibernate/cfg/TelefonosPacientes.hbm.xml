@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="Pacientes" name="com.hibernate.model.TelefonosPacientes" optimistic-lock="version" table="Telefonos_Pacientes">
+  <class catalog="SAEMBD" name="com.hibernate.model.TelefonosPacientes" optimistic-lock="version" table="Telefonos_Pacientes">
     <id name="id" type="java.lang.Long">
       <column name="id"/>
       <generator class="identity"/>
@@ -10,11 +10,8 @@
     <many-to-one class="com.hibernate.model.Pacientes" fetch="select" name="pacientes">
       <column length="15" name="Pacientes_nss" not-null="true"/>
     </many-to-one>
-    <property name="telefonoFijo" type="string">
-      <column length="20" name="telefono_fijo" not-null="true"/>
-    </property>
-    <property name="telefonoParticular" type="string">
-      <column length="20" name="telefono_particular" not-null="true"/>
+    <property name="numeroTelefono" type="string">
+      <column length="20" name="numero_telefono" not-null="true"/>
     </property>
   </class>
 </hibernate-mapping>

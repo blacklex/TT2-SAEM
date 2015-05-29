@@ -65,7 +65,7 @@ function muestraFormSesion() {
         $.ajax({
             dataType: "json",
             method: "POST",
-            url: "ajaxRecuperarDatosConsultaSesion",
+            url: "ajaxRecuperarDatosConsultaSesionHospital",
             data: {codigoHospital: codigoHospital}
         })
                 .done(function (msg) {
@@ -131,7 +131,7 @@ function muestraDireccionHospital() {
         $.ajax({
             dataType: "json",
             method: "POST",
-            url: "ajaxRecuperarDatosConsultaDireccion",
+            url: "ajaxRecuperarDatosConsultaDireccionHospital",
             data: {codigoHospital: codigoHospital}
         })
                 .done(function (msg) {

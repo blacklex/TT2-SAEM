@@ -49,6 +49,24 @@ public class DatosClinicosDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(DatosClinicos transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Datos clinicos actualizados");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Datos clinicos no actualizados");  
+                    return false;
+		}
+	}
          
         public DatosClinicos findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

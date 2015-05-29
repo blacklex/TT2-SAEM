@@ -49,6 +49,24 @@ public class TelefonoPacienteDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(TelefonosPacientes transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Telefonos actualizados");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Telefonos no actualizados");  
+                    return false;
+		}
+	}
          
         public TelefonosPacientes findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);

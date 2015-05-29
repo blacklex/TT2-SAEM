@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="Pacientes" name="com.hibernate.model.Usuarios" optimistic-lock="version" table="Usuarios">
+  <class catalog="SAEMBD" name="com.hibernate.model.Usuarios" optimistic-lock="version" table="Usuarios">
     <id name="nombreUsuario" type="string">
       <column length="20" name="nombre_usuario"/>
       <generator class="assigned"/>
@@ -16,19 +16,19 @@
     <property name="fechaRegistro" type="timestamp">
       <column length="19" name="fecha_registro" not-null="true"/>
     </property>
-    <set fetch="select" inverse="true" lazy="true" cascade="delete" name="pacienteses" table="Pacientes">
+    <set fetch="select" cascade="delete" inverse="true" lazy="true" name="pacienteses" table="Pacientes">
       <key>
         <column length="20" name="Usuarios_nombre_usuario" not-null="true"/>
       </key>
       <one-to-many class="com.hibernate.model.Pacientes"/>
     </set>
-    <set fetch="select" inverse="true" cascade="delete" lazy="true" name="administradoreses" table="Administradores">
+    <set fetch="select" cascade="delete" inverse="true" lazy="true" name="administradoreses" table="Administradores">
       <key>
         <column length="20" name="Usuarios_nombre_usuario" not-null="true"/>
       </key>
-      <one-to-many class="com.hibernate.model.Administradores" />
+      <one-to-many class="com.hibernate.model.Administradores"/>
     </set>
-    <set fetch="select" inverse="true" cascade="delete" lazy="true" name="hospitaleses" table="Hospitales">
+    <set fetch="select" cascade="delete" inverse="true" lazy="true" name="hospitaleses" table="Hospitales">
       <key>
         <column length="20" name="Usuarios_nombre_usuario" not-null="true"/>
       </key>

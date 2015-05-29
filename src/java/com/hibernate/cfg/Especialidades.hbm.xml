@@ -1,22 +1,22 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1 -->
+<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.hibernate.model.Especialidades" table="Especialidades" catalog="Pacientes" optimistic-lock="version">
-        <id name="noEspecialidad" type="int">
-            <column name="no_especialidad" />
-            <generator class="assigned" />
-        </id>
-        <property name="nombreEspecialidad" type="string">
-            <column name="nombre_especialidad" length="45" />
-        </property>
-        <set name="hospitaleses" cascade="delete" table="Especialidades_has_Hospitales" inverse="false" lazy="true" fetch="select">
-            <key>
-                <column name="Especialidades_no_especialidad" not-null="true" />
-            </key>
-            <many-to-many entity-name="com.hibernate.model.Hospitales">
-                <column name="Hospitales_codigo_hospital" length="20" not-null="true" />
-            </many-to-many>
-        </set>
-    </class>
+  <class catalog="SAEMBD" name="com.hibernate.model.Especialidades" optimistic-lock="version" table="Especialidades">
+    <id name="noEspecialidad" type="int">
+      <column name="no_especialidad"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombreEspecialidad" type="string">
+      <column length="45" name="nombre_especialidad"/>
+    </property>
+    <set fetch="select" cascade="delete" inverse="false" lazy="true" name="hospitaleses" table="Especialidades_has_Hospitales">
+      <key>
+        <column name="Especialidades_no_especialidad" not-null="true"/>
+      </key>
+      <many-to-many entity-name="com.hibernate.model.Hospitales">
+        <column length="20" name="Hospitales_codigo_hospital" not-null="true"/>
+      </many-to-many>
+    </set>
+  </class>
 </hibernate-mapping>

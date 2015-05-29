@@ -49,6 +49,24 @@ public class ContactoDAO extends HibernateUtil {
                     return false;
 		}
 	}
+        
+        public Boolean update(Contactos transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Contacto actualizado");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    s.close();
+			System.out.println("--->Contacto no actualizado");  
+                    return false;
+		}
+	}
          
         public Contactos findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
