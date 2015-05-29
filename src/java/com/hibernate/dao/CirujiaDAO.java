@@ -12,7 +12,7 @@ package com.hibernate.dao;
 
 
 import com.hibernate.cfg.HibernateUtil;
-import com.hibernate.model.Cirujias;
+import com.hibernate.model.Cirugias;
 import org.hibernate.Session;
 
 
@@ -20,7 +20,7 @@ public class CirujiaDAO extends HibernateUtil {
 	
 	// property constants
 
-         public Boolean save(Cirujias transientInstance) {
+         public Boolean save(Cirugias transientInstance) {
 		//log.debug("saving TblAbwUsuario instance");
 		try {
 			Session s = getSession();
@@ -35,7 +35,7 @@ public class CirujiaDAO extends HibernateUtil {
 		}
 	}
          
-        public Boolean delete(Cirujias transientInstance) {
+        public Boolean delete(Cirugias transientInstance) {
 		//log.debug("saving TblAbwUsuario instance");
 		try {
 			Session s = getSession();
@@ -50,7 +50,7 @@ public class CirujiaDAO extends HibernateUtil {
 		}
 	}
         
-        public Boolean update(Cirujias transientInstance) {
+        public Boolean update(Cirugias transientInstance) {
 		Session s = getSession();
 		try {
 			
@@ -68,11 +68,11 @@ public class CirujiaDAO extends HibernateUtil {
 		}
 	}
          
-        public Cirujias findById(Long id) {
+        public Cirugias findById(Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			Cirujias instance = (Cirujias) getSession().get(
-					Cirujias.class, id);
+			Cirugias instance = (Cirugias) getSession().get(
+					Cirugias.class, id);
 			return instance;
 		} catch (RuntimeException re) {
 			//log.error("get failed", re);

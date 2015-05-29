@@ -185,8 +185,8 @@ public class ConsultarPaciente implements SessionAware{
         while (it.hasNext()) {
             TelefonosPacientes telefonoTemp = it.next();
             
-            telefonoFijo = telefonoTemp.getTelefonoFijo();
-            telefonoParticular = telefonoTemp.getTelefonoParticular();
+//            telefonoFijo = telefonoTemp.getTelefonoFijo();
+//            telefonoParticular = telefonoTemp.getTelefonoParticular();
             
         }
 
@@ -212,9 +212,9 @@ public class ConsultarPaciente implements SessionAware{
             edad = datPerPacientTemp.getEdad();
             peso = datPerPacientTemp.getPeso();
             altura = datPerPacientTemp.getAltura();
-            talla = datPerPacientTemp.getTalla();
-            telCasa = datPerPacientTemp.getTelCasa();
-            telCel = datPerPacientTemp.getTelCel();
+//            talla = datPerPacientTemp.getTalla();
+//            telCasa = datPerPacientTemp.getTelCasa();
+//            telCel = datPerPacientTemp.getTelCel();
             correo = datPerPacientTemp.getCorreo();
             facebook = datPerPacientTemp.getFacebook();
         }
@@ -233,14 +233,14 @@ public class ConsultarPaciente implements SessionAware{
         Iterator<Contactos> it = pacienteTemp.getContactoses().iterator();
         //String datosContactosTemp = pacienteTemp.getNombre();
         while (it.hasNext()) {
-            Contactos datContactPacientTemp = it.next();
-            nombreC = datContactPacientTemp.getNombreC();
-            apellidoPaternoC = datContactPacientTemp.getApellidoPaternoC();
-            apellidoMaternoC = datContactPacientTemp.getApellidoMaternoC();
-            parentesco = datContactPacientTemp.getParentesco();
-            celular = datContactPacientTemp.getCelular();
-            facebookC = datContactPacientTemp.getFacebookC();
-            correoC = datContactPacientTemp.getCorreoC();
+//            Contactos datContactPacientTemp = it.next();
+//            nombreC = datContactPacientTemp.getNombreC();
+//            apellidoPaternoC = datContactPacientTemp.getApellidoPaternoC();
+//            apellidoMaternoC = datContactPacientTemp.getApellidoMaternoC();
+//            parentesco = datContactPacientTemp.getParentesco();
+//            celular = datContactPacientTemp.getCelular();
+//            facebookC = datContactPacientTemp.getFacebookC();
+//            correoC = datContactPacientTemp.getCorreoC();
         }
 
         return SUCCESS;
@@ -289,9 +289,9 @@ public class ConsultarPaciente implements SessionAware{
         // Obtenemos la lista de la sesión
         listaTemp = (ArrayList<Pacientes>) pacientesDAO.findAll();
 
-        for (Pacientes tempContPaciente : listaTemp) {
-            listaTempFinal.add(new Pacientes(tempContPaciente.getNss(), null, null, tempContPaciente.getNombre(), tempContPaciente.getApellidoPaterno(), tempContPaciente.getApellidoMaterno(), tempContPaciente.getUnidadMedica(), tempContPaciente.getNoConsultorio(), null, null, null, null, null, null, null));
-        }
+//        for (Pacientes tempContPaciente : listaTemp) {
+//            listaTempFinal.add(new Pacientes(tempContPaciente.getNss(), null, null, tempContPaciente.getNombre(), tempContPaciente.getApellidoPaterno(), tempContPaciente.getApellidoMaterno(), tempContPaciente.getUnidadMedica(), tempContPaciente.getNoConsultorio(), null, null, null, null, null, null, null));
+//        }
         gridListaConsultaPacientes = listaTempFinal;
         if (gridListaConsultaPacientes == null) {
             records = total = 0;

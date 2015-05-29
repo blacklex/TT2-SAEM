@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
+// Generated 28/05/2015 03:29:27 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -18,9 +18,11 @@ public class Hospitales  implements java.io.Serializable {
      private String lada;
      private String EMail;
      private Set domicilioHospitaleses = new HashSet(0);
-     private Set pacienteses = new HashSet(0);
-     private Set especialidadeses = new HashSet(0);
+     private Set peticionesSalienteses = new HashSet(0);
      private Set directivos = new HashSet(0);
+     private Set especialidadeses = new HashSet(0);
+     private Set peticionesEntranteses = new HashSet(0);
+     private Set pacienteses = new HashSet(0);
 
     public Hospitales() {
     }
@@ -34,7 +36,7 @@ public class Hospitales  implements java.io.Serializable {
         this.lada = lada;
         this.EMail = EMail;
     }
-    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadeses, Set directivos) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set peticionesSalienteses, Set directivos, Set especialidadeses, Set peticionesEntranteses, Set pacienteses) {
        this.codigoHospital = codigoHospital;
        this.usuarios = usuarios;
        this.nombre = nombre;
@@ -42,9 +44,11 @@ public class Hospitales  implements java.io.Serializable {
        this.lada = lada;
        this.EMail = EMail;
        this.domicilioHospitaleses = domicilioHospitaleses;
-       this.pacienteses = pacienteses;
-       this.especialidadeses = especialidadeses;
+       this.peticionesSalienteses = peticionesSalienteses;
        this.directivos = directivos;
+       this.especialidadeses = especialidadeses;
+       this.peticionesEntranteses = peticionesEntranteses;
+       this.pacienteses = pacienteses;
     }
    
     public String getCodigoHospital() {
@@ -96,12 +100,19 @@ public class Hospitales  implements java.io.Serializable {
     public void setDomicilioHospitaleses(Set domicilioHospitaleses) {
         this.domicilioHospitaleses = domicilioHospitaleses;
     }
-    public Set getPacienteses() {
-        return this.pacienteses;
+    public Set getPeticionesSalienteses() {
+        return this.peticionesSalienteses;
     }
     
-    public void setPacienteses(Set pacienteses) {
-        this.pacienteses = pacienteses;
+    public void setPeticionesSalienteses(Set peticionesSalienteses) {
+        this.peticionesSalienteses = peticionesSalienteses;
+    }
+    public Set getDirectivos() {
+        return this.directivos;
+    }
+    
+    public void setDirectivos(Set directivos) {
+        this.directivos = directivos;
     }
     public Set getEspecialidadeses() {
         return this.especialidadeses;
@@ -110,12 +121,19 @@ public class Hospitales  implements java.io.Serializable {
     public void setEspecialidadeses(Set especialidadeses) {
         this.especialidadeses = especialidadeses;
     }
-    public Set getDirectivos() {
-        return this.directivos;
+    public Set getPeticionesEntranteses() {
+        return this.peticionesEntranteses;
     }
     
-    public void setDirectivos(Set directivos) {
-        this.directivos = directivos;
+    public void setPeticionesEntranteses(Set peticionesEntranteses) {
+        this.peticionesEntranteses = peticionesEntranteses;
+    }
+    public Set getPacienteses() {
+        return this.pacienteses;
+    }
+    
+    public void setPacienteses(Set pacienteses) {
+        this.pacienteses = pacienteses;
     }
 
 

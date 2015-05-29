@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
+// Generated 28/05/2015 03:29:27 PM by Hibernate Tools 4.3.1
 
 
 
@@ -11,16 +11,14 @@ public class TelefonosPacientes  implements java.io.Serializable {
 
      private Long id;
      private Pacientes pacientes;
-     private String telefonoFijo;
-     private String telefonoParticular;
+     private String numeroTelefono;
 
     public TelefonosPacientes() {
     }
 
-    public TelefonosPacientes(Pacientes pacientes, String telefonoFijo, String telefonoParticular) {
+    public TelefonosPacientes(Pacientes pacientes, String numeroTelefono) {
        this.pacientes = pacientes;
-       this.telefonoFijo = telefonoFijo;
-       this.telefonoParticular = telefonoParticular;
+       this.numeroTelefono = numeroTelefono;
     }
    
     public Long getId() {
@@ -37,19 +35,12 @@ public class TelefonosPacientes  implements java.io.Serializable {
     public void setPacientes(Pacientes pacientes) {
         this.pacientes = pacientes;
     }
-    public String getTelefonoFijo() {
-        return this.telefonoFijo;
+    public String getNumeroTelefono() {
+        return this.numeroTelefono;
     }
     
-    public void setTelefonoFijo(String telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
-    }
-    public String getTelefonoParticular() {
-        return this.telefonoParticular;
-    }
-    
-    public void setTelefonoParticular(String telefonoParticular) {
-        this.telefonoParticular = telefonoParticular;
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
     }
 
 

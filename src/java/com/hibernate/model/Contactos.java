@@ -1,5 +1,6 @@
 package com.hibernate.model;
-// Generated 22-may-2015 20:27:16 by Hibernate Tools 4.3.1
+// Generated 28/05/2015 03:29:27 PM by Hibernate Tools 4.3.1
+
 
 
 
@@ -11,7 +12,7 @@ public class Contactos  implements java.io.Serializable {
 
      private Long id;
      private Pacientes pacientes;
-     private String nombreC;
+     private String nombre;
      private String apellidoPaterno;
      private String apellidoMaterno;
      private String parentesco;
@@ -23,17 +24,17 @@ public class Contactos  implements java.io.Serializable {
     }
 
 	
-    public Contactos(Pacientes pacientes, String nombreC, String apellidoPaterno, String apellidoMaterno, String parentesco, String celular) {
+    public Contactos(Pacientes pacientes, String nombre, String apellidoPaterno, String apellidoMaterno, String parentesco, String celular) {
         this.pacientes = pacientes;
-        this.nombreC = nombreC;
+        this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.parentesco = parentesco;
         this.celular = celular;
     }
-    public Contactos(Pacientes pacientes, String nombreC, String apellidoPaterno, String apellidoMaterno, String parentesco, String celular, String facebook, String correo) {
+    public Contactos(Pacientes pacientes, String nombre, String apellidoPaterno, String apellidoMaterno, String parentesco, String celular, String facebook, String correo) {
        this.pacientes = pacientes;
-       this.nombreC = nombreC;
+       this.nombre = nombre;
        this.apellidoPaterno = apellidoPaterno;
        this.apellidoMaterno = apellidoMaterno;
        this.parentesco = parentesco;
@@ -56,20 +57,26 @@ public class Contactos  implements java.io.Serializable {
     public void setPacientes(Pacientes pacientes) {
         this.pacientes = pacientes;
     }
-  
-    public String getApellidoPaternoC() {
-        return this.getApellidoPaterno();
+    public String getNombre() {
+        return this.nombre;
     }
     
-    public void setApellidoPaternoC(String apellidoPaterno) {
-        this.setApellidoPaterno(apellidoPaterno);
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public String getApellidoMaternoC() {
-        return this.getApellidoMaterno();
+    public String getApellidoPaterno() {
+        return this.apellidoPaterno;
     }
     
-    public void setApellidoMaternoC(String apellidoMaterno) {
-        this.setApellidoMaterno(apellidoMaterno);
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+    public String getApellidoMaterno() {
+        return this.apellidoMaterno;
+    }
+    
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
     public String getParentesco() {
         return this.parentesco;
@@ -85,89 +92,17 @@ public class Contactos  implements java.io.Serializable {
     public void setCelular(String celular) {
         this.celular = celular;
     }
-    public String getFacebookC() {
-        return this.getFacebook();
-    }
-    
-    public void setFacebookC(String facebook) {
-        this.setFacebook(facebook);
-    }
-    public String getCorreoC() {
-        return this.getCorreo();
-    }
-    
-    public void setCorreoC(String correo) {
-        this.setCorreo(correo);
-    }
-
-    public String getNombreC() {
-        return nombreC;
-    }
-
-    public void setNombreC(String nombreC) {
-        this.nombreC = nombreC;
-    }
-    
-    public String getNombre() {
-        return nombreC;
-    }
-
-    public void setNombre(String nombreC) {
-        this.nombreC = nombreC;
-    }
-
-    /**
-     * @return the apellidoPaterno
-     */
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    /**
-     * @param apellidoPaterno the apellidoPaterno to set
-     */
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    /**
-     * @return the apellidoMaterno
-     */
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    /**
-     * @param apellidoMaterno the apellidoMaterno to set
-     */
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    /**
-     * @return the facebook
-     */
     public String getFacebook() {
-        return facebook;
+        return this.facebook;
     }
-
-    /**
-     * @param facebook the facebook to set
-     */
+    
     public void setFacebook(String facebook) {
         this.facebook = facebook;
     }
-
-    /**
-     * @return the correo
-     */
     public String getCorreo() {
-        return correo;
+        return this.correo;
     }
-
-    /**
-     * @param correo the correo to set
-     */
+    
     public void setCorreo(String correo) {
         this.correo = correo;
     }

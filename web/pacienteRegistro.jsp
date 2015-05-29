@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<div style="position: fixed; z-index: 1; width: 100%; display: none;"  id="barraCargar" class="progress progress-sm active">
+<div style="position: fixed; z-index: 1; width: 100%; display: none;"  id="barraCargarPaciente" class="progress progress-sm active">
     <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
         <span class="sr-only">100% Complete (success)</span>
     </div>
@@ -15,19 +15,19 @@
 
 <div id="divAlertSuccess" style="display: none;"  class="alert alert-success alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4 id="tituloDivAlertSuccess"></h4>
-    <label id="labelMensajeSuccess"></label>
+    <h4 id="tituloDivAlertSuccessPaciente"></h4>
+    <label id="labelMensajeSuccessPaciente"></label>
 </div>
 
 <div id="divAlertError" style="display: none;"  class="alert alert-error alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4 id="tituloDivAlertError"></h4>
-    <label id="labelMensajeError"></label>
+    <h4 id="tituloDivAlertErrorPaciente"></h4>
+    <label id="labelMensajeErrorPaciente"></label>
 </div>
 
-<div id="divAlert" style="display: none;" class="alert alert-warning alert-dismissable">
+<div id="divAlertPaciente" style="display: none;" class="alert alert-warning alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4 id="textoAlert"><i class="icon fa fa-warning"></i>Campos no validos.</h4>
+    <h4 id="textoAlertPaciente"><i class="icon fa fa-warning"></i>Campos no validos.</h4>
     Verifique que los datos que ha ingresado sean correctos.
 </div>
 
@@ -132,13 +132,8 @@
                 </div>
 
                 <div id="divTelefonoFijoPaciente" class="form-group">
-                    <label for="telefonoFijo">Telefono Fijo</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="telefonoFijo" id="telefonoFijo" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Fijo" type="text">
-                </div>
-
-                <div id="divTelefonoParticularPaciente" class="form-group">
-                    <label for="telefonoParticular">Telefono Particular</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="telefonoParticular" id="telefonoParticular" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Particular" type="text">
+                    <label for="telefonoPaciente">Telefono Fijo</label>
+                    <input kl_virtual_keyboard_secure_input="on" name="numTelefono" id="numTelefono" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="No. Telefono" type="text">
                 </div>
             </div><!-- /.box-body -->
             
@@ -149,7 +144,49 @@
 
                 <div id="divEdoCivilPaciente" class="form-group">
                     <label for="estadoCivil">Estado Civil</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="estadoCivil" id="estadoCivil" placeholder="Estado Civil" type="text">
+                    <div class="row">
+                    <div class="col-lg-6">
+                      <div class="input-group">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="estadoCivil" id="radioCasado" value="casado" />
+                              Casado(a)
+                            </label>
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    </div>
+                        <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="radio">
+                            <label>
+                              <input type="radio" name="estadoCivil" id="radioUnionLibre" value="union libre" />
+                              Unión libre
+                            </label>
+                        </div>
+                        </div>
+                </div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="radio">
+                            <label>
+                              <input type="radio" name="estadoCivil" id="radioSoltero" value="soltero" />
+                              Soltero(a)
+                            </label>
+                        </div>
+                        </div>
+                </div>
+                        <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="radio">
+                            <label>
+                              <input type="radio" name="estadoCivil" id="radioDivorciado" value="divorciado" />
+                              Divorsiado(a)
+                            </label>
+                        </div>
+                        </div>
+                </div>
+                
+                  </div>
                 </div>
 
                 <div id="divCurpPaciente" class="form-group">
@@ -159,7 +196,31 @@
 
                 <div id="divSexoPaciente" class="form-group">
                     <label for="sexo">Sexo</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="sexo" id="sexo" placeholder="Sexo" type="text">
+                    
+            
+                <div class="row">
+                    <div class="col-lg-6">
+                      <div class="input-group">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="sexo" id="radioMasculino" value="masculino" />
+                              Masculino
+                            </label>
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="radio">
+                            <label>
+                              <input type="radio" name="sexo" id="radioFemenino" value="femenino" />
+                              Femenino
+                            </label>
+                        </div>
+                        </div>
+                </div>
+                
+                  </div>
                 </div>
 
                 <div id="divFechaNacimientoPaciente" class="form-group">
@@ -187,25 +248,412 @@
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="talla" id="talla" placeholder="Talla" type="text">
                 </div>
 
-                <div id="divTelefonoCasaPaciente" class="form-group">
-                    <label for="telCasa">Telefono de Casa</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="telCasa" id="telCasa" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono de Casa" type="text">
-                </div>
-
-                <div id="divTelefonoCelPaciente" class="form-group">
-                    <label for="telCel">Telefono Celular</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="telCel" id="telCel" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Celular" type="text">
-                </div>
-
                 <div id="divCorreoPaciente" class="form-group">
                     <label for="correo">Email</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text">
+                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="email" required="true">
                 </div>
 
                 <div id="divFacebookPaciente" class="form-group">
                     <label for="facebook">Facebook (www.facebook.com/alguien)</label>
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="facebook" id="facebook" placeholder="Facebook" type="text">
                 </div>
+            
+                <div class="box-body">
+                    <div class="box-header">
+                        <h3 class="box-title">Datos Clinicos</h3>
+                    </div>
+                    <div id="divDrograsPaciente" class="form-group">
+                        <label for="sexo">Uso de Drogas?</label>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="drogas" id="radioDrogasSi" value="1" >
+                                            Si
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="drogas" id="radioDrogasNo" value="0" >
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                           
+                    <div id="divAlcoholPaciente" class="form-group">
+                        <label for="sexo">Uso de Alcohol?</label>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="alcohol" id="radioAlcoholSi" value="1" >
+                                            Si
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="alcohol" id="radioAlcoholNo" value="0" >
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="divFumaPaciente" class="form-group">
+                        <label for="sexo">Fuma?</label>
+                    
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="fuma" id="radioFumaSi" value="1" >
+                                            Si
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="fuma" id="radioFumaNo" value="0" >
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div><!-- /.col-lg-6 -->
+                    </div><!-- /.box-body -->
+                </div>
+                <!--***************************************Alergias***********************************************-->
+                <div class="box-header">
+                    <h2 class="box-title">Alergias</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxPolen" value="polen">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Polen"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarPolen" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxAcaros" value="acaros">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Ácaros del polvo">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarAcaros" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxAnimales" value="animales">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Animales">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarAnimales" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxMedicamentos" value="medicamentos">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Medicamentos">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarMedicamentos" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxInsectos" value="insectos">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Picadura de insectos">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarInsectos" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxAlimentos" value="alimentos">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Alimentos">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <textarea class="form-control" name="especificarAlimentos" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+                <!--***************************************Cirugias***********************************************-->
+                <div class="box-header">
+                    <h2 class="box-title">Cirugías</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxInterna" value="interna">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Interna"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxExterna" value="externa">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Externa">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxMayor" value="mayor">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Mayor">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxMenor" value="menor">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Menor">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxCurativa" value="curativa">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Curativa">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxReparadora" value="reparadora">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Reparadora">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxPaliativa" value="paliativa">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Paliativa">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxCosmetica" value="cosmetica">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Cosmetica">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            
+                            <input class="form-control" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+                <!--***************************************Discapacidades***********************************************-->
+                <div class="box-header">
+                    <h2 class="box-title">Discapacidades</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxFisica" value="fisica">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Fisica"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxIntelectual" value="intelectual">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Intelectual">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxPsiquica" value="psiquica">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Psíquica">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxVisual" value="visual">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Visual">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxAuditiva" value="auditiva">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Auditiva">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="checkboxHabla" value="habla">
+                            </span>
+                            <input disabled="true" class="form-control" type="text" value="Habla">
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+                <!--***************************************Medicacion***********************************************-->
+                <div class="box-header">
+                    <h2 class="box-title">Medicación</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <label>Nombre del medicamento</label>
+                            <input class="form-control" type="text" value="" placeholder="Medicamentó"/>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <label>Frecuencia</label>
+                            <input class="form-control" type="text" value="" placeholder="Frecuencia"/>
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+                <!--***************************************Enfermedades Cronicas***********************************************-->
+                <div class="box-header">
+                    <h2 class="box-title">Enfermedades Crónicas</h2>
+                </div>
+                <div class="col-lg-6">
+                    <div style="margin-bottom:10px;" class="input-group">
+                        <label>Nombre enfermedad</label>
+                        <input class="form-control" name="enfermedadCronica" type="text" />
+                    </div><!-- /input-group -->
+                </div>
+                
+                <div class="col-lg-6">
+                    <div style="margin-bottom:10px;" class="input-group">
+                        <label>Tipo</label>
+                        <select name="tipoEnfermedad" class="form-control">
+                            <option value="-1">Seleccionar</option>
+                            <option value="diabetes">Diabetes</option>
+                            <option value="cardiovascular">Enfermedades cardiovasculares</option>
+                            <option value="obesidad">Obesidad</option>
+                            <option value="cancer">Cáncer</option>
+                            <option value="dislipidemias">Dislipidemias</option>
+                        </select>
+                    </div>
+                </div>
+                
+                
+                <div class="col-lg-6">
+                    <div style="margin-bottom:10px;" class="input-group">
+                        <label>Inicio de enfermedad</label>
+                        <input class="form-control" name="inicioEnfermedad" type="date" />
+                    </div><!-- /input-group -->
+                </div>
+                
             </div><!-- /.box-body -->
             
             <div class="box-body">
@@ -246,27 +694,6 @@
                 <div id="divCorreoCPaciente" class="form-group">
                     <label for="correoC">Email</label>
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correoC" id="correoC" placeholder="Email" type="text">
-                </div>
-            </div><!-- /.box-body -->
-            
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Datos Clínicos</h3>
-                </div>
-
-                <div id="divDrogasPaciente" class="form-group">
-                    <label for="usoDrogas">Usa Drogas</label>
-                    <input name="usoDrogas" id="usoDrogas" value="1" type="radio">
-                </div>
-
-                <div id="divAlcoholPaciente" class="form-group">
-                    <label for="usoAlcohol">Consume Alcohol</label>
-                    <input name="usoAlcohol" id="usoAlcohol" value="1" type="radio">
-                </div>
-
-                <div id="divFumaPaciente" class="form-group">
-                    <label for="fumador">Fuma</label>
-                    <input name="fumador" id="fumador" value="1" type="radio">
                 </div>
             </div><!-- /.box-body -->
 

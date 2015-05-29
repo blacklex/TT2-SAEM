@@ -286,8 +286,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         //paciente = pacienteDAO.findById();
                 
         //Establecemos los telefonos para el Paciente
-        telefonosPacientes.setTelefonoFijo(getTelefonoFijo());
-        telefonosPacientes.setTelefonoParticular(getTelefonoParticular());
+//        telefonosPacientes.setTelefonoFijo(getTelefonoFijo());
+//        telefonosPacientes.setTelefonoParticular(getTelefonoParticular());
         
         if(telefonoPacienteDAO.update(telefonosPacientes)) {
             actualizacionCorrecta = true;
@@ -327,8 +327,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         datosPersonales.setPeso(getPeso());
         datosPersonales.setAltura(getAltura());
         datosPersonales.setTalla(getTalla());
-        datosPersonales.setTelCasa(getTelCasa());
-        datosPersonales.setTelCel(getTelCel());
+//        datosPersonales.setTelCasa(getTelCasa());
+//        datosPersonales.setTelCel(getTelCel());
         datosPersonales.setCorreo(getCorreo());
         datosPersonales.setFacebook(getFacebook());
         
@@ -362,13 +362,13 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         //paciente = pacienteDAO.findById();
                 
         //Establecemos los datos de contacto para el Paciente
-        contactos.setNombreC(getNombreC());
-        contactos.setApellidoPaternoC(getApellidoPaternoC());
-        contactos.setApellidoMaternoC(getApellidoMaternoC());
-        contactos.setParentesco(getParentesco());
-        contactos.setCelular(getCelular());
-        contactos.setFacebookC(getFacebookC());
-        contactos.setCorreoC(getCorreoC());
+//        contactos.setNombreC(getNombreC());
+//        contactos.setApellidoPaternoC(getApellidoPaternoC());
+//        contactos.setApellidoMaternoC(getApellidoMaternoC());
+//        contactos.setParentesco(getParentesco());
+//        contactos.setCelular(getCelular());
+//        contactos.setFacebookC(getFacebookC());
+//        contactos.setCorreoC(getCorreoC());
         
         if(contactoDAO.update(contactos)) {
             actualizacionCorrecta = true;
@@ -490,8 +490,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         r3 = domicilioPacienteDAO.update(domicilioPacientes);
         
         //Establecemos los telefonos para el Paciente
-        telefonosPacientes.setTelefonoFijo(getTelefonoFijo());
-        telefonosPacientes.setTelefonoParticular(getTelefonoParticular());
+//        telefonosPacientes.setTelefonoFijo(getTelefonoFijo());
+//        telefonosPacientes.setTelefonoParticular(getTelefonoParticular());
         
         //Establecemos la clave foranea de telefonos del Paciente
         telefonosPacientes.setPacientes(paciente);
@@ -508,8 +508,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         datosPersonales.setPeso(getPeso());
         datosPersonales.setAltura(getAltura());
         datosPersonales.setTalla(getTalla());
-        datosPersonales.setTelCasa(getTelCasa());
-        datosPersonales.setTelCel(getTelCel());
+//        datosPersonales.setTelCasa(getTelCasa());
+//        datosPersonales.setTelCel(getTelCel());
         datosPersonales.setCorreo(getCorreo());
         datosPersonales.setFacebook(getFacebook());
         
@@ -519,14 +519,14 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         //Guardamos los datos de datos personales para el Paciente
         r5 = datosPersonalesDAO.update(datosPersonales);
         
-        //Establecemos los datos de contacto para el Paciente
-        contactos.setNombreC(getNombreC());
-        contactos.setApellidoPaternoC(getApellidoPaternoC());
-        contactos.setApellidoMaternoC(getApellidoMaternoC());
-        contactos.setParentesco(getParentesco());
-        contactos.setCelular(getCelular());
-        contactos.setFacebookC(getFacebookC());
-        contactos.setCorreoC(getCorreoC());
+//        //Establecemos los datos de contacto para el Paciente
+//        contactos.setNombreC(getNombreC());
+//        contactos.setApellidoPaternoC(getApellidoPaternoC());
+//        contactos.setApellidoMaternoC(getApellidoMaternoC());
+//        contactos.setParentesco(getParentesco());
+//        contactos.setCelular(getCelular());
+//        contactos.setFacebookC(getFacebookC());
+//        contactos.setCorreoC(getCorreoC());
         
         //Establecemos la clave foranea de contactos del Paciente
         contactos.setPacientes(paciente);
@@ -656,8 +656,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 Set telPaciente = paciente.getTelefonosPacienteses();
                 for (Iterator iterator3 = telPaciente.iterator(); iterator3.hasNext();) {
                     telefonosPacientes = (TelefonosPacientes) iterator3.next();
-                    setTelefonoFijo(telefonosPacientes.getTelefonoFijo());
-                    setTelefonoParticular(telefonosPacientes.getTelefonoParticular());
+//                    setTelefonoFijo(telefonosPacientes.getTelefonoFijo());
+//                    setTelefonoParticular(telefonosPacientes.getTelefonoParticular());
                     setNombreUsuario(userPaciente.getNombreUsuario());
                     System.out.println(getTelefonoFijo());
                     System.out.println(getTelefonoParticular());
@@ -686,8 +686,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     setPeso(datosPersonales.getPeso());
                     setAltura(datosPersonales.getAltura());
                     setTalla(datosPersonales.getTalla());
-                    setTelCasa(datosPersonales.getTelCasa());
-                    setTelCel(datosPersonales.getTelCel());
+//                    setTelCasa(datosPersonales.getTelCasa());
+//                    setTelCel(datosPersonales.getTelCel());
                     setCorreo(datosPersonales.getCorreo());
                     setFacebook(datosPersonales.getFacebook());
                     setNombreUsuario(userPaciente.getNombreUsuario());
@@ -720,13 +720,13 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 Set contacPaciente = paciente.getContactoses();
                 for (Iterator iterator3 = contacPaciente.iterator(); iterator3.hasNext();) {
                     contactos = (Contactos) iterator3.next();
-                    setNombreC(contactos.getNombreC());
-                    setApellidoPaternoC(contactos.getApellidoPaternoC());
-                    setApellidoMaternoC(contactos.getApellidoMaternoC());
-                    setParentesco(contactos.getParentesco());
-                    setCelular(contactos.getCelular());
-                    setFacebookC(contactos.getFacebookC());
-                    setCorreoC(contactos.getCorreoC());
+//                    setNombreC(contactos.getNombreC());
+//                    setApellidoPaternoC(contactos.getApellidoPaternoC());
+//                    setApellidoMaternoC(contactos.getApellidoMaternoC());
+//                    setParentesco(contactos.getParentesco());
+//                    setCelular(contactos.getCelular());
+//                    setFacebookC(contactos.getFacebookC());
+//                    setCorreoC(contactos.getCorreoC());
                     setNombreUsuario(userPaciente.getNombreUsuario());
                     System.out.println(getNombreC());
                     System.out.println(getApellidoPaternoC());
@@ -806,8 +806,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                         setEntidadFederativa(domicilioPacientes.getEntidadFederativa());
                         setCodigoPostal(domicilioPacientes.getCodigoPostal());
                         setId(domicilioPacientes.getId());
-                        setTelefonoFijo(telefonosPacientes.getTelefonoFijo());
-                        setTelefonoParticular(telefonosPacientes.getTelefonoParticular());
+//                        setTelefonoFijo(telefonosPacientes.getTelefonoFijo());
+//                        setTelefonoParticular(telefonosPacientes.getTelefonoParticular());
                         setEstadoCivil(datosPersonales.getEstadoCivil());
                         setCurp(datosPersonales.getCurp());
                         setSexo(datosPersonales.getSexo());
@@ -816,17 +816,17 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                         setPeso(datosPersonales.getPeso());
                         setAltura(datosPersonales.getAltura());
                         setTalla(datosPersonales.getTalla());
-                        setTelCasa(datosPersonales.getTelCasa());
-                        setTelCel(datosPersonales.getTelCel());
+//                        setTelCasa(datosPersonales.getTelCasa());
+//                        setTelCel(datosPersonales.getTelCel());
                         setCorreo(datosPersonales.getCorreo());
                         setFacebook(datosPersonales.getFacebook());
-                        setNombreC(contactos.getNombreC());
-                        setApellidoPaternoC(contactos.getApellidoPaternoC());
-                        setApellidoMaternoC(contactos.getApellidoMaternoC());
-                        setParentesco(contactos.getParentesco());
-                        setCelular(contactos.getCelular());
-                        setFacebookC(contactos.getFacebookC());
-                        setCorreoC(contactos.getCorreoC());
+//                        setNombreC(contactos.getNombreC());
+//                        setApellidoPaternoC(contactos.getApellidoPaternoC());
+//                        setApellidoMaternoC(contactos.getApellidoMaternoC());
+//                        setParentesco(contactos.getParentesco());
+//                        setCelular(contactos.getCelular());
+//                        setFacebookC(contactos.getFacebookC());
+//                        setCorreoC(contactos.getCorreoC());
                         setUsoDrogas(datosClinicos.isUsoDrogas());
                         setUsoAlcohol(datosClinicos.isUsoAlcohol());
                         setFumador(datosClinicos.isFumador());

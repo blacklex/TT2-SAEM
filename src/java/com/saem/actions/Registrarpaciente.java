@@ -178,8 +178,8 @@ public class Registrarpaciente implements SessionAware, ServletRequestAware{
         r3 = domicilioPacienteDAO.save(domicilioPaciente);
         
         //Establecemos los telefonos del Paciente
-        telefonoPaciente.setTelefonoFijo(telefonoFijo);
-        telefonoPaciente.setTelefonoParticular(telefonoParticular);
+//        telefonoPaciente.setTelefonoFijo(telefonoFijo);
+//        telefonoPaciente.setTelefonoParticular(telefonoParticular);
         
         //Establecemos la clave foranea de telefonos del Paciente
         telefonoPaciente.setPacientes(paciente);
@@ -196,8 +196,8 @@ public class Registrarpaciente implements SessionAware, ServletRequestAware{
         datosPersonales.setPeso(peso);
         datosPersonales.setAltura(altura);
         datosPersonales.setTalla(talla);
-        datosPersonales.setTelCasa(telCasa);
-        datosPersonales.setTelCel(telCel);
+//        datosPersonales.setTelCasa(telCasa);
+//        datosPersonales.setTelCel(telCel);
         datosPersonales.setCorreo(correo);
         datosPersonales.setFacebook(facebook);
         
@@ -208,14 +208,14 @@ public class Registrarpaciente implements SessionAware, ServletRequestAware{
         r5 = datosPersonalesDAO.save(datosPersonales);
         
         //Establecemos los datos de contacto del Paciente
-        contacto.setNombreC(nombreC);
-        contacto.setApellidoPaternoC(apellidoPaternoC);
-        contacto.setApellidoMaternoC(apellidoMaternoC);
-        contacto.setParentesco(parentesco);
-        contacto.setCelular(celular);
-        contacto.setFacebookC(facebookC);
-        contacto.setCorreoC(correoC);
-        
+//        contacto.setNombreC(nombreC);
+//        contacto.setApellidoPaternoC(apellidoPaternoC);
+//        contacto.setApellidoMaternoC(apellidoMaternoC);
+//        contacto.setParentesco(parentesco);
+//        contacto.setCelular(celular);
+//        contacto.setFacebookC(facebookC);
+//        contacto.setCorreoC(correoC);
+//        
         //Establecemos la clave foranea del contacto del Paciente
         contacto.setPacientes(paciente);
         
