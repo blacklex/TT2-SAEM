@@ -344,7 +344,7 @@
       
         <!-- ******************************************** REGISTRAR PACIENTE **************************************-->
         <!-- Registar Paciente -->
-        <action name="registrarPaciente" method="registrarPaciente" class="com.saem.actions.Registrarpaciente">
+        <action name="registrarPaciente" method="registrarPaciente" class="com.saem.actions.RegistrarPaciente">
             <interceptor-ref name="fileUpload">
                 <param name="maximumSize">2097152</param>
                 <param name="allowedTypes">
@@ -357,13 +357,13 @@
         <!-- Fin Registar Paciente -->
 
         <!-- Validar usuario -->
-        <action name="validarNombreUsuarioPaciente" method="validarNombreUsuarioPaciente" class="com.saem.actions.Registrarpaciente">
+        <action name="validarNombreUsuarioPaciente" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPaciente">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Validar usuario -->
 
         <!-- Recuperar Msjs de Registro-->
-        <action name="recuperarMensajeEstatusPaciente" method="recuperarEstatusPaciente" class="com.saem.actions.Registrarpaciente">
+        <action name="recuperarMensajeEstatusPaciente" method="recuperarEstatusPaciente" class="com.saem.actions.RegistrarPaciente">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Recuperar Msjs -->

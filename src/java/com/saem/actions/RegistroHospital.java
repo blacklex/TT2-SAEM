@@ -123,7 +123,7 @@ public class RegistroHospital implements SessionAware {
             while (parametros.hasMoreElements()) {
                 String nombreParametro = parametros.nextElement();
 
-                if (nombreParametro.startsWith("checkbox")) {
+                    if (nombreParametro.startsWith("checkbox")) {
                     Especialidades espcecTemp = new EspecialidadDAO().findById(Integer.parseInt(request.getParameter(nombreParametro)));
                     listaEspec.add(espcecTemp);
                     setEspecialidadesHosp.add(espcecTemp);

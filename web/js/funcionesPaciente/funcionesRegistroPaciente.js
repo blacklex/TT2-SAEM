@@ -4,32 +4,32 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function () {
-    $.getJSON("recuperarMensajeEstatusPaciente");
-    
-    $(document).ajaxSuccess(function (event, request, settings) {
-        
-        if (settings.url.match('recuperarMensajeEstatusPaciente') !== null) {
-            
-            var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
-            var textoAlert = $.parseJSON(request.responseText).textoAlert;
-            var estatusMensaje = $.parseJSON(request.responseText).estatusMensaje;
-
-            if (estatusMensaje === null)
-                return;
-
-            if (estatusMensaje === "success") {
-                $("#tituloDivAlertSuccess").html("<i class='icon fa fa-check'></i>" + tituloAlert);
-                $("#labelMensajeSuccess").html(textoAlert);
-                $("#divAlertSuccess").slideDown('slow').delay(2500).slideUp('slow');
-            } else if (estatusMensaje === "error") {
-                $("#tituloDivAlertError").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
-                $("#labelMensajeError").html(textoAlert);
-                $("#divAlertError").slideDown('slow').delay(2500).slideUp('slow');
-            }
-        }
-    });
-});
+//$(document).ready(function () {
+//    $.getJSON("recuperarMensajeEstatusPaciente");
+//    
+//    $(document).ajaxSuccess(function (event, request, settings) {
+//        
+//        if (settings.url.match('recuperarMensajeEstatusPaciente') !== null) {
+//            
+//            var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
+//            var textoAlert = $.parseJSON(request.responseText).textoAlert;
+//            var estatusMensaje = $.parseJSON(request.responseText).estatusMensaje;
+//
+//            if (estatusMensaje === null)
+//                return;
+//
+//            if (estatusMensaje === "success") {
+//                $("#tituloDivAlertSuccess").html("<i class='icon fa fa-check'></i>" + tituloAlert);
+//                $("#labelMensajeSuccess").html(textoAlert);
+//                $("#divAlertSuccess").slideDown('slow').delay(2500).slideUp('slow');
+//            } else if (estatusMensaje === "error") {
+//                $("#tituloDivAlertError").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
+//                $("#labelMensajeError").html(textoAlert);
+//                $("#divAlertError").slideDown('slow').delay(2500).slideUp('slow');
+//            }
+//        }
+//    });
+//});
 
 /*******************************************************************************/
 
@@ -42,17 +42,36 @@ $(function () {
 function validarCampos() {
     var valido = true;
     $(".control-label").remove();
-    $(".has-error").removeClass("has-error");
+    $("#divNombreUsuarioPaciente").removeClass("has-error");
+    $("#divClaveUsuarioPaciente").removeClass("has-error");
+    $("#divNss").removeClass("has-error");
+    $("#divNombrePaciente").removeClass("has-error");
+    $("#divApellidoPaternoPaciente").removeClass("has-error");
+    $("#divApellidoMaternoPaciente").removeClass("has-error");
+    $("#divUniMedicaPaciente").removeClass("has-error");
+    $("#divNoConsultorioPaciente").removeClass("has-error");
+    $("#divCallePaciente").removeClass("has-error");
+    $("#divColoniaPaciente").removeClass("has-error");
+    $("#divDelegacionPaciente").removeClass("has-error");
+    $("#divEntidadFederativaPaciente").removeClass("has-error");
+    $("#divCodigoPostalPaciente").removeClass("has-error");
+    $("#divCurpPaciente").removeClass("has-error");
+    $("#divFechaNacimientoPaciente").removeClass("has-error");
+    $("#divEdadPaciente").removeClass("has-error");
+    $("#divPesoPaciente").removeClass("has-error");
+    $("#divAlturaPaciente").removeClass("has-error");
+    $("#divTallaPaciente").removeClass("has-error");
+    
 
-    if ($("#nombreUsuario").val().length < 1) {
-        $("#divNombreUsuario").addClass("has-error");
-        $("#divNombreUsuario").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu Nombre de Usuario.</label>");
+    if ($("#nombreUsuario").val().length < 4) {
+        $("#divNombreUsuarioPaciente").addClass("has-error");
+        $("#divNombreUsuarioPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu Nombre de Usuario.</label>");
         valido = false;
     }
 
     if ($("#clave").val().length < 6) {
-        $("#divClaveUsuario").addClass("has-error");
-        $("#divClaveUsuario").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa una clave con mas de 6 caracteres.</label>");
+        $("#divClaveUsuarioPaciente").addClass("has-error");
+        $("#divClaveUsuarioPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa una clave con mas de 6 caracteres.</label>");
         valido = false;
     }
 
@@ -62,21 +81,21 @@ function validarCampos() {
         valido = false;
     }
     
-    if ($("#nombre").val().length < 1) {
-        $("#divNombre").addClass("has-error");
-        $("#divNombre").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu nombre.</label>");
+    if ($("#nombre").val().length < 6) {
+        $("#divNombrePaciente").addClass("has-error");
+        $("#divNombrePaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu nombre.</label>");
         valido = false;
     }
         
-    if ($("#apellidoPaterno").val().length < 1) {
-        $("#divApellidoPaterno").addClass("has-error");
-        $("#divApellidoPaterno").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu apellido paterno.</label>");
+    if ($("#apellidoPaterno").val().length < 5) {
+        $("#divApellidoPaternoPaciente").addClass("has-error");
+        $("#divApellidoPaternoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu apellido paterno.</label>");
         valido = false;
     }
     
-    if ($("#apellidoMaterno").val().length < 1) {
-        $("#divApellidoMaterno").addClass("has-error");
-        $("#divApellidoMaterno").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu apellido materno.</label>");
+    if ($("#apellidoMaterno").val().length < 5) {
+        $("#divApellidoMaternoPaciente").addClass("has-error");
+        $("#divApellidoMaternoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu apellido materno.</label>");
         valido = false;
     }
     
@@ -121,60 +140,29 @@ function validarCampos() {
         $("#divCodigoPostalPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un codigo postal valido.</label>");
         valido = false;
     }
-
-    if ($("#telefonoFijo").val().length < 17 || $("#telefonoFijo").val().search('_') !== -1) {
-        $("#divTelefonoFijoPaciente").addClass("has-error");
-        $("#divTelefonoFijoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un telefono fijo valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#telefonoParticular").val().length < 17 || $("#telefonoParticular").val().search('_') !== -1) {
-        $("#divTelefonoParticularPaciente").addClass("has-error");
-        $("#divTelefonoParticularPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un telefono particular valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#estadoCivil").val().length < 3) {
-        $("#divEdoCivilPaciente").addClass("has-error");
-        $("#divEdoCivilPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el estado civil.</label>");
-        valido = false;
-    }
-
-    if ($("#curp").val().length < 18) {
+        
+    if ($("#curp").val().length < 17) {
         $("#divCurpPaciente").addClass("has-error");
         $("#divCurpPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un CURP valido.</label>");
         valido = false;
-
     }
-    
-    if ($("#sexo").val().length < 1) {
-        $("#divSexoPaciente").addClass("has-error");
-        $("#divSexoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el sexo.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#fechaNacimiento").val().length < 6) {
+        
+    if ($("#fechaNacimiento").val().length < 10) {
         $("#divFechaNacimientoPaciente").addClass("has-error");
         $("#divFechaNacimientoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa la fecha de nacimiento.</label>");
         valido = false;
-
     }
     
     if ($("#edad").val().length < 1) {
         $("#divEdadPaciente").addClass("has-error");
         $("#divEdadPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa una edad valida.</label>");
         valido = false;
-
     }
     
     if ($("#peso").val().length < 2) {
         $("#divPesoPaciente").addClass("has-error");
         $("#divPesoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un peso valido.</label>");
         valido = false;
-
     }
     
     if ($("#altura").val().length < 1) {
@@ -190,91 +178,14 @@ function validarCampos() {
         valido = false;
 
     }
-    
-    if ($("#telCasa").val().length < 17 || $("#telCasa").val().search('_') !== -1) {
-        $("#divTelefonoCasaPaciente").addClass("has-error");
-        $("#divTelefonoCasaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un telefono valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#telCel").val().length < 17 || $("#telCel").val().search('_') !== -1) {
-        $("#divTelefonoCelPaciente").addClass("has-error");
-        $("#divTelefonoCelPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un telefono valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#correo").val().length < 3) {
-        $("#divCorreoPaciente").addClass("has-error");
-        $("#divCorreoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un correo valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#facebook").val().length < 5) {
-        $("#divFacebookPaciente").addClass("has-error");
-        $("#divFacebookPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa Facebook.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#nombreC").val().length < 1) {
-        $("#divNombreCPaciente").addClass("has-error");
-        $("#divNombreCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un nombre.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#apellidoPaternoC").val().length < 1) {
-        $("#divApellidoPaternoCPaciente").addClass("has-error");
-        $("#divApellidoPaternoCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un apellido paterno.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#apellidoMaternoC").val().length < 1) {
-        $("#divApellidoMaternoCPaciente").addClass("has-error");
-        $("#divApellidoMaternoCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un apellido materno.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#parentesco").val().length < 1) {
-        $("#divParentescoCPaciente").addClass("has-error");
-        $("#divParentescoCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el parentesco.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#celular").val().length < 17 || $("#celular").val().search('_') !== -1) {
-        $("#divCelularCPaciente").addClass("has-error");
-        $("#divCelularCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un telefono valido.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#facebookC").val().length < 4) {
-        $("#divFacebookCPaciente").addClass("has-error");
-        $("#divFacebookCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa Facebook.</label>");
-        valido = false;
-
-    }
-    
-    if ($("#correoC").val().length < 4) {
-        $("#divCorreoCPaciente").addClass("has-error");
-        $("#divCorreoCPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa correo.</label>");
-        valido = false;
-
-    }
 
     if (!valido) {
         $('html, body').animate({scrollTop: 0}, 'fast');
-        $("#divAlert").slideDown('slow').delay(2500).slideUp('slow');
+        $("#divAlertPaciente").slideDown('slow').delay(2500).slideUp('slow');
         return valido;
     }
 
-    $("#barraCargar").slideDown(100);
+    $("#barraCargarPaciente").slideDown(100);
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -282,27 +193,342 @@ function validarCampos() {
         data: {nombreUsuario: $("#nombreUsuario").val()}
     })
             .done(function (msg) {
-                $("#barraCargar").slideUp(100);
+                $("#barraCargarPaciente").slideUp(100);
                 if (msg.estatusMensaje === "nombreNoValido") {
                     $('html, body').animate({scrollTop: 0}, 'fast');
-                    $("#barraCargar").slideUp(100);
-                    $("#tituloDivAlertError").html("<i class='icon fa fa-ban'></i>El Usuario ya existe");
-                    $("#labelMensajeError").html("El nombre de usuario ya existe, escribe uno nuevo.");
+                    $("#barraCargarPaciente").slideUp(100);
+                    $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>El Usuario ya existe");
+                    $("#labelMensajeErrorPaciente").html("El nombre de usuario ya existe, escribe uno nuevo.");
 
                     $("#divNombreUsuario").addClass("has-error");
                     $("#divNombreUsuario").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  El nombre de usuario ya existe, escribe uno nuevo.</label>");
 
                     $("#divAlertError").slideDown('slow').delay(2500).slideUp('slow');
                     valido = false;
-                    $("#barraCargar").slideUp(100);
+                    $("#barraCargarPaciente").slideUp(100);
                     return valido;
                 } else if (msg.estatusMensaje === "nombreValido") {
                     valido = true;
-                    $("#barraCargar").slideDown(100);
+                    $("#barraCargarPaciente").slideDown(100);
                     document.forms["formNuevoPaciente"].submit();
                 }
             });
     return false;
 }
 
+function validarCheckboxAlergias() {
+    if( $('#checkboxPolen').is(':checked') ) {
+        $("#especificarPolen").attr('disabled', false);
+        $("#especificarPolen").focus();
+    }
+    else {
+        $("#especificarPolen").attr('disabled', true);
+    }
+    
+    if( $('#checkboxAcaros').is(':checked') ) {
+        $("#especificarAcaros").attr('disabled', false);
+        $("#especificarAcaros").focus();
+    }
+    else {
+        $("#especificarAcaros").attr('disabled', true);
+    }
+    
+    if( $('#checkboxAnimales').is(':checked') ) {
+        $("#especificarAnimales").attr('disabled', false);
+        $("#especificarAnimales").focus();
+    }
+    else {
+        $("#especificarAnimales").attr('disabled', true);
+    }
+    
+    if( $('#checkboxMedicamentos').is(':checked') ) {
+        $("#especificarMedicamentos").attr('disabled', false);
+        $("#especificarMedicamentos").focus();
+    }
+    else {
+        $("#especificarMedicamentos").attr('disabled', true);
+    }
+    
+    if( $('#checkboxInsectos').is(':checked') ) {
+        $("#especificarInsectos").attr('disabled', false);
+        $("#especificarInsectos").focus();
+    }
+    else {
+        $("#especificarInsectos").attr('disabled', true);
+    }
+    
+    if( $('#checkboxAlimentos').is(':checked') ) {
+        $("#especificarAlimentos").attr('disabled', false);
+        $("#especificarAlimentos").focus();
+    }
+    else {
+        $("#especificarAlimentos").attr('disabled', true);
+    }
+}
 
+function validarCheckboxCirugias() {
+    if( $('#checkboxInterna').is(':checked') ) {
+        $("#noCirugiaInterna").attr('disabled', false);
+        $("#noCirugiaInterna").focus();
+    }
+    else {
+        $("#noCirugiaInterna").attr('disabled', true);
+        $("#noCirugiaInterna").val("");
+        
+    }
+    
+    if( $('#checkboxExterna').is(':checked') ) {
+        $("#noCirugiaExterna").attr('disabled', false);
+        $("#noCirugiaExterna").focus();
+    }
+    else {
+        $("#noCirugiaExterna").attr('disabled', true);
+        $("#noCirugiaExterna").val("");
+    }
+    
+    if( $('#checkboxMayor').is(':checked') ) {
+        $("#noCirugiaMayor").attr('disabled', false);
+        $("#noCirugiaMayor").focus();
+    }
+    else {
+        $("#noCirugiaMayor").attr('disabled', true);
+        $("#noCirugiaMayor").val("");
+    }
+    
+    if( $('#checkboxMenor').is(':checked') ) {
+        $("#noCirugiaMenor").attr('disabled', false);
+        $("#noCirugiaMenor").focus();
+    }
+    else {
+        $("#noCirugiaMenor").attr('disabled', true);
+        $("#noCirugiaMenor").val("");
+    }
+    
+    if( $('#checkboxCurativa').is(':checked') ) {
+        $("#noCirugiaCurativa").attr('disabled', false);
+        $("#noCirugiaCurativa").focus();
+    }
+    else {
+        $("#noCirugiaCurativa").attr('disabled', true);
+        $("#noCirugiaCurativa").val("");
+    }
+    
+    if( $('#checkboxReparadora').is(':checked') ) {
+        $("#noCirugiaReparadora").attr('disabled', false);
+        $("#noCirugiaReparadora").focus();
+    }
+    else {
+        $("#noCirugiaReparadora").attr('disabled', true);
+        $("#noCirugiaReparadora").val("");
+    }
+    
+    if( $('#checkboxPaliativa').is(':checked') ) {
+        $("#noCirugiaPaliativa").attr('disabled', false);
+        $("#noCirugiaPaliativa").focus();
+    }
+    else {
+        $("#noCirugiaPaliativa").attr('disabled', true);
+        $("#noCirugiaPaliativa").val("");
+    }
+    
+    if( $('#checkboxCosmetica').is(':checked') ) {
+        $("#noCirugiaCosmetica").attr('disabled', false);
+        $("#noCirugiaCosmetica").focus();
+    }
+    else {
+        $("#noCirugiaCosmetica").attr('disabled', true);
+        $("#noCirugiaCosmetica").val("");
+    }
+       
+}
+
+$(document).ready(function() {
+    var counter = 1;
+    
+    $("#agregarEnfermedad").click(function () {
+        
+	if(counter > 5) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var newTextBoxDiv = $(document.createElement('div')).attr("id", 'enfermedadesCronicas' + counter);
+        newTextBoxDiv.attr("class", 'row');
+ 
+	newTextBoxDiv.after().html(
+                                    '<div class="col-lg-4">' +
+                                        '<div style="margin-bottom:10px;" class="form-group">' +
+                                            '<label>Nombre enfermedad #'+ counter + ' : </label>' +
+                                            '<input class="form-control" type="text" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '" value="" placeholder="Nombre enfermedad'+counter+'" />' + 
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="col-lg-4">'+
+                                        '<label>Tipo</label>'+
+                                        '<select name="tipoEnfermedad'+ counter +'" class="form-control">'+
+                                            '<option value="-1">Seleccionar</option>'+
+                                            '<option value="diabetes">Diabetes</option>'+
+                                            '<option value="cardiovascular">Enfermedades cardiovasculares</option>'+
+                                            '<option value="obesidad">Obesidad</option>'+
+                                            '<option value="cancer">Cáncer</option>'+
+                                            '<option value="dislipidemias">Dislipidemias</option>'+
+                                        '</select>'+
+                                    '</div>'+
+                                    '<div class="col-lg-4">'+
+                                        '<div id="divInicioEnfermedadPaciente" class="form-group">'+
+                                            '<label for="inicioEnfermedad">Inicio de enfermedad</label>'+
+                                            '<div class="input-group">'+
+                                                '<div class="input-group-addon">'+
+                                                    '<i class="fa fa-calendar"></i>'+
+                                                '</div>'+
+                                                '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="inicioEnfermedad'+ counter +'" id="inicioEnfermedad'+counter+'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask type="text">'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>');
+        newTextBoxDiv.appendTo("#TextBoxesGroup");
+        counter++;
+    });
+    
+    $("#eliminarEnfermedad").click(function () {
+        if(counter === 1) {
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+        counter--;
+        $("#enfermedadesCronicas" + counter).remove();
+    });
+//*********************************************************************************************************************************
+    var counterContacto = 1;
+    
+    $("#agregarContacto").click(function () {
+        if(counterContacto > 8) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'contactoPaciente' + counterContacto);
+ 
+	newTextBoxDiv.after().html( '<label for="nombreC">Contacto #'+counterContacto+'</label>'+
+                                    '<div id="divNombreCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="nombreC">Nombre</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreContacto'+counterContacto+'" id="nombreContacto'+counterContacto+'" placeholder="Nombre" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divApellidoPaternoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="apellidoPaternoC">Apellido Paterno</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaternoContacto'+counterContacto+'" id="apellidoPaternoContacto'+counterContacto+'" placeholder="Apellido Paterno" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divApellidoMaternoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="apellidoMaternoC">Apellido Materno</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaternoContacto'+counterContacto+'" id="apellidoMaternoContacto'+counterContacto+'" placeholder="Apellido Materno" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divParentescoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="parentesco">Parentesco</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="parentescoContacto'+counterContacto+'" id="parentescoContacto'+counterContacto+'" placeholder="Parentesco" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divCelularCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="celular">Telefono Celular</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" name="celularContacto'+counterContacto+'" id="celularContacto'+counterContacto+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Celular" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divFacebookCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="facebookC">Facebook (www.facebook.com/alguien)</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="facebookContacto'+counterContacto+'" id="facebookContacto'+counterContacto+'" placeholder="Facebook" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divCorreoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="correoC">Email</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="correoContacto'+counterContacto+'" id="correoContacto'+counterContacto+'" placeholder="Email" type="text">'+
+                                    '</div>');
+        
+
+	newTextBoxDiv.appendTo("#TextBoxesGroupContacto");
+	counterContacto++;
+     });
+ 
+     $("#eliminarContacto").click(function () {
+         if(counterContacto === 1){
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+         counterContacto--;
+         $("#contactoPaciente" + counterContacto).remove();
+     });
+     
+//*************************************************************************************************************************************************
+
+var counterTelefono = 1;
+    
+    $("#agregarTelefono").click(function () {
+        if(counterTelefono > 8) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'telefonoPaciente' + counterTelefono);
+ 
+	newTextBoxDiv.after().html(
+                                    '<div id="divTelefonoFijoPaciente" class="form-group">'+
+                                        '<label for="telefonoPaciente">Teléfono #'+counterTelefono+'</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" name="numTelefono'+counterTelefono+'" id="numTelefono'+counterTelefono+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="No. Telefono" type="text">'+
+                                    '</div>');
+        
+
+	newTextBoxDiv.appendTo("#TextBoxesGroupTelefonos");
+	counterTelefono++;
+     });
+ 
+     $("#eliminarTelefono").click(function () {
+         if(counterTelefono === 1){
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+         counterTelefono--;
+         $("#telefonoPaciente" + counterTelefono).remove();
+     });
+//******************************************************************************************************************************************************************
+
+var counterMedicamento = 1;
+    
+    $("#agregarMedicamento").click(function () {
+        
+	if(counterMedicamento > 5) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var newTextBoxDiv = $(document.createElement('div')).attr("id", 'medicamentos' + counterMedicamento);
+        newTextBoxDiv.attr("class", 'row');
+ 
+	newTextBoxDiv.after().html(
+                                    '<div class="col-lg-6">'+
+                                        '<div style="margin-bottom:10px;" class="form-group">'+
+                                            '<label>Nombre del medicamento #'+counterMedicamento+'</label>'+
+                                            '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó"/>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="col-lg-6">'+
+                                        '<div style="margin-bottom:10px;" class="form-group">'+
+                                            '<label>Frecuencia</label>'+
+                                            '<input class="form-control" type="text" value="" name="frecuencia'+counterMedicamento+'" id="frecuencia'+counterMedicamento+'" placeholder="Frecuencia"/>'+
+                                        '</div>'+
+                                    '</div>');
+        newTextBoxDiv.appendTo("#TextBoxesGroupMedicamentos");
+        counterMedicamento++;
+    });
+    
+    $("#eliminarMedicamento").click(function () {
+        if(counterMedicamento === 1) {
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+        counterMedicamento--;
+        $("#medicamentos" + counterMedicamento).remove();
+    });
+ });
