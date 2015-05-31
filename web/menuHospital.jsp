@@ -52,9 +52,9 @@
                 <i class="fa fa-users"></i> <span>Pacientes</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pantallaAltaPaciente"><i class="fa fa-circle-o"></i> Registrar</a></li>
-                <li><a href="pantallaModificarPaciente"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
-                <li><a href="pantallaConsultarPacientes"><i class="fa fa-circle-o"></i> Consultar</a></li>
+                <li><a href="pantallaAltaPaciente"><i class="fa fa-pencil"></i> Registrar</a></li>
+                <li><a href="pantallaModificarPaciente"><i class="fa fa-edit"></i> Modificar / Eliminar</a></li>
+                <li><a href="pantallaConsultarPacientes"><i class="fa fa-eye"></i> Consultar</a></li>
               
               </ul>
             </li>

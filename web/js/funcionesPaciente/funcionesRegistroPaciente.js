@@ -343,11 +343,11 @@ function validarCheckboxCirugias() {
 }
 
 $(document).ready(function() {
-    var counter = 1;
+    var counter = 0;
     
     $("#agregarEnfermedad").click(function () {
         
-	if(counter > 5) {
+	if(counter > 4) {
             alert("Limite alcanzado");
             return false;
         }
@@ -358,7 +358,7 @@ $(document).ready(function() {
 	newTextBoxDiv.after().html(
                                     '<div class="col-lg-4">' +
                                         '<div style="margin-bottom:10px;" class="form-group">' +
-                                            '<label>Nombre enfermedad #'+ counter + ' : </label>' +
+                                            '<label>Nombre enfermedad #'+ (counter + 1)+ ' : </label>' +
                                             '<input class="form-control" type="text" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '" value="" placeholder="Nombre enfermedad'+counter+'" />' + 
                                         '</div>'+
                                     '</div>'+
@@ -389,7 +389,7 @@ $(document).ready(function() {
     });
     
     $("#eliminarEnfermedad").click(function () {
-        if(counter === 1) {
+        if(counter === 0) {
             alert("Se borraron todas las entradas");
             return false;
         }
@@ -398,17 +398,17 @@ $(document).ready(function() {
         $("#enfermedadesCronicas" + counter).remove();
     });
 //*********************************************************************************************************************************
-    var counterContacto = 1;
+    var counterContacto = 0;
     
     $("#agregarContacto").click(function () {
-        if(counterContacto > 8) {
+        if(counterContacto > 7) {
             alert("Limite alcanzado");
             return false;
         }
         
 	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'contactoPaciente' + counterContacto);
  
-	newTextBoxDiv.after().html( '<label for="nombreC">Contacto #'+counterContacto+'</label>'+
+	newTextBoxDiv.after().html( '<label for="nombreC">Contacto #'+ (counterContacto + 1) +'</label>'+
                                     '<div id="divNombreCPaciente'+counterContacto+'" class="form-group">'+
                                         '<label for="nombreC">Nombre</label>'+
                                         '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreContacto'+counterContacto+'" id="nombreContacto'+counterContacto+'" placeholder="Nombre" type="text">'+
@@ -450,7 +450,7 @@ $(document).ready(function() {
      });
  
      $("#eliminarContacto").click(function () {
-         if(counterContacto === 1){
+         if(counterContacto === 0){
             alert("Se borraron todas las entradas");
             return false;
         }
@@ -461,10 +461,10 @@ $(document).ready(function() {
      
 //*************************************************************************************************************************************************
 
-var counterTelefono = 1;
+var counterTelefono = 0;
     
     $("#agregarTelefono").click(function () {
-        if(counterTelefono > 8) {
+        if(counterTelefono > 7) {
             alert("Limite alcanzado");
             return false;
         }
@@ -473,7 +473,7 @@ var counterTelefono = 1;
  
 	newTextBoxDiv.after().html(
                                     '<div id="divTelefonoFijoPaciente" class="form-group">'+
-                                        '<label for="telefonoPaciente">Teléfono #'+counterTelefono+'</label>'+
+                                        '<label for="telefonoPaciente">Teléfono #'+ (counterTelefono + 1) +'</label>'+
                                         '<input kl_virtual_keyboard_secure_input="on" name="numTelefono'+counterTelefono+'" id="numTelefono'+counterTelefono+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="No. Telefono" type="text">'+
                                     '</div>');
         
@@ -483,7 +483,7 @@ var counterTelefono = 1;
      });
  
      $("#eliminarTelefono").click(function () {
-         if(counterTelefono === 1){
+         if(counterTelefono === 0){
             alert("Se borraron todas las entradas");
             return false;
         }
@@ -493,11 +493,11 @@ var counterTelefono = 1;
      });
 //******************************************************************************************************************************************************************
 
-var counterMedicamento = 1;
+var counterMedicamento = 0;
     
     $("#agregarMedicamento").click(function () {
         
-	if(counterMedicamento > 5) {
+	if(counterMedicamento > 4) {
             alert("Limite alcanzado");
             return false;
         }
@@ -508,7 +508,7 @@ var counterMedicamento = 1;
 	newTextBoxDiv.after().html(
                                     '<div class="col-lg-6">'+
                                         '<div style="margin-bottom:10px;" class="form-group">'+
-                                            '<label>Nombre del medicamento #'+counterMedicamento+'</label>'+
+                                            '<label>Nombre del medicamento #'+ (counterMedicamento + 1) +'</label>'+
                                             '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó"/>'+
                                         '</div>'+
                                     '</div>'+
@@ -523,7 +523,7 @@ var counterMedicamento = 1;
     });
     
     $("#eliminarMedicamento").click(function () {
-        if(counterMedicamento === 1) {
+        if(counterMedicamento === 0) {
             alert("Se borraron todas las entradas");
             return false;
         }

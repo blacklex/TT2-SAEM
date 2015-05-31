@@ -37,7 +37,7 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Administrador</b></h3>
+            <h3 class="box-header"><label>Consultar Administrador</label></label></h3>
         </div>
         <div id="gridAdministradores" class="box-body">
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
@@ -93,7 +93,7 @@
             <!--Busqueda por Filtro-->
             <form class="sidebar-form" method="get" action="">
                 <div class="box-header">
-                    <h3 class="box-title">Filtrar por usuario:</h3>
+                    <h3 class="box-title"><label>Filtrar por usuario:</label></h3>
                 </div>
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
@@ -108,7 +108,8 @@
         </div>
         <div id="datosAccesoAdministrador" class="box-body" style='display:none;'>
             <div class="box-header">
-                <h3 class="box-title">Datos de acceso</h3>
+                <i class="fa fa-key"></i>
+                <h3 class="box-title"><label>Datos de acceso</label></h3>
             </div>
             <div id="divNombreUsuario" class="form-group">
                 <label for="nombreUsuario">Nombre de usuario</label>
@@ -127,7 +128,8 @@
         <s:hidden name="nombreUsuario" id="nomUs"/>
         <div id="datosPersonalesAdministrador" class="box-body" style='display:none;'>
             <div class="box-header">
-                <h3 class="box-title">Datos Personales</h3>
+                <i class="fa fa-info-circle"></i>
+                <h3 class="box-title"><label>Datos Personales</label></h3>
             </div>
 
             <div id="divNombre" class="form-group">
@@ -166,7 +168,8 @@
         
         <div id="datosDireccionAdministrador" class="box-body" style='display:none;'>
             <div class="box-header">
-                <h3 class="box-title">Dirección</h3>
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Dirección</label></h3>
             </div>
             <s:hidden name="id" id="idDomAdmin"/>
             <s:hidden name="telParticular" id="telPart"/>
@@ -204,13 +207,14 @@
     <!--**********************************************Busqueda por Filtro*******************************************************-->
     <div id="datosAdministradorPorFiltro" class="box box-primary" style='display:none;'>
         <div class="box-header">
-            <h3 class="box-header"><b>Datos del Administrador </b></h3>
+            <h3 class="box-header"><label>Datos del Administrador</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Datos de inicio de sesión</h3>
+                <i class="fa fa-key"></i>
+                <h3 class="box-title"><label>Datos acceso</label></h3>
             </div>
 
             <div id="divNombreUsuario" class="form-group">
@@ -227,7 +231,8 @@
 
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Datos Personales</h3>
+                <i class="fa fa-info-circle"></i>
+                <h3 class="box-title"><label>Datos Personales</label></h3>
             </div>
 
             <div id="divNombre" class="form-group">
@@ -263,7 +268,8 @@
 
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Dirección</h3>
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Dirección</label></h3>
             </div>
 
             <div id="divCalleAdministrador" class="form-group">

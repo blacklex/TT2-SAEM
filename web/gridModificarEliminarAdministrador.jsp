@@ -37,7 +37,7 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar/Eliminar Administrador</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Administrador</label></h3>
         </div>
         <div id="gridAdministradores" class="box-body">
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
@@ -98,7 +98,7 @@
             <!--Busqueda por Filtro-->
             <form class="sidebar-form" method="get" action="">
                 <div class="box-header">
-                    <h3 class="box-title">Filtrar por usuario:</h3>
+                    <h3 class="box-title"><label>Filtrar por usuario</label></h3>
                 </div>
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
@@ -128,7 +128,8 @@
            <form name="formEditarAccesoAdministrador" action="editarAccesoAdministrador" onsubmit="return validarCamposAcceso();" method="post" role="form">
             <div id="datosAccesoAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Datos de acceso</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Editar Datos de acceso</label></h3>
                 </div>
                 <div id="divNombreUsuario" class="form-group">
                     <label for="nombreUsuario">Nombre de usuario</label>
@@ -149,7 +150,8 @@
             <s:hidden name="nombreUsuario" id="nomUs"/>
             <div id="datosPersonalesAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Datos Personales</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Editar Datos Personales</label></h3>
                 </div>
 
                 <div id="divNombre" class="form-group">
@@ -195,7 +197,8 @@
         <s:form name="formEditarDireccionAdministrador" action="editarDireccionAdministrador" onsubmit="return validarCamposDireccion();" method="post" role="form">
             <div id="datosDireccionAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Editar Dirección</label></h3>
                 </div>
                 <s:hidden name="id" id="idDomAdmin"/>
                 <s:hidden name="telParticular" id="telPart"/>
@@ -237,13 +240,14 @@
     <s:form enctype="multipart/form-data" name="formNuevoAdministrador" action="editarAdminPorFiltro"  method="post" role="form">
         <div id="datosAdministradorPorFiltro" class="box box-primary" style='display:none;'>
             <div class="box-header">
-                <h3 class="box-header"><b>Los siguientes datos del Administrador seran eliminados/editados</b></h3>
+                <h3 class="box-header"><label>Los siguientes datos del Administrador seran eliminados/editados</label></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Datos de acceso</label></h3>
                 </div>
 
                 <div id="divNombreUsuario" class="form-group">
@@ -260,7 +264,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos Personales</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Datos Personales</label></h3>
                 </div>
 
                 <div id="divNombre" class="form-group">
@@ -301,7 +306,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Dirección</label></h3>
                 </div>
 
                 <div id="divCalleAdministrador" class="form-group">

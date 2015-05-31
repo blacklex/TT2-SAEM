@@ -156,14 +156,14 @@ public class RegistrarPaciente implements SessionAware {
     public String registrarPaciente() throws ParseException, FileNotFoundException, IOException {
         MultiPartRequestWrapper multiWrapper =(MultiPartRequestWrapper) ServletActionContext.getRequest();
         Enumeration<String> parametros;
-//        Boolean registroCorrecto = false;
-//        Pacientes paciente = new Pacientes();
-//        Usuarios userPaciente = new Usuarios();
-//        TelefonosPacientes telefonoPaciente = new TelefonosPacientes();
-//        DomicilioPacientes domicilioPaciente = new DomicilioPacientes();
-//        DatosPersonales datosPersonales = new DatosPersonales();
-//        DatosClinicos datosClinicos = new DatosClinicos();
-//        Contactos contacto = new Contactos();
+        Boolean registroCorrecto = false;
+        Pacientes paciente = new Pacientes();
+        Usuarios userPaciente = new Usuarios();
+        TelefonosPacientes telefonoPaciente = new TelefonosPacientes();
+        DomicilioPacientes domicilioPaciente = new DomicilioPacientes();
+        DatosPersonales datosPersonales = new DatosPersonales();
+        DatosClinicos datosClinicos = new DatosClinicos();
+        Contactos contacto = new Contactos();
 //        
 //        Date date = new Date();
 //        DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -182,8 +182,57 @@ public class RegistrarPaciente implements SessionAware {
 //    }
 
            if (nombreParametro.startsWith("numTelefono")) {
-                System.out.println("Parametro: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+                System.out.println("Parametro Telefono Paciente: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
            }
+           
+           if (nombreParametro.startsWith("medicamento")) {
+                System.out.println("Parametro Medicamento: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("frecuencia")) {
+                System.out.println("Parametro Frecuencia: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("enfermedadCronica")) {
+                System.out.println("Parametro enfermedadCronica: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("tipoEnfermedad")) {
+                System.out.println("Parametro tipoEnfermedad: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("inicioEnfermedad")) {
+                System.out.println("Parametro inicioEnfermedad: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           ///////////////////
+           if (nombreParametro.startsWith("nombreContacto")) {
+                System.out.println("Parametro nombreContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("apellidoPaternoContacto")) {
+                System.out.println("Parametro apellidoPaternoContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("apellidoMaternoContacto")) {
+                System.out.println("Parametro apellidoMaternoContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("parentescoContacto")) {
+                System.out.println("Parametro parentescoContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("celularContacto")) {
+                System.out.println("Parametro celularContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("facebookContacto")) {
+                System.out.println("Parametro facebookContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }
+           
+           if (nombreParametro.startsWith("correoContacto")) {
+                System.out.println("Parametro correoContacto: " + Arrays.toString(multiWrapper.getParameterValues(nombreParametro)));
+           }           
+           
         }
 
         System.out.println();

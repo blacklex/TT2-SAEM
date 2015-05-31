@@ -45,8 +45,8 @@
               </a>
               <ul class="treeview-menu">
                   <li><a href="pantallaMapaPaciente"><i class="fa fa-map-marker"></i> Mi ubicación</a></li>
-                <li><a href="pantallaEnviarAlerta"><i class="fa fa-circle-o"></i> Enviar Alerta</a></li>
-                <li><a href="pantallaHospitalesCercanos"><i class="fa fa-circle-o"></i> Hospitales Cercanos</a></li>
+                <li><a href="pantallaEnviarAlerta"><i class="fa fa-edit"></i> Enviar Alerta</a></li>
+                <li><a href="pantallaHospitalesCercanos"><i class="fa fa-eye"></i> Hospitales Cercanos</a></li>
               </ul>
             </li>
              <!--  FIN MENU HOSPITALES CRUD    -->
@@ -54,7 +54,7 @@
             <!--  INCIA MENU CONSULTAR HOSPITALES    -->
             <li>
               <a href="pantallaConsultarMiInformacion">
-                <i class="fa fa-user"></i> <span>Mi Informacion</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                <i class="fa fa-info"></i> <span>Mi Informacion</span> <!--<small class="label pull-right bg-green">Hot</small>-->
               </a>
             </li> 
              <!--  FIN MENU CONSULTAR HOSPITALES    -->

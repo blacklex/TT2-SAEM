@@ -40,7 +40,7 @@
         <s:form enctype="multipart/form-data" name="formNuevoPaciente" action="registrarPaciente" onsubmit="return validarCampos();"  method="post" role="form">
             <div class="box-body">
                 <div class="box-header">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-key"></i>
                     <h3 class="box-title"><label>Datos de inicio de sesión</label></h3>
                 </div>
                 <div id="divNombreUsuarioPaciente" class="form-group">
@@ -228,13 +228,15 @@
                         <i class="fa fa-phone"></i>
                         <h3 class="box-title"><label>Números Telefónicos</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                             <button title="Agregar Teléfono" type="button" id="agregarTelefono" class="btn btn-box-tool btn-primary">
                                 <i class="fa fa-plus-circle"></i>
                             </button>
-                            <button title="Eliminar Teléfono" type="button" id="eliminarTelefono" class="btn btn-box-tool btn-danger"><i class="fa fa-times"></i></button>
+                            <button title="Eliminar Teléfono" type="button" id="eliminarTelefono" class="btn btn-box-tool btn-danger">
+                                <i class="fa fa-times"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="box-body" id="TextBoxesGroupTelefonos">
@@ -338,7 +340,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><label>Alergias</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -437,7 +439,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><label>Cirugías</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -564,7 +566,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><label>Discapacidades</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -627,7 +629,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><label>Medicamentos</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                             <button title="Agregar Medicamento" type="button" id="agregarMedicamento" class="btn btn-box-tool btn-primary">
@@ -660,7 +662,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><label>Enfermedades Crónicas</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                             <button title="Agregar Enfermedad" type="button" id="agregarEnfermedad" class="btn btn-box-tool btn-primary">
@@ -708,9 +710,10 @@
             <div class="box-body">
                 <div class="box box-primary collapsed-box box-solid">
                     <div class="box-header with-border">
+                        <i class="fa fa-book"></i>
                         <h3 class="box-title"><label>Contactos del Paciente</label></h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-plus"></i>
                             </button>
                             <button type="button" title="Agregar Contacto" id="agregarContacto" class="btn btn-box-tool btn-primary">

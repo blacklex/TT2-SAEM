@@ -41,7 +41,8 @@
         <s:form enctype="multipart/form-data" name="formNuevoAdministrador" action="registrarAdministrador" onsubmit="return validarCampos();"  method="post" role="form">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Datos de inicio de sesión</label></h3>
                 </div>
 
                 <div id="divNombreUsuario" class="form-group">
@@ -57,7 +58,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos Personales</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Datos Personales</label></h3>
                 </div>
 
                 <div id="divNombre" class="form-group">
@@ -93,7 +95,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Dirección</label></h3>
                 </div>
 
                 <div id="divCalleAdministrador" class="form-group">
