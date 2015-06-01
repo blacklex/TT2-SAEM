@@ -4,32 +4,18 @@
  * and open the template in the editor.
  */
 
-//$(document).ready(function () {
-//    $.getJSON("recuperarMensajeEstatusPaciente");
-//    
-//    $(document).ajaxSuccess(function (event, request, settings) {
-//        
-//        if (settings.url.match('recuperarMensajeEstatusPaciente') !== null) {
-//            
-//            var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
-//            var textoAlert = $.parseJSON(request.responseText).textoAlert;
-//            var estatusMensaje = $.parseJSON(request.responseText).estatusMensaje;
-//
-//            if (estatusMensaje === null)
-//                return;
-//
-//            if (estatusMensaje === "success") {
-//                $("#tituloDivAlertSuccess").html("<i class='icon fa fa-check'></i>" + tituloAlert);
-//                $("#labelMensajeSuccess").html(textoAlert);
-//                $("#divAlertSuccess").slideDown('slow').delay(2500).slideUp('slow');
-//            } else if (estatusMensaje === "error") {
-//                $("#tituloDivAlertError").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
-//                $("#labelMensajeError").html(textoAlert);
-//                $("#divAlertError").slideDown('slow').delay(2500).slideUp('slow');
-//            }
-//        }
-//    });
-//});
+$(document).ready(function () {
+    $.getJSON("recuperarHospitales");
+
+    $(document).ajaxSuccess(function (event, request, settings) {
+        
+        if (settings.url.match('recuperarHospitales') != null) {
+            var html = $.parseJSON(request.responseText).htmlHospitales;
+            $("#divHospitales").html(html);
+        }
+    });
+
+});
 
 /*******************************************************************************/
 
@@ -217,57 +203,63 @@ function validarCampos() {
 }
 
 function validarCheckboxAlergias() {
-    if( $('#checkboxPolen').is(':checked') ) {
-        $("#especificarPolen").attr('disabled', false);
-        $("#especificarPolen").focus();
+    if( $('#checkboxAlergiaPolen0').is(':checked') ) {
+        $("#especificarAlergiaPolen0").attr('disabled', false);
+        $("#especificarAlergiaPolen0").focus();
     }
     else {
-        $("#especificarPolen").attr('disabled', true);
+        $("#especificarAlergiaPolen0").attr('disabled', true);
+        $("#especificarAlergiaPolen0").val("");
     }
     
-    if( $('#checkboxAcaros').is(':checked') ) {
-        $("#especificarAcaros").attr('disabled', false);
-        $("#especificarAcaros").focus();
+    if( $('#checkboxAlergiaAcaros1').is(':checked') ) {
+        $("#especificarAlergiaAcaros1").attr('disabled', false);
+        $("#especificarAlergiaAcaros1").focus();
     }
     else {
-        $("#especificarAcaros").attr('disabled', true);
+        $("#especificarAlergiaAcaros1").attr('disabled', true);
+        $("#especificarAlergiaAcaros1").val("");
     }
     
-    if( $('#checkboxAnimales').is(':checked') ) {
-        $("#especificarAnimales").attr('disabled', false);
-        $("#especificarAnimales").focus();
+    if( $('#checkboxAlergiaAnimales2').is(':checked') ) {
+        $("#especificarAlergiaAnimales2").attr('disabled', false);
+        $("#especificarAlergiaAnimales2").focus();
     }
     else {
-        $("#especificarAnimales").attr('disabled', true);
+        $("#especificarAlergiaAnimales2").attr('disabled', true);
+        $("#especificarAlergiaAnimales2").val("");
     }
     
-    if( $('#checkboxMedicamentos').is(':checked') ) {
-        $("#especificarMedicamentos").attr('disabled', false);
-        $("#especificarMedicamentos").focus();
+    if( $('#checkboxAlergiaMedicamentos3').is(':checked') ) {
+        $("#especificarAlergiaMedicamentos3").attr('disabled', false);
+        $("#especificarAlergiaMedicamentos3").focus();
     }
     else {
-        $("#especificarMedicamentos").attr('disabled', true);
+        $("#especificarAlergiaMedicamentos3").attr('disabled', true);
+        $("#especificarAlergiaMedicamentos3").val("");
     }
     
-    if( $('#checkboxInsectos').is(':checked') ) {
-        $("#especificarInsectos").attr('disabled', false);
-        $("#especificarInsectos").focus();
+    if( $('#checkboxAlergiaInsectos4').is(':checked') ) {
+        $("#especificarAlergiaInsectos4").attr('disabled', false);
+        $("#especificarAlergiaInsectos4").focus();
     }
     else {
-        $("#especificarInsectos").attr('disabled', true);
+        $("#especificarAlergiaInsectos4").attr('disabled', true);
+        $("#especificarAlergiaInsectos4").val("");
     }
     
-    if( $('#checkboxAlimentos').is(':checked') ) {
-        $("#especificarAlimentos").attr('disabled', false);
-        $("#especificarAlimentos").focus();
+    if( $('#checkboxAlergiaAlimentos5').is(':checked') ) {
+        $("#especificarAlergiaAlimentos5").attr('disabled', false);
+        $("#especificarAlergiaAlimentos5").focus();
     }
     else {
-        $("#especificarAlimentos").attr('disabled', true);
+        $("#especificarAlergiaAlimentos5").attr('disabled', true);
+        $("#especificarAlergiaAlimentos5").val("");
     }
 }
 
 function validarCheckboxCirugias() {
-    if( $('#checkboxInterna').is(':checked') ) {
+    if( $('#checkboxCirugiaInterna').is(':checked') ) {
         $("#noCirugiaInterna").attr('disabled', false);
         $("#noCirugiaInterna").focus();
     }
@@ -277,7 +269,7 @@ function validarCheckboxCirugias() {
         
     }
     
-    if( $('#checkboxExterna').is(':checked') ) {
+    if( $('#checkboxCirugiaExterna').is(':checked') ) {
         $("#noCirugiaExterna").attr('disabled', false);
         $("#noCirugiaExterna").focus();
     }
@@ -286,7 +278,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaExterna").val("");
     }
     
-    if( $('#checkboxMayor').is(':checked') ) {
+    if( $('#checkboxCirugiaMayor').is(':checked') ) {
         $("#noCirugiaMayor").attr('disabled', false);
         $("#noCirugiaMayor").focus();
     }
@@ -295,7 +287,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaMayor").val("");
     }
     
-    if( $('#checkboxMenor').is(':checked') ) {
+    if( $('#checkboxCirugiaMenor').is(':checked') ) {
         $("#noCirugiaMenor").attr('disabled', false);
         $("#noCirugiaMenor").focus();
     }
@@ -304,7 +296,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaMenor").val("");
     }
     
-    if( $('#checkboxCurativa').is(':checked') ) {
+    if( $('#checkboxCirugiaCurativa').is(':checked') ) {
         $("#noCirugiaCurativa").attr('disabled', false);
         $("#noCirugiaCurativa").focus();
     }
@@ -313,7 +305,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaCurativa").val("");
     }
     
-    if( $('#checkboxReparadora').is(':checked') ) {
+    if( $('#checkboxCirugiaReparadora').is(':checked') ) {
         $("#noCirugiaReparadora").attr('disabled', false);
         $("#noCirugiaReparadora").focus();
     }
@@ -322,7 +314,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaReparadora").val("");
     }
     
-    if( $('#checkboxPaliativa').is(':checked') ) {
+    if( $('#checkboxCirugiaPaliativa').is(':checked') ) {
         $("#noCirugiaPaliativa").attr('disabled', false);
         $("#noCirugiaPaliativa").focus();
     }
@@ -331,7 +323,7 @@ function validarCheckboxCirugias() {
         $("#noCirugiaPaliativa").val("");
     }
     
-    if( $('#checkboxCosmetica').is(':checked') ) {
+    if( $('#checkboxCirugiaCosmetica').is(':checked') ) {
         $("#noCirugiaCosmetica").attr('disabled', false);
         $("#noCirugiaCosmetica").focus();
     }

@@ -16,7 +16,7 @@ import com.hibernate.model.Cirugias;
 import org.hibernate.Session;
 
 
-public class CirujiaDAO extends HibernateUtil {
+public class CirugiaDAO extends HibernateUtil {
 	
 	// property constants
 

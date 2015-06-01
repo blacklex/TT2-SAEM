@@ -5,6 +5,7 @@
         <group>
             <file>file:/home/sergio/Escritorio/Git/TTSAEM/src/java/com/saem/actions/RegistrarPaciente.java</file>
             <file>file:/home/sergio/Escritorio/Git/TTSAEM/web/js/funcionesPaciente/funcionesRegistroPaciente.js</file>
+            <file>file:/home/sergio/Escritorio/Git/TTSAEM/src/java/com/hibernate/model/Pacientes.java</file>
             <file>file:/home/sergio/Escritorio/Git/TTSAEM/web/pacienteRegistro.jsp</file>
         </group>
     </open-files>

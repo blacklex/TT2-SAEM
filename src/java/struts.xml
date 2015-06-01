@@ -355,7 +355,11 @@
             <result name="pantallaAltaPaciente" type="tiles">pantallaAltaPaciente</result>
         </action>
         <!-- Fin Registar Paciente -->
-
+        
+        <action name="recuperarHospitales" method="recuperarHospitales" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
         <!-- Validar usuario -->
         <action name="validarNombreUsuarioPaciente" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPaciente">
             <result name="success" type="json">JSON</result>
