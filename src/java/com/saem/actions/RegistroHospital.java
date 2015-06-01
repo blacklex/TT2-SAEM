@@ -465,4 +465,5 @@ public class RegistroHospital implements SessionAware {
         this.htmlEspecialidades = htmlEspecialidades;
     }
 
+    
 }
