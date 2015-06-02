@@ -145,7 +145,7 @@
         </action>
         <!-- _______________________________________________________________________________________________ -->
         
-      <!-- ******************************** FIN MODIFICAR ELIMINIAR HOSPITAL ******************************* -->
+      <!-- ******************************** FIN MODIFICAR CONSULTAR HOSPITAL ******************************* -->
         
         <!-- ********************************************* MENU ADMINISTRADOR********************************************************-->
         <action name="pantallaAltaAdministrador" method="altaAdministrador" class="com.saem.actions.MenuAdministradorAction">
@@ -512,5 +512,33 @@
         </action>
 <!--         ******************************************** FIN RECUPERAR MSJ PACIENTE ****************************************************************  -->              
  
+        <!-- ************************************ HOSPITAL PETICIONES ENTRANTES ****************************************** -->
+        <action name="pantallaPeticionesEntrantesHospital" method="execute" class="com.saem.actions.PeticionesEntrantes">
+            <result name="pantallaPeticionesEntrantesHospital" type="tiles">pantallaPeticionesEntrantesHospital</result>
+        </action>
+        
+        <action name="recuperarMensajeEstatusPeticionEntrante" method="recuperarEstatusPeticionesEntrantesHospital" class="com.saem.actions.PeticionesEntrantes">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxLlenarListaPetionesEntrantes" method="llenarGridPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantes">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ************************************ FIN HOSPITAL PETICIONES ENTRANTES ****************************************** -->
+        
+         <!-- ************************************ HOSPITAL PETICIONES EXTERNAS ****************************************** -->
+        <action name="pantallaPeticionesExternasHospital" method="execute" class="com.saem.actions.PeticionesExternas">
+            <result name="pantallaPeticionesExternasHospital" type="tiles">pantallaPeticionesExternasHospital</result>
+        </action>
+        
+        <action name="recuperarMensajeEstatusPeticionExterna" method="recuperarEstatusPeticionesExternasHospital" class="com.saem.actions.PeticionesExternas">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxLlenarListaPetionesExternas" method="llenarGridPeticionesExternas" class="com.saem.actions.PeticionesExternas">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ************************************ FIN HOSPITAL PETICIONES EXTERNAS ****************************************** -->
+        
     </package>
 </struts>

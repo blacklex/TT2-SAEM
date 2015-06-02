@@ -62,7 +62,7 @@
              
             <!--  INCIA MENU PETICIONES ENTRANTES    -->
             <li>
-                <a id="notifiacionPeticiones" href="pantallaPeticionesEntrantes">
+                <a id="notifiacionPeticiones" href="pantallaPeticionesEntrantesHospital">
                 <i class="fa fa-exchange"></i> <span>Peticiones Entrantes</span> <!--<small class="label pull-right bg-green">Hot</small>-->
               </a>
             </li> 
@@ -70,8 +70,8 @@
              
              <!--  INCIA MENU RESPONDER PETICIONES     -->
             <li>
-              <a href="pantallaResponderPeticiones">
-                <i class="fa fa-mail-reply"></i> <span>Responder Peticiones</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+              <a href="pantallaPeticionesExternasHospital">
+                <i class="fa fa-mail-reply"></i> <span>Peticiones Externas</span> <!--<small class="label pull-right bg-green">Hot</small>-->
               </a>
             </li> 
              <!--  FIN MENU RESPONDER PETICIONES     -->
