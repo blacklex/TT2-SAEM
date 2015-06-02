@@ -112,5 +112,11 @@
         <put-attribute name="menu"   value="/menuHospital.jsp"/>
         <put-attribute name="body"   value="/hospitalPeticionesExternas.jsp"/>      
     </definition>
+    
+    <definition name="pantallaConsultarInformacionHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Informacion Personal"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/hospitalConsultarPerfil.jsp"/>      
+    </definition>
     <!-- FIN PANTALLAS DEL MENU HOSPITAL -->
 </tiles-definitions>

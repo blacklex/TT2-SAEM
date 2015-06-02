@@ -6,10 +6,12 @@
 package com.saem.actions;
 
 import com.hibernate.dao.HospitalDAO;
+import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Directivo;
 import com.hibernate.model.DomicilioHospitales;
 import com.hibernate.model.Especialidades;
 import com.hibernate.model.Hospitales;
+import com.hibernate.model.Usuarios;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.persistencia.owl.OWLConsultas;
@@ -70,6 +72,10 @@ public class ConsultarHospital implements SessionAware {
 
     public String execute() {
         return "pantallaConsultarHospitales";
+    }
+    
+    public String pantallaConsultarInformacionHospital() {
+        return "pantallaConsultarInformacionHospital";
     }
 
     /**
@@ -199,6 +205,19 @@ public class ConsultarHospital implements SessionAware {
         return SUCCESS;
     }
 
+    public String recuperarCodigoHospital(){
+        String idUsuario = (String)session.get("nombreUsuario");
+        System.out.println("----> "+idUsuario);
+        Usuarios usuarioTemp = new UsuarioDAO().findById(idUsuario);
+        Iterator<Hospitales> iterHospitales = usuarioTemp.getHospitaleses().iterator();
+        
+        while(iterHospitales.hasNext()){
+            Hospitales hospitalTemp = iterHospitales.next();
+            codigoHospital = hospitalTemp.getCodigoHospital();
+            System.out.println("--->Cod "+codigoHospital);
+        }
+        return SUCCESS;
+    }
     /**
      * *************************************** METODOS GRID
      * ********************************

@@ -8,7 +8,7 @@
 <script type="text/javascript">
     setInterval(function() {
     $("#small").remove();
-    $("#notifiacionPeticiones").append("<small id='small' class='label pull-right bg-green'>Hot</small>");
+    //$("#notifiacionPeticiones").append("<small id='small' class='label pull-right bg-green'>Hot</small>");
     }, 1000 * 60 * .1);
     
 </script>      

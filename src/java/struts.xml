@@ -540,5 +540,15 @@
         </action>
         <!-- ************************************ FIN HOSPITAL PETICIONES EXTERNAS ****************************************** -->
         
+         <!-- ************************************ HOSPITAL CONSULTAR INFORMACION ****************************************** -->
+        <action name="pantallaConsultarInformacionHospital" method="pantallaConsultarInformacionHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="pantallaConsultarInformacionHospital" type="tiles">pantallaConsultarInformacionHospital</result>
+        </action>
+         <action name="recuperarCodigoHospital" method="recuperarCodigoHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ************************************ FIN HOSPITAL CONSULTAR INFORMACION ****************************************** -->
+        
+        
     </package>
 </struts>

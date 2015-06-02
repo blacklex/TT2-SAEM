@@ -1,6 +1,6 @@
 <%-- 
-    Document   : hospitalModificarEliminar
-    Created on : 26-abr-2015, 23:33:50
+    Document   : hospitalConsultarPerfil
+    Created on : 02-jun-2015, 23:33:50
     Author     : Alejandro
 --%>
 
@@ -48,92 +48,14 @@
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
     <div id="divjGrid" class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
+            <h3 class="box-header"><label>Informacion del Hospital</label></h3>
         </div><!-- /.box-header -->
-        
-         
-        <div class="sidebar-form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Buscar Hospital" name="filtroBusquedaHospital" id="filtroBusquedaHospital"/>
-                    <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarHospitalPorFiltro();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-        </div>
-        <div  class="box-body">
-            <sjg:grid
-                id		     ="gridListaConsultaHospitales"		gridModel	="gridListaConsultaHospitales"
-                href	     ="ajaxLlenarListaConsultarHospitales"     dataType	="json"        
-                caption	     ="Hospitales"			altRows		="true"								
-                pager	     ="true"				pagerInput	="false"
-                pagerButtons     ="true"				rowList		="20,30,40,50"
-                rowNum	     ="20"				rownumbers	="true"
-                navigator	     ="true"				viewrecords	="true"
-                hidegrid	     ="false"                           multiselect	="false"
-                navigatorRefresh ="false"				navigatorSearch ="false"				
-                resizable	     ="true"				autowidth="true"
-                navigatorAdd     ="false"				
-                navigatorEdit    ="false"	
-                navigatorDelete  ="false"
-                navigatorAddOptions ="{closeAfterAdd:true, closeAfterSubmit:true}"
-                navigatorEditOptions="{reloadAfterSubmit:true,closeAfterEdit:true}"
-                navigatorExtraButtons="{
 
-                mostrarFormSesion : { 
-                title : 'Mostrar Inicio de Sesion', 
-                icon:'ui-icon-key',  
-                onclick: function(){ muestraFormSesion() }
-                },
-                mostrarFormDatosHospital : { 
-                title : 'Mostrar Datos del Hospital', 
-                icon:'ui-icon-pencil', 
-                onclick: function(){ muestraFormDatosHospital() }
-                },
-                mostrarFormDireccionHospital : { 
-                title : 'Mostrar Direccion del Hospital', 
-                icon:'ui-icon-home', 
-                onclick: function(){ muestraDireccionHospital() }
-                },
-                mostrarFormDirectivo : { 
-                title : 'Mostrar Datos del Directivo', 
-                icon:'ui-icon-person', 
-                onclick: function(){ muestraFormDirectivo() }
-                },
-                mostrarFormEspecialidades : { 
-                title : 'Mostrar Especialidades', 
-                icon:'ui-icon-circle-plus', 
-                onclick: function(){ muestraFormEspecialidades() }
-                }
-                }"
-                >
-
-                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"
-                                editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
-                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-            </sjg:grid> 
-        </div>
     </div>
 
     <!-- **************************************INICIA DIV FORM SESION**********************************************  -->
     <div class="box box-primary" id="divFormInicioSesion" style="display: none;">
-        <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
-        </div><!-- /.box-header -->
+
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
@@ -151,15 +73,11 @@
             </div>
         </div><!-- /.box-body -->
 
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
-
     </div>
 
     <!-- ***********************************INICIA DIV FORM DATOS HOSPITAL*****************************************  -->
     <div class="box box-primary" id="divFormDatosHospital" style="display: none;">
-        <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
-        </div><!-- /.box-header -->
+
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
@@ -183,15 +101,11 @@
             </div>
 
         </div><!-- /.box-body -->
-
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
     <div class="box box-primary" id="divFormDireccionHospital" style="display: none;">
-        <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
-        </div><!-- /.box-header -->
+
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
@@ -234,14 +148,11 @@
             </div>
 
         </div><!-- /.box-body -->
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
     <div class="box box-primary" id="divFormDirectivo" style="display: none;">
-        <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
-        </div><!-- /.box-header -->
+
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
@@ -265,14 +176,11 @@
             </div>
 
         </div><!-- /.box-body -->
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
     </div>
 
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
     <div class="box box-primary" id="divFormEspecialidades" style="display: none;">
-        <div class="box-header">
-            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
-        </div><!-- /.box-header -->
+
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
@@ -280,13 +188,9 @@
                 <h3 class="box-title"><label>Especialidades</label></h3>
             </div>
             <div id="divContEspecialidades"></div>
-            
+
         </div><!-- /.box-body -->
-        
-            
-         <div class="box-footer">
-            <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
-        </div>
+
     </div>
 </section>
 
@@ -300,7 +204,7 @@
 <script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
 
-<script src="js/funcionesHospital/funcionesConsultarHospital.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesHospitalPerfil.js" type="text/javascript"></script>
 
 
 
