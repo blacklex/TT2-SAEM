@@ -28,7 +28,7 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class ConsultarHospital implements SessionAware {
 
-    private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_ME";
+    private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_CONSULTAR";
     private static final String LLAVE_ESTATUS_ME = "CONSULTARHOSPITAL_ESTATUS_LLAVE";
 
     private String codigoHospital;
@@ -40,8 +40,8 @@ public class ConsultarHospital implements SessionAware {
     private String telefonoHospital;
     private String emailHospital;
 
-    private String latitudY ;
-    private String longitudX ;
+    private String latitudY;
+    private String longitudX;
     private String calle;
     private String numero;
     private String colonia;
@@ -53,9 +53,9 @@ public class ConsultarHospital implements SessionAware {
     private String emailDirectivo;
     private String nombreDirectivo;
     //fin de campos formularo
-    
-    private String especialidades;
 
+    private String especialidades;
+    private String filtroBusquedaHospital;
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
@@ -72,8 +72,10 @@ public class ConsultarHospital implements SessionAware {
         return "pantallaConsultarHospitales";
     }
 
-    
-/************************ METODOS PARA SETAR EN FORMULARIOS *********************/
+    /**
+     * ********************** METODOS PARA SETAR EN FORMULARIOS
+     * ********************
+     */
     public String recuperarEstatusConsultarHospital() {
         System.out.println("-->Entro a recuperar estatus Consultar");
         tituloAlert = "";
@@ -97,7 +99,7 @@ public class ConsultarHospital implements SessionAware {
     public String recuperarDatosConsultaSesion() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-        
+
         nombreUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario();
         claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
         return SUCCESS;
@@ -117,9 +119,9 @@ public class ConsultarHospital implements SessionAware {
     }
 
     public String recuperarDatosConsultaDireccion() {
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
-            
+
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
         Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
@@ -134,19 +136,19 @@ public class ConsultarHospital implements SessionAware {
             delegacion = domHospTemp.getDelegacion();
             entidadFederativa = domHospTemp.getEntidadFederativa();
             codigoPostal = domHospTemp.getCodigoPostal();
-            
-            nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+","");
+
+            nombreHospitalTemp = nombreHospitalTemp.replaceAll("\\s+", "");
             OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
             consultor.hospitalseUbicaEnDireccion(nombreHospitalTemp);
-            System.out.println("--->"+ONTOLOGIA);
-            consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp);
-            latitudY = consultor.getCoordenadaYDireccion("Direccion"+nombreHospitalTemp).get(0);
-            longitudX = consultor.getCoordenadaXDireccion("Direccion"+nombreHospitalTemp).get(0);
+            System.out.println("--->" + ONTOLOGIA);
+            consultor.getCoordenadaYDireccion("Direccion" + nombreHospitalTemp);
+            latitudY = consultor.getCoordenadaYDireccion("Direccion" + nombreHospitalTemp).get(0);
+            longitudX = consultor.getCoordenadaXDireccion("Direccion" + nombreHospitalTemp).get(0);
         }
 
         return SUCCESS;
     }
-    
+
     public String recuperarDatosConsultaDirectivo() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
@@ -156,45 +158,44 @@ public class ConsultarHospital implements SessionAware {
 
         while (it.hasNext()) {
             Directivo directivoTemp = it.next();
-            
+
             telefonoDirectivo = directivoTemp.getTelParticular();
             emailDirectivo = directivoTemp.getCorreo();
             nombreDirectivo = directivoTemp.getNombre();
-            
+
         }
 
         return SUCCESS;
     }
-    
-    public String recuperarDatosEspecialidades(){
+
+    public String recuperarDatosEspecialidades() {
         HospitalDAO hospitalDAO = new HospitalDAO();
         System.out.println("--->Entro a recuperarEspecialidades Consulta");
         String html = "";
-        
+
         Set<Especialidades> especialidadesHospial = hospitalDAO.findById(codigoHospital).getEspecialidadeses();
-        if(especialidadesHospial==null)
+        if (especialidadesHospial == null) {
             return SUCCESS;
-        System.out.println("--->"+especialidadesHospial.size());
-        
+        }
+        System.out.println("--->" + especialidadesHospial.size());
+
         Iterator<Especialidades> iterEspecHosp = especialidadesHospial.iterator();
-        
-       int contEspec = 0;
-        while(iterEspecHosp.hasNext()){
-        Especialidades especialidadTemp = iterEspecHosp.next();
-        
-        
-       
+
+        int contEspec = 0;
+        while (iterEspecHosp.hasNext()) {
+            Especialidades especialidadTemp = iterEspecHosp.next();
+
             html += "<div style=\"margin-bottom:10px;\"; class=\"input-group\">"
                     + "<span class=\"input-group-addon\">"
-                    + "<input type=\"checkbox\" checked=\"true\" disabled=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad()+ "\">"
+                    + "<input type=\"checkbox\" checked=\"true\" disabled=\"true\" name=\"checkbox" + contEspec + "\" value=\"" + especialidadTemp.getNoEspecialidad() + "\">"
                     + "</span>"
                     + "<input disabled=\"true\" class=\"form-control\" type=\"text\" value=\"" + especialidadTemp.getNombreEspecialidad() + "\">"
                     + "</div><!-- /input-group -->";
             contEspec++;
-        
+
         }
         especialidades = html;
-    
+
         return SUCCESS;
     }
 
@@ -217,15 +218,35 @@ public class ConsultarHospital implements SessionAware {
         HospitalDAO hospitalesDAO = new HospitalDAO();
         ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
         ArrayList<Hospitales> listaTempFinal = new ArrayList<Hospitales>();
+        System.out.println("--->Filtro " + filtroBusquedaHospital);
+        gridListaConsultaHospitales = new ArrayList<Hospitales>();
 
-        // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+        if (filtroBusquedaHospital == null) {
+            if (session.get(LISTA_HOSPITALES) != null) {
+                listaTemp = (ArrayList<Hospitales>) session.get(LISTA_HOSPITALES);
+                session.remove(LISTA_HOSPITALES);
+            } else {
+                return;
+            }
+        } else {
+
+            if (filtroBusquedaHospital.length() > 0) {
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(filtroBusquedaHospital);
+
+                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+            } else {
+                // Obtenemos la lista de la sesión
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+            }
+            session.put(LISTA_HOSPITALES, listaTemp);
+        }
 
         for (Hospitales tempContHosp : listaTemp) {
-
             listaTempFinal.add(new Hospitales(tempContHosp.getCodigoHospital(), null, tempContHosp.getNombre(), tempContHosp.getTelefono(), tempContHosp.getLada(), tempContHosp.getEMail()));
         }
+
         gridListaConsultaHospitales = listaTempFinal;
+
         if (gridListaConsultaHospitales == null) {
             records = total = 0;
         } else {
@@ -275,8 +296,6 @@ public class ConsultarHospital implements SessionAware {
         this.nombreUsuario = nombreUsuario;
     }
 
-    
-    
     public String getClaveUsuario() {
         return claveUsuario;
     }
@@ -325,8 +344,6 @@ public class ConsultarHospital implements SessionAware {
         this.longitudX = longitudX;
     }
 
-    
-    
     public String getCalle() {
         return calle;
     }
@@ -406,8 +423,14 @@ public class ConsultarHospital implements SessionAware {
     public void setEspecialidades(String especialidades) {
         this.especialidades = especialidades;
     }
-    
-    
+
+    public String getFiltroBusquedaHospital() {
+        return filtroBusquedaHospital;
+    }
+
+    public void setFiltroBusquedaHospital(String filtroBusquedaHospital) {
+        this.filtroBusquedaHospital = filtroBusquedaHospital;
+    }
 
     /**
      * ************************************************************************

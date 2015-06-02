@@ -418,7 +418,23 @@ function eliminarHospital() {
 
 }
 
+function buscarHospitalPorFiltroME() {
+    var filtroHospital="";
+    if ($("#filtroBusquedaHospital").val().length > 0) {
+        filtroHospital=$("#filtroBusquedaHospital").val();
+    }
+    $("#barraCargar").slideDown(100);
+    $.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "ajaxLlenarListaHospitalesME",
+        data: {filtroBusquedaHospital: filtroHospital}
+    }).done(function (msg) {
+         $("#barraCargar").slideUp(100);
+         $('#gridListaHospitales').trigger("reloadGrid", [{page: 1}]);
+            });
 
+}
 
 
 

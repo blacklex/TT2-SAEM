@@ -6,7 +6,9 @@
 package com.saem.actions;
 
 import com.hibernate.dao.HospitalDAO;
+import com.hibernate.dao.PeticionesEntrantesDAO;
 import com.hibernate.model.Hospitales;
+import com.hibernate.model.PeticionesEntrantes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import org.apache.struts2.interceptor.SessionAware;
  *
  * @author Alejandro
  */
-public class PeticionesEntrantes implements SessionAware {
+public class PeticionesEntrantesAction implements SessionAware {
 
     private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_ME";
     private static final String LLAVE_ESTATUS_ME = "PETICIONES_ENTRANTES_ESTATUS_LLAVE";
@@ -86,16 +88,16 @@ public class PeticionesEntrantes implements SessionAware {
     }
 
     private void obteneTablaPeticionesEntrantes() {
-        HospitalDAO hospitalesDAO = new HospitalDAO();
-        ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
-        ArrayList<Hospitales> listaTempFinal = new ArrayList<Hospitales>();
+        PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
+        ArrayList<PeticionesEntrantes> listaTemp = new ArrayList<PeticionesEntrantes>();
+        ArrayList<PeticionesEntrantes> listaTempFinal = new ArrayList<PeticionesEntrantes>();
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAll();
 
-        for (Hospitales tempContHosp : listaTemp) {
+        for (PeticionesEntrantes tempContHosp : listaTemp) {
 
-            listaTempFinal.add(new Hospitales(tempContHosp.getCodigoHospital(), null, tempContHosp.getNombre(), tempContHosp.getTelefono(), tempContHosp.getLada(), tempContHosp.getEMail()));
+            listaTempFinal.add(null);
         }
         gridListaPeticionesEntrantes = listaTempFinal;
         if (gridListaPeticionesEntrantes == null) {
@@ -114,7 +116,7 @@ public class PeticionesEntrantes implements SessionAware {
         // Calculamos el final de los registros a mostrar
         hasta = page * rows > records ? records - 1 : page * rows - 1;
 
-        Iterator<Hospitales> it = gridListaPeticionesEntrantes.iterator();
+        Iterator<PeticionesEntrantes> it = gridListaPeticionesEntrantes.iterator();
 
         // Quitamos los registros del TreeSet que no se vayan a desplegar en el
         // jQuery grid del jsp
@@ -163,7 +165,7 @@ public class PeticionesEntrantes implements SessionAware {
      * ****************** Lo siguiente está relacionado al jQuery Grid
      * *************************
      */
-    private ArrayList<Hospitales> gridListaPeticionesEntrantes;
+    private ArrayList<PeticionesEntrantes> gridListaPeticionesEntrantes;
     // Indica cuantas filas queremos mostrar (Atributo 'rowNum' en el grid del
     // jsp)
     private int rows;
@@ -194,11 +196,11 @@ public class PeticionesEntrantes implements SessionAware {
     /*
      * Aqui vienen los getters y setters del jQuery Grid
      */
-    public ArrayList<Hospitales> getGridListaPeticionesEntrantes() {
+    public ArrayList<PeticionesEntrantes> getGridListaPeticionesEntrantes() {
         return gridListaPeticionesEntrantes;
     }
 
-    public void setGridListaPeticionesEntrantes(ArrayList<Hospitales> gridListaPeticionesEntrantes) {
+    public void setGridListaPeticionesEntrantes(ArrayList<PeticionesEntrantes> gridListaPeticionesEntrantes) {
         this.gridListaPeticionesEntrantes = gridListaPeticionesEntrantes;
     }
 

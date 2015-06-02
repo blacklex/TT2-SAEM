@@ -12,6 +12,8 @@ package com.hibernate.dao;
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.Hospitales;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -93,6 +95,20 @@ public class HospitalDAO extends HibernateUtil {
             Query queryObject = getSession().createQuery(queryString);
             getSession().close();
             return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            getSession().close();
+        }
+    }
+    
+    public List<Hospitales> findHospitalLike(String hospitalNombre) {
+        try {
+             String queryString="from Hospitales where lower(nombre) LIKE (:searchKeyword)";
+             Query queryObject = getSession().createQuery(queryString);
+             queryObject.setParameter("searchKeyword", "%"+hospitalNombre+"%");
+             return queryObject.list();
+        
         } catch (RuntimeException re) {
             throw re;
         } finally {

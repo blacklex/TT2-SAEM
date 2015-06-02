@@ -37,7 +37,7 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class ModificarEliminarHospital implements SessionAware {
 
-    private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_ME";
+    private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_MOD_ELI";
     private static final String LLAVE_ESTATUS_ME = "MODIFICARELIMINARHOSPITAL_ESTATUS_LLAVE";
 
     private String codigoHospitalEditar;
@@ -65,7 +65,8 @@ public class ModificarEliminarHospital implements SessionAware {
     //fin de campos formularo
 
     private String especialidades;
-
+    private String filtroBusquedaHospital;
+    
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
@@ -589,9 +590,26 @@ public class ModificarEliminarHospital implements SessionAware {
         HospitalDAO hospitalesDAO = new HospitalDAO();
         ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
         ArrayList<Hospitales> listaTempFinal = new ArrayList<Hospitales>();
+        gridListaHospitales = new ArrayList<Hospitales>();
+        if (filtroBusquedaHospital == null) {
+            if (session.get(LISTA_HOSPITALES) != null) {
+                listaTemp = (ArrayList<Hospitales>) session.get(LISTA_HOSPITALES);
+                session.remove(LISTA_HOSPITALES);
+            } else {
+                return;
+            }
+        } else {
 
-        // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+            if (filtroBusquedaHospital.length() > 0) {
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(filtroBusquedaHospital);
+
+                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+            } else {
+                // Obtenemos la lista de la sesión
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+            }
+            session.put(LISTA_HOSPITALES, listaTemp);
+        }
 
         for (Hospitales tempContHosp : listaTemp) {
 
@@ -774,6 +792,16 @@ public class ModificarEliminarHospital implements SessionAware {
     public void setEspecialidades(String especialidades) {
         this.especialidades = especialidades;
     }
+
+    public String getFiltroBusquedaHospital() {
+        return filtroBusquedaHospital;
+    }
+
+    public void setFiltroBusquedaHospital(String filtroBusquedaHospital) {
+        this.filtroBusquedaHospital = filtroBusquedaHospital;
+    }
+    
+    
 
     /**
      * ************************************************************************

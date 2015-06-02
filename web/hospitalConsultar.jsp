@@ -50,6 +50,20 @@
         <div class="box-header">
             <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
+        
+         <div class="box-header">
+                    <h3 class="box-title"><label>Filtrar por usuario:</label></h3>
+                </div>
+        <div class="sidebar-form">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Hospital" name="filtroBusquedaHospital" id="filtroBusquedaHospital"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarHospitalPorFiltro();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+        </div>
         <div  class="box-body">
             <sjg:grid
                 id		     ="gridListaConsultaHospitales"		gridModel	="gridListaConsultaHospitales"

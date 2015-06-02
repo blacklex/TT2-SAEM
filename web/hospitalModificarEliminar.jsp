@@ -50,6 +50,18 @@
         <div class="box-header">
             <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></label></h3>
         </div><!-- /.box-header -->
+        
+        <div class="sidebar-form">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Hospital" name="filtroBusquedaHospital" id="filtroBusquedaHospital"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarHospitalPorFiltroME();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+        </div>
+        
         <div class="box-body">
         <sjg:grid
             id		     ="gridListaHospitales"		gridModel	="gridListaHospitales"
