@@ -8,6 +8,7 @@ package com.saem.actions;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -75,18 +76,25 @@ public class GridRegistroPaciente implements SessionAware{
 
     public void llenarGrid(){
          
-        System.out.println("\n---> entro a llenar grid");
-        int to = (rows * page);
-        int from = to - rows;
+         ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        ArrayList<Usuarios> listaTempFinal = new ArrayList<Usuarios>();
 
-        //Count Rows (select count(*) from custumer)
-        records = 4; //Your logic to search and select the required data.
-        gridModel = usuarios.listar(from, to);
+        // Obtenemos la lista de la sesión
+        listaTemp = (ArrayList<Usuarios>) usuarios.listarPacientes(0, 0);
 
-        //calculate the total pages for the query
-        total = (int) Math.ceil((double) records / (double) rows);
-                System.out.println("Entro");
-                session.put(LISTA_GRID_MODEL, gridModel);
+        for (Usuarios tempContUsuario : listaTemp) {
+
+            listaTempFinal.add(new Usuarios(tempContUsuario.getNombreUsuario(), tempContUsuario.getTipoUsuario(), tempContUsuario.getClave(), tempContUsuario.getFechaRegistro()));
+        }
+        gridModel = listaTempFinal;
+        if (gridModel == null) {
+            records = total = 0;
+        } else {
+            // Obtenemos el total de registros
+            records = gridModel.size();
+            // Calculamos el total de páginas necesarias
+            total = (int) Math.ceil((double) records / (double) rows);
+        }
     }
     
     public String execute() {

@@ -92,6 +92,28 @@ public class PacienteDAO extends HibernateUtil {
 			throw re;
 		}
 	}
+
+    public String obtenerCogigoHospital(String nss) {
+        try
+        {
+           System.err.println("Bandera 1");
+          Session s = getSession();
+           System.err.println("Bandera 2");
+           s.beginTransaction();
+           System.err.println("Bandera 3");
+           String codigoHospital  = (String) s.createSQLQuery("select Hospitales_codigo_hospital from Pacientes where nss='"+nss+"'").uniqueResult();
+           System.err.println("Bandera 4");
+           s.getTransaction().commit();
+           System.err.println("Bandera 5");
+           return codigoHospital;
+           
+          
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+    }
          
         
       

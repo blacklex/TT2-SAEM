@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 2/06/2015 02:02:23 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class catalog="SAEMBD" name="com.hibernate.model.DatosPersonales" optimistic-lock="version" table="Datos_Personales">
     <id name="id" type="java.lang.Long">
@@ -29,16 +29,16 @@
       <column length="4" name="peso"/>
     </property>
     <property name="altura" type="string">
-      <column length="3" name="altura"/>
+      <column length="5" name="altura"/>
     </property>
     <property name="talla" type="string">
-      <column length="3" name="talla"/>
+      <column length="4" name="talla"/>
     </property>
     <property name="correo" type="string">
       <column length="45" name="correo"/>
     </property>
     <property name="facebook" type="string">
-      <column length="45" name="facebook"/>
+      <column length="100" name="facebook"/>
     </property>
   </class>
 </hibernate-mapping>

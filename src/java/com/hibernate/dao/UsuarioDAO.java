@@ -189,6 +189,27 @@ public class UsuarioDAO extends HibernateUtil {
 }
          
         
-      
+      public List<Usuarios> listarPacientes(int from, int to) {
+        try
+        {
+           System.err.println("Bandera 1");
+          Session s = getSession();
+           System.err.println("Bandera 2");
+           s.beginTransaction();
+           System.err.println("Bandera 3");
+           List<Usuarios> listUsuarios = (List<Usuarios>)s.createQuery("from Usuarios where tipoUsuario='Paciente'").list();
+           System.err.println("Bandera 4");
+           s.getTransaction().commit();
+           System.err.println("Bandera 5");
+           return listUsuarios;
+           
+          
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+
+}
 
 }

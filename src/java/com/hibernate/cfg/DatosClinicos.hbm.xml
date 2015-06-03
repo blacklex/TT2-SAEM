@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 28/05/2015 03:29:29 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 2/06/2015 02:02:23 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class catalog="SAEMBD" name="com.hibernate.model.DatosClinicos" optimistic-lock="version" table="Datos_Clinicos">
     <id name="noHistorial" type="long">
@@ -25,7 +25,7 @@
       </key>
       <one-to-many class="com.hibernate.model.Cirugias"/>
     </set>
-    <set fetch="select" cascade="delete" inverse="true" lazy="true" name="enfermedadesCronicases" table="Enfermedades_Cronicas">
+    <set fetch="select" cascade="delete"  inverse="true" lazy="true" name="enfermedadesCronicases" table="Enfermedades_Cronicas">
       <key>
         <column name="Datos_Clinicos_no_historial" not-null="true"/>
       </key>

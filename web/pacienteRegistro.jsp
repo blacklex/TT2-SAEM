@@ -353,7 +353,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaPolen0" name="checkboxAlergiaPolen0" value="polen" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia0" name="checkboxAlergia0" value="polen" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Polen"/>
                                 </div><!-- /input-group -->
@@ -361,13 +361,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" id="especificarAlergiaPolen0" name="especificarAlergiaPolen0" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" id="especificarAlergia0" name="especificarAlergia0" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaAcaros1" name="checkboxAlergiaAcaros1" value="acaros" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia1" name="checkboxAlergia1" value="acaros" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Ácaros del polvo">
                                 </div><!-- /input-group -->
@@ -375,13 +375,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" name="especificarAlergiaAcaros1" id="especificarAlergiaAcaros1" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia1" id="especificarAlergia1" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaAnimales2" name="checkboxAlergiaAnimales2" value="animales" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia2" name="checkboxAlergia2" value="animales" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Animales">
                                 </div><!-- /input-group -->
@@ -389,13 +389,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" name="especificarAlergiaAnimales2" id="especificarAlergiaAnimales2" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia2" id="especificarAlergia2" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaMedicamentos3" name="checkboxAlergiaMedicamentos3" value="medicamentos" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia3" name="checkboxAlergia3" value="medicamentos" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" disabled="true" class="form-control" type="text" value="Medicamentos">
                                 </div><!-- /input-group -->
@@ -403,13 +403,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" name="especificarAlergiaMedicamentos3" id="especificarAlergiaMedicamentos3" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia3" id="especificarAlergia3" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaInsectos4" name="checkboxAlergiaInsectos4" value="insectos" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia4" name="checkboxAlergia4" value="insectos" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Picadura de insectos">
                                 </div><!-- /input-group -->
@@ -417,13 +417,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" name="especificarAlergiaInsectos4" id="especificarAlergiaInsectos4" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia4" id="especificarAlergia4" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxAlergiaAlimentos5" name="checkboxAlergiaAlimentos5" value="alimentos" onclick="validarCheckboxAlergias();"/>
+                                        <input type="checkbox" id="checkboxAlergia5" name="checkboxAlergia5" value="alimentos" onclick="validarCheckboxAlergias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Alimentos">
                                 </div><!-- /input-group -->
@@ -431,7 +431,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <textarea class="form-control" disabled="true" name="especificarAlergiaAlimentos5" id="especificarAlergiaAlimentos5" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia5" id="especificarAlergia5" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
                                 </div><!-- /input-group -->
                             </div>
                         </div>
@@ -452,7 +452,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxCirugiaInterna" name="checkboxCirugiaInterna" value="interna" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" id="checkboxCirugia0" name="checkboxCirugia0" value="interna" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Interna"/>
                                 </div><!-- /input-group -->
@@ -460,13 +460,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaInterna" id="noCirugiaInterna" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia0" id="noCirugia0" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" id="checkboxCirugiaExterna" name="checkboxCirugiaExterna" value="externa" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" id="checkboxCirugia1" name="checkboxCirugia1" value="externa" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Externa">
                                 </div><!-- /input-group -->
@@ -474,13 +474,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaExterna" id="noCirugiaExterna" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia1" id="noCirugia1" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaMayor" id="checkboxCirugiaMayor" value="mayor" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia2" id="checkboxCirugia2" value="mayor" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Mayor">
                                 </div><!-- /input-group -->
@@ -488,13 +488,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaMayor" id="noCirugiaMayor" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia2" id="noCirugia2" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaMenor" id="checkboxCirugiaMenor" value="menor" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia3" id="checkboxCirugia3" value="menor" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Menor">
                                 </div><!-- /input-group -->
@@ -502,13 +502,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaMenor" id="noCirugiaMenor" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia3" id="noCirugia3" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaCurativa" id="checkboxCirugiaCurativa" value="curativa" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia4" id="checkboxCirugia4" value="curativa" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Curativa">
                                 </div><!-- /input-group -->
@@ -516,13 +516,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaCurativa" id="noCirugiaCurativa" disabled="true"  type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia4" id="noCirugia4" disabled="true"  type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaReparadora" id="checkboxCirugiaReparadora" value="reparadora" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia5" id="checkboxCirugia5" value="reparadora" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Reparadora">
                                 </div><!-- /input-group -->
@@ -530,13 +530,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaReparadora" id="noCirugiaReparadora" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia5" id="noCirugia5" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaPaliativa" id="checkboxCirugiaPaliativa" value="paliativa" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia6" id="checkboxCirugia6" value="paliativa" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Paliativa">
                                 </div><!-- /input-group -->
@@ -544,13 +544,13 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaPaliativa" id="noCirugiaPaliativa" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia6" id="noCirugia6" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxCirugiaCosmetica" id="checkboxCirugiaCosmetica" value="cosmetica" onclick="validarCheckboxCirugias();"/>
+                                        <input type="checkbox" name="checkboxCirugia7" id="checkboxCirugia7" value="cosmetica" onclick="validarCheckboxCirugias();"/>
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Cosmetica">
                                 </div><!-- /input-group -->
@@ -558,7 +558,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
 
-                                    <input class="form-control" name="noCirugiaCosmetica" id="noCirugiaCosmetica" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
+                                    <input class="form-control" name="noCirugia7" id="noCirugia7" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias"/>
                                 </div><!-- /input-group -->
                             </div>
                         </div>
@@ -579,7 +579,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadFisica" value="fisica">
+                                        <input type="checkbox" name="checkboxDiscapacidad0" value="fisica">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Fisica"/>
                                 </div><!-- /input-group -->
@@ -587,7 +587,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadIntelectual" value="intelectual">
+                                        <input type="checkbox" name="checkboxDiscapacidad1" value="intelectual">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Intelectual">
                                 </div><!-- /input-group -->
@@ -595,7 +595,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadPsiquica" value="psiquica">
+                                        <input type="checkbox" name="checkboxDiscapacidad2" value="psiquica">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Psíquica">
                                 </div><!-- /input-group -->
@@ -603,7 +603,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadVisual" value="visual">
+                                        <input type="checkbox" name="checkboxDiscapacidad3" value="visual">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Visual">
                                 </div><!-- /input-group -->
@@ -611,7 +611,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadAuditiva" value="auditiva">
+                                        <input type="checkbox" name="checkboxDiscapacidad4" value="auditiva">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Auditiva">
                                 </div><!-- /input-group -->
@@ -619,7 +619,7 @@
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" name="checkboxDiscapacidadHabla" value="habla">
+                                        <input type="checkbox" name="checkboxDiscapacidad5" value="habla">
                                     </span>
                                     <input disabled="true" class="form-control" type="text" value="Habla">
                                 </div><!-- /input-group -->
@@ -643,7 +643,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="box-body" id="TextBoxesGroupMedicamentos">
+                    <div class="box-body" id="TextBoxesGroup">
 <!--                        <div class="row" id="medicamentos1">
                             <div class="col-lg-6">
                                 <div style="margin-bottom:10px;" class="form-group">
@@ -676,7 +676,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="box-body" id="TextBoxesGroup">
+                    <div class="box-body" id="TextBoxesGroupEnfermedadCronica">
 <!--                        <div class="row" id="enfermedadesCronicas1">
                             <div class="col-lg-4">
                                 <div style="margin-bottom:10px;" class="form-group">
