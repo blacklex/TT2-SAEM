@@ -54,23 +54,8 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="radio">
-                    <label>
-                        <input id="radioEditar" type="radio" checked="" value="option1" name="optionsRadios"/>
-                        Editar
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input id="radioEliminar" type="radio" value="option2" name="optionsRadios"/>
-                        Eliminar
-                    </label>
-                </div>
-            </div>
         <!--Fin Busqueda por Filtro-->
         
-            
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
