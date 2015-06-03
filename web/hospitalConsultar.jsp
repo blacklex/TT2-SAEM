@@ -119,10 +119,10 @@
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
+                <sjg:gridColumn id="telefono" name="telefono"	title="Telefono" 		index="telefono"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
+                <sjg:gridColumn  name="EMail"			title="Email" 		index="EMail"		sortable="false"
                                  editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
             </sjg:grid> 

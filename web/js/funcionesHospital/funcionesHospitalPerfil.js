@@ -61,6 +61,7 @@ function ocultarForms() {
 
 
 function muestraFormSesion(codigoHospital) {
+    $("#barraCargar").slideDown(100);   
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -68,7 +69,7 @@ function muestraFormSesion(codigoHospital) {
         data: {codigoHospital: codigoHospital}
     })
             .done(function (msg) {
-
+                 $("#barraCargar").slideUp(100);
                 $("#claveUsuario").val(msg.claveUsuario);
                 $("#nombreUsuario").val(msg.nombreUsuario);
                 $("#divFormInicioSesion").slideDown('slow');
@@ -77,6 +78,7 @@ function muestraFormSesion(codigoHospital) {
 }
 
 function muestraFormDatosHospital(codigoHospital) {
+    $("#barraCargar").slideDown(100);    
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -92,13 +94,14 @@ function muestraFormDatosHospital(codigoHospital) {
                 $("#nombreHospital").val(nombreHospital);
                 $("#telefonoHospital").val(telefonoHospital);
                 $("#emailHospital").val(emailHospital);
-
+                 $("#barraCargar").slideUp(100);
                 $("#divFormDatosHospital").slideDown('slow');
 
             });
 }
 
 function muestraDireccionHospital(codigoHospital) {
+    $("#barraCargar").slideDown(100);   
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -113,16 +116,18 @@ function muestraDireccionHospital(codigoHospital) {
                 $("#delegacion").val(msg.delegacion);
                 $("#entidadFederativa").val(msg.entidadFederativa);
                 $("#codigoPostal").val(msg.codigoPostal);
-
+                
                 $("#divFormDireccionHospital").slideDown('slow', function () {
                     inicializarMapaConsultar(msg.latitudY, msg.longitudX);
                 });
+                 $("#barraCargar").slideUp(100);
 
             });
 
 }
 
 function muestraFormDirectivo(codigoHospital) {
+    $("#barraCargar").slideDown(100);
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -134,7 +139,7 @@ function muestraFormDirectivo(codigoHospital) {
                 $("#telefonoDirectivo").val(msg.telefonoDirectivo);
                 $("#emailDirectivo").val(msg.emailDirectivo);
                 $("#nombreDirectivo").val(msg.nombreDirectivo);
-
+                 $("#barraCargar").slideUp(100);
                 $("#divFormDirectivo").slideDown('slow');
 
             });
@@ -142,6 +147,7 @@ function muestraFormDirectivo(codigoHospital) {
 }
 
 function muestraFormEspecialidades(codigoHospital) {
+    $("#barraCargar").slideDown(100);
     $.ajax({
         dataType: "json",
         method: "POST",
@@ -151,7 +157,7 @@ function muestraFormEspecialidades(codigoHospital) {
             .done(function (msg) {
 
                 $("#divContEspecialidades").html(msg.especialidades);
-
+                 $("#barraCargar").slideUp(100);
                 $("#divFormEspecialidades").slideDown('slow');
 
             });
@@ -159,13 +165,13 @@ function muestraFormEspecialidades(codigoHospital) {
 }
 
 function muestraInformacionPerfilHospital(codigoHospital) {
-    $("#barraCargar").slideDown(100);
+
     muestraFormSesion(codigoHospital);
     muestraFormDatosHospital(codigoHospital);
     muestraDireccionHospital(codigoHospital);
     muestraFormDirectivo(codigoHospital);
     muestraFormEspecialidades(codigoHospital);
-    $("#barraCargar").slideUp(100);
+   
 }
 
 

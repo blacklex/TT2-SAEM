@@ -92,17 +92,17 @@
         onclick: function(){ muestraFormDatosHospital() }
         },
         mostrarFormDireccionHospital : { 
-        title : 'Modificacr Direccion del Hospital', 
+        title : 'Modificar Direccion del Hospital', 
         icon:'ui-icon-home', 
         onclick: function(){ muestraDireccionHospital() }
         },
         mostrarFormDirectivo : { 
-        title : 'Modificacr Datos del Directivo', 
+        title : 'Modificar Datos del Directivo', 
         icon:'ui-icon-person', 
         onclick: function(){ muestraFormDirectivo() }
         },
         mostrarFormEspecialidades : { 
-        title : 'Modificacr Especialidades', 
+        title : 'Modificar Especialidades', 
         icon:'ui-icon-circle-plus', 
         onclick: function(){ muestraFormEspecialidades() }
         },
@@ -118,12 +118,12 @@
 
             <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false" />
 
-            <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"/>
+            <sjg:gridColumn id="lada" name="lada"	title="Lada" 		index="lada"		sortable="false"/>
 
             
-            <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono" />
+            <sjg:gridColumn id="telefono" name="telefono"	title="Telefono" 		index="telefono" />
  
-            <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"/>
+            <sjg:gridColumn  name="EMail"			title="Email" 		index="EMail"		sortable="false"/>
 
            </sjg:grid> 
             </div>
