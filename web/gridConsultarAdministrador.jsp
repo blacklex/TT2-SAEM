@@ -39,7 +39,24 @@
         <div class="box-header">
             <h3 class="box-header"><label>Consultar Administrador</label></label></h3>
         </div>
+         
         <div id="gridAdministradores" class="box-body">
+           
+            <!--Busqueda por Filtro-->
+            <div class="sidebar-form">
+               
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Por Nombre De Usuario" name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div> 
+        <!--Fin Busqueda por Filtro-->
+        
+            
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
@@ -52,8 +69,8 @@
                 rowList="10,15,20"
                 rowNum="15"
                 rownumbers="true"
-                navigatorSearch="true"
-                navigatorRefresh="true"
+                navigatorSearch="false"
+                navigatorRefresh="false"
                 navigator="true"
                 navigatorAdd="false"
                 navigatorEdit="false"
@@ -62,9 +79,7 @@
                 navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
                 navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-                                        seperator: {
-                                                    title : 'seperator'
-                                                   },
+                                       
                                         editarAcceso : {
                                                     title : 'Ver Datos de Acceso',
                                                     icon: 'ui-icon-key', 
@@ -83,29 +98,13 @@
                                        }"
                 autowidth="true">
                  <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
-                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="ID" key="true" sortable="true"/>
-                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Tipo" sortable="true"/>
-                <sjg:gridColumn editable="true" name="clave" index="clave" title="Password" sortable="false"/>
-                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/YH:i', srcformat : 'Y-m-d H:i:s'}"/>
+                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="Nombre de Usuario" key="true" sortable="true"/>
+                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Rol del Usuario" sortable="true"/>
+                <sjg:gridColumn editable="true" name="clave" index="clave" title="Clave de Acceso" sortable="false"/>
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/YH:i', srcformat : 'Y-m-d H:i:s'}"/>
             </sjg:grid>
         </div>
-        <div class="box-body">
-            <!--Busqueda por Filtro-->
-            <form class="sidebar-form" method="get" action="">
-                <div class="box-header">
-                    <h3 class="box-title"><label>Filtrar por usuario:</label></h3>
-                </div>
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
-                    <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </form> 
-        <!--Fin Busqueda por Filtro-->
-        </div>
+       
         <div id="datosAccesoAdministrador" class="box-body" style='display:none;'>
             <div class="box-header">
                 <i class="fa fa-key"></i>

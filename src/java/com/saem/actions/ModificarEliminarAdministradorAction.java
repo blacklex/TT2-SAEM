@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -392,8 +393,23 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
     
     public String buscarDatosPorFiltro() throws FileNotFoundException, IOException {
         Usuarios usuarioResultado;
-
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        if (nombreUsuario.length() > 0) {
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(nombreUsuario);
+                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+                if(listaTemp==null){
+                     estatusMensajeEliminar = "usuarioNoEncontrado";
+                }else{estatusMensajeEliminar = "usuarioEncontrado";}
+                
+                
+            } else {
+                // Obtenemos la lista de la sesión
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(0, 0);
+                estatusMensajeEliminar = "usuarioEncontrado";
+            }
+            session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaTemp);
+            
+        /*usuarioResultado = usuarioDAO.findById(nombreUsuario);
         
         if (usuarioResultado == null) {
             estatusMensajeEliminar = "usuarioNoEncontrado";
@@ -436,7 +452,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         } 
         else {
             estatusMensajeEliminar = "usuarioNoEncontrado";
-        }
+        }*/
         return "success";
     }
 

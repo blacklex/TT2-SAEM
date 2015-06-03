@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -134,14 +135,32 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     
     public String buscarDatosMostrarFiltro() throws FileNotFoundException, IOException {
         Usuarios usuarioResultado;
-
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
         
-        if (usuarioResultado == null) {
+        //usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        
+        /*if (usuarioResultado == null) {
             estatusMensajeEliminar = "usuarioNoEncontrado";
             return SUCCESS;
         }
-        if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
+        */
+        
+         if (nombreUsuario.length() > 0) {
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(nombreUsuario);
+                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+                if(listaTemp==null){
+                     estatusMensajeEliminar = "usuarioNoEncontrado";
+                }else{estatusMensajeEliminar = "usuarioEncontrado";}
+                
+                
+            } else {
+                // Obtenemos la lista de la sesión
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(0, 0);
+                estatusMensajeEliminar = "usuarioEncontrado";
+            }
+            session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaTemp);
+            
+        /*if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
             estatusMensajeEliminar = "usuarioEncontrado";
             listUsuarios = usuarioDAO.listarById(nombreUsuario);
             for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
@@ -177,7 +196,7 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
         }
         else {
             estatusMensajeEliminar = "usuarioNoEncontrado";
-        }
+        }*/
 
         return "success";
     }

@@ -39,7 +39,38 @@
         <div class="box-header">
             <h3 class="box-header"><label>Modificar/Eliminar Administrador</label></h3>
         </div>
+        
         <div id="gridAdministradores" class="box-body">
+           
+            <!--Busqueda por Filtro-->
+            <div class="sidebar-form">
+                
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Por Nombre De Usuario" name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="radio">
+                    <label>
+                        <input id="radioEditar" type="radio" checked="" value="option1" name="optionsRadios"/>
+                        Editar
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input id="radioEliminar" type="radio" value="option2" name="optionsRadios"/>
+                        Eliminar
+                    </label>
+                </div>
+            </div>
+        <!--Fin Busqueda por Filtro-->
+        
+            
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
@@ -52,8 +83,8 @@
                 rowList="10,15,20"
                 rowNum="15"
                 rownumbers="true"
-                navigatorSearch="true"
-                navigatorRefresh="true"
+                navigatorSearch="false"
+                navigatorRefresh="false"
                 navigator="true"
                 navigatorAdd="false"
                 navigatorEdit="false"
@@ -62,9 +93,6 @@
                 navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
                 navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-                                        seperator: {
-                                                    title : 'seperator'
-                                                   },
                                         editarAcceso : {
                                                     title : 'Editar Acceso',
                                                     icon: 'ui-icon-key', 
@@ -88,43 +116,13 @@
                                        }"
                 autowidth="true">
                  <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
-                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="ID" key="true" sortable="true"/>
-                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Tipo" sortable="true"/>
-                <sjg:gridColumn editable="true" name="clave" index="clave" title="Password" sortable="false"/>
-                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false"/>
+                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="Nombre de Usuario" key="true" sortable="true"/>
+                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Rol del Usuario" sortable="true"/>
+                <sjg:gridColumn editable="true" name="clave" index="clave" title="Clave de Acceso" sortable="false"/>
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false"/>
             </sjg:grid>
         </div>
-        <div class="box-body">
-            <!--Busqueda por Filtro-->
-            <form class="sidebar-form" method="get" action="">
-                <div class="box-header">
-                    <h3 class="box-title"><label>Filtrar por usuario</label></h3>
-                </div>
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
-                    <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </form>
-            <div class="form-group">
-                <div class="radio">
-                    <label>
-                        <input id="radioEditar" type="radio" checked="" value="option1" name="optionsRadios"/>
-                        Editar
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input id="radioEliminar" type="radio" value="option2" name="optionsRadios"/>
-                        Eliminar
-                    </label>
-                </div>
-            </div>
-        <!--Fin Busqueda por Filtro-->
-        </div>
+
            <form name="formEditarAccesoAdministrador" action="editarAccesoAdministrador" onsubmit="return validarCamposAcceso();" method="post" role="form">
             <div id="datosAccesoAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
