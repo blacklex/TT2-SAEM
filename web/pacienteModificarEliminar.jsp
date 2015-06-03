@@ -71,25 +71,25 @@
                                                     onclick: function(){ editarAccesoPaciente(); }
                                                  },
                                         editarDatos : {
-                                                    title : 'Editar Datos',
+                                                    title : 'Editar Datos de Identicifación',
                                                     icon: 'ui-icon-person', 
                                                     onclick: function(){ editarDatosPaciente(); }
                                                  },
                                         editarDireccion : {
-                                                    title : 'Editar Dirección',
+                                                    title : 'Editar Domicilio',
                                                     icon: 'ui-icon-home', 
                                                     onclick: function(){ editarDireccionPaciente(); }
                                                  },
+                                        editarDatosPersonales : {
+                                           title : 'Editar Datos Personales',
+                                           icon: '  ui-icon-info', 
+                                           onclick: function(){ editarDatosPersonalesPaciente(); }
+                                        },
                                         editarTelefonos : {
                                                     title : 'Editar Teléfonos',
-                                                    icon: 'ui-icon-home', 
+                                                    icon: 'ui-icon-clipboard', 
                                                     onclick: function(){ editarTelefonosPaciente(); }
                                                  }, 
-                                        editarDatosPersonales : {
-                                                    title : 'Editar Datos Personales',
-                                                    icon: 'ui-icon-home', 
-                                                    onclick: function(){ editarDatosPersonalesPaciente(); }
-                                                 },
                                         editarContactos : {
                                                     title : 'Editar Contactos',
                                                     icon: 'ui-icon-home', 
@@ -167,6 +167,8 @@
         </form>
         <s:form enctype="multipart/form-data" name="formEditarDatosPaciente" action="editarDatosPaciente" method="post" role="form">
             <s:hidden name="nombreUsuario" id="nomUs"/>
+            <s:hidden name="codigoHospital" id="codHos"/>
+            
             <div id="datosPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos Paciente</h3>
@@ -222,8 +224,9 @@
                 <div class="box-header">
                     <h3 class="box-title">Editar Dirección</h3>
                 </div>
-                <s:hidden name="id" id="idDomPaciente"/>
+                <s:hidden name="idDomicilioPaciente" id="idDomPaciente"/>
                 <s:hidden name="nombreUsuario" id="nomUsr"/>
+                <s:hidden name="nss" id="noSeSo"/>
                 <div id="divCallePaciente" class="form-group">
                     <label for="calle">Calle y No.</label>
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -256,26 +259,28 @@
             </div><!-- /.box-body -->
         </s:form>
         <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
-            <div id="datosTelefonosPaciente" class="box-body" style='display:none;'>
-                <div class="box-header">
-                    <h3 class="box-title">Editar Teléfonos</h3>
+            <div class="box-body" id="datosTelefonosPaciente" style='display:none;'>
+                <div class="box box-primary collapsed-box box-solid">
+                    <div class="box-header with-border">
+                        <i class="fa fa-phone"></i>
+                        <h3 class="box-title"><label>Números Telefónicos</label></h3>
+                        <div class="box-tools pull-right">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button title="Agregar Teléfono" type="button" id="agregarTelefono" class="btn btn-box-tool btn-primary">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                            <button title="Eliminar Teléfono" type="button" id="eliminarTelefono" class="btn btn-box-tool btn-danger">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body" id="TextBoxesGroupTelefonos">
+                        
+                    </div>
                 </div>
-                <s:hidden name="nombreUsuario" id="nomUs3"/>
-                <div id="divTelefonoFijoPaciente" class="form-group">
-                    <label for="telefonoFijo">Telefono Fijo</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoFijo" id="telefonoFijo" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Fijo" type="text">
-                </div>
-
-                <div id="divTelefonoParticularPaciente" class="form-group">
-                    <label for="telefonoParticular">Telefono Particular</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoParticular" id="telefonoParticular" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Particular" type="text">
-                </div>
-                
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin">Actualizar</button>
-                    <button type="button" onclick="cancelarEdicionTelefonos();" class="btn btn-danger btn-sm margin">Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
+            </div>
         </s:form>
         <s:form name="formEditarDatosPersonalesPaciente" action="editarDatosPersonalesPaciente" onsubmit="return validarCamposDatosPersonales();" method="post" role="form">
             <div id="datosPersonalesPaciente" class="box-body" style='display:none;'>
@@ -283,11 +288,52 @@
                     <h3 class="box-title">Editar Datos Personales</h3>
                 </div>
                 <s:hidden name="nombreUsuario" id="nomUs4"/>
+                <s:hidden name="idDatosPersonalesPaciente" id="idDaPePa"/>
                 <div id="divEdoCivilPaciente" class="form-group">
                     <label for="estadoCivil">Estado Civil</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="estadoCivil" id="estadoCivil" placeholder="Estado Civil" type="text">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="estadoCivil" id="radioCasado" value="casado"/>
+                                        Casado(a)
+                                    </label>
+                                </div>
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="estadoCivil" id="radioUnionLibre" value="union libre" />
+                                        Unión libre
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="estadoCivil" id="radioSoltero" value="soltero" />
+                                        Soltero(a)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="estadoCivil" id="radioDivorciado" value="divorciado" />
+                                        Divorsiado(a)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
                 <div id="divCurpPaciente" class="form-group">
                     <label for="curp">CURP</label>
                     <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="curp" id="curp" placeholder="CURP" type="text">
@@ -323,16 +369,6 @@
                     <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="talla" id="talla" placeholder="Talla" type="text">
                 </div>
 
-                <div id="divTelefonoCasaPaciente" class="form-group">
-                    <label for="telCasa">Telefono de Casa</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telCasa" id="telCasa" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono de Casa" type="text">
-                </div>
-
-                <div id="divTelefonoCelPaciente" class="form-group">
-                    <label for="telCel">Telefono Celular</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telCel" id="telCel" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Celular" type="text">
-                </div>
-
                 <div id="divCorreoPaciente" class="form-group">
                     <label for="correo">Email</label>
                     <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text">
@@ -349,7 +385,9 @@
                 </div>
                 
             </div><!-- /.box-body -->
-        </s:form>  
+        </s:form>
+
+            
         <s:form name="formEditarContactosPaciente" action="editarContactosPaciente" onsubmit="return validarCamposContactos();" method="post" role="form">
             <div id="datosContactosPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">

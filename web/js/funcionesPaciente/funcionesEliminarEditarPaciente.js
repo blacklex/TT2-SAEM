@@ -82,6 +82,8 @@ function editarDatosPaciente() {
             $("#unidadMedica").val(msg.unidadMedica);
             $("#noConsultorio").val(msg.noConsultorio);
             $("#nomUs").val(msg.nombreUsuario);
+            $("#codHos").val(msg.codigoHospital);
+            alert(msg.codigoHospital);
             $("#imagen").attr('src', urlImg);
         });
         $("#datosPaciente").show(1000);
@@ -107,8 +109,9 @@ function editarDireccionPaciente() {
             $("#delegacion").val(msg.delegacion);
             $("#entidadFederativa").val(msg.entidadFederativa);
             $("#codigoPostal").val(msg.codigoPostal);
-            $("#idDomPaciente").val(msg.id);
+            $("#idDomPaciente").val(msg.idDomicilioPaciente);
             $("#nomUsr").val(msg.nombreUsuario);
+            $("#noSeSo").val(msg.nss);
         });
 
         $("#datosDireccionPaciente").show(1000);
@@ -152,7 +155,22 @@ function editarDatosPersonalesPaciente() {
             url: "buscarDatosPersonalesPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#estadoCivil").val(msg.estadoCivil);
+            if(msg.estadoCivil === "casado") {
+                $("#radioCasado").attr('checked', true);
+            }
+            
+            if(msg.estadoCivil === "union libre") {
+                $("#radioUnionLibre").attr('checked', true);
+            }
+            
+            if(msg.estadoCivil === "soltero") {
+                $("#radioSoltero").attr('checked', true);
+            }
+            
+            if(msg.estadoCivil === "divorciado") {
+                $("#radioDivorciado").attr('checked', true);
+            }
+            
             $("#curp").val(msg.curp);
             $("#sexo").val(msg.sexo);
             $("#fechaNacimiento").val(msg.fechaNacimiento);
@@ -165,6 +183,7 @@ function editarDatosPersonalesPaciente() {
             $("#correo").val(msg.correo);
             $("#facebook").val(msg.facebook);
             $("#nomUs4").val(msg.nombreUsuario);
+            $("#idDaPePa").val(msg.idDatosPersonalesPaciente);
         });
 
         $("#datosPersonalesPaciente").show(1000);

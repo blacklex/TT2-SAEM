@@ -9,6 +9,7 @@ import com.hibernate.dao.ContactoDAO;
 import com.hibernate.dao.DatosClinicosDAO;
 import com.hibernate.dao.DatosPersonalesDAO;
 import com.hibernate.dao.DomicilioPacienteDAO;
+import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.TelefonoPacienteDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.dao.PacienteDAO;
@@ -16,6 +17,7 @@ import com.hibernate.model.Contactos;
 import com.hibernate.model.DatosClinicos;
 import com.hibernate.model.DatosPersonales;
 import com.hibernate.model.DomicilioPacientes;
+import com.hibernate.model.Hospitales;
 import com.hibernate.model.TelefonosPacientes;
 import com.hibernate.model.Usuarios;
 import com.hibernate.model.Pacientes;
@@ -51,9 +53,12 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private final DatosPersonalesDAO datosPersonalesDAO = new DatosPersonalesDAO();
     private final ContactoDAO contactoDAO = new ContactoDAO();
     private final DatosClinicosDAO datosClinicosDAO = new DatosClinicosDAO();
+    private final HospitalDAO hospitalDAO = new HospitalDAO();
+    
     
     private List<Pacientes> listPacientes;
     private List<Usuarios> listUsuarios;
+    private List<Hospitales> listHospitales;
     
     Pacientes paciente = new Pacientes();
     DomicilioPacientes domicilioPacientes = new DomicilioPacientes();
@@ -62,8 +67,13 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     DatosPersonales datosPersonales = new DatosPersonales();
     Contactos contactos = new Contactos();
     DatosClinicos datosClinicos = new DatosClinicos();
+    Hospitales hospital = new Hospitales();
     
     private HttpServletRequest servletRequest;
+    
+    String codigoHospital;
+    Long idDomicilioPaciente;
+    Long idDatosPersonalesPaciente;
     
     //Acceso
     private String nombreUsuario; //Clave Primaria
@@ -586,30 +596,35 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     }
     
     public String buscarDatosPaciente() throws IOException {
-        listUsuarios = usuarioDAO.listarById(getNombreUsuario());
+        listUsuarios = usuarioDAO.listarById(nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
+            
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
                 paciente = (Pacientes) iterator2.next(); 
-                setNss(paciente.getNss());
-                setNombre(paciente.getNombre());
-                setApellidoPaterno(paciente.getApellidoPaterno());
-                setApellidoMaterno(paciente.getApellidoMaterno());
-                setUnidadMedica(paciente.getUnidadMedica());
-                setNoConsultorio(paciente.getNoConsultorio());
-                setImagenPaciente(paciente.getImagen());
+                nss = paciente.getNss();
+                nombre = paciente.getNombre();
+                apellidoPaterno = paciente.getApellidoPaterno();
+                apellidoMaterno = paciente.getApellidoMaterno();
+                unidadMedica = paciente.getUnidadMedica();
+                noConsultorio = paciente.getNoConsultorio();
+                imagenPaciente = paciente.getImagen();
                 String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
                 System.out.println(filePath);
-                FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilPaciente/"+getNombreUsuario()+".jpeg");
-                image.write(getImagenPaciente());
-                setNombreUsuario(userPaciente.getNombreUsuario());
-                System.out.println(getNombre());
-                System.out.println(getApellidoPaterno());
-                System.out.println(getApellidoMaterno());
-                System.out.println(getUnidadMedica());
-                System.out.println(getNoConsultorio());
-                System.out.println(getNombreUsuario());
+                FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilPaciente/"+nombreUsuario+".jpeg");
+                image.write(imagenPaciente);
+                nombreUsuario = userPaciente.getNombreUsuario();                
+                System.out.println(nss);
+                System.out.println(nombre);
+                System.out.println(apellidoPaterno);
+                System.out.println(apellidoMaterno);
+                System.out.println(unidadMedica);
+                System.out.println(noConsultorio);
+                System.out.println(nombreUsuario);
+                codigoHospital = pacienteDAO.obtenerCogigoHospital(nss);
+                System.out.println(codigoHospital);
+                
                 image.close();
             }
         }
@@ -626,20 +641,22 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 Set domPaciente = paciente.getDomicilioPacienteses();
                 for (Iterator iterator3 = domPaciente.iterator(); iterator3.hasNext();) {
                     domicilioPacientes = (DomicilioPacientes) iterator3.next();
-                    setCalle(domicilioPacientes.getCalle());
-                    setColonia(domicilioPacientes.getColonia());
-                    setDelegacion(domicilioPacientes.getDelegacion());
-                    setEntidadFederativa(domicilioPacientes.getEntidadFederativa());
-                    setCodigoPostal(domicilioPacientes.getCodigoPostal());
-                    setId(domicilioPacientes.getId());
-                    setNombreUsuario(userPaciente.getNombreUsuario());
-                    System.out.println(getId());
-                    System.out.println(getCalle());
-                    System.out.println(getColonia());
-                    System.out.println(getDelegacion());
-                    System.out.println(getEntidadFederativa());
-                    System.out.println(getCodigoPostal());
-                    System.out.println(getNombreUsuario());
+                    idDomicilioPaciente = domicilioPacientes.getId();
+                    calle = domicilioPacientes.getCalle();
+                    colonia = domicilioPacientes.getColonia();
+                    delegacion = domicilioPacientes.getDelegacion();
+                    entidadFederativa = domicilioPacientes.getEntidadFederativa();
+                    codigoPostal = domicilioPacientes.getCodigoPostal();
+                    nss = paciente.getNss();
+                    nombreUsuario = userPaciente.getNombreUsuario();
+                    System.out.println(idDomicilioPaciente);
+                    System.out.println(calle);
+                    System.out.println(colonia);
+                    System.out.println(delegacion);
+                    System.out.println(entidadFederativa);
+                    System.out.println(codigoPostal);
+                    System.out.println(nss);
+                    System.out.println(nombreUsuario);
                 }
             }
         }
@@ -647,6 +664,9 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     }
     
     public String buscarTelefonosPaciente() {
+        System.out.println("--->Entro a telefonos pacientes");
+        String html = "";
+        TelefonoPacienteDAO telPacienteDAO = new TelefonoPacienteDAO();
         listUsuarios = usuarioDAO.listarById(getNombreUsuario());
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -678,32 +698,32 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 Set datPerPaciente = paciente.getDatosPersonaleses();
                 for (Iterator iterator3 = datPerPaciente.iterator(); iterator3.hasNext();) {
                     datosPersonales = (DatosPersonales) iterator3.next();
-                    setEstadoCivil(datosPersonales.getEstadoCivil());
-                    setCurp(datosPersonales.getCurp());
-                    setSexo(datosPersonales.getSexo());
-                    setFechaNacimiento(datosPersonales.getFechaNacimiento());
-                    setEdad(datosPersonales.getEdad());
-                    setPeso(datosPersonales.getPeso());
-                    setAltura(datosPersonales.getAltura());
-                    setTalla(datosPersonales.getTalla());
-//                    setTelCasa(datosPersonales.getTelCasa());
-//                    setTelCel(datosPersonales.getTelCel());
-                    setCorreo(datosPersonales.getCorreo());
-                    setFacebook(datosPersonales.getFacebook());
-                    setNombreUsuario(userPaciente.getNombreUsuario());
-                    System.out.println(getEstadoCivil());
-                    System.out.println(getCurp());
-                    System.out.println(getSexo());
-                    System.out.println(getFechaNacimiento());
-                    System.out.println(getEdad());
-                    System.out.println(getPeso());
-                    System.out.println(getAltura());
-                    System.out.println(getTalla());
-                    System.out.println(getTelCasa());
-                    System.out.println(getTelCel());
-                    System.out.println(getCorreo());
-                    System.out.println(getFacebook());
-                    System.out.println(getNombreUsuario());
+                    idDatosPersonalesPaciente = datosPersonales.getId();
+                    estadoCivil = datosPersonales.getEstadoCivil();
+                    curp = datosPersonales.getCurp();
+                    sexo = datosPersonales.getSexo();
+                    fechaNacimiento = datosPersonales.getFechaNacimiento();
+                    edad = datosPersonales.getEdad();
+                    peso = datosPersonales.getPeso();
+                    altura = datosPersonales.getAltura();
+                    talla = datosPersonales.getTalla();
+                    correo = datosPersonales.getCorreo();
+                    facebook = datosPersonales.getFacebook();
+                    nombreUsuario = userPaciente.getNombreUsuario();
+                    nss = paciente.getNss();
+                    System.out.println(idDatosPersonalesPaciente);
+                    System.out.println(estadoCivil);
+                    System.out.println(curp);
+                    System.out.println(sexo);
+                    System.out.println(fechaNacimiento);
+                    System.out.println(edad);
+                    System.out.println(peso);
+                    System.out.println(altura);
+                    System.out.println(talla);
+                    System.out.println(correo);
+                    System.out.println(facebook);
+                    System.out.println(nss);
+                    System.out.println(nombreUsuario);
                 }
             }
         }
@@ -872,664 +892,215 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         servletRequest =hsr;
     }
 
-    /**
-     * @return the nombreUsuario
-     */
+    public String getCodigoHospital() {
+        return codigoHospital;
+    }
+
+    public void setCodigoHospital(String codigoHospital) {
+        this.codigoHospital = codigoHospital;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    /**
-     * @param nombreUsuario the nombreUsuario to set
-     */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
-    /**
-     * @return the clave
-     */
-    public String getClave() {
-        return clave;
-    }
-
-    /**
-     * @param clave the clave to set
-     */
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    /**
-     * @return the tipoUsuario
-     */
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    /**
-     * @param tipoUsuario the tipoUsuario to set
-     */
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    /**
-     * @return the nss
-     */
     public String getNss() {
         return nss;
     }
 
-    /**
-     * @param nss the nss to set
-     */
     public void setNss(String nss) {
         this.nss = nss;
     }
 
-    /**
-     * @return the nombre
-     */
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * @param nombre the nombre to set
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the apellidoPaterno
-     */
     public String getApellidoPaterno() {
         return apellidoPaterno;
     }
 
-    /**
-     * @param apellidoPaterno the apellidoPaterno to set
-     */
     public void setApellidoPaterno(String apellidoPaterno) {
         this.apellidoPaterno = apellidoPaterno;
     }
 
-    /**
-     * @return the apellidoMaterno
-     */
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
 
-    /**
-     * @param apellidoMaterno the apellidoMaterno to set
-     */
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    /**
-     * @return the unidadMedica
-     */
     public String getUnidadMedica() {
         return unidadMedica;
     }
 
-    /**
-     * @param unidadMedica the unidadMedica to set
-     */
     public void setUnidadMedica(String unidadMedica) {
         this.unidadMedica = unidadMedica;
     }
 
-    /**
-     * @return the noConsultorio
-     */
     public String getNoConsultorio() {
         return noConsultorio;
     }
 
-    /**
-     * @param noConsultorio the noConsultorio to set
-     */
     public void setNoConsultorio(String noConsultorio) {
         this.noConsultorio = noConsultorio;
     }
 
-    /**
-     * @return the imagen
-     */
-    public File getImagen() {
-        return imagen;
-    }
-
-    /**
-     * @param imagen the imagen to set
-     */
-    public void setImagen(File imagen) {
-        this.imagen = imagen;
-    }
-
-    /**
-     * @return the imagenPaciente
-     */
     public byte[] getImagenPaciente() {
         return imagenPaciente;
     }
 
-    /**
-     * @param imagenPaciente the imagenPaciente to set
-     */
     public void setImagenPaciente(byte[] imagenPaciente) {
         this.imagenPaciente = imagenPaciente;
     }
 
-    /**
-     * @return the userImageContentType
-     */
-    public String getUserImageContentType() {
-        return userImageContentType;
+    public Long getIdDomicilioPaciente() {
+        return idDomicilioPaciente;
     }
 
-    /**
-     * @param userImageContentType the userImageContentType to set
-     */
-    public void setUserImageContentType(String userImageContentType) {
-        this.userImageContentType = userImageContentType;
+    public void setIdDomicilioPaciente(Long idDomicilioPaciente) {
+        this.idDomicilioPaciente = idDomicilioPaciente;
     }
 
-    /**
-     * @return the userImageFileName
-     */
-    public String getUserImageFileName() {
-        return userImageFileName;
-    }
-
-    /**
-     * @param userImageFileName the userImageFileName to set
-     */
-    public void setUserImageFileName(String userImageFileName) {
-        this.userImageFileName = userImageFileName;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the calle
-     */
     public String getCalle() {
         return calle;
     }
 
-    /**
-     * @param calle the calle to set
-     */
     public void setCalle(String calle) {
         this.calle = calle;
     }
 
-    /**
-     * @return the colonia
-     */
     public String getColonia() {
         return colonia;
     }
 
-    /**
-     * @param colonia the colonia to set
-     */
     public void setColonia(String colonia) {
         this.colonia = colonia;
     }
 
-    /**
-     * @return the delegacion
-     */
     public String getDelegacion() {
         return delegacion;
     }
 
-    /**
-     * @param delegacion the delegacion to set
-     */
     public void setDelegacion(String delegacion) {
         this.delegacion = delegacion;
     }
 
-    /**
-     * @return the entidadFederativa
-     */
     public String getEntidadFederativa() {
         return entidadFederativa;
     }
 
-    /**
-     * @param entidadFederativa the entidadFederativa to set
-     */
     public void setEntidadFederativa(String entidadFederativa) {
         this.entidadFederativa = entidadFederativa;
     }
 
-    /**
-     * @return the codigoPostal
-     */
     public String getCodigoPostal() {
         return codigoPostal;
     }
 
-    /**
-     * @param codigoPostal the codigoPostal to set
-     */
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
 
-    /**
-     * @return the telefonoFijo
-     */
-    public String getTelefonoFijo() {
-        return telefonoFijo;
-    }
-
-    /**
-     * @param telefonoFijo the telefonoFijo to set
-     */
-    public void setTelefonoFijo(String telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
-    }
-
-    /**
-     * @return the telefonoParticular
-     */
-    public String getTelefonoParticular() {
-        return telefonoParticular;
-    }
-
-    /**
-     * @param telefonoParticular the telefonoParticular to set
-     */
-    public void setTelefonoParticular(String telefonoParticular) {
-        this.telefonoParticular = telefonoParticular;
-    }
-
-    /**
-     * @return the estadoCivil
-     */
     public String getEstadoCivil() {
         return estadoCivil;
     }
 
-    /**
-     * @param estadoCivil the estadoCivil to set
-     */
     public void setEstadoCivil(String estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
 
-    /**
-     * @return the curp
-     */
     public String getCurp() {
         return curp;
     }
 
-    /**
-     * @param curp the curp to set
-     */
     public void setCurp(String curp) {
         this.curp = curp;
     }
 
-    /**
-     * @return the sexo
-     */
     public String getSexo() {
         return sexo;
     }
 
-    /**
-     * @param sexo the sexo to set
-     */
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    /**
-     * @return the fechaNacimiento
-     */
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    /**
-     * @param fechaNacimiento the fechaNacimiento to set
-     */
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    /**
-     * @return the edad
-     */
     public String getEdad() {
         return edad;
     }
 
-    /**
-     * @param edad the edad to set
-     */
     public void setEdad(String edad) {
         this.edad = edad;
     }
 
-    /**
-     * @return the peso
-     */
     public String getPeso() {
         return peso;
     }
 
-    /**
-     * @param peso the peso to set
-     */
     public void setPeso(String peso) {
         this.peso = peso;
     }
 
-    /**
-     * @return the altura
-     */
     public String getAltura() {
         return altura;
     }
 
-    /**
-     * @param altura the altura to set
-     */
     public void setAltura(String altura) {
         this.altura = altura;
     }
 
-    /**
-     * @return the talla
-     */
     public String getTalla() {
         return talla;
     }
 
-    /**
-     * @param talla the talla to set
-     */
     public void setTalla(String talla) {
         this.talla = talla;
     }
 
-    /**
-     * @return the telCasa
-     */
-    public String getTelCasa() {
-        return telCasa;
-    }
-
-    /**
-     * @param telCasa the telCasa to set
-     */
-    public void setTelCasa(String telCasa) {
-        this.telCasa = telCasa;
-    }
-
-    /**
-     * @return the telCel
-     */
-    public String getTelCel() {
-        return telCel;
-    }
-
-    /**
-     * @param telCel the telCel to set
-     */
-    public void setTelCel(String telCel) {
-        this.telCel = telCel;
-    }
-
-    /**
-     * @return the correo
-     */
     public String getCorreo() {
         return correo;
     }
 
-    /**
-     * @param correo the correo to set
-     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    /**
-     * @return the facebook
-     */
     public String getFacebook() {
         return facebook;
     }
 
-    /**
-     * @param facebook the facebook to set
-     */
     public void setFacebook(String facebook) {
         this.facebook = facebook;
     }
 
-    /**
-     * @return the nombreC
-     */
-    public String getNombreC() {
-        return nombreC;
+    public Long getIdDatosPersonalesPaciente() {
+        return idDatosPersonalesPaciente;
     }
 
-    /**
-     * @param nombreC the nombreC to set
-     */
-    public void setNombreC(String nombreC) {
-        this.nombreC = nombreC;
+    public void setIdDatosPersonalesPaciente(Long idDatosPersonalesPaciente) {
+        this.idDatosPersonalesPaciente = idDatosPersonalesPaciente;
     }
 
-    /**
-     * @return the apellidoPaternoC
-     */
-    public String getApellidoPaternoC() {
-        return apellidoPaternoC;
-    }
-
-    /**
-     * @param apellidoPaternoC the apellidoPaternoC to set
-     */
-    public void setApellidoPaternoC(String apellidoPaternoC) {
-        this.apellidoPaternoC = apellidoPaternoC;
-    }
-
-    /**
-     * @return the apellidoMaternoC
-     */
-    public String getApellidoMaternoC() {
-        return apellidoMaternoC;
-    }
-
-    /**
-     * @param apellidoMaternoC the apellidoMaternoC to set
-     */
-    public void setApellidoMaternoC(String apellidoMaternoC) {
-        this.apellidoMaternoC = apellidoMaternoC;
-    }
-
-    /**
-     * @return the parentesco
-     */
-    public String getParentesco() {
-        return parentesco;
-    }
-
-    /**
-     * @param parentesco the parentesco to set
-     */
-    public void setParentesco(String parentesco) {
-        this.parentesco = parentesco;
-    }
-
-    /**
-     * @return the celular
-     */
-    public String getCelular() {
-        return celular;
-    }
-
-    /**
-     * @param celular the celular to set
-     */
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    /**
-     * @return the facebookC
-     */
-    public String getFacebookC() {
-        return facebookC;
-    }
-
-    /**
-     * @param facebookC the facebookC to set
-     */
-    public void setFacebookC(String facebookC) {
-        this.facebookC = facebookC;
-    }
-
-    /**
-     * @return the correoC
-     */
-    public String getCorreoC() {
-        return correoC;
-    }
-
-    /**
-     * @param correoC the correoC to set
-     */
-    public void setCorreoC(String correoC) {
-        this.correoC = correoC;
-    }
-
-    /**
-     * @return the usoDrogas
-     */
-    public boolean isUsoDrogas() {
-        return usoDrogas;
-    }
-
-    /**
-     * @param usoDrogas the usoDrogas to set
-     */
-    public void setUsoDrogas(boolean usoDrogas) {
-        this.usoDrogas = usoDrogas;
-    }
-
-    /**
-     * @return the usoAlcohol
-     */
-    public boolean isUsoAlcohol() {
-        return usoAlcohol;
-    }
-
-    /**
-     * @param usoAlcohol the usoAlcohol to set
-     */
-    public void setUsoAlcohol(boolean usoAlcohol) {
-        this.usoAlcohol = usoAlcohol;
-    }
-
-    /**
-     * @return the fumador
-     */
-    public boolean isFumador() {
-        return fumador;
-    }
-
-    /**
-     * @param fumador the fumador to set
-     */
-    public void setFumador(boolean fumador) {
-        this.fumador = fumador;
-    }
-
-    /**
-     * @return the tituloAlertEditar
-     */
-    public String getTituloAlertEditar() {
-        return tituloAlertEditar;
-    }
-
-    /**
-     * @param tituloAlertEditar the tituloAlertEditar to set
-     */
-    public void setTituloAlertEditar(String tituloAlertEditar) {
-        this.tituloAlertEditar = tituloAlertEditar;
-    }
-
-    /**
-     * @return the textoAlertEditar
-     */
-    public String getTextoAlertEditar() {
-        return textoAlertEditar;
-    }
-
-    /**
-     * @param textoAlertEditar the textoAlertEditar to set
-     */
-    public void setTextoAlertEditar(String textoAlertEditar) {
-        this.textoAlertEditar = textoAlertEditar;
-    }
-
-    /**
-     * @return the estatusMensajeEliminar
-     */
-    public String getEstatusMensajeEliminar() {
-        return estatusMensajeEliminar;
-    }
-
-    /**
-     * @param estatusMensajeEliminar the estatusMensajeEliminar to set
-     */
-    public void setEstatusMensajeEliminar(String estatusMensajeEliminar) {
-        this.estatusMensajeEliminar = estatusMensajeEliminar;
-    }
-
-    /**
-     * @return the estatusMensajeEditar
-     */
-    public String getEstatusMensajeEditar() {
-        return estatusMensajeEditar;
-    }
-
-    /**
-     * @param estatusMensajeEditar the estatusMensajeEditar to set
-     */
-    public void setEstatusMensajeEditar(String estatusMensajeEditar) {
-        this.estatusMensajeEditar = estatusMensajeEditar;
-    }
-
+    
    
     
 }

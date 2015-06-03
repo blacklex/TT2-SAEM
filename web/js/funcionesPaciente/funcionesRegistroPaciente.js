@@ -203,133 +203,133 @@ function validarCampos() {
 }
 
 function validarCheckboxAlergias() {
-    if( $('#checkboxAlergiaPolen0').is(':checked') ) {
-        $("#especificarAlergiaPolen0").attr('disabled', false);
-        $("#especificarAlergiaPolen0").focus();
+    if( $('#checkboxAlergia0').is(':checked') ) {
+        $("#especificarAlergia0").attr('disabled', false);
+        $("#especificarAlergia0").focus();
     }
     else {
-        $("#especificarAlergiaPolen0").attr('disabled', true);
-        $("#especificarAlergiaPolen0").val("");
+        $("#especificarAlergia0").attr('disabled', true);
+        $("#especificarAlergia0").val("");
     }
     
-    if( $('#checkboxAlergiaAcaros1').is(':checked') ) {
-        $("#especificarAlergiaAcaros1").attr('disabled', false);
-        $("#especificarAlergiaAcaros1").focus();
+    if( $('#checkboxAlergia1').is(':checked') ) {
+        $("#especificarAlergia1").attr('disabled', false);
+        $("#especificarAlergia1").focus();
     }
     else {
-        $("#especificarAlergiaAcaros1").attr('disabled', true);
-        $("#especificarAlergiaAcaros1").val("");
+        $("#especificarAlergia1").attr('disabled', true);
+        $("#especificarAlergia1").val("");
     }
     
-    if( $('#checkboxAlergiaAnimales2').is(':checked') ) {
-        $("#especificarAlergiaAnimales2").attr('disabled', false);
-        $("#especificarAlergiaAnimales2").focus();
+    if( $('#checkboxAlergia2').is(':checked') ) {
+        $("#especificarAlergia2").attr('disabled', false);
+        $("#especificarAlergia2").focus();
     }
     else {
-        $("#especificarAlergiaAnimales2").attr('disabled', true);
-        $("#especificarAlergiaAnimales2").val("");
+        $("#especificarAlergia2").attr('disabled', true);
+        $("#especificarAlergia2").val("");
     }
     
-    if( $('#checkboxAlergiaMedicamentos3').is(':checked') ) {
-        $("#especificarAlergiaMedicamentos3").attr('disabled', false);
-        $("#especificarAlergiaMedicamentos3").focus();
+    if( $('#checkboxAlergia3').is(':checked') ) {
+        $("#especificarAlergia3").attr('disabled', false);
+        $("#especificarAlergia3").focus();
     }
     else {
-        $("#especificarAlergiaMedicamentos3").attr('disabled', true);
-        $("#especificarAlergiaMedicamentos3").val("");
+        $("#especificarAlergia3").attr('disabled', true);
+        $("#especificarAlergia3").val("");
     }
     
-    if( $('#checkboxAlergiaInsectos4').is(':checked') ) {
-        $("#especificarAlergiaInsectos4").attr('disabled', false);
-        $("#especificarAlergiaInsectos4").focus();
+    if( $('#checkboxAlergia4').is(':checked') ) {
+        $("#especificarAlergia4").attr('disabled', false);
+        $("#especificarAlergia4").focus();
     }
     else {
-        $("#especificarAlergiaInsectos4").attr('disabled', true);
-        $("#especificarAlergiaInsectos4").val("");
+        $("#especificarAlergia4").attr('disabled', true);
+        $("#especificarAlergia4").val("");
     }
     
-    if( $('#checkboxAlergiaAlimentos5').is(':checked') ) {
-        $("#especificarAlergiaAlimentos5").attr('disabled', false);
-        $("#especificarAlergiaAlimentos5").focus();
+    if( $('#checkboxAlergia5').is(':checked') ) {
+        $("#especificarAlergia5").attr('disabled', false);
+        $("#especificarAlergia5").focus();
     }
     else {
-        $("#especificarAlergiaAlimentos5").attr('disabled', true);
-        $("#especificarAlergiaAlimentos5").val("");
+        $("#especificarAlergia5").attr('disabled', true);
+        $("#especificarAlergia5").val("");
     }
 }
 
 function validarCheckboxCirugias() {
-    if( $('#checkboxCirugiaInterna').is(':checked') ) {
-        $("#noCirugiaInterna").attr('disabled', false);
-        $("#noCirugiaInterna").focus();
+    if( $('#checkboxCirugia0').is(':checked') ) {
+        $("#noCirugia0").attr('disabled', false);
+        $("#noCirugia0").focus();
     }
     else {
-        $("#noCirugiaInterna").attr('disabled', true);
-        $("#noCirugiaInterna").val("");
+        $("#noCirugia0").attr('disabled', true);
+        $("#noCirugia0").val("");
         
     }
     
-    if( $('#checkboxCirugiaExterna').is(':checked') ) {
-        $("#noCirugiaExterna").attr('disabled', false);
-        $("#noCirugiaExterna").focus();
+    if( $('#checkboxCirugia1').is(':checked') ) {
+        $("#noCirugia1").attr('disabled', false);
+        $("#noCirugia1").focus();
     }
     else {
-        $("#noCirugiaExterna").attr('disabled', true);
-        $("#noCirugiaExterna").val("");
+        $("#noCirugia1").attr('disabled', true);
+        $("#noCirugia1").val("");
     }
     
-    if( $('#checkboxCirugiaMayor').is(':checked') ) {
-        $("#noCirugiaMayor").attr('disabled', false);
-        $("#noCirugiaMayor").focus();
+    if( $('#checkboxCirugia2').is(':checked') ) {
+        $("#noCirugia2").attr('disabled', false);
+        $("#noCirugia2").focus();
     }
     else {
-        $("#noCirugiaMayor").attr('disabled', true);
-        $("#noCirugiaMayor").val("");
+        $("#noCirugia2").attr('disabled', true);
+        $("#noCirugia2").val("");
     }
     
-    if( $('#checkboxCirugiaMenor').is(':checked') ) {
-        $("#noCirugiaMenor").attr('disabled', false);
-        $("#noCirugiaMenor").focus();
+    if( $('#checkboxCirugia3').is(':checked') ) {
+        $("#noCirugia3").attr('disabled', false);
+        $("#noCirugia3").focus();
     }
     else {
-        $("#noCirugiaMenor").attr('disabled', true);
-        $("#noCirugiaMenor").val("");
+        $("#noCirugia3").attr('disabled', true);
+        $("#noCirugia3").val("");
     }
     
-    if( $('#checkboxCirugiaCurativa').is(':checked') ) {
-        $("#noCirugiaCurativa").attr('disabled', false);
-        $("#noCirugiaCurativa").focus();
+    if( $('#checkboxCirugia4').is(':checked') ) {
+        $("#noCirugia4").attr('disabled', false);
+        $("#noCirugia4").focus();
     }
     else {
-        $("#noCirugiaCurativa").attr('disabled', true);
-        $("#noCirugiaCurativa").val("");
+        $("#noCirugia4").attr('disabled', true);
+        $("#noCirugia4").val("");
     }
     
-    if( $('#checkboxCirugiaReparadora').is(':checked') ) {
-        $("#noCirugiaReparadora").attr('disabled', false);
-        $("#noCirugiaReparadora").focus();
+    if( $('#checkboxCirugia5').is(':checked') ) {
+        $("#noCirugia5").attr('disabled', false);
+        $("#noCirugia5").focus();
     }
     else {
-        $("#noCirugiaReparadora").attr('disabled', true);
-        $("#noCirugiaReparadora").val("");
+        $("#noCirugia5").attr('disabled', true);
+        $("#noCirugia5").val("");
     }
     
-    if( $('#checkboxCirugiaPaliativa').is(':checked') ) {
-        $("#noCirugiaPaliativa").attr('disabled', false);
-        $("#noCirugiaPaliativa").focus();
+    if( $('#checkboxCirugia6').is(':checked') ) {
+        $("#noCirugia6").attr('disabled', false);
+        $("#noCirugia6").focus();
     }
     else {
-        $("#noCirugiaPaliativa").attr('disabled', true);
-        $("#noCirugiaPaliativa").val("");
+        $("#noCirugia6").attr('disabled', true);
+        $("#noCirugia6").val("");
     }
     
-    if( $('#checkboxCirugiaCosmetica').is(':checked') ) {
-        $("#noCirugiaCosmetica").attr('disabled', false);
-        $("#noCirugiaCosmetica").focus();
+    if( $('#checkboxCirugia7').is(':checked') ) {
+        $("#noCirugia7").attr('disabled', false);
+        $("#noCirugia7").focus();
     }
     else {
-        $("#noCirugiaCosmetica").attr('disabled', true);
-        $("#noCirugiaCosmetica").val("");
+        $("#noCirugia7").attr('disabled', true);
+        $("#noCirugia7").val("");
     }
        
 }
@@ -372,11 +372,11 @@ $(document).ready(function() {
                                                 '<div class="input-group-addon">'+
                                                     '<i class="fa fa-calendar"></i>'+
                                                 '</div>'+
-                                                '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="inicioEnfermedad'+ counter +'" id="inicioEnfermedad'+counter+'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask type="text">'+
+                                                '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="inicioEnfermedad'+ counter +'" id="inicioEnfermedad'+counter+'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask placeholder="dd/mm/yyyy" type="text">'+
                                             '</div>'+
                                         '</div>'+
                                     '</div>');
-        newTextBoxDiv.appendTo("#TextBoxesGroup");
+        newTextBoxDiv.appendTo("#TextBoxesGroupEnfermedadCronica");
         counter++;
     });
     
@@ -501,7 +501,7 @@ var counterMedicamento = 0;
                                     '<div class="col-lg-6">'+
                                         '<div style="margin-bottom:10px;" class="form-group">'+
                                             '<label>Nombre del medicamento #'+ (counterMedicamento + 1) +'</label>'+
-                                            '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó"/>'+
+                                            '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó'+(counterMedicamento+1)+'"/>'+
                                         '</div>'+
                                     '</div>'+
                                     '<div class="col-lg-6">'+
@@ -510,7 +510,7 @@ var counterMedicamento = 0;
                                             '<input class="form-control" type="text" value="" name="frecuencia'+counterMedicamento+'" id="frecuencia'+counterMedicamento+'" placeholder="Frecuencia"/>'+
                                         '</div>'+
                                     '</div>');
-        newTextBoxDiv.appendTo("#TextBoxesGroupMedicamentos");
+        newTextBoxDiv.appendTo("#TextBoxesGroup");
         counterMedicamento++;
     });
     
