@@ -21,6 +21,12 @@
         <!-- iCheck -->
         <link href="plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
 
+        <!-- jQuery 2.1.3 -->
+        <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+        <!-- Bootstrap 3.3.2 JS -->
+        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- iCheck -->
+        <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -29,8 +35,33 @@
         <![endif]-->
 
         <script type="text/javascript">
+            $(document).ready(function () {
+                $.getJSON("recuperarMensajeEstatusLogin");
+
+                $(document).ajaxSuccess(function (event, request, settings) {
+
+
+                    if (settings.url.match('recuperarMensajeEstatusLogin') != null) {
+
+                        var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
+                        var textoAlert = $.parseJSON(request.responseText).textoAlert;
+                        var estatusMensaje = $.parseJSON(request.responseText).estatusMensaje;
+
+                        if (estatusMensaje == null)
+                            return;
+
+                        if (estatusMensaje === "errorLogin") {
+                            $("#tituloDivAlertError").html("<i class='icon fa fa-warning'></i>" + tituloAlert);
+                            $("#labelMensajeError").html(textoAlert);
+                            $("#divAlertError").slideDown('slow').delay(5500).slideUp('slow');
+                        }
+                    }
+                });
+
+            });
+
             function validarCampos() {
-                $( ".control-label" ).remove();
+                $(".control-label").remove();
                 if ($("#formNombreUsuario").val() == "" && $("#formClave").val() == "") {
                     $("#divNombreUsuario").addClass("has-error");
                     $("#divClave").addClass("has-error");
@@ -45,15 +76,15 @@
                     $("#divNombreUsuario").addClass("has-error");
                     $("#divClave").removeClass("has-error");
                     return false;
-                }else{
-                     $("#divNombreUsuario").removeClass("has-error");
+                } else {
+                    $("#divNombreUsuario").removeClass("has-error");
                 }
                 if ($("#formClave").val() == "") {
                     $("#divClave").append("<label id='labelClave' class='control-label' for='formClave'><i class='fa fa-times-circle-o'></i>  Ingresa tu clave de acceso.</label>");
                     $("#divClave").addClass("has-error");
                     return false;
                 }
-                
+
 
                 return true;
 
@@ -61,6 +92,7 @@
         </script>
     </head>
     <body class="login-page">
+
         <div class="login-box">
             <div class="login-logo">
                 <a href="#"><b>SAE</b>M</a>
@@ -68,7 +100,11 @@
             <div class="login-box-body">
                 <p class="login-box-msg">Iniciar Sesión</p>
                 <form action="Login" method="post" onsubmit="return validarCampos()">
-
+                    <div id="divAlertError" style="display: none;"  class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4 id="tituloDivAlertError"></h4>
+                        <label id="labelMensajeError"></label>
+                    </div>
                     <div id="divNombreUsuario" class="form-group has-feedback">
                         <input  type="text" id="formNombreUsuario" name="formNombreUsuario" class="form-control" placeholder="Nombre Usuario"/>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -104,20 +140,15 @@
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
 
-        <!-- jQuery 2.1.3 -->
-        <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
-        <!-- Bootstrap 3.3.2 JS -->
-        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- iCheck -->
-        <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
         <script>
-                    $(function () {
-                        $('input').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue',
-                            increaseArea: '20%' // optional
-                        });
-                    });
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+            });
         </script>
     </body>
 </html>

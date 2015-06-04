@@ -29,6 +29,9 @@
             <result name="pantallaInicioHospital" type="tiles">pantallaInicioHospital</result>
         </action>
         
+         <action name="recuperarMensajeEstatusLogin" method="recuperarEstatusLogin" class="com.saem.actions.Login">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- ****************************** REGISTRAR HOSPITAL ********************************************* -->
         <action name="pantallaRegistroHospital" method="execute" class="com.saem.actions.RegistroHospital">
             <result name="pantallaRegistroHospital" type="tiles">pantallaRegistroHospital</result>
