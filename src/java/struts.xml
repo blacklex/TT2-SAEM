@@ -29,6 +29,10 @@
             <result name="pantallaInicioHospital" type="tiles">pantallaInicioHospital</result>
         </action>
         
+         <action name="LogOut" method="execute" class="com.saem.actions.LogOut">
+            <result name="success">login.jsp</result>
+        </action>
+        
          <action name="recuperarMensajeEstatusLogin" method="recuperarEstatusLogin" class="com.saem.actions.Login">
             <result name="success" type="json">JSON</result>
         </action>
