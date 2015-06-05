@@ -77,8 +77,7 @@ public class PeticionesEntrantesAction implements SessionAware {
     public String llenarGridPeticionesEntrantes() {
 
         System.out.println("\n\n--->Entro a llenar tabla Peticiones Entrantes");
-        if(true)
-            return Action.SUCCESS;
+       
         // Obtenemos la tabla desordenada
         obteneTablaPeticionesEntrantes();
         // Quitamos los registros que no se desplegarán en el grid
@@ -95,9 +94,11 @@ public class PeticionesEntrantesAction implements SessionAware {
         // Obtenemos la lista de la sesión
         listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAll();
 
+        System.out.println("---> Tam pet Entra "+listaTemp.size());
+        
         for (PeticionesEntrantes tempContHosp : listaTemp) {
 
-            listaTempFinal.add(null);
+            listaTempFinal.add(new PeticionesEntrantes(tempContHosp.getIdPeticionesEntrantes(), null,null, tempContHosp.getFechaRegistro(),tempContHosp.getEstatus(), tempContHosp.getLatitudPaciente(), tempContHosp.getLongitudPaciente(),tempContHosp.getPrioridad()));
         }
         gridListaPeticionesEntrantes = listaTempFinal;
         if (gridListaPeticionesEntrantes == null) {
