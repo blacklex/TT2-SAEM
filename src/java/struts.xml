@@ -11,7 +11,7 @@
     <constant name="struts.convention.default.parent.package" value="basicstruts2"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="false" />
-    
+    <constant name="struts.custom.i18n.resources" value="global" />
     <!-- Configuration for the default package. -->
     <package name="basicstruts2" namespace="/" extends="struts-default,json-default">
         <result-types>

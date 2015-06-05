@@ -4,7 +4,7 @@
     Author     : Alejandro
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
       <header class="main-header">
         <a href="index2.html" class="logo"><b>SAE</b>M</a>
