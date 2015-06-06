@@ -13,6 +13,8 @@ package com.hibernate.dao;
 
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.Discapacidades;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 
@@ -80,6 +82,17 @@ public class DiscapacidadDAO extends HibernateUtil {
 		}
 	}
          
+        public List<Discapacidades> findAll() {
+        try {
+            String queryString = "from Discapacidades";
+            Query queryObject = getSession().createQuery(queryString);
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            getSession().close();
+        }
+    }
         
       
 

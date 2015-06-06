@@ -106,6 +106,9 @@
         icon:'ui-icon-circle-plus', 
         onclick: function(){ muestraFormEspecialidades() }
         },
+        seperator: {
+                    title : 'seperator'
+                   },
         eliminarHospital : { 
         title : 'Eliminar Hospital', 
         icon:'ui-icon-trash', 

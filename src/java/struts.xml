@@ -305,7 +305,7 @@
             <result name="pantallaConsultarPacientes" type="tiles">pantallaConsultarPacientes</result>
         </action>
         
-        <action name="ajaxLlenarListaConsultarPacientes" method="llenarGridPacienteConsultar" class="com.saem.actions.ConsultarPaciente">
+        <action name="ajaxLlenarListaConsultarPacientes" class="com.saem.actions.GridRegistroPaciente">
             <result name="success" type="json">JSON</result>
         </action>
         
@@ -509,9 +509,7 @@
         <!-- Fin Recuperar Msjs -->
         <!-- ListaAdministradores Grid -->
         <action name="ajaxLlenarListaPacientes" class="com.saem.actions.GridRegistroPaciente">
-            <result name="success"  type="json">
-                
-            </result>
+            <result name="success"  type="json">JSON</result>
         </action>
 <!--         ******************************************** FIN RECUPERAR MSJ PACIENTE ****************************************************************  -->              
  

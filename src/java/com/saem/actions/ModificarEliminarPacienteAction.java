@@ -5,17 +5,21 @@
  */
 package com.saem.actions;
 
+import com.hibernate.dao.AlergiaDAO;
 import com.hibernate.dao.ContactoDAO;
 import com.hibernate.dao.DatosClinicosDAO;
 import com.hibernate.dao.DatosPersonalesDAO;
+import com.hibernate.dao.DiscapacidadDAO;
 import com.hibernate.dao.DomicilioPacienteDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.TelefonoPacienteDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.dao.PacienteDAO;
+import com.hibernate.model.Alergias;
 import com.hibernate.model.Contactos;
 import com.hibernate.model.DatosClinicos;
 import com.hibernate.model.DatosPersonales;
+import com.hibernate.model.Discapacidades;
 import com.hibernate.model.DomicilioPacientes;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.TelefonosPacientes;
@@ -31,6 +35,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +59,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private final ContactoDAO contactoDAO = new ContactoDAO();
     private final DatosClinicosDAO datosClinicosDAO = new DatosClinicosDAO();
     private final HospitalDAO hospitalDAO = new HospitalDAO();
+    private final DiscapacidadDAO discapacidadDAO = new DiscapacidadDAO();
+    private final AlergiaDAO alergiaDAO = new AlergiaDAO();
     
     
     private List<Pacientes> listPacientes;
@@ -67,6 +74,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     DatosPersonales datosPersonales = new DatosPersonales();
     Contactos contactos = new Contactos();
     DatosClinicos datosClinicos = new DatosClinicos();
+    Alergias alergia = new Alergias();
+    Discapacidades discapacidad = new Discapacidades();
     Hospitales hospital = new Hospitales();
     
     private HttpServletRequest servletRequest;
@@ -74,7 +83,9 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     String codigoHospital;
     Long idDomicilioPaciente;
     Long idDatosPersonalesPaciente;
-    
+    Long noHistorial;
+    ArrayList<String> discapacidades = new ArrayList<String>();
+    ArrayList<String> alergias = new ArrayList<String>();
     //Acceso
     private String nombreUsuario; //Clave Primaria
     private String clave;
@@ -122,9 +133,9 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String facebookC;
     private String correoC;
     //Datos clínicos
-    private boolean usoDrogas;
-    private boolean usoAlcohol;
-    private boolean fumador;
+    private boolean drogas;
+    private boolean alcohol;
+    private boolean fuma;;
     //campos json retorno
     private String tituloAlertEditar;
     private String textoAlertEditar;
@@ -763,6 +774,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     }
     
     public String buscarDatosClinicosPaciente() {
+        ArrayList<String> nombreDiscapacidad = new ArrayList<String>();
+        ArrayList<String> nombreAlergia = new ArrayList<String>();
         listUsuarios = usuarioDAO.listarById(getNombreUsuario());
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -772,14 +785,36 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
-                    setUsoDrogas(datosClinicos.isUsoDrogas());
-                    setUsoAlcohol(datosClinicos.isUsoAlcohol());
-                    setFumador(datosClinicos.isFumador());
-                    setNombreUsuario(userPaciente.getNombreUsuario());
-                    System.out.println(isUsoDrogas());
-                    System.out.println(isUsoAlcohol());
-                    System.out.println(isFumador());
-                    System.out.println(getNombreUsuario());
+                    noHistorial = datosClinicos.getNoHistorial();
+                    drogas = datosClinicos.isUsoDrogas();
+                    alcohol = datosClinicos.isUsoAlcohol();
+                    fuma = datosClinicos.isFumador();
+                    nombreUsuario = userPaciente.getNombreUsuario();
+                    nss = paciente.getNss();
+                    System.out.println(noHistorial);
+                    System.out.println(drogas);
+                    System.out.println(alcohol);
+                    System.out.println(fuma);
+                    System.out.println(nombreUsuario);
+                    System.out.println(nss);
+                    
+                    Set datClinicosDiscapacidades = datosClinicos.getDiscapacidadeses();
+                    for (Iterator iterator4 = datClinicosDiscapacidades.iterator(); iterator4.hasNext();) {
+                        discapacidad = (Discapacidades) iterator4.next();
+                        nombreDiscapacidad.add(discapacidad.getTipo() + ":" + discapacidad.getId());                      
+                    }
+                    discapacidades = nombreDiscapacidad;
+                    System.out.println(discapacidades);
+                    Set datClinicosAlergias = datosClinicos.getAlergiases();
+                    for (Iterator iterator5 = datClinicosAlergias.iterator(); iterator5.hasNext();) {
+                        alergia = (Alergias) iterator5.next();
+                        nombreAlergia.add(alergia.getTipoAlergia()+";"+alergia.getEspecificacion()+":"+alergia.getId());                      
+                    }
+                    
+                    alergias = nombreAlergia;
+                    System.out.println(alergias);
+                    
+                    
                 }
             }
         }
@@ -1100,7 +1135,46 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         this.idDatosPersonalesPaciente = idDatosPersonalesPaciente;
     }
 
+    public boolean isDrogas() {
+        return drogas;
+    }
+
+    public void setDrogas(boolean drogas) {
+        this.drogas = drogas;
+    }
+
+    public boolean isAlcohol() {
+        return alcohol;
+    }
+
+    public void setAlcohol(boolean alcohol) {
+        this.alcohol = alcohol;
+    }
+
+    public boolean isFuma() {
+        return fuma;
+    }
+
+    public void setFuma(boolean fuma) {
+        this.fuma = fuma;
+    }
+
+    public ArrayList<String> getDiscapacidades() {
+        return discapacidades;
+    }
+
+    public void setDiscapacidades(ArrayList<String> discapacidades) {
+        this.discapacidades = discapacidades;
+    }  
+
+    public ArrayList<String> getAlergias() {
+        return alergias;
+    }
+
+    public void setAlergias(ArrayList<String> alergias) {
+        this.alergias = alergias;
+    }
     
-   
+    
     
 }

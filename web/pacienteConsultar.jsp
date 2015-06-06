@@ -46,84 +46,99 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary" >
         <div class="box-header">
             <h3 class="box-header"><b>Pacientes Registrados</b></h3>
         </div><!-- /.box-header -->
-        <div  class="box-body" style="width: 82%">
+        <div class="box-body">
+            <!--Busqueda por Filtro-->
+            <form class="sidebar-form" method="get" action="">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Bucar por nombre de Paciente..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+          
+        <!--Fin Busqueda por Filtro-->
+        </div>
+        <div id="gridPacientes" class="box-body">
+           <s:url var="remoteurl" action="ajaxLlenarListaPacientes"/>
+
             <sjg:grid
-                id		     ="gridListaConsultaPacientes"		gridModel	="gridListaConsultaPacientes"
-                href	     ="ajaxLlenarListaConsultarPacientes"     dataType	="json"        
-                caption	     ="Pacientes"			altRows		="true"								
-                pager	     ="true"				pagerInput	="false"
-                pagerButtons     ="true"				rowList		="20,30,40,50"
-                rowNum	     ="20"				rownumbers	="true"
-                navigator	     ="true"				viewrecords	="true"
-                hidegrid	     ="false"                           multiselect	="false"
-                navigatorRefresh ="false"				navigatorSearch ="false"				
-                resizable	     ="true"				autowidth="true"
-                navigatorAdd     ="false"				
-                navigatorEdit    ="false"	
-                navigatorDelete  ="false"
-                navigatorAddOptions ="{closeAfterAdd:true, closeAfterSubmit:true}"
-                navigatorEditOptions="{reloadAfterSubmit:true,closeAfterEdit:true}"
+                id="gridPaciente"
+                caption="Pacientes"
+                dataType="json"
+                href="%{remoteurl}"
+                pager="true"
+                gridModel="gridModel"
+                rowList="10,15,20"
+                rowNum="15"
+                rownumbers="true"
+                navigatorSearch="false"
+                navigatorRefresh="false"
+                navigator="true"
+                navigatorAdd="false"
+                navigatorEdit="false"
+                navigatorDelete="false"
+                viewrecords="true"
+                navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
+                navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-
-                mostrarFormSesion : { 
-                title : 'Mostrar Inicio de Sesion', 
-                icon:'ui-icon-key',  
-                onclick: function(){ muestraFormSesion() }
-                },
-                mostrarFormDatosPaciente : { 
-                title : 'Mostrar Datos del Paciente', 
-                icon:'ui-icon-pencil', 
-                onclick: function(){ muestraFormDatosPaciente() }
-                },
-                mostrarFormDireccionPaciente : { 
-                title : 'Mostrar Direccion del Paciente', 
-                icon:'ui-icon-home', 
-                onclick: function(){ muestraDireccionPaciente() }
-                },
-                mostrarFormTelefonosPaciente : { 
-                title : 'Mostrar Teléfonos del Paciente', 
-                icon:'ui-icon-person', 
-                onclick: function(){ muestraFormTelefonosPaciente() }
-                },
-                mostrarFormDatosPersonalesPaciente : { 
-                title : 'Mostrar Datos Personales del Paciente', 
-                icon:'ui-icon-person', 
-                onclick: function(){ muestraFormDatosPersonalesPaciente() }
-                },
-                mostrarFormContactosPaciente : { 
-                title : 'Mostrar Contactos del Paciente', 
-                icon:'ui-icon-person', 
-                onclick: function(){ muestraFormContactosPaciente() }
-                },
-                mostrarFormDatosClinicosPaciente : { 
-                title : 'Mostrar Datos Clínicos del Paciente', 
-                icon:'ui-icon-person', 
-                onclick: function(){ muestraFormDatosClinicosPaciente() }
-                }
-                }"
-                >
-
-                <sjg:gridColumn id="nssP" key="true" name="nssP"	title="Numero de Seguro Social" 		index="nss"		sortable="false"	width="100"
-                                editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"	width="100"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn id="apellidoPaterno" name="apellidoPaterno"	title="Apellido Paterno" 		index="apellidoPaterno"		sortable="false"	width="100"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-
-                <sjg:gridColumn id="apellidoMaterno" name="apellidoMaterno"	title="Apellido Materno" 		index="apellidoMaterno"		sortable="false"	width="100"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-                <sjg:gridColumn  id="unidadMedica"   name="unidadMedica"	title="Unidad Medica" 		index="unidadMedica"		sortable="false"	width="100"
-                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
-
-            </sjg:grid> 
+                                        editarAcceso : {
+                                                    title : 'Editar Acceso',
+                                                    icon: 'ui-icon-key', 
+                                                    onclick: function(){ editarAccesoPaciente(); }
+                                                 },
+                                        editarDatos : {
+                                                    title : 'Editar Datos de Identicifación',
+                                                    icon: 'ui-icon-person', 
+                                                    onclick: function(){ editarDatosPaciente(); }
+                                                 },
+                                        editarDireccion : {
+                                                    title : 'Editar Domicilio',
+                                                    icon: 'ui-icon-home', 
+                                                    onclick: function(){ editarDireccionPaciente(); }
+                                                 },
+                                        editarDatosPersonales : {
+                                           title : 'Editar Datos Personales',
+                                           icon: '  ui-icon-info', 
+                                           onclick: function(){ editarDatosPersonalesPaciente(); }
+                                        },
+                                        editarTelefonos : {
+                                                    title : 'Editar Teléfonos',
+                                                    icon: 'ui-icon-clipboard', 
+                                                    onclick: function(){ editarTelefonosPaciente(); }
+                                                 }, 
+                                        editarContactos : {
+                                                    title : 'Editar Contactos',
+                                                    icon: 'ui-icon-note', 
+                                                    onclick: function(){ editarContactosPaciente(); }
+                                                 },    
+                                        editarDatosClinicos : {
+                                                    title : 'Editar Datos Clínicos',
+                                                    icon: 'ui-icon-folder-open', 
+                                                    onclick: function(){ editarDatosClinicosPaciente(); }
+                                                 },
+                                        seperator: {
+                                                    title : 'seperator'
+                                                   },
+                                        eliminar : { 
+                                                    title : 'Eliminar Registro', 
+                                                    icon: 'ui-icon-trash',
+                                                    onclick: function(){ eliminarPaciente(); }
+                                                   }
+                                       }"
+                autowidth="true">
+                 <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
+                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="ID" key="true" sortable="true"/>
+                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Tipo" sortable="true"/>
+                <sjg:gridColumn editable="true" name="clave" index="clave" title="Password" sortable="false"/>
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false"/>
+            </sjg:grid>
         </div>
     </div>
 

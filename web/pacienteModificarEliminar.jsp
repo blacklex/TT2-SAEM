@@ -39,6 +39,21 @@
         <div class="box-header">
             <h3 class="box-header"><b>Modificar/Eliminar Paciente</b></h3>
         </div>
+        <div class="box-body">
+            <!--Busqueda por Filtro-->
+            <form class="sidebar-form" method="get" action="">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Bucar por nombre de Paciente..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+          
+        <!--Fin Busqueda por Filtro-->
+        </div>
         <div id="gridPacientes" class="box-body">
            <s:url var="remoteurl" action="ajaxLlenarListaPacientes"/>
 
@@ -52,8 +67,8 @@
                 rowList="10,15,20"
                 rowNum="15"
                 rownumbers="true"
-                navigatorSearch="true"
-                navigatorRefresh="true"
+                navigatorSearch="false"
+                navigatorRefresh="false"
                 navigator="true"
                 navigatorAdd="false"
                 navigatorEdit="false"
@@ -62,9 +77,6 @@
                 navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
                 navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-                                        seperator: {
-                                                    title : 'seperator'
-                                                   },
                                         editarAcceso : {
                                                     title : 'Editar Acceso',
                                                     icon: 'ui-icon-key', 
@@ -92,14 +104,17 @@
                                                  }, 
                                         editarContactos : {
                                                     title : 'Editar Contactos',
-                                                    icon: 'ui-icon-home', 
+                                                    icon: 'ui-icon-note', 
                                                     onclick: function(){ editarContactosPaciente(); }
                                                  },    
                                         editarDatosClinicos : {
                                                     title : 'Editar Datos Clínicos',
-                                                    icon: 'ui-icon-home', 
+                                                    icon: 'ui-icon-folder-open', 
                                                     onclick: function(){ editarDatosClinicosPaciente(); }
-                                                 },         
+                                                 },
+                                        seperator: {
+                                                    title : 'seperator'
+                                                   },
                                         eliminar : { 
                                                     title : 'Eliminar Registro', 
                                                     icon: 'ui-icon-trash',
@@ -114,38 +129,8 @@
                 <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false"/>
             </sjg:grid>
         </div>
-        <div class="box-body">
-            <!--Busqueda por Filtro-->
-            <form class="sidebar-form" method="get" action="">
-                <div class="box-header">
-                    <h3 class="box-title">Filtrar por usuario:</h3>
-                </div>
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
-                    <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </form>
-            <div class="form-group">
-                <div class="radio">
-                    <label>
-                        <input id="radioEditar" type="radio" checked="" value="option1" name="optionsRadios"/>
-                        Editar
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input id="radioEliminar" type="radio" value="option2" name="optionsRadios"/>
-                        Eliminar
-                    </label>
-                </div>
-            </div>
-        <!--Fin Busqueda por Filtro-->
-        </div>
-           <form name="formEditarAccesoPaciente" action="editarAccesoPaciente" onsubmit="return validarCamposAcceso();" method="post" role="form">
+        
+        <form name="formEditarAccesoPaciente" action="editarAccesoPaciente" onsubmit="return validarCamposAcceso();" method="post" role="form">
             <div id="datosAccesoPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos de acceso</h3>
@@ -165,7 +150,7 @@
                 </div>
             </div><!-- /.col -->
         </form>
-        <s:form enctype="multipart/form-data" name="formEditarDatosPaciente" action="editarDatosPaciente" method="post" role="form">
+        <s:form enctype="multipart/form-data" name="formEditarDatosPaciente" action="editarDatosDelPaciente" method="post" role="form">
             <s:hidden name="nombreUsuario" id="nomUs"/>
             <s:hidden name="codigoHospital" id="codHos"/>
             
@@ -440,22 +425,245 @@
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos Clinicos</h3>
                 </div>
-                <s:hidden name="nombreUsuario" id="nomUs6"/>
-                <div id="divDrogasPaciente" class="form-group">
-                    <label for="usoDrogas">Usa Drogas</label>
-                    <input name="usoDrogas" id="usoDrogas" value="1" type="radio">
-                </div>
-
-                <div id="divAlcoholPaciente" class="form-group">
-                    <label for="usoAlcohol">Consume Alcohol</label>
-                    <input name="usoAlcohol" id="usoAlcohol" value="1" type="radio">
-                </div>
-
-                <div id="divFumaPaciente" class="form-group">
-                    <label for="fumador">Fuma</label>
-                    <input name="fumador" id="fumador" value="1" type="radio">
-                </div>
+                <s:hidden name="nombreUsuario" id="nomUsrClin"/>
+                <s:hidden name="noHistorial" id="noHisto"/>
+                <s:hidden name="nss" id="nssClinico"/>
                 
+                <div id="divDrograsPaciente" class="form-group">
+                    <label for="sexo">Uso de Drogas?</label>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="drogas" id="radioDrogasSi" value="1" />
+                                        Si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="drogas" id="radioDrogasNo" value="0"/>
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divAlcoholPaciente" class="form-group">
+                    <label for="sexo">Uso de Alcohol?</label>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="alcohol" id="radioAlcoholSi" value="1" />
+                                        Si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="alcohol" id="radioAlcoholNo" value="0" checked/>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divFumaPaciente" class="form-group">
+                    <label for="sexo">Fuma?</label>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fuma" id="radioFumaSi" value="1" />
+                                        Si
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fuma" id="radioFumaNo" value="0"/>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <!--***************************************Alergias***********************************************-->
+                <div class="box box-primary collapsed-box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><label>Alergias</label></h3>
+                        <div class="box-tools pull-right">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia0" name="checkboxAlergia0" value="polen" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Polen"/>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" id="especificarAlergia0" name="especificarAlergia0" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia1" name="checkboxAlergia1" value="acaros" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Ácaros del polvo">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia1" id="especificarAlergia1" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia2" name="checkboxAlergia2" value="animales" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Animales">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia2" id="especificarAlergia2" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia3" name="checkboxAlergia3" value="medicamentos" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" disabled="true" class="form-control" type="text" value="Medicamentos">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia3" id="especificarAlergia3" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia4" name="checkboxAlergia4" value="insectos" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Picadura de insectos">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia4" id="especificarAlergia4" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxAlergia5" name="checkboxAlergia5" value="alimentos" onclick="validarCheckboxAlergias();"/>
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Alimentos">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+
+                                    <textarea class="form-control" disabled="true" name="especificarAlergia5" id="especificarAlergia5" placeholder="Especificar ..." rows="3" style="width: 485px; height: 50px;"></textarea>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--***************************************Discapacidades***********************************************-->
+                <div class="box box-primary collapsed-box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><label>Discapacidades</label></h3>
+                        <div class="box-tools pull-right">
+                            <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad0" name="checkboxDiscapacidad0" value="fisica">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Fisica"/>
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad1" name="checkboxDiscapacidad1" value="intelectual">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Intelectual">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad2" name="checkboxDiscapacidad2" value="psiquica">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Psíquica">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad3" name="checkboxDiscapacidad3" value="visual">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Visual">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad4" name="checkboxDiscapacidad4" value="auditiva">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Auditiva">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="margin-bottom:10px;" class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="checkboxDiscapacidad5" name="checkboxDiscapacidad5" value="habla">
+                                    </span>
+                                    <input disabled="true" class="form-control" type="text" value="Habla">
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary btn-sm margin">Actualizar</button>
                     <button type="button" onclick="cancelarEdicionDatosClinicos();" class="btn btn-danger btn-sm margin">Cancelar</button>
@@ -463,288 +671,6 @@
             </div><!-- /.box-body -->
         </s:form>    
     </div>
-    <!--**********************************************Busqueda por Filtro*******************************************************-->
-    <s:form enctype="multipart/form-data" name="formNuevoPaciente" action="editarPacientePorFiltro"  method="post" role="form">
-        <div id="datosPacientePorFiltro" class="box box-primary" style='display:none;'>
-            <div class="box-header">
-                <h3 class="box-header"><b>Los siguientes datos del Paciente seran eliminados/editados</b></h3>
-            </div><!-- /.box-header -->
-            <!-- form start -->
-
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
-                </div>
-
-                <div id="divNombreUsuario" class="form-group">
-                    <label for="nombreUsuario">Nombre de usuario</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuarioFiltro" placeholder="Nombre de usuario" type="text" autofocus="true">
-                </div>
-                <s:hidden name="id" id="idDomPacienteFiltro"/>
-                <s:hidden name="tipoUsuario" value="Administrador" />
-                <div id="divClaveUsuario" class="form-group">
-                    <label for="claveUsuario">Clave de Acceso</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" id="claveFiltro" name="clave" placeholder="Clave de Acceso" type="password">
-                </div>
-            </div><!-- /.box-body -->
-
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Datos</h3>
-                </div>
-
-                <div id="divNss" class="form-group">
-                    <label for="nss">NSS</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nss" id="nssFiltro" placeholder="NSS" type="text" readonly="true">
-                </div>
-
-                <div id="divNombre" class="form-group">
-                    <label for="nombre">Nombre(s)</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombreFiltro" placeholder="Nombre(s)" type="text" readonly="true">
-                </div>
-                
-                <div id="divApellidoPaterno" class="form-group">
-                    <label for="apellidoPaterno">Apellido Paterno</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaternoFiltro" placeholder="Apellido Paterno" type="text" readonly="true">
-                </div>
-                
-                <div id="divApellidoMaterno" class="form-group">
-                    <label for="apellidoMaterno">Apellido Materno</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaternoFiltro" placeholder="Apellido Paterno" type="text" readonly="true">
-                </div>
-
-                <div id="divUniMedicaPaciente" class="form-group">
-                    <label for="unidadMedica">Unidad Médica</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="unidadMedica" id="unidadMedicaFiltro" class="form-control" placeholder="Unidad Medica" type="text">
-                </div>
-
-                <div id="divNoConsultorioPaciente" class="form-group">
-                    <label for="noConsultorio">No Consultorio</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="noConsultorio" id="noConsultorioFiltro" placeholder="No. de Consultorio" type="text">
-                </div>
-                
-                <div id="divImagenPaciente" class="form-group">
-                    <label for="imagen">Imagen</label>
-                    <input multiple=false data-preview-file-type="any" name="imagen" id="file-1" class="file" placeholder="Imagen" type="file">
-                </div>
-                
-                <div id="divImagenPaciente" class="form-group">
-                        <label for="imagen">Imagen Actual</label>
-                        <img id="imagenFiltro" src="" width="220" height="150">
-                </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
-                </div>
-
-                <div id="divCallePaciente" class="form-group">
-                    <label for="calle">Calle y No.</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calleFiltro" placeholder="Calle" type="text">
-                </div>
-
-                <div id="divColoniaPaciente" class="form-group">
-                    <label for="colonia">Colonia</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="coloniaFiltro" placeholder="Colonia" type="text">
-                </div>
-
-                <div id="divDelegacionPaciente" class="form-group">
-                    <label for="delegacion">Delegación</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacionFiltro" placeholder="Delegación" type="text">
-                </div>
-
-                <div id="divEntidadFederativaPaciente" class="form-group">
-                    <label for="entidadFederativa">Entidad Federativa</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativaFiltro" placeholder="Entidad Federativa" type="text">
-                </div>
-
-                <div id="divCodigoPostalPaciente" class="form-group">
-                    <label for="codigoPostal">Código Postal</label>
-                    <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostalFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text">
-                </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-            
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Teléfonos</h3>
-                </div>
-
-                <div id="divTelefonoFijoPaciente" class="form-group">
-                    <label for="telefonoFijo">Telefono Fijo</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoFijo" id="telefonoFijoFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Fijo" type="text">
-                </div>
-
-                <div id="divTelefonoParticularPaciente" class="form-group">
-                    <label for="telefonoParticular">Telefono Particular</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoParticular" id="telefonoParticularFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Particular" type="text">
-                </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-            
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Datos Personales</h3>
-                </div>
-
-                <div id="divEdoCivilPaciente" class="form-group">
-                    <label for="estadoCivil">Estado Civil</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="estadoCivil" id="estadoCivilFiltro" placeholder="Estado Civil" type="text">
-                </div>
-
-                <div id="divCurpPaciente" class="form-group">
-                    <label for="curp">CURP</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="curp" id="curpFiltro" placeholder="CURP" type="text">
-                </div>
-
-                <div id="divSexoPaciente" class="form-group">
-                    <label for="sexo">Sexo</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="sexo" id="sexoFiltro" placeholder="Sexo" type="text">
-                </div>
-
-                <div id="divFechaNacimientoPaciente" class="form-group">
-                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="fechaNacimiento" id="fechaNacimientoFiltro" placeholder="Fecha de Nacimiento" type="date">
-                </div>
-
-                <div id="divEdadPaciente" class="form-group">
-                    <label for="edad">Edad</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="edad" id="edadFiltro" placeholder="Edad" type="text">
-                </div>
-
-                <div id="divPesoPaciente" class="form-group">
-                    <label for="peso">Peso (Kg)</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="peso" id="pesoFiltro" placeholder="Peso" type="text">
-                </div>
-
-                <div id="divAlturaPaciente" class="form-group">
-                    <label for="altura">Altura (metros)</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="altura" id="alturaFiltro" placeholder="Altura" type="text">
-                </div>
-
-                <div id="divTallaPaciente" class="form-group">
-                    <label for="talla">Talla </label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="talla" id="tallaFiltro" placeholder="Talla" type="text">
-                </div>
-
-                <div id="divTelefonoCasaPaciente" class="form-group">
-                    <label for="telCasa">Telefono de Casa</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telCasa" id="telCasaFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono de Casa" type="text">
-                </div>
-
-                <div id="divTelefonoCelPaciente" class="form-group">
-                    <label for="telCel">Telefono Celular</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telCel" id="telCelFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono Celular" type="text">
-                </div>
-
-                <div id="divCorreoPaciente" class="form-group">
-                    <label for="correo">Email</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correoFiltro" placeholder="Email" type="text">
-                </div>
-
-                <div id="divFacebookPaciente" class="form-group">
-                    <label for="facebook">Facebook (www.facebook.com/alguien)</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="facebook" id="facebookFiltro" placeholder="Facebook" type="text">
-                </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-            
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Contactos</h3>
-                </div>
-
-                <div id="divNombreCPaciente" class="form-group">
-                    <label for="nombreC">Nombre</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreC" id="nombreCFiltro" placeholder="Nombre" type="text">
-                </div>
-
-                <div id="divApellidoPaternoCPaciente" class="form-group">
-                    <label for="apellidoPaternoC">Apellido Paterno</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaternoC" id="apellidoPaternoCFiltro" placeholder="Apellido Paterno" type="text">
-                </div>
-
-                <div id="divApellidoMaternoCPaciente" class="form-group">
-                    <label for="apellidoMaternoC">Apellido Materno</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaternoC" id="apellidoMaternoCFiltro" placeholder="Apellido Materno" type="text">
-                </div>
-
-                <div id="divParentescoCPaciente" class="form-group">
-                    <label for="parentesco">Parentesco</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="parentesco" id="parentescoFiltro" placeholder="Parentesco" type="text">
-                </div>
-
-                <div id="divCelularCPaciente" class="form-group">
-                    <label for="celular">Telefono Celular</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" name="celular" id="celularFiltro" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Celular" type="text">
-                </div>
-
-                <div id="divFacebookCPaciente" class="form-group">
-                    <label for="facebookC">Facebook (www.facebook.com/alguien)</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="facebookCFiltro" id="facebookC" placeholder="Facebook" type="text">
-                </div>
-
-                <div id="divCorreoCPaciente" class="form-group">
-                    <label for="correoC">Email</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="correoCFiltro" id="correoC" placeholder="Email" type="text">
-                </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-            
-            <div class="box-body">
-                <div class="box-header">
-                    <h3 class="box-title">Datos Clinicos</h3>
-                </div>
-
-                <div id="divDrogasPaciente" class="form-group">
-                    <label for="usoDrogas">Usa Drogas</label>
-                    <input name="usoDrogas" id="usoDrogasFiltro" value="1" type="radio">
-                </div>
-
-                <div id="divAlcoholPaciente" class="form-group">
-                    <label for="usoAlcohol">Consume Alcohol</label>
-                    <input name="usoAlcohol" id="usoAlcoholFiltro" value="1" type="radio">
-                </div>
-
-                <div id="divFumaPaciente" class="form-group">
-                    <label for="fumador">Fuma</label>
-                    <input name="fumador" id="fumadorFiltro" value="1" type="radio">
-                </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary btn-sm margin" id="actualizar" value="Actualizar" style='display:none;'>Actualizar</button>
-                    <button type="button" class="btn btn-danger btn-sm margin" onclick="eliminarPacientePorFiltro();" id="eliminar" style='display:none;'>Eliminar</button>
-                    <button type="button" class="btn btn-orange btn-sm margin" onclick="cancelarEdicionPorFiltro();" >Cancelar</button>
-                </div>
-            </div><!-- /.box-body -->
-        </div>
-    </s:form>
 </section>
 
 <!-- InputMask -->
