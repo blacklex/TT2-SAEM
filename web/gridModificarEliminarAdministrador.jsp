@@ -93,6 +93,9 @@
                                                     icon: 'ui-icon-home', 
                                                     onclick: function(){ editarDireccionAdministrador(); }
                                                  },
+                                        seperator: {
+                                                    title : 'seperator'
+                                                   },
                                         eliminar : { 
                                                     title : 'Eliminar Registro', 
                                                     icon: 'ui-icon-trash',

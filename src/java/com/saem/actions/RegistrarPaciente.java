@@ -191,211 +191,262 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         //Establecemos los datos de acceso para el Paciente------> Tabla Usuario
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
         
-        //Establecemos los datos para el Paciente----->Tabla de Pacientes
-        paciente.setNss(nss);
-        paciente.setNombre(nombre);
-        paciente.setApellidoPaterno(apellidoPaterno);
-        paciente.setApellidoMaterno(apellidoMaterno);
-        paciente.setUnidadMedica(unidadMedica);
-        paciente.setNoConsultorio(noConsultorio);
-        //Establecemos la clave foranea del Paciente haciendo referencia al hospital
-        paciente.setHospitales(hospital);//----->Llave foranea del Hospital
-        
-        //Convertimos la imagen a un arreglo de
-        if(imagen != null) {
-            System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
-            byte[] bFile = new byte[(int) imagen.length()];
-            try (FileInputStream fileInputStream = new FileInputStream(imagen)) {
-                fileInputStream.read(bFile);
-            }
-            paciente.setImagen(bFile);
-        }
-        else{
-            String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-            File fileImg = new File(filePath+"imagenesPerfilPaciente/default/default.jpeg");
-            byte[] defaultFile = new byte[(int) fileImg.length()];
-            try (FileInputStream imgDefault = new FileInputStream(fileImg)) {
-                imgDefault.read(defaultFile);
-            }
-            paciente.setImagen(defaultFile);
-        }
         //Guardamos los datos de acceso del paciente
-        usuarioDAO.save(userPaciente);
-        
-        //Establecemos la clave foranea del Paciente con referencia a Usuarios
-        paciente.setUsuarios(userPaciente);//----->Llave foranea del Paciente
-        
-        //Establecemos los datos personales para el Paciente----->Tabla de Datos Personales
-        datosPersonales.setEstadoCivil(estadoCivil);
-        datosPersonales.setCurp(curp);
-        datosPersonales.setSexo(sexo);
-        datosPersonales.setFechaNacimiento(fechaNacimiento);
-        datosPersonales.setEdad(edad);
-        datosPersonales.setPeso(peso);
-        datosPersonales.setAltura(altura);
-        datosPersonales.setTalla(talla);
-        datosPersonales.setCorreo(correo);
-        datosPersonales.setFacebook(facebook);
+        if(usuarioDAO.save(userPaciente)){
+            //Establecemos los datos para el Paciente----->Tabla de Pacientes
+            paciente.setNss(nss);
+            paciente.setNombre(nombre);
+            paciente.setApellidoPaterno(apellidoPaterno);
+            paciente.setApellidoMaterno(apellidoMaterno);
+            paciente.setUnidadMedica(unidadMedica);
+            paciente.setNoConsultorio(noConsultorio);
+            //Establecemos la clave foranea del Paciente haciendo referencia al hospital
+            paciente.setHospitales(hospital);//----->Llave foranea del Hospital
 
-        //Establecemos los datos de dirección para el Paciente----->Tabla de Domicilio de Pacientes
-        domicilioPaciente.setCalle(calle);
-        domicilioPaciente.setColonia(colonia);
-        domicilioPaciente.setDelegacion(delegacion);
-        domicilioPaciente.setEntidadFederativa(entidadFederativa);
-        domicilioPaciente.setCodigoPostal(codigoPostal);
+            //Convertimos la imagen a un arreglo de
+            if(imagen != null) {
+                System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
+                byte[] bFile = new byte[(int) imagen.length()];
+                try (FileInputStream fileInputStream = new FileInputStream(imagen)) {
+                    fileInputStream.read(bFile);
+                }
+                paciente.setImagen(bFile);
+            }
+            else{
+                String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
+                File fileImg = new File(filePath+"imagenesPerfilPaciente/default/default.jpeg");
+                byte[] defaultFile = new byte[(int) fileImg.length()];
+                try (FileInputStream imgDefault = new FileInputStream(fileImg)) {
+                    imgDefault.read(defaultFile);
+                }
+                paciente.setImagen(defaultFile);
+            }
 
-        pacienteDAO.save(paciente);
-        
-        datosPersonales.setPacientes(paciente);//----->Llave foranea del Paciente
-        
-        domicilioPaciente.setPacientes(paciente);//----->Llave foranea del Paciente
-        
-        //Guardamos los datos personales del paciente
-        datosPersonalesDAO.save(datosPersonales);
-        
-        //Guardamos los datos de domicilio del paciente
-        domicilioPacienteDAO.save(domicilioPaciente);
-        
-        //Establecemos los datos clinicos para el paciente----->Tabla de Datos Clinicos
-        datosClinicos.setNoHistorial(Long.parseLong(codigoClinico));
-        
-        if(drogas.equals("0"))
-            datosClinicos.setUsoDrogas(false);
-        else
-            datosClinicos.setUsoDrogas(true);
-        
-        if(alcohol.equals("0"))
-            datosClinicos.setUsoAlcohol(false);
-        else
-            datosClinicos.setUsoAlcohol(true);
-        
-        if(fuma.equals("0"))
-            datosClinicos.setFumador(false);
-        else
-            datosClinicos.setFumador(true);
-        
-        datosClinicos.setPacientes(paciente);//----->Llave foranea del Paciente
-        
-        //Guardamos los datos clinicos del paciente
-        datosClinicosDAO.save(datosClinicos);
-        
-        parametros = multiWrapper.getParameterNames();
-        while (parametros.hasMoreElements()) {
+            //Establecemos la clave foranea del Paciente con referencia a Usuarios
+            paciente.setUsuarios(userPaciente);//----->Llave foranea del Paciente
             
-            String nombreParametro = parametros.nextElement();
-            
-            /*********************************************Alergias****************************************************************/
-            if (nombreParametro.startsWith("checkboxAlergia")) {
-                String parametroAlergia = nombreParametro.substring(15);
-                alergiasPaciente.setTipoAlergia(multiWrapper.getParameter("checkboxAlergia"+parametroAlergia));
-                alergiasPaciente.setEspecificacion(multiWrapper.getParameter("especificarAlergia"+parametroAlergia));
-                alergiasPaciente.setDatosClinicos(datosClinicos);
-                alergiaDAO.save(alergiasPaciente);
+            if(pacienteDAO.save(paciente)){
+                //Establecemos los datos personales para el Paciente----->Tabla de Datos Personales
+                datosPersonales.setEstadoCivil(estadoCivil);
+                datosPersonales.setCurp(curp);
+                datosPersonales.setSexo(sexo);
+                datosPersonales.setFechaNacimiento(fechaNacimiento);
+                datosPersonales.setEdad(edad);
+                datosPersonales.setPeso(peso);
+                datosPersonales.setAltura(altura);
+                datosPersonales.setTalla(talla);
+                datosPersonales.setCorreo(correo);
+                datosPersonales.setFacebook(facebook);
                 
-                System.out.println("Parametro Alergia: " + multiWrapper.getParameter("checkboxAlergia"+parametroAlergia));
-                System.out.println("Parametro Especificacion: " + multiWrapper.getParameter("especificarAlergia"+parametroAlergia));
-            }
-            
-            /*********************************************Cirugias*****************************************************************/
-            if (nombreParametro.startsWith("checkboxCirugia")) {
-                String parametroCirugia = nombreParametro.substring(15);
-                cirugiasPaciente.setTipoCirugia(multiWrapper.getParameter("checkboxCirugia"+parametroCirugia));
-                cirugiasPaciente.setNoCirugia(Integer.parseInt(multiWrapper.getParameter("noCirugia"+parametroCirugia)));
-                cirugiasPaciente.setDatosClinicos(datosClinicos);
-                cirugiaDAO.save(cirugiasPaciente);
-                System.out.println("Parametro Cirugia: " + multiWrapper.getParameter("checkboxCirugia"+parametroCirugia));
-                System.out.println("Parametro No. Cirugias: " + multiWrapper.getParameter("noCirugia"+parametroCirugia));
-            }
-            
-            /*********************************************Discapacidades************************************************************/
-            if (nombreParametro.startsWith("checkboxDiscapacidad")) {
-                String parametroDiscapacidad = nombreParametro.substring(20);
-                discapacidadPaciente.setTipo(multiWrapper.getParameter("checkboxDiscapacidad"+parametroDiscapacidad));
-                discapacidadPaciente.setDatosClinicos(datosClinicos);
-                discapacidadDAO.save(discapacidadPaciente);
-                System.out.println("Parametro Discapacidad: " + multiWrapper.getParameter("checkboxDiscapacidad"+parametroDiscapacidad));
-            }
-            
-            /*********************************************Telefonos de paciente****************************************************/
-            if (nombreParametro.startsWith("numTelefono")) {
-                telefonoPaciente.setNumeroTelefono(multiWrapper.getParameter(nombreParametro));
-                telefonoPaciente.setPacientes(paciente);
-                telefonoPacienteDAO.save(telefonoPaciente);
-                System.out.println("Parametro No. Telefono: " + multiWrapper.getParameter(nombreParametro));
+                datosPersonales.setPacientes(paciente);//----->Llave foranea del Paciente
                 
-            }
-            
-            /*********************************************Medicamentos*************************************************************/
-            if(nombreParametro.startsWith("medicamento")) {
-                String parametroMedicamento = nombreParametro.substring(11);
-                medicacionPaciente.setNombreMedicamento(multiWrapper.getParameter("medicamento"+parametroMedicamento));
-                medicacionPaciente.setFrecuencia(multiWrapper.getParameter("frecuencia"+parametroMedicamento));
-                medicacionPaciente.setDatosClinicos(datosClinicos);
-                medicacionDAO.save(medicacionPaciente);
-                System.out.println("Parametro Medicamento: " + multiWrapper.getParameter("medicamento"+parametroMedicamento));
-                System.out.println("Parametro Frecuencia: " + multiWrapper.getParameter("frecuencia"+parametroMedicamento));
-            }   
-            /*********************************************Enfermedad Cronica********************************************************/
-            if(nombreParametro.startsWith("enfermedadCronica")) {
-                String parametroEnfermedadCronica = nombreParametro.substring(17);
-                enfermedadCronica.setNombre(multiWrapper.getParameter("enfermedadCronica"+parametroEnfermedadCronica));
-                enfermedadCronica.setTipo(multiWrapper.getParameter("tipoEnfermedad"+parametroEnfermedadCronica));
-                String inicioEnfermedad = multiWrapper.getParameter("inicioEnfermedad"+parametroEnfermedadCronica);
-                SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-                Date dateInicioEnfermedad = null;
-                String html = "data-inputmask=\"'alias': 'dd/mm/yyyy'\"";
-                dateInicioEnfermedad = formatoDeFecha.parse(inicioEnfermedad);
-                enfermedadCronica.setIncioEnfermedad(dateInicioEnfermedad);
-                enfermedadCronica.setDatosClinicos(datosClinicos);
-                enfermedadCronicaDAO.save(enfermedadCronica);
-                System.out.println("Parametro Enfermedad: " + multiWrapper.getParameter("enfermedadCronica"+parametroEnfermedadCronica));
-                System.out.println("Parametro Tipo: " + multiWrapper.getParameter("tipoEnfermedad"+parametroEnfermedadCronica));
-                System.out.println("Parametro Inicioenfermedad: " + dateInicioEnfermedad);
-            }
-            
-            /*********************************************Enfermedad Cronica********************************************************/
-            if(nombreParametro.startsWith("nombreContacto")) {
-                String parametroContacto = nombreParametro.substring(14);
-                contacto.setNombre(multiWrapper.getParameter("nombreContacto"+parametroContacto));
-                contacto.setApellidoPaterno(multiWrapper.getParameter("apellidoPaternoContacto"+parametroContacto));
-                contacto.setApellidoMaterno(multiWrapper.getParameter("apellidoMaternoContacto"+parametroContacto));
-                contacto.setParentesco(multiWrapper.getParameter("parentescoContacto"+parametroContacto));
-                contacto.setCelular(multiWrapper.getParameter("celularContacto"+parametroContacto));
-                contacto.setFacebook(multiWrapper.getParameter("facebookContacto"+parametroContacto));
-                contacto.setCorreo(multiWrapper.getParameter("correoContacto"+parametroContacto));
-                contacto.setPacientes(paciente);
-                contactoDAO.save(contacto);
+                //Guardamos los datos personales del paciente
+                datosPersonalesDAO.save(datosPersonales);
+
+                //Establecemos los datos de dirección para el Paciente----->Tabla de Domicilio de Pacientes
+                domicilioPaciente.setCalle(calle);
+                domicilioPaciente.setColonia(colonia);
+                domicilioPaciente.setDelegacion(delegacion);
+                domicilioPaciente.setEntidadFederativa(entidadFederativa);
+                domicilioPaciente.setCodigoPostal(codigoPostal);
+
+                domicilioPaciente.setPacientes(paciente);//----->Llave foranea del Paciente
                 
-                System.out.println(parametroContacto);
-                System.out.println("Parametro Nommbre: " + multiWrapper.getParameter("nombreContacto"+parametroContacto));
-                System.out.println("Parametro ApellidoP: " + multiWrapper.getParameter("apellidoPaternoContacto"+parametroContacto));
-                System.out.println("Parametro ApellidoM: " + multiWrapper.getParameter("apellidoMaternoContacto"+parametroContacto));
-                System.out.println("Parametro Parentesco: " + multiWrapper.getParameter("parentescoContacto"+parametroContacto));
-                System.out.println("Parametro Celular: " + multiWrapper.getParameter("celularContacto"+parametroContacto));
-                System.out.println("Parametro Face: " + multiWrapper.getParameter("facebookContacto"+parametroContacto));
-                System.out.println("Parametro E-mail: " + multiWrapper.getParameter("correoContacto"+parametroContacto));
+                //Guardamos los datos de domicilio del paciente
+                domicilioPacienteDAO.save(domicilioPaciente);
                 
-            }   
+                //Establecemos los datos clinicos para el paciente----->Tabla de Datos Clinicos
+                datosClinicos.setNoHistorial(Long.parseLong(codigoClinico));
+
+                if(drogas.equals("0"))
+                    datosClinicos.setUsoDrogas(false);
+                else
+                    datosClinicos.setUsoDrogas(true);
+
+                if(alcohol.equals("0"))
+                    datosClinicos.setUsoAlcohol(false);
+                else
+                    datosClinicos.setUsoAlcohol(true);
+
+                if(fuma.equals("0"))
+                    datosClinicos.setFumador(false);
+                else
+                    datosClinicos.setFumador(true);
+
+                datosClinicos.setPacientes(paciente);//----->Llave foranea del Paciente
+                
+                //Guardamos los datos clinicos del paciente
+                if(datosClinicosDAO.save(datosClinicos)) {
+                    parametros = multiWrapper.getParameterNames();
+                    while (parametros.hasMoreElements()) {
+
+                        String nombreParametro = parametros.nextElement();
+
+                        /*********************************************Alergias****************************************************************/
+                        if (nombreParametro.startsWith("checkboxAlergia")) {
+                            String parametroAlergia = nombreParametro.substring(15);
+                            alergiasPaciente.setTipoAlergia(multiWrapper.getParameter("checkboxAlergia"+parametroAlergia));
+                            alergiasPaciente.setEspecificacion(multiWrapper.getParameter("especificarAlergia"+parametroAlergia));
+                            alergiasPaciente.setDatosClinicos(datosClinicos);
+                            alergiaDAO.save(alergiasPaciente);
+
+                            System.out.println("Parametro Alergia: " + multiWrapper.getParameter("checkboxAlergia"+parametroAlergia));
+                            System.out.println("Parametro Especificacion: " + multiWrapper.getParameter("especificarAlergia"+parametroAlergia));
+                        }
+
+                        /*********************************************Cirugias*****************************************************************/
+                        if (nombreParametro.startsWith("checkboxCirugia")) {
+                            String parametroCirugia = nombreParametro.substring(15);
+                            cirugiasPaciente.setTipoCirugia(multiWrapper.getParameter("checkboxCirugia"+parametroCirugia));
+                            cirugiasPaciente.setNoCirugia(Integer.parseInt(multiWrapper.getParameter("noCirugia"+parametroCirugia)));
+                            cirugiasPaciente.setDatosClinicos(datosClinicos);
+                            cirugiaDAO.save(cirugiasPaciente);
+                            System.out.println("Parametro Cirugia: " + multiWrapper.getParameter("checkboxCirugia"+parametroCirugia));
+                            System.out.println("Parametro No. Cirugias: " + multiWrapper.getParameter("noCirugia"+parametroCirugia));
+                        }
+
+                        /*********************************************Discapacidades************************************************************/
+                        if (nombreParametro.startsWith("checkboxDiscapacidad")) {
+                            String parametroDiscapacidad = nombreParametro.substring(20);
+                            discapacidadPaciente.setTipo(multiWrapper.getParameter("checkboxDiscapacidad"+parametroDiscapacidad));
+                            discapacidadPaciente.setDatosClinicos(datosClinicos);
+                            discapacidadDAO.save(discapacidadPaciente);
+                            System.out.println("Parametro Discapacidad: " + multiWrapper.getParameter("checkboxDiscapacidad"+parametroDiscapacidad));
+                        }
+
+                        /*********************************************Telefonos de paciente****************************************************/
+                        if (nombreParametro.startsWith("numTelefono")) {
+                            telefonoPaciente.setNumeroTelefono(multiWrapper.getParameter(nombreParametro));
+                            telefonoPaciente.setPacientes(paciente);
+                            telefonoPacienteDAO.save(telefonoPaciente);
+                            System.out.println("Parametro No. Telefono: " + multiWrapper.getParameter(nombreParametro));
+
+                        }
+
+                        /*********************************************Medicamentos*************************************************************/
+                        if(nombreParametro.startsWith("medicamento")) {
+                            String parametroMedicamento = nombreParametro.substring(11);
+                            medicacionPaciente.setNombreMedicamento(multiWrapper.getParameter("medicamento"+parametroMedicamento));
+                            medicacionPaciente.setFrecuencia(multiWrapper.getParameter("frecuencia"+parametroMedicamento));
+                            medicacionPaciente.setDatosClinicos(datosClinicos);
+                            if(!medicacionDAO.save(medicacionPaciente))
+                                medicacionDAO.delete(medicacionPaciente);
+                            System.out.println("Parametro Medicamento: " + multiWrapper.getParameter("medicamento"+parametroMedicamento));
+                            System.out.println("Parametro Frecuencia: " + multiWrapper.getParameter("frecuencia"+parametroMedicamento));
+                        }   
+                        /*********************************************Enfermedad Cronica********************************************************/
+                        if(nombreParametro.startsWith("enfermedadCronica")) {
+                            String parametroEnfermedadCronica = nombreParametro.substring(17);
+                            enfermedadCronica.setNombre(multiWrapper.getParameter("enfermedadCronica"+parametroEnfermedadCronica));
+                            enfermedadCronica.setTipo(multiWrapper.getParameter("tipoEnfermedad"+parametroEnfermedadCronica));
+                            String inicioEnfermedad = multiWrapper.getParameter("inicioEnfermedad"+parametroEnfermedadCronica);
+                            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+                            Date dateInicioEnfermedad = null;
+                            String html = "data-inputmask=\"'alias': 'dd/mm/yyyy'\"";
+                            dateInicioEnfermedad = formatoDeFecha.parse(inicioEnfermedad);
+                            enfermedadCronica.setIncioEnfermedad(dateInicioEnfermedad);
+                            enfermedadCronica.setDatosClinicos(datosClinicos);
+                            if(!enfermedadCronicaDAO.save(enfermedadCronica))
+                                enfermedadCronicaDAO.delete(enfermedadCronica);
+                            System.out.println("Parametro Enfermedad: " + multiWrapper.getParameter("enfermedadCronica"+parametroEnfermedadCronica));
+                            System.out.println("Parametro Tipo: " + multiWrapper.getParameter("tipoEnfermedad"+parametroEnfermedadCronica));
+                            System.out.println("Parametro Inicioenfermedad: " + dateInicioEnfermedad);
+                        }
+
+                        /*********************************************Enfermedad Cronica********************************************************/
+                        if(nombreParametro.startsWith("nombreContacto")) {
+                            String parametroContacto = nombreParametro.substring(14);
+                            contacto.setNombre(multiWrapper.getParameter("nombreContacto"+parametroContacto));
+                            contacto.setApellidoPaterno(multiWrapper.getParameter("apellidoPaternoContacto"+parametroContacto));
+                            contacto.setApellidoMaterno(multiWrapper.getParameter("apellidoMaternoContacto"+parametroContacto));
+                            contacto.setParentesco(multiWrapper.getParameter("parentescoContacto"+parametroContacto));
+                            contacto.setCelular(multiWrapper.getParameter("celularContacto"+parametroContacto));
+                            contacto.setFacebook(multiWrapper.getParameter("facebookContacto"+parametroContacto));
+                            contacto.setCorreo(multiWrapper.getParameter("correoContacto"+parametroContacto));
+                            contacto.setPacientes(paciente);
+                            if(!contactoDAO.save(contacto))
+                                contactoDAO.delete(contacto);
+                            System.out.println(parametroContacto);
+                            System.out.println("Parametro Nommbre: " + multiWrapper.getParameter("nombreContacto"+parametroContacto));
+                            System.out.println("Parametro ApellidoP: " + multiWrapper.getParameter("apellidoPaternoContacto"+parametroContacto));
+                            System.out.println("Parametro ApellidoM: " + multiWrapper.getParameter("apellidoMaternoContacto"+parametroContacto));
+                            System.out.println("Parametro Parentesco: " + multiWrapper.getParameter("parentescoContacto"+parametroContacto));
+                            System.out.println("Parametro Celular: " + multiWrapper.getParameter("celularContacto"+parametroContacto));
+                            System.out.println("Parametro Face: " + multiWrapper.getParameter("facebookContacto"+parametroContacto));
+                            System.out.println("Parametro E-mail: " + multiWrapper.getParameter("correoContacto"+parametroContacto));
+
+                        }   
+                    }
+                    registroCorrecto = true;
+                }
+                else {
+                    registroCorrecto = false;
+                    usuarioDAO.delete(userPaciente);
+                    pacienteDAO.delete(paciente);
+                    datosPersonalesDAO.delete(datosPersonales);
+                    domicilioPacienteDAO.delete(domicilioPaciente);
+                    datosClinicosDAO.delete(datosClinicos);
+                }
+            }
+            else {
+                registroCorrecto = false;
+                usuarioDAO.delete(userPaciente);
+            }
         }
+        else {
+            registroCorrecto = false;
+            mensajeError = "Error al registrar al Paciente.";
+        }
+        
+        if (registroCorrecto) {
+            session.put("tituloAlert", "Paciente Registrado");
+            session.put("textoAlert", "El Paciente fue registrado exitosamente.");
+            session.put("estatusMensaje", "success");
+
+        } else if (!registroCorrecto) {
+            session.put("tituloAlert", "Error al registrar Paciente.");
+            session.put("textoAlert", mensajeError);
+            session.put("estatusMensaje", "error");
+        }
+        
         return "pantallaAltaPaciente";
+    }
+    
+    public String recuperarEstatusPaciente() {
+        System.out.println("--->Entro a recuperarEstatusPaciente");
+        tituloAlert = "";
+        textoAlert = "";
+        estatusMensaje = "";
+
+        if (session.get("estatusMensaje") != null) {
+            tituloAlert = session.get("tituloAlert").toString();
+            textoAlert = session.get("textoAlert").toString();
+            estatusMensaje = session.get("estatusMensaje").toString();
+        }
+
+        session.remove("estatusMensaje");
+        session.remove("tituloAlert");
+        session.remove("estatusMensaje");
+        session.put("estatusMensaje", null);
+
+        return SUCCESS;
     }
     
     public String validarNombreUsuarioPaciente() {
         Usuarios usuarioResultado;
-
+        
         usuarioResultado = usuarioDAO.findById(nombreUsuario);
-
+        
         if (usuarioResultado == null) {
             estatusMensaje = "nombreValido";
             return SUCCESS;
         }
-
+        
         if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
             estatusMensaje = "nombreNoValido";
         } else {
             estatusMensaje = "nombreValido";
         }
-
         return SUCCESS;
     }
     
@@ -403,11 +454,10 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         System.out.println("--->Entro a recuperarHospitales");
         String html = 
                         "<label>Hospital</label>"
-                        + "<select name=\"codigoHospital\" class=\"form-control\">" +
+                      + "<select name=\"codigoHospital\" class=\"form-control\">" +
                             "<option value=\"-1\">Seleccionar</option>";
         HospitalDAO hospitalDAO = new HospitalDAO();
         ArrayList<Hospitales> hospitales = (ArrayList<Hospitales>) hospitalDAO.findAll();
-
         if (hospitales == null) {
             return SUCCESS;
         }
@@ -416,11 +466,9 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
             html += "<option value=\""+hospitalTemp.getCodigoHospital()+"\">"+hospitalTemp.getNombre()+"</option>";
             contHosp++;
         }
-        
         html += "</select>";
-
         htmlHospitales = html;
-
+        
         return SUCCESS;
     }
 
@@ -981,4 +1029,6 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
     public void setServletRequest(HttpServletRequest servletRequest) {
             this.servletRequest = servletRequest;
     }
+    
+    
 }

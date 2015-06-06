@@ -83,7 +83,6 @@ function editarDatosPaciente() {
             $("#noConsultorio").val(msg.noConsultorio);
             $("#nomUs").val(msg.nombreUsuario);
             $("#codHos").val(msg.codigoHospital);
-            alert(msg.codigoHospital);
             $("#imagen").attr('src', urlImg);
         });
         $("#datosPaciente").show(1000);
@@ -92,6 +91,7 @@ function editarDatosPaciente() {
 }
 
 function editarDireccionPaciente() {
+    alert("entro");
     var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
     var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
     if(s === null) {
@@ -233,13 +233,89 @@ function editarDatosClinicosPaciente() {
             url: "buscarDatosClinicosPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#usoDrogas").val(msg.usoDrogas);
-            $("#usoAlcohol").val(msg.usoAlcohol);
-            $("#fumador").val(msg.fumador);
-            $("#nomUs6").val(msg.nombreUsuario);
+            var discapacidad = msg.discapacidades;
+            var alergias = msg.alergias;
+            for(var i = 0; i < alergias.length; i++){
+                if(alergias[i].contains("polen")) {
+                    $("#checkboxAlergia0").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+                if(alergias[i].contains("acaros")) {
+                    $("#checkboxAlergia1").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+                if(alergias[i].contains("animales")) {
+                    $("#checkboxAlergia2").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+                if(alergias[i].contains("medicamentos")) {
+                    $("#checkboxAlergia3").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+                if(alergias[i].contains("insectos")) {
+                    $("#checkboxAlergia4").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+                if(alergias[i].contains("alimentos")) {
+                    $("#checkboxAlergia5").attr('checked', true);
+                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
+                }
+            }
+            for(var i = 0; i < discapacidad.length; i++){
+                if(discapacidad[i].contains("fisica")) {
+                    $("#checkboxDiscapacidad0").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+                if(discapacidad[i].contains("intelectual")) {
+                    $("#checkboxDiscapacidad1").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+                if(discapacidad[i].contains("psiquica")) {
+                    $("#checkboxDiscapacidad2").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+                if(discapacidad[i].contains("visual")) {
+                    $("#checkboxDiscapacidad3").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+                if(discapacidad[i].contains("auditiva")) {
+                    $("#checkboxDiscapacidad4").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+                if(discapacidad[i].contains("habla")) {
+                    $("#checkboxDiscapacidad5").attr('checked', true);
+                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
+                }
+            }
+            if(msg.drogas === true){
+                $("#radioDrogasSi").attr('checked', true);
+            }
+            else {
+                $("#radioDrogasNo").attr('checked', true);
+            }
+            
+            if(msg.alcohol === true){
+                $("#radioAlcoholSi").attr('checked', true);
+            }
+            else {
+                $("#radioAlcoholNo").attr('checked', true);
+            }
+            
+            if(msg.fuma === true){
+                $("#radioFumaSi").attr('checked', true);
+            }
+            else {
+                $("#radioFumaNo").attr('checked', true);
+            }
+
+            $("#nomUsrClin").val(msg.nombreUsuario);
+            $("#noHisto").val(msg.noHistorial);
+            $("#nssClinico").val(msg.nss);
+            
+            
         });
 
-        $("#datosTelefonosPaciente").show(1000);
+        $("#datosClinicosPaciente").show(1000);
         $("#gridPacientes").slideUp(1000);
     }
 }

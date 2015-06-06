@@ -6,8 +6,30 @@
 
 $(document).ready(function () {
     $.getJSON("recuperarHospitales");
+    $.getJSON("recuperarMensajeEstatusPaciente");
 
     $(document).ajaxSuccess(function (event, request, settings) {
+        
+        if (settings.url.match('recuperarMensajeEstatusPaciente') != null) {
+
+            var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
+            var textoAlert = $.parseJSON(request.responseText).textoAlert;
+            var estatusMensaje = $.parseJSON(request.responseText).estatusMensaje;
+
+            if (estatusMensaje == null){
+                alert("no hay msj");
+                return;
+                }
+            if (estatusMensaje === "success") {
+                $("#tituloDivAlertSuccessPaciente").html("<i class='icon fa fa-check'></i>" + tituloAlert);
+                $("#labelMensajeSuccessPaciente").html(textoAlert);
+                $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            } else if (estatusMensaje === "error") {
+                $("#divAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
+                $("#labelMensajeErrorPaciente").html(textoAlert);
+                $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            }
+        }
         
         if (settings.url.match('recuperarHospitales') != null) {
             var html = $.parseJSON(request.responseText).htmlHospitales;
