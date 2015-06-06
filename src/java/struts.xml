@@ -11,7 +11,7 @@
     <constant name="struts.convention.default.parent.package" value="basicstruts2"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="false" />
-    
+    <constant name="struts.custom.i18n.resources" value="global" />
     <!-- Configuration for the default package. -->
     <package name="basicstruts2" namespace="/" extends="struts-default,json-default">
         <result-types>
@@ -27,6 +27,10 @@
             <result name="pantallaInicioAdministrador" type="tiles">pantallaInicioAdministrador</result>
             <result name="pantallaInicioPaciente" type="tiles">pantallaInicioPaciente</result>
             <result name="pantallaInicioHospital" type="tiles">pantallaInicioHospital</result>
+        </action>
+        
+         <action name="LogOut" method="execute" class="com.saem.actions.LogOut">
+            <result name="success">login.jsp</result>
         </action>
         
          <action name="recuperarMensajeEstatusLogin" method="recuperarEstatusLogin" class="com.saem.actions.Login">

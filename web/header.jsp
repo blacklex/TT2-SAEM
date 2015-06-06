@@ -4,7 +4,7 @@
     Author     : Alejandro
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
       <header class="main-header">
         <a href="index2.html" class="logo"><b>SAE</b>M</a>
@@ -22,13 +22,13 @@
              
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
-                  <a href="#" style="padding-left: 20px;" class="dropdown-toggle" data-toggle="dropdown">
+                  <a href="LogOut" style="padding-left: 20px;">
                  <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>-->
                  <i class="fa fa-power-off"></i>
                 
                 </a>
-                <ul class="dropdown-menu">
-                  <!-- User image -->
+                <!--<ul class="dropdown-menu">
+                  <!-- User image 
                   <li class="user-header">
                     <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                     <p>
@@ -36,7 +36,7 @@
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
-                  <!-- Menu Body -->
+                  <!-- Menu Body
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
                       <a href="#">Followers</a>
@@ -48,16 +48,16 @@
                       <a href="#">Friends</a>
                     </div>
                   </li>
-                  <!-- Menu Footer-->
+                  <!-- Menu Footer
                   <li class="user-footer">
                     <div class="pull-left">
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                      <a href="LogOut" class="btn btn-default btn-flat">Cerrar Sesión</a>
                     </div>
                   </li>
-                </ul>
+                </ul>-->
               </li>
             </ul>
           </div>
