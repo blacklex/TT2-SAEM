@@ -67,7 +67,7 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             //log.error("get failed", re);
             throw re;
         } finally {
-            s.close();
+            
         }
     }
 
@@ -94,7 +94,7 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            s.close();
+            
         }
     }
 

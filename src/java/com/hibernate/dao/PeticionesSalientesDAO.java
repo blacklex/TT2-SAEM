@@ -93,7 +93,7 @@ public class PeticionesSalientesDAO extends HibernateUtil {
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            s.close();
+            
         }
     }
 
