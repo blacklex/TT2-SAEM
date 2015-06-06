@@ -13,13 +13,13 @@
     </div>
 </div>
 
-<div id="divAlertSuccess" style="display: none;"  class="alert alert-success alert-dismissable">
+<div id="divAlertSuccessPaciente" style="display: none;"  class="alert alert-success alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4 id="tituloDivAlertSuccessPaciente"></h4>
     <label id="labelMensajeSuccessPaciente"></label>
 </div>
 
-<div id="divAlertError" style="display: none;"  class="alert alert-error alert-dismissable">
+<div id="divAlertErrorPaciente" style="display: none;"  class="alert alert-error alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4 id="tituloDivAlertErrorPaciente"></h4>
     <label id="labelMensajeErrorPaciente"></label>

@@ -358,4 +358,6 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
     public void setServletRequest(HttpServletRequest servletRequest) {
             this.servletRequest = servletRequest;
     }
+    
+    
 }
