@@ -17,7 +17,7 @@ import org.hibernate.Session;
 
 public class PeticionesEntrantesDAO extends HibernateUtil {
 
-	// property constants
+    // property constants
     public Boolean save(PeticionesEntrantes transientInstance) {
         Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
@@ -34,14 +34,15 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(PeticionesEntrantes transientInstance) {
+        Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -51,33 +52,49 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public PeticionesEntrantes findById(String id) {
+        Session s = getSession();
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
-            PeticionesEntrantes instance = (PeticionesEntrantes) getSession().get(
+            PeticionesEntrantes instance = (PeticionesEntrantes) s.get(
                     PeticionesEntrantes.class, id);
             return instance;
         } catch (RuntimeException re) {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public List<PeticionesEntrantes> findAll() {
+        Session s = getSession();
         try {
             String queryString = "from PeticionesEntrantes";
-            Query queryObject = getSession().createQuery(queryString);
+            Query queryObject = s.createQuery(queryString);
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            getSession().close();
+            s.close();
+        }
+    }
+
+    public List<PeticionesEntrantes> findAllByHospital(String codigoHospital) {
+        Session s = getSession();
+        try {
+            String queryString = "from PeticionesEntrantes where Hospitales_codigo_hospital =:codigoHospital and estatus='PP' order by prioridad";
+            Query queryObject = s.createQuery(queryString);
+            queryObject.setParameter("codigoHospital", codigoHospital);
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            s.close();
         }
     }
 

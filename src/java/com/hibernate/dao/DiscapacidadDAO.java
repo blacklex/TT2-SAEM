@@ -9,78 +9,82 @@ package com.hibernate.dao;
  *
  * @author Alejandro
  */
-
-
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.Discapacidades;
 import org.hibernate.Session;
 
-
 public class DiscapacidadDAO extends HibernateUtil {
-	
-	// property constants
 
-         public Boolean save(Discapacidades transientInstance) {
-		//log.debug("saving TblAbwUsuario instance");
-		try {
-			Session s = getSession();
-                        s.beginTransaction();
-                        s.save(transientInstance);
-                        s.getTransaction().commit();
-			//log.debug("save successful");
-                        return true;
-		} catch (RuntimeException re) {
-			//log.error("save failed", re);  
-                    return false;
-		}
-	}
-         
-        public Boolean delete(Discapacidades transientInstance) {
-		//log.debug("saving TblAbwUsuario instance");
-		try {
-			Session s = getSession();
-                        s.beginTransaction();
-                        s.delete(transientInstance);
-                        s.getTransaction().commit();
-			//log.debug("save successful");
-                        return true;
-		} catch (RuntimeException re) {
-			//log.error("save failed", re);
-                    return false;
-		}
-	}
-        
-        public Boolean update(Discapacidades transientInstance) {
-		Session s = getSession();
-		try {
-			
-                        s.beginTransaction();
-                        s.update(transientInstance);
-                        s.getTransaction().commit();
-                        s.close();
-			System.out.println("--->Discapacidades actualizadas");
-                        return true;
-		} catch (RuntimeException re) {
+	// property constants
+    public Boolean save(Discapacidades transientInstance) {
+        //log.debug("saving TblAbwUsuario instance");
+        Session s = getSession();
+        try {
+
+            s.beginTransaction();
+            s.save(transientInstance);
+            s.getTransaction().commit();
+            //log.debug("save successful");
+            return true;
+        } catch (RuntimeException re) {
+            //log.error("save failed", re);  
+            return false;
+        } finally {
+            s.close();
+        }
+    }
+
+    public Boolean delete(Discapacidades transientInstance) {
+        Session s = getSession();
+        //log.debug("saving TblAbwUsuario instance");
+        try {
+
+            s.beginTransaction();
+            s.delete(transientInstance);
+            s.getTransaction().commit();
+            //log.debug("save successful");
+            return true;
+        } catch (RuntimeException re) {
+            //log.error("save failed", re);
+            return false;
+        } finally {
+            s.close();
+        }
+    }
+
+    public Boolean update(Discapacidades transientInstance) {
+        Session s = getSession();
+        try {
+
+            s.beginTransaction();
+            s.update(transientInstance);
+            s.getTransaction().commit();
+            s.close();
+            System.out.println("--->Discapacidades actualizadas");
+            return true;
+        } catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-                    s.close();
-			System.out.println("--->Discapacidades no actualizadas");  
-                    return false;
-		}
-	}
-         
-        public Discapacidades findById(Long id) {
-		//log.debug("getting TblAbwUsuario instance with id: " + id);
-		try {
-			Discapacidades instance = (Discapacidades) getSession().get(
-					Discapacidades.class, id);
-			return instance;
-		} catch (RuntimeException re) {
-			//log.error("get failed", re);
-			throw re;
-		}
-	}
-         
-        
-      
+            s.close();
+            System.out.println("--->Discapacidades no actualizadas");
+            return false;
+        } finally {
+            s.close();
+        }
+    }
+
+    public Discapacidades findById(Long id) {
+        //log.debug("getting TblAbwUsuario instance with id: " + id);
+        Session s = getSession();
+        try {
+            Discapacidades instance = (Discapacidades) s.get(
+                    Discapacidades.class, id);
+            return instance;
+        } catch (RuntimeException re) {
+            //log.error("get failed", re);
+            throw re;
+        } finally {
+            s.close();
+        }
+    }
 
 }

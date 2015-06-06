@@ -80,16 +80,27 @@
                 <sjg:gridColumn id="idPeticionesEntrantes" key="true" name="idPeticionesEntrantes"	title="ID Peticion" 		index="idPeticionesEntrantes"		sortable="false"
                                 editable="false" />
 
-                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/YH:i', srcformat : 'Y-m-d H:i:s'}"/>
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y H:i', srcformat : 'Y-m-d H:i:s'}"/>
 
                 <sjg:gridColumn id="estatus" name="estatus"	title="Estatus" 		index="estatus"		sortable="false"
                                 editable="true"	 />
 
+                <sjg:gridColumn id="nombrePaciente" name="nombrePaciente"	title="Nombre del paciente" 		index="nombrePaciente"		sortable="false"
+                                editable="true"	/>
+                
+                <sjg:gridColumn id="apellidoPaciente" name="apellidoPaciente"	title="Apellido del paciente" 		index="apellidoPaciente"		sortable="false"
+                                editable="true"	/>
+                
+               <sjg:gridColumn editable="false" name="fechaNacimineto" index="fechaNacimineto" title="Fecha de Nacimiento" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y'}"/>
 
-                <sjg:gridColumn id="latitudPaciente" name="latitudPaciente"	title="latitudPaciente" 		index="latitudPaciente"		sortable="false"
+
+               <sjg:gridColumn id="nss" name="nss"	title="NSS" 		index="nss"		sortable="false"
+                                editable="true"	/>
+               
+                <sjg:gridColumn id="latitudPaciente" hidden="true" name="latitudPaciente"	title="latitudPaciente" 		index="latitudPaciente"		sortable="false"
                                 editable="true"	/>
 
-                <sjg:gridColumn  name="longitudPaciente"			title="longitudPaciente" 		index="longitudPaciente"		sortable="false"
+                <sjg:gridColumn  name="longitudPaciente" hidden="true"			title="longitudPaciente" 		index="longitudPaciente"		sortable="false"
                                  editable="true"	/>
 
             </sjg:grid> 
@@ -111,8 +122,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
 <!--<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
-
-<script src="js/funcionesHospital/funcionesConsultarHospital.js" type="text/javascript"></script>-->
+-->
+<script src="js/funcionesHospital/funcionesPeticionesEntrantes.js" type="text/javascript"></script>
 
 
 

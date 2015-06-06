@@ -6,6 +6,7 @@
 package com.saem.actions;
 
 import com.hibernate.dao.PeticionesSalientesDAO;
+import com.hibernate.model.DatosPersonales;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -74,8 +75,7 @@ public class PeticionesExternasAction implements SessionAware {
     public String llenarGridPeticionesExternas() {
 
         System.out.println("\n\n--->Entro a llenar tabla Peticiones Externas");
-        if(true)
-            return Action.SUCCESS;
+        
         // Obtenemos la tabla desordenada
         obteneTablaPeticionesExternas();
         // Quitamos los registros que no se desplegarán en el grid
@@ -88,15 +88,33 @@ public class PeticionesExternasAction implements SessionAware {
         PeticionesSalientesDAO peticionesSalientesDAO = new PeticionesSalientesDAO();
         ArrayList<PeticionesSalientes> listaTemp = new ArrayList<PeticionesSalientes>();
         ArrayList<PeticionesSalientes> listaTempFinal = new ArrayList<PeticionesSalientes>();
+        String codigoHosptail = (String) session.get("HospitalCodigoHospital");
+
+        if (codigoHosptail == null) {
+            return;
+        }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAll();
+        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(codigoHosptail);
+
+        System.out.println("---> Tam pet Salientes " + listaTemp.size());
 
         for (PeticionesSalientes tempContHosp : listaTemp) {
+            PeticionesSalientes tempPet = new PeticionesSalientes(tempContHosp.getIdPeticionesSalientes(), null, null, tempContHosp.getFechaRegistro(), tempContHosp.getEstatus(), tempContHosp.getLatitudPaciente(), tempContHosp.getLongitudPaciente(), tempContHosp.getPrioridad());
+            tempPet.setNombrePaciente(tempContHosp.getPacientes().getNombre());
+            tempPet.setApellidoPaciente(tempContHosp.getPacientes().getApellidoPaterno());
+            tempPet.setNss(tempContHosp.getPacientes().getNss());
 
-            listaTempFinal.add(null);
+            Iterator<DatosPersonales> iterDatosPerPac = tempContHosp.getPacientes().getDatosPersonaleses().iterator();
+            if (iterDatosPerPac.hasNext()) {
+                tempPet.setFechaNacimineto(iterDatosPerPac.next().getFechaNacimiento());
+            }
+
+            listaTempFinal.add(tempPet);
         }
+        
         gridListaPeticionesExternas = listaTempFinal;
+        
         if (gridListaPeticionesExternas == null) {
             records = total = 0;
         } else {

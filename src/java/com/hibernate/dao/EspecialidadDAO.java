@@ -17,7 +17,7 @@ import org.hibernate.Session;
 
 public class EspecialidadDAO extends HibernateUtil {
 
-	// property constants
+    // property constants
     public Boolean save(Especialidades transientInstance) {
         Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
@@ -34,14 +34,15 @@ public class EspecialidadDAO extends HibernateUtil {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(Especialidades transientInstance) {
         //log.debug("saving TblAbwUsuario instance");
+        Session s = getSession();
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -51,33 +52,35 @@ public class EspecialidadDAO extends HibernateUtil {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Especialidades findById(int id) {
+        Session s = getSession();
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
-            Especialidades instance = (Especialidades) getSession().get(
+            Especialidades instance = (Especialidades) s.get(
                     Especialidades.class, id);
             return instance;
         } catch (RuntimeException re) {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public List<Especialidades> findAll() {
+        Session s = getSession();
         try {
             String queryString = "from Especialidades";
-            Query queryObject = getSession().createQuery(queryString);
+            Query queryObject = s.createQuery(queryString);
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 

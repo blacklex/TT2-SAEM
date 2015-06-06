@@ -22,8 +22,9 @@ public class HospitalDAO extends HibernateUtil {
 
     // property constants
     public Boolean save(Hospitales transientInstance) {
+        Session s = getSession();
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
@@ -34,13 +35,14 @@ public class HospitalDAO extends HibernateUtil {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(Hospitales transientInstance) {
+        Session s = getSession();
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -51,7 +53,7 @@ public class HospitalDAO extends HibernateUtil {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
@@ -71,48 +73,51 @@ public class HospitalDAO extends HibernateUtil {
             System.out.println("--->Hospital no actualizado");
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Hospitales findById(String id) {
+        Session s = getSession();
         try {
-            Hospitales instance = (Hospitales) getSession().get(
+            Hospitales instance = (Hospitales) s.get(
                     Hospitales.class, id);
-            getSession().close();
+            s.close();
             return instance;
         } catch (RuntimeException re) {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public List<Hospitales> findAll() {
+        Session s = getSession();
         try {
             String queryString = "from Hospitales";
-            Query queryObject = getSession().createQuery(queryString);
-            getSession().close();
+            Query queryObject = s.createQuery(queryString);
+            s.close();
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
-    
+
     public List<Hospitales> findHospitalLike(String hospitalNombre) {
+        Session s = getSession();
         try {
-             String queryString="from Hospitales where lower(nombre) LIKE (:searchKeyword)";
-             Query queryObject = getSession().createQuery(queryString);
-             queryObject.setParameter("searchKeyword", "%"+hospitalNombre+"%");
-             return queryObject.list();
-        
+            String queryString = "from Hospitales where lower(nombre) LIKE (:searchKeyword)";
+            Query queryObject = s.createQuery(queryString);
+            queryObject.setParameter("searchKeyword", "%" + hospitalNombre + "%");
+            return queryObject.list();
+
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 

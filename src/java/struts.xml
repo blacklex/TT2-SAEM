@@ -531,6 +531,10 @@
         <action name="ajaxLlenarListaPetionesEntrantes" method="llenarGridPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantesAction">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="ajaxRecuperarTotalPeticiones" method="recuperarTotalPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- ************************************ FIN HOSPITAL PETICIONES ENTRANTES ****************************************** -->
         
          <!-- ************************************ HOSPITAL PETICIONES EXTERNAS ****************************************** -->

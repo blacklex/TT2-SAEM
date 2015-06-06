@@ -19,7 +19,12 @@ public class PeticionesSalientes  implements java.io.Serializable {
      private String longitudPaciente;
      private String prioridad;
      private String comentario;
-
+    /***********ATRIBUTOS PARA EL GRID DATOS DE PACIENTE***************/
+     private String nombrePaciente;
+     private String apellidoPaciente;
+     private Date fechaNacimineto;
+     private String nss;
+     
     public PeticionesSalientes() {
     }
 
@@ -110,7 +115,39 @@ public class PeticionesSalientes  implements java.io.Serializable {
         this.comentario = comentario;
     }
 
+/*********************GETTERS AND SETTER PARA PACIENTE GRID********************************/
+  
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
 
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getApellidoPaciente() {
+        return apellidoPaciente;
+    }
+
+    public void setApellidoPaciente(String apellidoPaciente) {
+        this.apellidoPaciente = apellidoPaciente;
+    }
+
+    public Date getFechaNacimineto() {
+        return fechaNacimineto;
+    }
+
+    public void setFechaNacimineto(Date fechaNacimineto) {
+        this.fechaNacimineto = fechaNacimineto;
+    }
+
+    public String getNss() {
+        return nss;
+    }
+
+    public void setNss(String nss) {
+        this.nss = nss;
+    }
 
 
 }

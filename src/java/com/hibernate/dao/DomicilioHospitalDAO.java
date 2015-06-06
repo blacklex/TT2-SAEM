@@ -15,11 +15,12 @@ import org.hibernate.Session;
 
 public class DomicilioHospitalDAO extends HibernateUtil {
 
-	// property constants
+    // property constants
     public Boolean save(DomicilioHospitales transientInstance) {
         //log.debug("saving TblAbwUsuario instance");
+        Session s = getSession();
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
@@ -30,14 +31,15 @@ public class DomicilioHospitalDAO extends HibernateUtil {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(DomicilioHospitales transientInstance) {
         //log.debug("saving TblAbwUsuario instance");
+        Session s = getSession();
         try {
-            Session s = getSession();
+
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -47,7 +49,7 @@ public class DomicilioHospitalDAO extends HibernateUtil {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
@@ -67,21 +69,22 @@ public class DomicilioHospitalDAO extends HibernateUtil {
             System.out.println("--->Domicilio Hospital no actualizado");
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public DomicilioHospitales findById(Long id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
+        Session s = getSession();
         try {
-            DomicilioHospitales instance = (DomicilioHospitales) getSession().get(
+            DomicilioHospitales instance = (DomicilioHospitales) s.get(
                     DomicilioHospitales.class, id);
             return instance;
         } catch (RuntimeException re) {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
