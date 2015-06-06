@@ -5,11 +5,9 @@
  */
 package com.saem.actions;
 
-import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.PeticionesEntrantesDAO;
 import com.hibernate.dao.PeticionesSalientesDAO;
 import com.hibernate.model.DatosPersonales;
-import com.hibernate.model.Hospitales;
 import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
