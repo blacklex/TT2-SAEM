@@ -151,30 +151,30 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     String mensajeError = "";
 
     public String eliminarPaciente() {
-        if (usuarioDAO.deletePaciente(getNombreUsuario())) {
-            setEstatusMensajeEliminar("usuarioEncontrado");
-            System.err.println("Usuario eliminado--->" + getNombreUsuario());
+        if (usuarioDAO.deletePaciente(nombreUsuario)) {
+            estatusMensajeEliminar = "usuarioEncontrado";
+            System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarPaciente";
         }
         else {
-            mensajeError = "Error al eliminar Paciente";
-            setEstatusMensajeEliminar("usuarioNoEncontrado");
+            mensajeError = "Error al eliminar Administrador";
+            estatusMensajeEliminar = "usuarioNoEncontrado";
         }
         return "pantallaModificarEliminarPaciente";
     }
     
-    public String eliminarPacientePorFiltro() {
-        if (usuarioDAO.deletePaciente(getNombreUsuario())) {
-            setEstatusMensajeEliminar("usuarioEncontrado");
-            System.err.println("Usuario eliminado--->" + getNombreUsuario());
-            return "pantallaModificarEliminarPaciente";
-        }
-        else {
-            mensajeError = "Error al eliminar Paciente";
-            setEstatusMensajeEliminar("usuarioNoEncontrado");
-        }
-        return "pantallaModificarEliminarPaciente";
-    }
+//    public String eliminarPacientePorFiltro() {
+//        if (usuarioDAO.deletePaciente(getNombreUsuario())) {
+//            setEstatusMensajeEliminar("usuarioEncontrado");
+//            System.err.println("Usuario eliminado--->" + getNombreUsuario());
+//            return "pantallaModificarEliminarPaciente";
+//        }
+//        else {
+//            mensajeError = "Error al eliminar Paciente";
+//            setEstatusMensajeEliminar("usuarioNoEncontrado");
+//        }
+//        return "pantallaModificarEliminarPaciente";
+//    }
     
     public String editarAccesoPaciente() throws ParseException {
         Boolean actualizacionCorrecta = false;
@@ -1173,6 +1173,14 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
 
     public void setAlergias(ArrayList<String> alergias) {
         this.alergias = alergias;
+    }
+
+    public String getEstatusMensajeEliminar() {
+        return estatusMensajeEliminar;
+    }
+
+    public void setEstatusMensajeEliminar(String estatusMensajeEliminar) {
+        this.estatusMensajeEliminar = estatusMensajeEliminar;
     }
     
     

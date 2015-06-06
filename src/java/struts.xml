@@ -385,9 +385,9 @@
             <result name="pantallaModificarEliminarPaciente" type="json">JSON</result>
         </action>
         
-        <action name="eliminarPacientePorFiltro" method="eliminarPacientePorFiltro" class="com.saem.actions.ModificarEliminarPacienteAction">
+<!--        <action name="eliminarPacientePorFiltro" method="eliminarPacientePorFiltro" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="pantallaModificarEliminarPaciente" type="json">JSON</result>
-        </action>
+        </action>-->
         <!-- Fin Eliminar Paciente -->
         <!-- ******************************************** FIN ELIMINAR PACIENTE ****************************************************************-->
         
