@@ -15,12 +15,11 @@ import org.hibernate.Session;
 
 public class DirectivoDAO extends HibernateUtil {
 
-    // property constants
+	// property constants
     public Boolean save(Directivo transientInstance) {
         //log.debug("saving TblAbwUsuario instance");
-        Session s = getSession();
         try {
-
+            Session s = getSession();
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
@@ -37,9 +36,8 @@ public class DirectivoDAO extends HibernateUtil {
 
     public Boolean delete(Directivo transientInstance) {
         //log.debug("saving TblAbwUsuario instance");
-        Session s = getSession();
         try {
-
+            Session s = getSession();
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -76,9 +74,8 @@ public class DirectivoDAO extends HibernateUtil {
 
     public Directivo findById(Long id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
-        Session s = getSession();
         try {
-            Directivo instance = (Directivo) s.get(
+            Directivo instance = (Directivo) getSession().get(
                     Directivo.class, id);
             return instance;
         } catch (RuntimeException re) {

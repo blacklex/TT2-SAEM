@@ -21,10 +21,9 @@ public class TelefonoPacienteDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(TelefonosPacientes transientInstance) {
-             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			
+			Session s = getSession();
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -33,14 +32,14 @@ public class TelefonoPacienteDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}finally{s.close();}
+		}
 	}
          
         public Boolean delete(TelefonosPacientes transientInstance) {
-            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			s.beginTransaction();
+			Session s = getSession();
+                        s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
 			//log.debug("save successful");
@@ -48,7 +47,7 @@ public class TelefonoPacienteDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}finally{s.close();}
+		}
 	}
         
         public Boolean update(TelefonosPacientes transientInstance) {
@@ -66,20 +65,19 @@ public class TelefonoPacienteDAO extends HibernateUtil {
                     s.close();
 			System.out.println("--->Telefonos no actualizados");  
                     return false;
-		}finally{s.close();}
+		}
 	}
          
         public TelefonosPacientes findById(Long id) {
-            Session s = getSession();
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			TelefonosPacientes instance = (TelefonosPacientes) s.get(
+			TelefonosPacientes instance = (TelefonosPacientes) getSession().get(
 					TelefonosPacientes.class, id);
 			return instance;
 		} catch (RuntimeException re) {
 			//log.error("get failed", re);
 			throw re;
-		}finally{s.close();}
+		}
 	}
          
         

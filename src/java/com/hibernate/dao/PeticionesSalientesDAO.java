@@ -26,11 +26,11 @@ public class PeticionesSalientesDAO extends HibernateUtil {
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
-            s.close();
+            
             //log.debug("save successful");
             return true;
         } catch (RuntimeException re) {
-            s.close();
+            
             //log.error("save failed", re);  
             return false;
         } finally {
