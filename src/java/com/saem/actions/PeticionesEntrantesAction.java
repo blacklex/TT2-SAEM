@@ -5,10 +5,11 @@
  */
 package com.saem.actions;
 
-import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.PeticionesEntrantesDAO;
-import com.hibernate.model.Hospitales;
+import com.hibernate.dao.PeticionesSalientesDAO;
+import com.hibernate.model.DatosPersonales;
 import com.hibernate.model.PeticionesEntrantes;
+import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.util.ArrayList;
@@ -27,14 +28,14 @@ public class PeticionesEntrantesAction implements SessionAware {
     private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_ME";
     private static final String LLAVE_ESTATUS_ME = "PETICIONES_ENTRANTES_ESTATUS_LLAVE";
 
-   
     //campos del formulario
-   
     //fin de campos formularo
-    
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
+
+    private String totalPeticionesEntrantes;
+    private String totalPeticionesSalientes;
 
     HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
@@ -49,9 +50,11 @@ public class PeticionesEntrantesAction implements SessionAware {
         return "pantallaPeticionesEntrantesHospital";
     }
 
-    
-/************************ METODOS PARA SETAR EN FORMULARIOS *********************/
-   public String recuperarEstatusPeticionesEntrantesHospital() {
+    /**
+     * ********************** METODOS PARA SETAR EN FORMULARIOS
+     * ********************
+     */
+    public String recuperarEstatusPeticionesEntrantesHospital() {
         System.out.println("-->Entro a recuperar estatus Consultar");
         tituloAlert = "";
         textoAlert = "";
@@ -70,6 +73,7 @@ public class PeticionesEntrantesAction implements SessionAware {
 
         return SUCCESS;
     }
+
     /**
      * *************************************** METODOS GRID
      * ********************************
@@ -77,8 +81,7 @@ public class PeticionesEntrantesAction implements SessionAware {
     public String llenarGridPeticionesEntrantes() {
 
         System.out.println("\n\n--->Entro a llenar tabla Peticiones Entrantes");
-        if(true)
-            return Action.SUCCESS;
+
         // Obtenemos la tabla desordenada
         obteneTablaPeticionesEntrantes();
         // Quitamos los registros que no se desplegarán en el grid
@@ -91,13 +94,29 @@ public class PeticionesEntrantesAction implements SessionAware {
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
         ArrayList<PeticionesEntrantes> listaTemp = new ArrayList<PeticionesEntrantes>();
         ArrayList<PeticionesEntrantes> listaTempFinal = new ArrayList<PeticionesEntrantes>();
+        String codigoHosptail = (String) session.get("HospitalCodigoHospital");
+
+        if (codigoHosptail == null) {
+            return;
+        }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAll();
+        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(codigoHosptail);
+
+        System.out.println("---> Tam pet Entra " + listaTemp.size());
 
         for (PeticionesEntrantes tempContHosp : listaTemp) {
+            PeticionesEntrantes tempPet = new PeticionesEntrantes(tempContHosp.getIdPeticionesEntrantes(), null, null, tempContHosp.getFechaRegistro(), tempContHosp.getEstatus(), tempContHosp.getLatitudPaciente(), tempContHosp.getLongitudPaciente(), tempContHosp.getPrioridad());
+            tempPet.setNombrePaciente(tempContHosp.getPacientes().getNombre());
+            tempPet.setApellidoPaciente(tempContHosp.getPacientes().getApellidoPaterno());
+            tempPet.setNss(tempContHosp.getPacientes().getNss());
 
-            listaTempFinal.add(null);
+            Iterator<DatosPersonales> iterDatosPerPac = tempContHosp.getPacientes().getDatosPersonaleses().iterator();
+            if (iterDatosPerPac.hasNext()) {
+                tempPet.setFechaNacimineto(iterDatosPerPac.next().getFechaNacimiento());
+            }
+
+            listaTempFinal.add(tempPet);
         }
         gridListaPeticionesEntrantes = listaTempFinal;
         if (gridListaPeticionesEntrantes == null) {
@@ -108,6 +127,31 @@ public class PeticionesEntrantesAction implements SessionAware {
             // Calculamos el total de páginas necesarias
             total = (int) Math.ceil((double) records / (double) rows);
         }
+    }
+
+    public String recuperarTotalPeticionesEntrantes() {
+        PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
+        ArrayList<PeticionesEntrantes> listaTempEnt = new ArrayList<PeticionesEntrantes>();
+        
+        PeticionesSalientesDAO peticionesSalientesDAO = new PeticionesSalientesDAO();
+        ArrayList<PeticionesSalientes> listaTempSal = new ArrayList<PeticionesSalientes>();
+        
+        String codigoHosptail = (String) session.get("HospitalCodigoHospital");
+
+        listaTempEnt = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(codigoHosptail);
+        if (listaTempEnt == null) {
+            listaTempEnt = new ArrayList<PeticionesEntrantes>();
+        }
+        
+        listaTempSal = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(codigoHosptail);
+        if (listaTempSal == null) {
+            listaTempSal = new ArrayList<PeticionesSalientes>();
+        }
+
+        totalPeticionesEntrantes = listaTempEnt.size() + "";
+        totalPeticionesSalientes = listaTempSal.size() + "";
+
+        return SUCCESS;
     }
 
     private void recortarTablaPeticionesEntrantes() {
@@ -133,7 +177,6 @@ public class PeticionesEntrantesAction implements SessionAware {
     /**
      * ************************************************************************
      */
-   
     /**
      * ************************************************************************
      */
@@ -161,6 +204,23 @@ public class PeticionesEntrantesAction implements SessionAware {
         this.estatusMensaje = estatusMensaje;
     }
 
+    public String getTotalPeticionesEntrantes() {
+        return totalPeticionesEntrantes;
+    }
+
+    public void setTotalPeticionesEntrantes(String totalPeticionesEntrantes) {
+        this.totalPeticionesEntrantes = totalPeticionesEntrantes;
+    }
+
+    public String getTotalPeticionesSalientes() {
+        return totalPeticionesSalientes;
+    }
+
+    public void setTotalPeticionesSalientes(String totalPeticionesSalientes) {
+        this.totalPeticionesSalientes = totalPeticionesSalientes;
+    }
+
+    
     /**
      * ****************** Lo siguiente está relacionado al jQuery Grid
      * *************************

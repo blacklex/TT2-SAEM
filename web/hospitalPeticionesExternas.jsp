@@ -61,7 +61,7 @@
                 navigator    ="true"                                    viewrecords="true"
                 hidegrid     ="false"                                   multiselect="false"
                 navigatorRefresh ="false"				navigatorSearch ="false"				
-                resizable    ="true"                                    autowidth="true"
+                                                                        autowidth="true"
                 navigatorAdd ="false"				
                 navigatorEdit="false"	
                 navigatorDelete="false"
@@ -77,21 +77,31 @@
                 }"
                 >
 
-                <sjg:gridColumn id="codigoHospital" key="true" name="codigoHospital"	title="Codigo Hospital" 		index="codigoHospital"		sortable="false"
-                                editable="false"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
+                <sjg:gridColumn id="idPeticionesSalientes" key="true" name="idPeticionesSalientes"	title="ID Peticion" 		index="idPeticionesSalientes"		sortable="false"
+                                editable="false" />
 
-                <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y H:i', srcformat : 'Y-m-d H:i:s'}"/>
 
-                <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
+                <sjg:gridColumn id="estatus" name="estatus"	title="Estatus" 		index="estatus"		sortable="false"
+                                editable="true"	 />
+
+                <sjg:gridColumn id="nombrePaciente" name="nombrePaciente"	title="Nombre del paciente" 		index="nombrePaciente"		sortable="false"
+                                editable="true"	/>
+                
+                <sjg:gridColumn id="apellidoPaciente" name="apellidoPaciente"	title="Apellido del paciente" 		index="apellidoPaciente"		sortable="false"
+                                editable="true"	/>
+                
+               <sjg:gridColumn editable="false" name="fechaNacimineto" index="fechaNacimineto" title="Fecha de Nacimiento" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y'}"/>
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
-                                editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
+               <sjg:gridColumn id="nss" name="nss"	title="NSS" 		index="nss"		sortable="false"
+                                editable="true"	/>
+               
+                <sjg:gridColumn id="latitudPaciente" hidden="true" name="latitudPaciente"	title="latitudPaciente" 		index="latitudPaciente"		sortable="false"
+                                editable="true"	/>
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
-                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
+                <sjg:gridColumn  name="longitudPaciente" hidden="true"			title="longitudPaciente" 		index="longitudPaciente"		sortable="false"
+                                 editable="true"	/>
 
             </sjg:grid> 
         </div>

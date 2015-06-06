@@ -6,9 +6,11 @@
 package com.saem.actions;
 
 import com.hibernate.dao.UsuarioDAO;
+import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
@@ -70,9 +72,19 @@ public class Login implements SessionAware{
         if(tipoUsuario.toUpperCase().equals("PACIENTE"))
             return "pantallaInicioPaciente";
         
-        if(tipoUsuario.toUpperCase().equals("HOSPITAL"))
+        if(tipoUsuario.toUpperCase().equals("HOSPITAL")){
+            String codigoHospital ="";
+            Iterator<Hospitales> iterHosp = usuario.getHospitaleses().iterator();
+            
+            while(iterHosp.hasNext()){
+                Hospitales hospTemp = iterHosp.next();
+                codigoHospital = hospTemp.getCodigoHospital();
+            }
+            System.out.println("---> Cod hosp "+codigoHospital);
+            session.put("HospitalCodigoHospital", codigoHospital);
+            
             return "pantallaInicioHospital";
-        
+        }
         return Action.LOGIN;
     }
 

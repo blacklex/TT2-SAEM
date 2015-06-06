@@ -73,7 +73,7 @@
             navigator	     ="true"				viewrecords	="true"
             hidegrid	     ="false"                           multiselect	="false"
             navigatorRefresh ="false"				navigatorSearch ="false"				
-            resizable	     ="true"				autowidth="true"
+                                        			autowidth="true"
             navigatorAdd     ="false"				
             navigatorEdit    ="false"	
             navigatorDelete  ="false"
