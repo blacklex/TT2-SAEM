@@ -25,7 +25,7 @@ $(document).ready(function () {
                 $("#labelMensajeSuccessPaciente").html(textoAlert);
                 $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
             } else if (estatusMensaje === "error") {
-                $("#divAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
+                $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>" + tituloAlert);
                 $("#labelMensajeErrorPaciente").html(textoAlert);
                 $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
             }
