@@ -416,7 +416,27 @@
             <result name="success" type="json">JSON</result>
         </action>
         
-        <action name="buscarDatosPorFiltro" method="buscarDatosPorFiltro" class="com.saem.actions.ModificarEliminarAdministradorAction">
+        <action name="buscarAlergiasPaciente" method="buscarAlergiasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarCirugiasPaciente" method="buscarCirugiasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDiscapacidadesPaciente" method="buscarDiscapacidadesPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarMedicamentosPaciente" method="buscarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarMedicamentosPaciente" method="buscarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarEnfermedadesCronicasPaciente" method="buscarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ******************************************** FIN BUSCAR DATOS PARA EDITAR PACIENTE ****************************************************************-->
@@ -429,7 +449,7 @@
         <!-- Fin Editar Acceso Paciente -->
         
         <!-- Editar Datos Paciente -->
-        <action name="editarDatosPaciente" method="editarDatosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+        <action name="editarDatosIdentificacionPaciente" method="editarDatosIdentificacionPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
             <interceptor-ref name="fileUpload">
                 <param name="maximumSize">2097152</param>
                 <param name="allowedTypes">
