@@ -58,13 +58,13 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
 
     private Map<String, Object> session = null;
     private final PacienteDAO pacienteDAO = new PacienteDAO();
+    private final HospitalDAO hospitalDAO = new HospitalDAO();
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final DomicilioPacienteDAO domicilioPacienteDAO = new DomicilioPacienteDAO();
     private final TelefonoPacienteDAO telefonoPacienteDAO = new TelefonoPacienteDAO();
     private final DatosPersonalesDAO datosPersonalesDAO = new DatosPersonalesDAO();
     private final ContactoDAO contactoDAO = new ContactoDAO();
     private final DatosClinicosDAO datosClinicosDAO = new DatosClinicosDAO();
-    private final HospitalDAO hospitalDAO = new HospitalDAO();
     private final DiscapacidadDAO discapacidadDAO = new DiscapacidadDAO();
     private final AlergiaDAO alergiaDAO = new AlergiaDAO();
     private final CirugiaDAO cirugiaDAO = new CirugiaDAO();
@@ -75,9 +75,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private List<Usuarios> listUsuarios;
     private List<Hospitales> listHospitales;
     
-    Pacientes paciente = new Pacientes();
-    DomicilioPacientes domicilioPacientes = new DomicilioPacientes();
     Usuarios userPaciente = new Usuarios();
+    Pacientes paciente = new Pacientes();
+    Hospitales hospital = new Hospitales();
+    DomicilioPacientes domicilioPacientes = new DomicilioPacientes();
     TelefonosPacientes telefonosPacientes = new TelefonosPacientes();
     DatosPersonales datosPersonales = new DatosPersonales();
     Contactos contactos = new Contactos();
@@ -85,24 +86,21 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     Alergias alergia = new Alergias();
     Cirugias cirugia = new Cirugias();
     Discapacidades discapacidad = new Discapacidades();
-    Hospitales hospital = new Hospitales();
     Medicacion medicacion = new Medicacion();
     EnfermedadesCronicas enfermedadCronica = new EnfermedadesCronicas();
     
     private HttpServletRequest servletRequest;
     
-    String codigoHospital;
-    Long idDomicilioPaciente;
-    Long idDatosPersonalesPaciente;
-    Long noHistorial;
-    ArrayList<String> discapacidades = new ArrayList<String>();
-    ArrayList<String> alergias = new ArrayList<String>();
-    ArrayList<String> cirugias = new ArrayList<String>();
-    String fechaNacimientoFormato;
-    String contactosDelPaciente;
-    String medicamentos;
-    String enfermedadesCronicas;
+    private String codigoHospital;
+    private Long noHistorial;
+    private ArrayList<String> discapacidades = new ArrayList<>();
+    private ArrayList<String> alergias = new ArrayList<>();
+    private ArrayList<String> cirugias = new ArrayList<>();
     
+    private String fechaNacimientoFormato;
+    private String contactosDelPaciente;
+    private String medicamentos;
+    private String enfermedadesCronicas;
        
     //Acceso
     private String nombreUsuario; //Clave Primaria
@@ -117,10 +115,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String noConsultorio;
     private File imagen;
     private byte[] imagenPaciente;
-    private String userImageContentType;
-    private String userImageFileName;
     //Direccion
-    private Long id; //Clave Primaria
+    Long idDomicilioPaciente;
     private String calle;
     private String colonia;
     private String delegacion;
@@ -132,6 +128,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String telefonosDelPaciente;
     
     //Datos personales
+    Long idDatosPersonalesPaciente;
     private String estadoCivil;
     private String curp;
     private String sexo;
@@ -144,31 +141,16 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String telCel;
     private String correo;
     private String facebook;
-    //Contacto
-    private String nombreC;
-    private String apellidoPaternoC;
-    private String apellidoMaternoC;
-    private String parentesco;
-    private String celular;
-    private String facebookC;
-    private String correoC;
     //Datos clínicos
-    String drogas;
-    String alcohol;
-    String fuma;
+    private String drogas;
+    private String alcohol;
+    private String fuma;
     //campos json retorno
     private String tituloAlertEditar;
     private String textoAlertEditar;
     private String estatusMensajeEliminar;
     private String estatusMensajeEditar;
-    Boolean r1 = false;
-    Boolean r2 = false;
-    Boolean r3 = false;
-    Boolean r4 = false;
-    Boolean r5 = false;
-    Boolean r6 = false;
-    Boolean r7 = false;
-    String mensajeError = "";
+    private String mensajeError = "";
 
     public String eliminarPaciente() {
         if (usuarioDAO.deletePaciente(nombreUsuario)) {
@@ -182,19 +164,6 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         }
         return "pantallaModificarEliminarPaciente";
     }
-    
-//    public String eliminarPacientePorFiltro() {
-//        if (usuarioDAO.deletePaciente(getNombreUsuario())) {
-//            setEstatusMensajeEliminar("usuarioEncontrado");
-//            System.err.println("Usuario eliminado--->" + getNombreUsuario());
-//            return "pantallaModificarEliminarPaciente";
-//        }
-//        else {
-//            mensajeError = "Error al eliminar Paciente";
-//            setEstatusMensajeEliminar("usuarioNoEncontrado");
-//        }
-//        return "pantallaModificarEliminarPaciente";
-//    }
     
     public String editarAccesoPaciente() throws ParseException {
         Boolean actualizacionCorrecta = false;
@@ -287,9 +256,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     public String editarDireccionPaciente() throws IOException {
         Boolean actualizacionCorrecta = false;
         
-        paciente = pacienteDAO.findById(nss);
-        
-        //paciente = pacienteDAO.findById();
+        paciente = pacienteDAO.findById(nss); 
                 
         //Establecemos los datos de dirección para el Paciente
         domicilioPacientes.setId(idDomicilioPaciente);
@@ -326,13 +293,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         Boolean actualizacionCorrecta = false;
         
         userPaciente = usuarioDAO.findById(getNombreUsuario());
-        
-        //paciente = pacienteDAO.findById();
                 
-        //Establecemos los telefonos para el Paciente
-//        telefonosPacientes.setTelefonoFijo(getTelefonoFijo());
-//        telefonosPacientes.setTelefonoParticular(getTelefonoParticular());
-        
         if(telefonoPacienteDAO.update(telefonosPacientes)) {
             actualizacionCorrecta = true;
         }
@@ -359,9 +320,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         Boolean actualizacionCorrecta = false;
         
         paciente = pacienteDAO.findById(nss);
-        
-        //paciente = pacienteDAO.findById();
-                
+              
         //Establecemos los datos personales para el Paciente
         datosPersonales.setId(idDatosPersonalesPaciente);
         datosPersonales.setEstadoCivil(estadoCivil);
@@ -376,7 +335,6 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         datosPersonales.setFacebook(facebook);
         
         datosPersonales.setPacientes(paciente);
-        
         
         if(datosPersonalesDAO.update(datosPersonales)) {
             actualizacionCorrecta = true;
@@ -404,17 +362,6 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         Boolean actualizacionCorrecta = false;
         
         userPaciente = usuarioDAO.findById(getNombreUsuario());
-        
-        //paciente = pacienteDAO.findById();
-                
-        //Establecemos los datos de contacto para el Paciente
-//        contactos.setNombreC(getNombreC());
-//        contactos.setApellidoPaternoC(getApellidoPaternoC());
-//        contactos.setApellidoMaternoC(getApellidoMaternoC());
-//        contactos.setParentesco(getParentesco());
-//        contactos.setCelular(getCelular());
-//        contactos.setFacebookC(getFacebookC());
-//        contactos.setCorreoC(getCorreoC());
         
         if(contactoDAO.update(contactos)) {
             actualizacionCorrecta = true;
@@ -749,7 +696,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     
     public String buscarAlergiasPaciente() {
         System.out.println("--->Entro a alergias pacientes");
-        ArrayList<String> nombreAlergia = new ArrayList<String>();
+        ArrayList<String> nombreAlergia = new ArrayList<>();
         listUsuarios = usuarioDAO.listarById(nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -774,7 +721,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     
     public String buscarCirugiasPaciente() {
         System.out.println("--->Entro a cirugias pacientes");
-        ArrayList<String> nombreCirugia = new ArrayList<String>();
+        ArrayList<String> nombreCirugia = new ArrayList<>();
         listUsuarios = usuarioDAO.listarById(nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -799,7 +746,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     
     public String buscarDiscapacidadesPaciente() {
         System.out.println("--->Entro a discapacidades pacientes");
-        ArrayList<String> nombreDiscapacidad = new ArrayList<String>();
+        ArrayList<String> nombreDiscapacidad = new ArrayList<>();
         listUsuarios = usuarioDAO.listarById(nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -838,16 +785,18 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     int index = 0;
                     for (Iterator iterator4 = datClinicosMedicacion.iterator(); iterator4.hasNext();) {
                         medicacion = (Medicacion) iterator4.next();
-                        html += "<div class=\"col-lg-6\">" + "\n" +
-                                "   <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "       <label>Nombre del medicamento #"+ (index + 1) +"</label>" + "\n" +
-                                "       <input class=\"form-control\" type=\"text\" value=\""+medicacion.getNombreMedicamento()+"\" name=\"medicamento"+index+"\" id=\"medicamento"+index+"\" placeholder=\"Medicamentó"+(index+1)+"\"/>" + "\n" +
+                        html += "<div id=\"medicamentos"+index+"\" class=\"row\">" + "\n" +
+                                "   <div class=\"col-lg-6\">" + "\n" +
+                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
+                                "           <label>Nombre del medicamento #"+ (index + 1) +"</label>" + "\n" +
+                                "           <input class=\"form-control\" type=\"text\" value=\""+medicacion.getNombreMedicamento()+"\" name=\"medicamento"+index+"\" id=\"medicamento"+index+"\" placeholder=\"Medicamentó"+(index+1)+"\"/>" + "\n" +
+                                "       </div>" + "\n" +
                                 "   </div>" + "\n" +
-                                "</div>" + "\n" +
-                                "<div class=\"col-lg-6\">" + "\n" +
-                                "   <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "       <label>Frecuencia</label>" + "\n" +
-                                "       <input class=\"form-control\" type=\"text\" value=\""+medicacion.getFrecuencia()+"\" name=\"frecuencia"+index+"\" id=\"frecuencia"+index+"\" placeholder=\"Frecuencia\"/>" + "\n" +
+                                "   <div class=\"col-lg-6\">" + "\n" +
+                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
+                                "           <label>Frecuencia</label>" + "\n" +
+                                "           <input class=\"form-control\" type=\"text\" value=\""+medicacion.getFrecuencia()+"\" name=\"frecuencia"+index+"\" id=\"frecuencia"+index+"\" placeholder=\"Frecuencia\"/>" + "\n" +
+                                "       </div>" + "\n" +
                                 "   </div>" + "\n" +
                                 "</div>";
                         index++;
@@ -880,31 +829,33 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                         DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String inicioEnfermedadFormato = hourdateFormat.format(inicioEnfermedad);
                         String enfermedad = enfermedadCronica.getTipo();
-                        html += "<div class=\"col-lg-4\">" + "\n" +
-                                "   <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "       <label>Nombre enfermedad #"+ (index + 1)+ " : </label>" + "\n" +
-                                "       <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\""+enfermedadCronica.getNombre()+"\" placeholder=\"Nombre enfermedad"+index+"\" />" + "\n" +
+                        html += "<div id=\"enfermedadesCronicas"+index+"\" class=\"row\">" + "\n" +
+                                "   <div class=\"col-lg-4\">" + "\n" +
+                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
+                                "           <label>Nombre enfermedad #"+ (index + 1)+ " : </label>" + "\n" +
+                                "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\""+enfermedadCronica.getNombre()+"\" placeholder=\"Nombre enfermedad"+index+"\" />" + "\n" +
+                                "       </div>" + "\n" +
                                 "   </div>" + "\n" +
-                                "</div>" + "\n" +
-                                "<div class=\"col-lg-4\">" + "\n" +
-                                "   <label>Tipo</label>" + "\n" +
-                                "   <select name=\"tipoEnfermedad"+ index +"\" class=\"form-control\">" + "\n" +
-                                "       <option value=\"-1\">Seleccionar</option>" + "\n" +
-                                "       <option value=\"diabetes\" "+((enfermedad.equals("diabetes"))?"selected":"")+">Diabetes</option>" + "\n" +
-                                "       <option value=\"cardiovascular\" "+((enfermedad.equals("cardiovascular"))?"selected":"")+">Enfermedades cardiovasculares</option>" + "\n" +
-                                "       <option value=\"obesidad\" "+((enfermedad.equals("obesidad"))?"selected":"")+">Obesidad</option>" + "\n" +
-                                "       <option value=\"cancer\"  "+((enfermedad.equals("cancer"))?"selected":"")+">Cáncer</option>" + "\n" +
-                                "       <option value=\"dislipidemias\" "+((enfermedad.equals("dislipidemias"))?"selected":"")+">Dislipidemias</option>" + "\n" +
-                                "   </select>" + "\n" +
-                                "</div>" + "\n" +
-                                "<div class=\"col-lg-4\">" + "\n" +
-                                "   <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n" +
-                                "       <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n" +
-                                "       <div class=\"input-group\">" + "\n" +
-                                "           <div class=\"input-group-addon\">" + "\n" +
-                                "               <i class=\"fa fa-calendar\"></i>" + "\n" +
+                                "   <div class=\"col-lg-4\">" + "\n" +
+                                "       <label>Tipo</label>" + "\n" +
+                                "       <select name=\"tipoEnfermedad"+ index +"\" class=\"form-control\">" + "\n" +
+                                "           <option value=\"-1\">Seleccionar</option>" + "\n" +
+                                "           <option value=\"diabetes\" "+((enfermedad.equals("diabetes"))?"selected":"")+">Diabetes</option>" + "\n" +
+                                "           <option value=\"cardiovascular\" "+((enfermedad.equals("cardiovascular"))?"selected":"")+">Enfermedades cardiovasculares</option>" + "\n" +
+                                "           <option value=\"obesidad\" "+((enfermedad.equals("obesidad"))?"selected":"")+">Obesidad</option>" + "\n" +
+                                "           <option value=\"cancer\"  "+((enfermedad.equals("cancer"))?"selected":"")+">Cáncer</option>" + "\n" +
+                                "           <option value=\"dislipidemias\" "+((enfermedad.equals("dislipidemias"))?"selected":"")+">Dislipidemias</option>" + "\n" +
+                                "       </select>" + "\n" +
+                                "   </div>" + "\n" +
+                                "   <div class=\"col-lg-4\">" + "\n" +
+                                "       <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n" +
+                                "           <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n" +
+                                "           <div class=\"input-group\">" + "\n" +
+                                "               <div class=\"input-group-addon\">" + "\n" +
+                                "                   <i class=\"fa fa-calendar\"></i>" + "\n" +
+                                "               </div>" + "\n" +
+                                "               <input kl_virtual_keyboard_secure_input=\"on\" value=\""+inicioEnfermedadFormato+"\" class=\"form-control\" name=\"inicioEnfermedad"+ index +"\" id=\"inicioEnfermedad"+index+"\" data-inputmask=\"\\'alias\\': \\'dd/mm/yyyy\\'\" data-mask placeholder=\"dd/mm/yyyy\" type=\"text\">" + "\n" +
                                 "           </div>" + "\n" +
-                                "           <input kl_virtual_keyboard_secure_input=\"on\" value=\""+inicioEnfermedadFormato+"\" class=\"form-control\" name=\"inicioEnfermedad"+ index +"\" id=\"inicioEnfermedad"+index+"\" data-inputmask=\"\\'alias\\': \\'dd/mm/yyyy\\'\" data-mask placeholder=\"dd/mm/yyyy\" type=\"text\">" + "\n" +
                                 "       </div>" + "\n" +
                                 "   </div>" + "\n" +
                                 "</div>";
@@ -937,7 +888,27 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         return SUCCESS;
     }
     
-    
+    public String buscarDatosPacienteMostrarFiltro() throws FileNotFoundException, IOException {
+        ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        
+         if (nombreUsuario.length() > 0) {
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.findPacientesLike(nombreUsuario);
+                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+                if(listaTemp==null){
+                     estatusMensajeEliminar = "usuarioNoEncontrado";
+                }else{estatusMensajeEliminar = "usuarioEncontrado";}
+                
+                
+            } else {
+                // Obtenemos la lista de la sesión
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(0, 0);
+                estatusMensajeEliminar = "usuarioEncontrado";
+            }
+            session.put(com.saem.actions.GridRegistroPaciente.LISTA_GRID_MODEL, listaTemp);
+
+        return "success";
+    }
+
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;
@@ -1275,6 +1246,5 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     public void setEnfermedadesCronicas(String enfermedadesCronicas) {
         this.enfermedadesCronicas = enfermedadesCronicas;
     }
-    
-    
+
 }

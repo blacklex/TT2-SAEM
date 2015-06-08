@@ -55,8 +55,7 @@
                 </div>
             </div> 
         <!--Fin Busqueda por Filtro-->
-        
-            
+                    
            <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
@@ -79,7 +78,6 @@
                 navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
                 navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-                                       
                                         editarAcceso : {
                                                     title : 'Ver Datos de Acceso',
                                                     icon: 'ui-icon-key', 

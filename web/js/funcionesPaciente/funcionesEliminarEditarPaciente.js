@@ -453,7 +453,6 @@ function editarMedicamentosPaciente() {
             url: "buscarMedicamentosPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#TextBoxesGroup").attr("class", 'row');
             $("#TextBoxesGroup").html(msg.medicamentos);
         });
 
@@ -475,7 +474,6 @@ function editarEnfermedadesCronicasPaciente() {
             url: "buscarEnfermedadesCronicasPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#TextBoxesGroupEnfermedadCronica").attr("class", 'row');
             $("#TextBoxesGroupEnfermedadCronica").html(msg.enfermedadesCronicas);
         });
 
@@ -547,13 +545,6 @@ function cancelarEdicionDatosPersonales(){
 }
 
 function cancelarEdicionContactos(){
-    $("#nombreC").val("");
-    $("#apellidoPaternoC").val("");
-    $("#apellidoMaternoC").val("");
-    $("#parentesco").val("");
-    $("#celular").val("");
-    $("#facebookC").val("");
-    $("#correoC").val("");
         
     $("#datosContactosPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
@@ -584,6 +575,11 @@ function cancelarEdicionDiscapacidades() {
 
 function cancelarEdicionMedicamentos() {
     $("#datosMedicamentosPaciente").slideUp(1000);
+    $("#gridPacientes").show(1000);
+}
+
+function cancelarEdicionEnfermedades() {
+    $("#datosEnfermedadesPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
 }
 
@@ -950,4 +946,37 @@ function eliminarPacientePorFiltro() {
                     }
                 }
          });
+}
+
+function buscarPacientePorFiltroUsuario() {
+    var nombreUsuario = $("#nombreUsuarioPorFiltro").val();
+
+    if(nombreUsuario.length === 0)
+        nombreUsuario="";
+
+        $("#barraCargarEliminar").slideUp(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarDatosPacienteMostrarFiltro",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#barraCargarEliminar").slideUp(100);
+            if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
+                $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+               
+            }
+            else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
+                $('html, body').animate({scrollTop: 0}, 'fast');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#tituloDivAlertErrorEliminar").html("<i class='icon fa fa-ban'></i>El Usuario no existe");
+                $("#labelMensajeErrorEliminar").html("El nombre de usuario no existe.");
+
+                $("#divAlertErrorEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#nombreUsuarioPorFiltro").focus();
+            }           
+        });
+    
 }

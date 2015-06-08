@@ -45,13 +45,12 @@
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Bucar por nombre de Paciente..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
                     <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarPacientePorFiltroUsuario();">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
                 </div>
             </form>
-          
         <!--Fin Busqueda por Filtro-->
         </div>
         <div id="gridPacientes" class="box-body">
@@ -426,8 +425,6 @@
                 
             </div><!-- /.box-body -->
         </s:form>
-
-            
         <s:form name="formEditarContactosPaciente" action="editarContactosPaciente" onsubmit="return validarCamposContactos();" method="post" role="form">
             <div class="box-body" id="datosContactosPaciente" style="display: none;">
                 <div class="box box-primary box-solid">
@@ -580,7 +577,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarDatosAlergiasPaciente" method="post" role="form">
+        <s:form name="formEditarDatosClinicosPaciente" action="editarAlergiasPaciente" method="post" role="form">
             <div id="datosAlergiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Alergias</h3>
@@ -694,7 +691,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarDatosCirugiasPaciente" method="post" role="form">
+        <s:form name="formEditarDatosClinicosPaciente" action="editarCirugiasPaciente" method="post" role="form">
             <!--***************************************Cirugias***********************************************-->
             <div id="datosCirugiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
@@ -837,7 +834,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarDatosDiscapacidadesPaciente" method="post" role="form">
+        <s:form name="formEditarDatosClinicosPaciente" action="" method="post" role="form">
             <!--***************************************Discapacidades***********************************************-->
                 <div id="datosDiscapacidadesPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
@@ -951,7 +948,7 @@
                         <h3 class="box-title"><label>Enfermedades Crónicas</label></h3>
                         <div class="box-tools pull-right">
                             <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-minus"></i>
                             </button>
                             <button title="Agregar Enfermedad" type="button" id="agregarEnfermedad" class="btn btn-box-tool btn-primary">
                                 <i class="fa fa-plus-circle"></i>
@@ -996,7 +993,7 @@
                 </div>
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary btn-sm margin">Actualizar</button>
-                    <button type="button" onclick="cancelarEdicionMedicamentos();" class="btn btn-danger btn-sm margin">Cancelar</button>
+                    <button type="button" onclick="cancelarEdicionEnfermedades();" class="btn btn-danger btn-sm margin">Cancelar</button>
                 </div>
             </div>
         </s:form>
