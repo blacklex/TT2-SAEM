@@ -630,7 +630,7 @@ function consultPacientePorFiltroUsuario() {
             $("#barraCargarEliminar").slideUp(100);
             if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
                 $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
-                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+                $('#gridListaConsultaPacientes').trigger("reloadGrid", [{page: 1}]);
                
             }
             else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {

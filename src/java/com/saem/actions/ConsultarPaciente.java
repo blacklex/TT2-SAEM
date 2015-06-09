@@ -902,7 +902,7 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
                 
             } else {
                 // Obtenemos la lista de la sesión
-                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(0, 0);
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listarPacientes(0, 0);
                 estatusMensajeEliminar = "usuarioEncontrado";
             }
             session.put(com.saem.actions.GridRegistroPaciente.LISTA_GRID_MODEL, listaTemp);

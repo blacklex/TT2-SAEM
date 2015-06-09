@@ -79,8 +79,16 @@ public class GridRegistroPaciente implements SessionAware{
          ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
         ArrayList<Usuarios> listaTempFinal = new ArrayList<Usuarios>();
 
-        // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<Usuarios>) usuarios.listarPacientes(0, 0);
+        if (session.get(LISTA_GRID_MODEL) != null) {
+                listaTemp = (ArrayList<Usuarios>) session.get(LISTA_GRID_MODEL);
+                System.out.println("----> "+listaTemp.size());
+                session.remove(LISTA_GRID_MODEL);
+            } else {
+                return;
+                // Obtenemos la lista de la sesión
+                //listaTemp = (ArrayList<Usuarios>) usuarios.listarPacientes(0, 0);
+            }
+        
 
         for (Usuarios tempContUsuario : listaTemp) {
 
