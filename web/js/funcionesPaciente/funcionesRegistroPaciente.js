@@ -71,7 +71,7 @@ function validarCampos() {
     $("#divTallaPaciente").removeClass("has-error");
     
 
-    if ($("#nombreUsuario").val().length < 4) {
+    if ($("#nombreUsuario").val().length < 3) {
         $("#divNombreUsuarioPaciente").addClass("has-error");
         $("#divNombreUsuarioPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa tu Nombre de Usuario.</label>");
         valido = false;
@@ -107,9 +107,9 @@ function validarCampos() {
         valido = false;
     }
     
-    if ($("#unidadMedica").val().length < 1) {
+    if ($("#unidadMedica").val().length > 4) {
         $("#divUniMedicaPaciente").addClass("has-error");
-        $("#divUniMedicaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa la unidad medica.</label>");
+        $("#divUniMedicaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa la unidad medica (no mayor a 4 digitos).</label>");
         valido = false;
     }
     

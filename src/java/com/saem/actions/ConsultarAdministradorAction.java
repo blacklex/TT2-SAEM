@@ -134,16 +134,8 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     }
     
     public String buscarDatosMostrarFiltro() throws FileNotFoundException, IOException {
-        Usuarios usuarioResultado;
+
         ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
-        
-        //usuarioResultado = usuarioDAO.findById(nombreUsuario);
-        
-        /*if (usuarioResultado == null) {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
-            return SUCCESS;
-        }
-        */
         
          if (nombreUsuario.length() > 0) {
                 listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(nombreUsuario);
@@ -159,44 +151,6 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
                 estatusMensajeEliminar = "usuarioEncontrado";
             }
             session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaTemp);
-            
-        /*if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
-            estatusMensajeEliminar = "usuarioEncontrado";
-            listUsuarios = usuarioDAO.listarById(nombreUsuario);
-            for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
-                userAdmin = (Usuarios) iterator1.next();
-                Set administradores = userAdmin.getAdministradoreses();
-                for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                    administrador = (Administradores) iterator2.next(); 
-                    Set domAdmin = administrador.getDomicilioAdministradoreses();
-                    for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
-                        domicilioAdmin = (DomicilioAdministradores) iterator3.next();
-                        nombreUsuario = userAdmin.getNombreUsuario();
-                        clave = userAdmin.getClave();
-                        nombre = administrador.getNombre();
-                        apellidoPaterno = administrador.getApellidoPaterno();
-                        apellidoMaterno = administrador.getApellidoMaterno();
-                        telParticular = administrador.getTelParticular();
-                        correo = administrador.getCorreo();
-                        imagenAdmin = administrador.getImagen();
-                        String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-                        System.out.println(filePath);
-                        FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
-                        image.write(imagenAdmin);
-                        calle = domicilioAdmin.getCalle();
-                        colonia = domicilioAdmin.getColonia();
-                        delegacion = domicilioAdmin.getDelegacion();
-                        entidadFederativa = domicilioAdmin.getEntidadFederativa();
-                        codigoPostal = domicilioAdmin.getCodigoPostal();
-                        id = domicilioAdmin.getId();
-                        image.close();
-                    }
-                }
-            }
-        }
-        else {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
-        }*/
 
         return "success";
     }

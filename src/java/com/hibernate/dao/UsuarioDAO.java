@@ -203,6 +203,21 @@ public class UsuarioDAO extends HibernateUtil {
             
 }
         
+        public List<Usuarios> findPacientesLike(String flitroNombreUsuario) {
+             try {
+             String queryString="from Usuarios where tipoUsuario='Paciente'and lower(nombreUsuario) LIKE (:searchKeyword)";
+             Query queryObject = getSession().createQuery(queryString);
+             queryObject.setParameter("searchKeyword", "%"+flitroNombreUsuario+"%");
+             return queryObject.list();
+        
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            getSession().close();
+        }
+            
+}
+        
       public List<Usuarios> listarPacientes(int from, int to) {
         try
         {

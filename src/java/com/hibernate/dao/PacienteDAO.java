@@ -70,7 +70,7 @@ public class PacienteDAO extends HibernateUtil {
 		}
 	}
          
-        public Pacientes findById(int id) {
+        public Pacientes findById(String id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
 			Pacientes instance = (Pacientes) getSession().get(

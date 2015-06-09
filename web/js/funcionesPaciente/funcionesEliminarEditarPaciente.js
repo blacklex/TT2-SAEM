@@ -91,7 +91,7 @@ function editarDatosPaciente() {
 }
 
 function editarDireccionPaciente() {
-    alert("entro");
+    
     var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
     var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
     if(s === null) {
@@ -132,9 +132,9 @@ function editarTelefonosPaciente() {
             url: "buscarTelefonosPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#telefonoFijo").val(msg.telefonoFijo);
-            $("#telefonoParticular").val(msg.telefonoParticular);
-            $("#nomUs3").val(msg.nombreUsuario);
+            
+            $("#TextBoxesGroupTelefonos").html(msg.telefonosDelPaciente);
+            //$("#nomUs3").val(msg.nombreUsuario);
         });
 
         $("#datosTelefonosPaciente").show(1000);
@@ -172,8 +172,16 @@ function editarDatosPersonalesPaciente() {
             }
             
             $("#curp").val(msg.curp);
-            $("#sexo").val(msg.sexo);
-            $("#fechaNacimiento").val(msg.fechaNacimiento);
+            
+            if(msg.sexo === "masculino"){
+                $("#radioMasculino").attr('checked', true)
+            }
+            
+            if(msg.sexo === "femenino"){
+                $("#radioFemenino").attr('checked', true)
+            }
+            
+            $("#fechaNacimiento").val(msg.fechaNacimientoFormato);
             $("#edad").val(msg.edad);
             $("#peso").val(msg.peso);
             $("#altura").val(msg.altura);
@@ -184,6 +192,7 @@ function editarDatosPersonalesPaciente() {
             $("#facebook").val(msg.facebook);
             $("#nomUs4").val(msg.nombreUsuario);
             $("#idDaPePa").val(msg.idDatosPersonalesPaciente);
+            $("#nssDatosPersonales").val(msg.nss);
         });
 
         $("#datosPersonalesPaciente").show(1000);
@@ -204,15 +213,8 @@ function editarContactosPaciente() {
             url: "buscarContactosPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#nombreC").val(msg.nombreC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#apellidoPaternoC").val(msg.apellidoPaternoC);
-            $("#nomUs5").val(msg.nombreUsuario);
+            $("#TextBoxesGroupContacto").html(msg.contactosDelPaciente);
+            //$("#nomUs5").val(msg.nombreUsuario);
         });
 
         $("#datosContactosPaciente").show(1000);
@@ -233,75 +235,20 @@ function editarDatosClinicosPaciente() {
             url: "buscarDatosClinicosPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            var discapacidad = msg.discapacidades;
-            var alergias = msg.alergias;
-            for(var i = 0; i < alergias.length; i++){
-                if(alergias[i].contains("polen")) {
-                    $("#checkboxAlergia0").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-                if(alergias[i].contains("acaros")) {
-                    $("#checkboxAlergia1").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-                if(alergias[i].contains("animales")) {
-                    $("#checkboxAlergia2").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-                if(alergias[i].contains("medicamentos")) {
-                    $("#checkboxAlergia3").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-                if(alergias[i].contains("insectos")) {
-                    $("#checkboxAlergia4").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-                if(alergias[i].contains("alimentos")) {
-                    $("#checkboxAlergia5").attr('checked', true);
-                    alert("Alergia: " + alergias[i] + ", id: " +alergias[i].match(/\d{1,10}/));
-                }
-            }
-            for(var i = 0; i < discapacidad.length; i++){
-                if(discapacidad[i].contains("fisica")) {
-                    $("#checkboxDiscapacidad0").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-                if(discapacidad[i].contains("intelectual")) {
-                    $("#checkboxDiscapacidad1").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-                if(discapacidad[i].contains("psiquica")) {
-                    $("#checkboxDiscapacidad2").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-                if(discapacidad[i].contains("visual")) {
-                    $("#checkboxDiscapacidad3").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-                if(discapacidad[i].contains("auditiva")) {
-                    $("#checkboxDiscapacidad4").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-                if(discapacidad[i].contains("habla")) {
-                    $("#checkboxDiscapacidad5").attr('checked', true);
-                    alert("Discapacidad: " + discapacidad[i] + ", id: " +discapacidad[i].match(/\d{1,10}/));
-                }
-            }
-            if(msg.drogas === true){
+            if(msg.drogas === "1"){
                 $("#radioDrogasSi").attr('checked', true);
             }
             else {
                 $("#radioDrogasNo").attr('checked', true);
             }
             
-            if(msg.alcohol === true){
+            if(msg.alcohol === "1"){
                 $("#radioAlcoholSi").attr('checked', true);
             }
             else {
                 $("#radioAlcoholNo").attr('checked', true);
             }
-            
-            if(msg.fuma === true){
+            if(msg.fuma === "1"){
                 $("#radioFumaSi").attr('checked', true);
             }
             else {
@@ -311,8 +258,6 @@ function editarDatosClinicosPaciente() {
             $("#nomUsrClin").val(msg.nombreUsuario);
             $("#noHisto").val(msg.noHistorial);
             $("#nssClinico").val(msg.nss);
-            
-            
         });
 
         $("#datosClinicosPaciente").show(1000);
@@ -320,205 +265,222 @@ function editarDatosClinicosPaciente() {
     }
 }
 
-function buscarUsuarioPorFiltroUsuario() {
-    var nombreUsuario = $("#nombreUsuarioPorFiltro").val();
-
-    if(nombreUsuario.length === 0)
-        alert("Ingrese un usuario");
+function editarAlergiasPaciente() {
+    var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
+    var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
+    if(s === null) {
+        alert("Seleccione un usuario");
+    }
     else {
-        $("#barraCargarEliminar").slideUp(100);
         $.ajax({
             dataType: "json",
             method: "POST",
-            url: "buscarDatosPorFiltro",
+            url: "buscarAlergiasPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            $("#barraCargarEliminar").slideUp(100);
-            if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
-                $("#barraCargarEliminar").slideDown('slow').delay(2500).slideUp('slow');
-                var urlImg = 'imagenesPerfilPaciente/'+msg.nombreUsuario+'.jpeg';
-                if($("#radioEliminar").is(':checked')) {
-                    $("#nombreUsuarioFiltro").val(msg.nombreUsuario);
-                    $("#nombreUsuarioFiltro").attr('readonly', true);
-                    $("#claveFiltro").val(msg.clave);
-                    $("#claveFiltro").attr('readonly', true);
-                    $("#nssFiltro").val(msg.nss);
-                    $("#nssFiltro").attr('readonly', true);
-                    $("#nombreFiltro").val(msg.nombre);
-                    $("#nombreFiltro").attr('readonly', true);
-                    $("#apellidoPaternoFiltro").val(msg.apellidoPaterno);
-                    $("#apellidoPaternoFiltro").attr('readonly', true);
-                    $("#apellidoMaternoFiltro").val(msg.apellidoMaterno);
-                    $("#apellidoMaternoFiltro").attr('readonly', true);
-                    $("#unidadMedicaFiltro").val(msg.unidadMedica);
-                    $("#unidadMedicaFiltro").attr('readonly', true);
-                    $("#noConsultorioFiltro").val(msg.noConsultorio);
-                    $("#noConsultorioFiltro").attr('readonly', true);
-                    $("#calleFiltro").val(msg.calle);
-                    $("#calleFiltro").attr('readonly', true);
-                    $("#coloniaFiltro").val(msg.colonia);
-                    $("#coloniaFiltro").attr('readonly', true);
-                    $("#delegacionFiltro").val(msg.delegacion);
-                    $("#delegacionFiltro").attr('readonly', true);
-                    $("#entidadFederativaFiltro").val(msg.entidadFederativa);
-                    $("#entidadFederativaFiltro").attr('readonly', true);
-                    $("#codigoPostalFiltro").val(msg.codigoPostal);
-                    $("#codigoPostalFiltro").attr('readonly', true);
-                    $("#idDomPacienteFiltro").val(msg.id);
-                    $("#idDomPacienteFiltro").attr('readonly', true);
-                    $("#imagenFiltro").attr('src', urlImg);
-                    $("#telefonoFijoFiltro").val(msg.telefonoFijo);
-                    $("#telefonoFijoFiltro").attr('readonly', true);
-                    $("#telefonoParticularFiltro").val(msg.telefonoParticular);
-                    $("#telefonoParticularFiltro").attr('readonly', true);
-                    $("#estadoCivilFiltro").val(msg.estadoCivil);
-                    $("#estadoCivilFiltro").attr('readonly', true);
-                    $("#curpFiltro").val(msg.curp);
-                    $("#curpFiltro").attr('readonly', true);
-                    $("#sexoFiltro").val(msg.sexo);
-                    $("#sexoFiltro").attr('readonly', true);
-                    $("#fechaNacimientoFiltro").val(msg.colonia);
-                    $("#fechaNacimientoFiltro").attr('readonly', true);
-                    $("#edadFiltro").val(msg.edad);
-                    $("#edadFiltro").attr('readonly', true);
-                    $("#pesoFiltro").val(msg.peso);
-                    $("#pesoFiltro").attr('readonly', true);
-                    $("#alturaFiltro").val(msg.altura);
-                    $("#alturaFiltro").attr('readonly', true);
-                    $("#tallaFiltro").val(msg.talla);
-                    $("#tallaFiltro").attr('readonly', true);
-                    $("#telCasaFiltro").val(msg.telCasa);
-                    $("#telCasaFiltro").attr('readonly', true);
-                    $("#telCelFiltro").val(msg.telCel);
-                    $("#telCelFiltro").attr('readonly', true);
-                    $("#correoFiltro").val(msg.correo);
-                    $("#correoFiltro").attr('readonly', true);
-                    $("#facebookFiltro").val(msg.facebook);
-                    $("#facebookFiltro").attr('readonly', true);
-                    $("#nombreCFiltro").val(msg.nombreC);
-                    $("#nombreCFiltro").attr('readonly', true);
-                    $("#apellidoPaternoCFiltro").val(msg.apellidoPaternoC);
-                    $("#apellidoPaternoCFiltro").attr('readonly', true);
-                    $("#apellidoMaternoCFiltro").val(msg.apellidoMaternoC);
-                    $("#apellidoMaternoCFiltro").attr('readonly', true);
-                    $("#parentescoFiltro").val(msg.parentesco);
-                    $("#parentescoFiltro").attr('readonly', true);
-                    $("#celularFiltro").val(msg.celular);
-                    $("#celularFiltro").attr('readonly', true);
-                    $("#facebookCFiltro").val(msg.facebookC);
-                    $("#facebookCFiltro").attr('readonly', true);
-                    $("#correoCFiltro").val(msg.correoC);
-                    $("#correoCFiltro").attr('readonly', true);
-                    $("#usoDrogasFiltro").val(msg.usoDrogas);
-                    $("#usoDrogasFiltro").attr('readonly', true);
-                    $("#usoAlcoholFiltro").val(msg.usoAlcohol);
-                    $("#usoAlcoholFiltro").attr('readonly', true);
-                    $("#fumadorFiltro").val(msg.fumador);
-                    $("#fumadorFiltro").attr('readonly', true);
-                    
-                    $("#eliminar").show(100);
-                }
-                if($("#radioEditar").is(':checked')) {
-                    $("#nombreUsuarioFiltro").val(msg.nombreUsuario);
-                    $("#nombreUsuarioFiltro").attr('readonly', true);
-                    $("#claveFiltro").val(msg.clave);
-                    $("#claveFiltro").attr('readonly', false);
-                    $("#nssFiltro").val(msg.nss);
-                    $("#nssFiltro").attr('readonly', false);
-                    $("#nombreFiltro").val(msg.nombre);
-                    $("#nombreFiltro").attr('readonly', false);
-                    $("#apellidoPaternoFiltro").val(msg.apellidoPaterno);
-                    $("#apellidoPaternoFiltro").attr('readonly', false);
-                    $("#apellidoMaternoFiltro").val(msg.apellidoMaterno);
-                    $("#apellidoMaternoFiltro").attr('readonly', false);
-                    $("#unidadMedicaFiltro").val(msg.unidadMedica);
-                    $("#unidadMedicaFiltro").attr('readonly', false);
-                    $("#noConsultorioFiltro").val(msg.noConsultorio);
-                    $("#noConsultorioFiltro").attr('readonly', false);
-                    $("#idDomPacienteFiltro").val(msg.id);
-                    $("#idDomPacienteFiltro").attr('readonly', false);
-                    $("#imagenFiltro").attr('src', urlImg);
-                    $("#imagenUpload").attr('readonly', false);
-                    $("#calleFiltro").val(msg.calle);
-                    $("#calleFiltro").attr('readonly', false);
-                    $("#coloniaFiltro").val(msg.colonia);
-                    $("#coloniaFiltro").attr('readonly', false);
-                    $("#delegacionFiltro").val(msg.delegacion);
-                    $("#delegacionFiltro").attr('readonly', false);
-                    $("#entidadFederativaFiltro").val(msg.entidadFederativa);
-                    $("#entidadFederativaFiltro").attr('readonly', false);
-                    $("#codigoPostalFiltro").val(msg.codigoPostal);
-                    $("#codigoPostalFiltro").attr('readonly', false);
-                    $("#idDomPacienteFiltro").val(msg.id);
-                    $("#idDomPacienteFiltro").attr('readonly', false);
-                    $("#imagenFiltro").attr('src', urlImg);
-                    $("#telefonoFijoFiltro").val(msg.telefonoFijo);
-                    $("#telefonoFijoFiltro").attr('readonly', false);
-                    $("#telefonoParticularFiltro").val(msg.telefonoParticular);
-                    $("#telefonoParticularFiltro").attr('readonly', false);
-                    $("#estadoCivilFiltro").val(msg.estadoCivil);
-                    $("#estadoCivilFiltro").attr('readonly', false);
-                    $("#curpFiltro").val(msg.curp);
-                    $("#curpFiltro").attr('readonly', false);
-                    $("#sexoFiltro").val(msg.sexo);
-                    $("#sexoFiltro").attr('readonly', false);
-                    $("#fechaNacimientoFiltro").val(msg.colonia);
-                    $("#fechaNacimientoFiltro").attr('readonly', false);
-                    $("#edadFiltro").val(msg.edad);
-                    $("#edadFiltro").attr('readonly', false);
-                    $("#pesoFiltro").val(msg.peso);
-                    $("#pesoFiltro").attr('readonly', false);
-                    $("#alturaFiltro").val(msg.altura);
-                    $("#alturaFiltro").attr('readonly', false);
-                    $("#tallaFiltro").val(msg.talla);
-                    $("#tallaFiltro").attr('readonly', false);
-                    $("#telCasaFiltro").val(msg.telCasa);
-                    $("#telCasaFiltro").attr('readonly', false);
-                    $("#telCelFiltro").val(msg.telCel);
-                    $("#telCelFiltro").attr('readonly', false);
-                    $("#correoFiltro").val(msg.correo);
-                    $("#correoFiltro").attr('readonly', false);
-                    $("#facebookFiltro").val(msg.facebook);
-                    $("#facebookFiltro").attr('readonly', false);
-                    $("#nombreCFiltro").val(msg.nombreC);
-                    $("#nombreCFiltro").attr('readonly', false);
-                    $("#apellidoPaternoCFiltro").val(msg.apellidoPaternoC);
-                    $("#apellidoPaternoCFiltro").attr('readonly', false);
-                    $("#apellidoMaternoCFiltro").val(msg.apellidoMaternoC);
-                    $("#apellidoMaternoCFiltro").attr('readonly', false);
-                    $("#parentescoFiltro").val(msg.parentesco);
-                    $("#parentescoFiltro").attr('readonly', false);
-                    $("#celularFiltro").val(msg.celular);
-                    $("#celularFiltro").attr('readonly', false);
-                    $("#facebookCFiltro").val(msg.facebookC);
-                    $("#facebookCFiltro").attr('readonly', false);
-                    $("#correoCFiltro").val(msg.correoC);
-                    $("#correoCFiltro").attr('readonly', false);
-                    $("#usoDrogasFiltro").val(msg.usoDrogas);
-                    $("#usoDrogasFiltro").attr('readonly', false);
-                    $("#usoAlcoholFiltro").val(msg.usoAlcohol);
-                    $("#usoAlcoholFiltro").attr('readonly', false);
-                    $("#fumadorFiltro").val(msg.fumador);
-                    $("#fumadorFiltro").attr('readonly', false);
-                    
-                    $("#actualizar").show(100);
-                }
-                $("#datosPacientePorFiltro").show(1000);
-                $("#gridPacientes").slideUp(1000);
-            } else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
-                $('html, body').animate({scrollTop: 0}, 'fast');
-                $("#barraCargarEliminar").slideUp(100);
-                $("#tituloDivAlertErrorEliminar").html("<i class='icon fa fa-ban'></i>El Usuario no existe");
-                $("#labelMensajeErrorEliminar").html("El nombre de usuario no existe.");
+            var alergias = msg.alergias;
 
-                $("#divAlertErrorEliminar").slideDown('slow').delay(2500).slideUp('slow');
-                $("#barraCargarEliminar").slideUp(100);
-
+            for(var i = 0; i < alergias.length; i++) {
+                var alergia = new Array();
+                alergia = alergias[i].split(";");
+                for(var indexAlergia = 0; indexAlergia < alergia.length; indexAlergia++) {
+                    if(alergia[indexAlergia] === "polen") {
+                        $("#checkboxAlergia0").attr('checked', true);
+                        $("#especificarAlergia0").val(alergia[indexAlergia+1]);
+                    }
+                    
+                    if(alergia[indexAlergia] === "acaros") {
+                        $("#checkboxAlergia1").attr('checked', true);
+                        $("#especificarAlergia1").val(alergia[indexAlergia+1]);
+                    }
+                    
+                    if(alergia[indexAlergia] === "animales") {
+                        $("#checkboxAlergia2").attr('checked', true);
+                        $("#especificarAlergia2").val(alergia[indexAlergia+1]);
+                    }
+                    
+                    if(alergia[indexAlergia] === "medicamentos") {
+                        $("#checkboxAlergia3").attr('checked', true);
+                        $("#especificarAlergia3").val(alergia[indexAlergia+1]);
+                    }
+                    
+                    if(alergia[indexAlergia] === "insectos") {
+                        $("#checkboxAlergia4").attr('checked', true);
+                        $("#especificarAlergia4").val(alergia[indexAlergia+1]);
+                    }
+                    
+                    if(alergia[indexAlergia] === "alimentos") {
+                        $("#checkboxAlergia5").attr('checked', true);
+                        $("#especificarAlergia5").val(alergia[indexAlergia+1]);
+                    }
+                }
             }
-                
-            });
-        }
+        });
+
+        $("#datosAlergiasPaciente").show(1000);
+        $("#gridPacientes").slideUp(1000);
     }
+}
+
+function editarCirugiasPaciente() {
+    var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
+    var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
+    if(s === null) {
+        alert("Seleccione un usuario");
+    }
+    else {
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarCirugiasPaciente",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            var cirugias = msg.cirugias;
+
+            for(var i = 0; i < cirugias.length; i++) {
+                var cirugia = new Array();
+                cirugia = cirugias[i].split(";");
+                for(var indexCirugia = 0; indexCirugia < cirugia.length; indexCirugia++) {
+                    if(cirugia[indexCirugia] === "interna") {
+                        $("#checkboxCirugia0").attr('checked', true);
+                        $("#noCirugia0").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "externa") {
+                        $("#checkboxCirugia1").attr('checked', true);
+                        $("#noCirugia1").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "mayor") {
+                        $("#checkboxCirugia2").attr('checked', true);
+                        $("#noCirugia2").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "menor") {
+                        $("#checkboxCirugia3").attr('checked', true);
+                        $("#noCirugia3").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "curativa") {
+                        $("#checkboxCirugia4").attr('checked', true);
+                        $("#noCirugia4").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "reparadora") {
+                        $("#checkboxCirugia5").attr('checked', true);
+                        $("#noCirugia5").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "paliativa") {
+                        $("#checkboxCirugia6").attr('checked', true);
+                        $("#noCirugia6").val(cirugia[indexCirugia+1]);
+                    }
+                    
+                    if(cirugia[indexCirugia] === "cosmetica") {
+                        $("#checkboxCirugia7").attr('checked', true);
+                        $("#noCirugia7").val(cirugia[indexCirugia+1]);
+                    }
+                }
+            }
+        });
+
+        $("#datosCirugiasPaciente").show(1000);
+        $("#gridPacientes").slideUp(1000);
+    }
+}
+
+function editarDiscapacidadesPaciente() {
+    var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
+    var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
+    if(s === null) {
+        alert("Seleccione un usuario");
+    }
+    else {
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarDiscapacidadesPaciente",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            var discapacidades = msg.discapacidades;            
+            for(var i = 0; i < discapacidades.length; i++) {
+                var discapacidad = new Array();
+                discapacidad = discapacidades[i].split(";");
+                for(var indexDiscapacidad = 0; indexDiscapacidad < discapacidad.length; indexDiscapacidad++) {
+                    if(discapacidad[indexDiscapacidad] === "fisica") {
+                        $("#checkboxDiscapacidad0").attr('checked', true);
+                    }
+                    
+                    if(discapacidad[indexDiscapacidad] === "intelectual") {
+                        $("#checkboxDiscapacidad1").attr('checked', true);
+                    }
+                    
+                    if(discapacidad[indexDiscapacidad] === "psiquica") {
+                        $("#checkboxDiscapacidad2").attr('checked', true);
+                    }
+                    
+                    if(discapacidad[indexDiscapacidad] === "visual") {
+                        $("#checkboxDiscapacidad3").attr('checked', true);
+                    }
+                    
+                    if(discapacidad[indexDiscapacidad] === "auditiva") {
+                        $("#checkboxDiscapacidad4").attr('checked', true);
+                    }
+                    
+                    if(discapacidad[indexDiscapacidad] === "habla") {
+                        $("#checkboxDiscapacidad5").attr('checked', true);
+                    }
+
+                }
+            }
+        });
+
+        $("#datosDiscapacidadesPaciente").show(1000);
+        $("#gridPacientes").slideUp(1000);
+    }
+}
+
+function editarMedicamentosPaciente() {
+    var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
+    var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
+    if(s === null) {
+        alert("Seleccione un usuario");
+    }
+    else {
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarMedicamentosPaciente",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#TextBoxesGroup").html(msg.medicamentos);
+        });
+
+        $("#datosMedicamentosPaciente").show(1000);
+        $("#gridPacientes").slideUp(1000);
+    }
+}
+
+function editarEnfermedadesCronicasPaciente() {
+    var s = $("#gridPaciente").jqGrid('getGridParam','selrow');
+    var nombreUsuario = $("#gridPaciente").jqGrid('getCell',s,'nombreUsuario');
+    if(s === null) {
+        alert("Seleccione un usuario");
+    }
+    else {
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarEnfermedadesCronicasPaciente",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#TextBoxesGroupEnfermedadCronica").html(msg.enfermedadesCronicas);
+        });
+
+        $("#datosEnfermedadesPaciente").show(1000);
+        $("#gridPacientes").slideUp(1000);
+    }
+}
 
 /*******************************************************************************/
 
@@ -557,9 +519,8 @@ function cancelarEdicionDireccion(){
     $("#gridPacientes").show(1000);
 }
 
-function cancelarEdicionTelefonos(){
+function cancelarEdicionNumTel(){
     $("#telefonoFijo").val("");
-    $("#telefonoParticular").val("");
         
     $("#datosTelefonosPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
@@ -584,69 +545,41 @@ function cancelarEdicionDatosPersonales(){
 }
 
 function cancelarEdicionContactos(){
-    $("#nombreC").val("");
-    $("#apellidoPaternoC").val("");
-    $("#apellidoMaternoC").val("");
-    $("#parentesco").val("");
-    $("#celular").val("");
-    $("#facebookC").val("");
-    $("#correoC").val("");
         
     $("#datosContactosPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
 }
 
 function cancelarEdicionDatosClinicos(){
-    $("#usoDrogas").val("");
-    $("#usoAlcohol").val("");
-    $("#fumador").val("");
         
     $("#datosClinicosPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
 }
 
-function cancelarEdicionPorFiltro(){
-    $("#nombreUsuarioFiltro").val("");
-    $("#claveFiltro").val("");
-    $("#nombreFiltro").val("");
-    $("#apellidoPaternoFiltro").val("");
-    $("#apellidoMaternoFiltro").val("");
-    $("#unidadMedicaFiltro").val("");
-    $("#noConsultorioFiltro").val("");
-    $("#calleFiltro").val("");
-    $("#coloniaFiltro").val("");
-    $("#delegacionFiltro").val("");
-    $("#entidadFederativaFiltro").val("");
-    $("#codigoPostalFiltro").val("");
-    $("#telefonoFijoFiltro").val("");
-    $("#telefonoParticularFiltro").val("");
-    $("#estadoCivilFiltro").val("");
-    $("#curpFiltro").val("");
-    $("#sexoFiltro").val("");
-    $("#fechaNacimientoFiltro").val("");
-    $("#edadFiltro").val("");
-    $("#pesoFiltro").val("");
-    $("#alturaFiltro").val("");
-    $("#tallaFiltro").val("");
-    $("#telCasaFiltro").val("");
-    $("#telCelFiltro").val("");
-    $("#correoFiltro").val("");
-    $("#facebookFiltro").val("");
-    $("#nombreCFiltro").val("");
-    $("#apellidoPaternoCFiltro").val("");
-    $("#apellidoMaternoCFiltro").val("");
-    $("#parentescoFiltro").val("");
-    $("#celularFiltro").val("");
-    $("#facebookCFiltro").val("");
-    $("#correoCFiltro").val("");
-    $("#usoDrogasFiltro").val("");
-    $("#usoAlcoholFiltro").val("");
-    $("#fumadorFiltro").val("");
-    
-    $("#idDomPacienteFiltro").val("");
-    $("#nombreUsuarioPorFiltro").val("");
+function cancelarEdicionAlergias(){
+        
+    $("#datosAlergiasPaciente").slideUp(1000);
+    $("#gridPacientes").show(1000);
+}
 
-    $("#datosPacientePorFiltro").slideUp(1000);
+function cancelarEdicionCirugias(){
+        
+    $("#datosCirugiasPaciente").slideUp(1000);
+    $("#gridPacientes").show(1000);
+}
+
+function cancelarEdicionDiscapacidades() {
+    $("#datosDiscapacidadesPaciente").slideUp(1000);
+    $("#gridPacientes").show(1000);
+}
+
+function cancelarEdicionMedicamentos() {
+    $("#datosMedicamentosPaciente").slideUp(1000);
+    $("#gridPacientes").show(1000);
+}
+
+function cancelarEdicionEnfermedades() {
+    $("#datosEnfermedadesPaciente").slideUp(1000);
     $("#gridPacientes").show(1000);
 }
 
@@ -725,9 +658,47 @@ function validarCamposAcceso() {
     return false;
 }
 
+function validarCamposDatosIdentificacionPaciente() {
+    var valido = true;
+    $(".control-label").remove();
+    $("#divUniMedicaPaciente").removeClass("has-error");
+    $("#divNoConsultorioPaciente").removeClass("has-error");
+    
+    if ($("#unidadMedica").val().length > 4) {
+        $("#divUniMedicaPaciente").addClass("has-error");
+        $("#divUniMedicaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa la unidad medica (no mayor a 4 digitos).</label>");
+        valido = false;
+    }
+    
+    if ($("#noConsultorio").val().length < 1) {
+        $("#divNoConsultorioPaciente").addClass("has-error");
+        $("#divNoConsultorioPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el numero de consultorio.</label>");
+        valido = false;
+    }
+    
+    if (!valido) {
+        $('html, body').animate({scrollTop: 0}, 'fast');
+        $("#divAlertEliminar").slideDown('slow').delay(2500).slideUp('slow');
+        return valido;
+    }
+    
+    if(valido) {
+        valido = true;
+        $("#barraCargarEliminar").slideDown(100);
+        document.forms["formEditarDatosIdentificacionPaciente"].submit();
+    }
+    
+    return false;
+}
+
 function validarCamposDireccion() {
     var valido = true;
     $(".control-label").remove();
+    $("#divCallePaciente").removeClass("has-error");
+    $("#divColoniaPaciente").removeClass("has-error");
+    $("#divDelegacionPaciente").removeClass("has-error");
+    $("#divEntidadFederativaPaciente").removeClass("has-error");
+    $("#divCodigoPostalPaciente").removeClass("has-error");
     $('.has-error').removeClass('has-error');
     
     if ($("#calle").val().length < 6) {
@@ -807,34 +778,16 @@ function validarCamposTelefonos() {
     return false;
 }
 
-function validarCamposDatosPersonales() {
+function validarCamposDatosPersonalesPaciente() {
     var valido = true;
     $(".control-label").remove();
+    $("#divEdadPaciente").removeClass("has-error");
+    $("#divPesoPaciente").removeClass("has-error");
+    $("#divAlturaPaciente").removeClass("has-error");
+    $("#divTallaPaciente").removeClass("has-error");
+    $("#divCorreoPaciente").removeClass("has-error");
+    $("#divFacebookPaciente").removeClass("has-error");
     $('.has-error').removeClass('has-error');
-    
-    if ($("#estadoCivil").val().length < 3) {
-        $("#divEdoCivilPaciente").addClass("has-error");
-        $("#divEdoCivilPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un estado civil.</label>");
-        valido = false;
-    }
-
-    if ($("#curp").val().length < 18) {
-        $("#divCurpPaciente").addClass("has-error");
-        $("#divCurpPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa un CURP.</label>");
-        valido = false;
-    }
-    
-    if ($("#sexo").val().length < 1) {
-        $("#divSexoPaciente").addClass("has-error");
-        $("#divSexoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el sexo.</label>");
-        valido = false;
-    }
-    
-    if ($("#fechaNacimiento").val().length < 6) {
-        $("#divFechaNacimientoPaciente").addClass("has-error");
-        $("#divFechaNacimientoPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa la fecha de nacimiento.</label>");
-        valido = false;
-    }
     
     if ($("#edad").val().length < 1) {
         $("#divEdadPaciente").addClass("has-error");
@@ -854,16 +807,11 @@ function validarCamposDatosPersonales() {
         valido = false;
     }
     
-    if ($("#telCasa").val().length < 8) {
-        $("#divTelefonoCasaPaciente").addClass("has-error");
-        $("#divTelefonoCasaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el teléfono de casa.</label>");
+    if ($("#talla").val().length < 1) {
+        $("#divTallaPaciente").addClass("has-error");
+        $("#divTallaPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa una talla valida.</label>");
         valido = false;
-    }
-    
-    if ($("#telCel").val().length < 8) {
-        $("#divTelefonoCelPaciente").addClass("has-error");
-        $("#divTelefonoCelPaciente").append("<label class='control-label' for='formNombreUsuario'><i class='fa fa-times-circle-o'></i>  Ingresa el teléfono celular.</label>");
-        valido = false;
+
     }
     
     if ($("#correo").val().length < 3) {
@@ -998,4 +946,37 @@ function eliminarPacientePorFiltro() {
                     }
                 }
          });
+}
+
+function buscarPacientePorFiltroUsuario() {
+    var nombreUsuario = $("#nombreUsuarioPorFiltro").val();
+
+    if(nombreUsuario.length === 0)
+        nombreUsuario="";
+
+        $("#barraCargarEliminar").slideUp(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarDatosPacienteMostrarFiltro",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#barraCargarEliminar").slideUp(100);
+            if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
+                $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+               
+            }
+            else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
+                $('html, body').animate({scrollTop: 0}, 'fast');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#tituloDivAlertErrorEliminar").html("<i class='icon fa fa-ban'></i>El Usuario no existe");
+                $("#labelMensajeErrorEliminar").html("El nombre de usuario no existe.");
+
+                $("#divAlertErrorEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#nombreUsuarioPorFiltro").focus();
+            }           
+        });
+    
 }

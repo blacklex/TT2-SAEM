@@ -19,7 +19,7 @@ import org.apache.struts2.interceptor.SessionAware;
  * @author gabriela
  */
 public class GridRegistroPaciente implements SessionAware{
-    private static final String LISTA_GRID_MODEL = "listaGridModel";
+    protected static final String LISTA_GRID_MODEL = "listaGridModel";
     //HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
      //Your result List
