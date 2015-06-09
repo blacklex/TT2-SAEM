@@ -56,8 +56,7 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
         }
     }
 
-    public PeticionesEntrantes findById(String id) {
-        Session s = getSession();
+    public PeticionesEntrantes findById(Session s,String id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
             PeticionesEntrantes instance = (PeticionesEntrantes) s.get(
@@ -84,8 +83,8 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
         }
     }
 
-    public List<PeticionesEntrantes> findAllByHospital(String codigoHospital) {
-        Session s = getSession();
+    public List<PeticionesEntrantes> findAllByHospital(Session s,String codigoHospital) {
+        //Session s = getSession();
         try {
             String queryString = "from PeticionesEntrantes where Hospitales_codigo_hospital =:codigoHospital and estatus='PP' order by prioridad";
             Query queryObject = s.createQuery(queryString);

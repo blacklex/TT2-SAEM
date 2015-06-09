@@ -7,7 +7,9 @@ package com.saem.actions;
 
 import com.hibernate.dao.PeticionesEntrantesDAO;
 import com.hibernate.dao.PeticionesSalientesDAO;
+import com.hibernate.model.DatosClinicos;
 import com.hibernate.model.DatosPersonales;
+import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
@@ -18,6 +20,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -36,6 +39,21 @@ public class PeticionesEntrantesAction implements SessionAware {
 
     private String totalPeticionesEntrantes;
     private String totalPeticionesSalientes;
+    
+    /*****************CAMPOS DEL FORMULARIO*****************/
+    private String idPeticionesEntrantes;
+    
+    private String nss; 
+    private String nombre; 
+    private String apellidoPaterno; 
+    private String apellidoMaterno; 
+    private String unidadMedica; 
+    private String noConsultorio; 
+    private String edad;
+    private String peso;
+    private String altura; 
+    private String noHistorial;
+    private String enfermedadesCronicas;
 
     HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
@@ -47,6 +65,7 @@ public class PeticionesEntrantesAction implements SessionAware {
 
     public String execute() {
         System.out.println("-->Entro a peticones Entatens execute");
+        
         return "pantallaPeticionesEntrantesHospital";
     }
 
@@ -55,7 +74,7 @@ public class PeticionesEntrantesAction implements SessionAware {
      * ********************
      */
     public String recuperarEstatusPeticionesEntrantesHospital() {
-        System.out.println("-->Entro a recuperar estatus Consultar");
+        System.out.println("-->Entro a recuperar estatus Pet Entrantes");
         tituloAlert = "";
         textoAlert = "";
         estatusMensaje = "";
@@ -68,9 +87,58 @@ public class PeticionesEntrantesAction implements SessionAware {
 
         session.remove(LLAVE_ESTATUS_ME);
         session.remove("tituloAlert");
-        session.remove(LLAVE_ESTATUS_ME);
+        
         session.put(LLAVE_ESTATUS_ME, null);
 
+        return SUCCESS;
+    }
+    
+    public String recuperarDatosPaciente(){
+        System.out.println("--> recuperarPeticion "+idPeticionesEntrantes);
+        PeticionesEntrantes peticion;
+        Pacientes paciente;
+        PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        
+        peticion = peticionesEntrantesDAO.findById(s,idPeticionesEntrantes);
+        
+        if(peticion==null){
+            tituloAlert="Error al recuperar datos.";
+            textoAlert="No se recuperarón los datos del paciente.";
+            estatusMensaje="error";
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+           return SUCCESS;
+        }
+        
+        paciente = peticion.getPacientes();
+        nss = paciente.getNss();
+        unidadMedica = paciente.getUnidadMedica();
+        nombre = paciente.getNombre();
+        apellidoPaterno = paciente.getApellidoPaterno();
+        apellidoMaterno = paciente.getApellidoMaterno();
+        noConsultorio = paciente.getNoConsultorio();
+        
+        if(paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false){
+            tituloAlert="Error al recuperar datos.";
+            textoAlert="No se recuperarón los datos personales y/o clinicos del paciente.";
+            estatusMensaje="error";
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+            return SUCCESS;
+        }
+        DatosPersonales datosPerPaciente = (DatosPersonales)paciente.getDatosPersonaleses().iterator().next();
+        DatosClinicos datosClinicosPaciente =  (DatosClinicos)paciente.getDatosClinicoses().iterator().next();
+        
+        
+        edad = datosPerPaciente.getEdad();
+        peso = datosPerPaciente.getPeso();
+        altura = datosPerPaciente.getAltura();
+        noHistorial = datosClinicosPaciente.getNoHistorial()+"";
+        s.close();
+        
         return SUCCESS;
     }
 
@@ -91,6 +159,7 @@ public class PeticionesEntrantesAction implements SessionAware {
     }
 
     private void obteneTablaPeticionesEntrantes() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
         ArrayList<PeticionesEntrantes> listaTemp = new ArrayList<PeticionesEntrantes>();
         ArrayList<PeticionesEntrantes> listaTempFinal = new ArrayList<PeticionesEntrantes>();
@@ -101,7 +170,7 @@ public class PeticionesEntrantesAction implements SessionAware {
         }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(codigoHosptail);
+        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s,codigoHosptail);
 
         System.out.println("---> Tam pet Entra " + listaTemp.size());
 
@@ -127,9 +196,12 @@ public class PeticionesEntrantesAction implements SessionAware {
             // Calculamos el total de páginas necesarias
             total = (int) Math.ceil((double) records / (double) rows);
         }
+        s.close();
     }
 
     public String recuperarTotalPeticionesEntrantes() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        Session s2 = com.hibernate.cfg.HibernateUtil.getSession();
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
         ArrayList<PeticionesEntrantes> listaTempEnt = new ArrayList<PeticionesEntrantes>();
         
@@ -138,19 +210,20 @@ public class PeticionesEntrantesAction implements SessionAware {
         
         String codigoHosptail = (String) session.get("HospitalCodigoHospital");
 
-        listaTempEnt = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(codigoHosptail);
+        listaTempEnt = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s,codigoHosptail);
         if (listaTempEnt == null) {
             listaTempEnt = new ArrayList<PeticionesEntrantes>();
         }
         
-        listaTempSal = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(codigoHosptail);
+        listaTempSal = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s2,codigoHosptail);
         if (listaTempSal == null) {
             listaTempSal = new ArrayList<PeticionesSalientes>();
         }
 
         totalPeticionesEntrantes = listaTempEnt.size() + "";
         totalPeticionesSalientes = listaTempSal.size() + "";
-
+        s.close();
+        s2.close();
         return SUCCESS;
     }
 
@@ -220,7 +293,104 @@ public class PeticionesEntrantesAction implements SessionAware {
         this.totalPeticionesSalientes = totalPeticionesSalientes;
     }
 
+    public String getIdPeticionesEntrantes() {
+        return idPeticionesEntrantes;
+    }
+
+    public void setIdPeticionesEntrantes(String idPeticionesEntrantes) {
+        this.idPeticionesEntrantes = idPeticionesEntrantes;
+    }
+
+    public String getNss() {
+        return nss;
+    }
+
+    public void setNss(String nss) {
+        this.nss = nss;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getUnidadMedica() {
+        return unidadMedica;
+    }
+
+    public void setUnidadMedica(String unidadMedica) {
+        this.unidadMedica = unidadMedica;
+    }
+
+    public String getNoConsultorio() {
+        return noConsultorio;
+    }
+
+    public void setNoConsultorio(String noConsultorio) {
+        this.noConsultorio = noConsultorio;
+    }
+
+    public String getPeso() {
+        return peso;
+    }
+
+    public void setPeso(String peso) {
+        this.peso = peso;
+    }
+
+    public String getAltura() {
+        return altura;
+    }
+
+    public void setAltura(String altura) {
+        this.altura = altura;
+    }
+
+    public String getNoHistorial() {
+        return noHistorial;
+    }
+
+    public void setNoHistorial(String noHistorial) {
+        this.noHistorial = noHistorial;
+    }
+
+    public String getEnfermedadesCronicas() {
+        return enfermedadesCronicas;
+    }
+
+    public void setEnfermedadesCronicas(String enfermedadesCronicas) {
+        this.enfermedadesCronicas = enfermedadesCronicas;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
+    }
     
+    
+       
     /**
      * ****************** Lo siguiente está relacionado al jQuery Grid
      * *************************

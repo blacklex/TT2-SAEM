@@ -82,7 +82,7 @@
 
                 <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y H:i', srcformat : 'Y-m-d H:i:s'}"/>
 
-                <sjg:gridColumn id="estatus" name="estatus"	title="Estatus" 		index="estatus"		sortable="false"
+                <sjg:gridColumn id="estatus" name="estatus" hidden="false"	title="Estatus" 		index="estatus"		sortable="false"
                                 editable="true"	 />
 
                 <sjg:gridColumn id="nombrePaciente" name="nombrePaciente"	title="Nombre del paciente" 		index="nombrePaciente"		sortable="false"
@@ -107,9 +107,65 @@
         </div>
     </div>
 
-    <!-- **************************************INICIA DIV FORM SESION**********************************************  -->
+    <!-- **************************************INICIA DIV  DATOS DEL PACIENTE**********************************************  -->
+    <div class="box box-primary" id="divFormDatosPacientePeticion" style="display: none;">
+        <div class="box-header">
+            <h3 class="box-header"><label id="labelNombrePaciente"></label></h3>
+        </div><!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-key"></i>
+                <h3 class="box-title"><label>Información Clinica</label></h3>
+            </div>
 
-    <!-- ***********************************INICIA DIV FORM DATOS HOSPITAL*****************************************  -->
+            <div id="divNombre" class="form-group">
+                <label for="nombrePaciente">Nombre</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombrePaciente" placeholder="Nombre del Paciente" type="text">
+            </div>
+            <div id="divApellidoPaterno" class="form-group">
+                <label for="apellidoPaterno">Apellido Paterno</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="apellidoPaterno" name="apellidoPaterno" placeholder="Apellido Paterno" type="text">
+            </div>
+            <div id="divApellidoMaterno" class="form-group">
+                <label for="apellidoMaterno">Apellido Materno</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="apellidoMaterno" name="apellidoMaterno" placeholder="Apellido Materno" type="text">
+            </div>
+            <div id="divNoHistorial" class="form-group">
+                <label for="noHistorial">No. de Historial</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="noHistorial" name="noHistorial" placeholder="No. de Hisptorial" type="text">
+            </div>
+            <div id="divNss" class="form-group">
+                <label for="nss">Numero de Seguro Social</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="nss" name="nss" placeholder="NSS" type="text">
+            </div>
+            <div id="divUnidadMedica" class="form-group">
+                <label for="unidadMedica">Unidad Medica</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="unidadMedica" name="unidadMedica" placeholder="Unidad Medica" type="text">
+            </div>
+            <div id="divNoConsultorio" class="form-group">
+                <label for="noConsultorio">No. Consultorio</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="noConsultorio" name="noConsultorio" placeholder="No. Consultorio" type="text">
+            </div>
+            <div id="divEdad" class="form-group">
+                <label for="edad">Edad</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="edad" name="edad" placeholder="Edad" type="text">
+            </div>
+            <div id="divPeso" class="form-group">
+                <label for="peso">Peso</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="peso" name="peso" placeholder="Peso" type="text">
+            </div>
+            <div id="divAltura" class="form-group">
+                <label for="altura">Altura</label>
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="altura" name="altura" placeholder="Altura" type="text">
+            </div>
+            
+        </div><!-- /.box-body -->
+
+        <button type="button" onclick="mostrarDivGrid();" class="btn btn-primary btn-sm margin">Regresar</button>
+
+    </div>
+    <!-- ***********************************INICIA DIV DATOS DEL PACIENTE*****************************************  -->
 
 </section>
 
@@ -121,9 +177,9 @@
 <!--Script creados -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
 <!--<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
-<link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
+<link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>-->
 
-<script src="js/funcionesHospital/funcionesConsultarHospital.js" type="text/javascript"></script>-->
+<script src="js/funcionesHospital/funcionesPeticionesExternas.js" type="text/javascript"></script>
 
 
 

@@ -522,7 +522,7 @@
             <result name="pantallaPeticionesEntrantesHospital" type="tiles">pantallaPeticionesEntrantesHospital</result>
         </action>
         
-        <action name="recuperarMensajeEstatusPeticionEntrante" method="recuperarEstatusPeticionesEntrantesHospital" class="com.saem.actions.PeticionesEntrantesAction">
+        <action name="recuperarMensajeEstatusPeticionesEntrantes" method="recuperarEstatusPeticionesEntrantesHospital" class="com.saem.actions.PeticionesEntrantesAction">
             <result name="success" type="json">JSON</result>
         </action>
         
@@ -531,6 +531,10 @@
         </action>
         
         <action name="ajaxRecuperarTotalPeticiones" method="recuperarTotalPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarPacientePeticionEntrante" method="recuperarDatosPaciente" class="com.saem.actions.PeticionesEntrantesAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ************************************ FIN HOSPITAL PETICIONES ENTRANTES ****************************************** -->
@@ -545,6 +549,10 @@
         </action>
         
         <action name="ajaxLlenarListaPetionesExternas" method="llenarGridPeticionesExternas" class="com.saem.actions.PeticionesExternasAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarPacientePeticionExterna" method="recuperarDatosPaciente" class="com.saem.actions.PeticionesExternasAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ************************************ FIN HOSPITAL PETICIONES EXTERNAS ****************************************** -->
