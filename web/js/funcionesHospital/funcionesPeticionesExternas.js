@@ -5,13 +5,13 @@
  */
 
 $(document).ready(function () {
-    $.getJSON("recuperarMensajeEstatusPeticionesEntrantes");
+    $.getJSON("recuperarMensajeEstatusPeticionExterna");
     //consultarPeticionesEntrantesGrid();
 
     $(document).ajaxSuccess(function (event, request, settings) {
 
 
-        if (settings.url.match('recuperarMensajeEstatusPeticionesEntrantes') != null) {
+        if (settings.url.match('recuperarMensajeEstatusPeticionExterna') != null) {
 
             var tituloAlert = $.parseJSON(request.responseText).tituloAlert;
             var textoAlert = $.parseJSON(request.responseText).textoAlert;
@@ -44,20 +44,20 @@ $(function () {
 
 });
 
-function muestraFormPeticionEntrante() {
+function muestraFormPeticionExterna() {
 
-    if ($("#gridListaPeticionesEntrantes").jqGrid('getGridParam', 'selrow') != null) {
-        var s = $("#gridListaPeticionesEntrantes").jqGrid('getGridParam', 'selrow');
+    if ($("#gridListaPeticionesExternas").jqGrid('getGridParam', 'selrow') != null) {
+        var s = $("#gridListaPeticionesExternas").jqGrid('getGridParam', 'selrow');
 
-        var idPeticion = $("#gridListaPeticionesEntrantes").jqGrid('getCell', s, 'idPeticionesEntrantes');
+        var idPeticion = $("#gridListaPeticionesExternas").jqGrid('getCell', s, 'idPeticionesSalientes');
 
         $("#barraCargar").slideDown(100);
 
         $.ajax({
             dataType: "json",
             method: "POST",
-            url: "ajaxRecuperarPacientePeticionEntrante",
-            data: {idPeticionesEntrantes: idPeticion}
+            url: "ajaxRecuperarPacientePeticionExterna",
+            data: {idPeticionesSalientes: idPeticion}
         })
                 .done(function (msg) {
                     $("#barraCargar").slideUp(100);
@@ -79,7 +79,7 @@ function muestraFormPeticionEntrante() {
                         $("#divFormDatosPacientePeticion").slideDown('slow');
                     });
 
-                    $.getJSON("recuperarMensajeEstatusPeticionesEntrantes");
+                    $.getJSON("recuperarMensajeEstatusPeticionExterna");
                 });
     } else {
         alert("Seleccione una peticion de la tabla.");

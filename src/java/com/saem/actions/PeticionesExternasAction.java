@@ -6,7 +6,9 @@
 package com.saem.actions;
 
 import com.hibernate.dao.PeticionesSalientesDAO;
+import com.hibernate.model.DatosClinicos;
 import com.hibernate.model.DatosPersonales;
+import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -16,6 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -28,7 +31,18 @@ public class PeticionesExternasAction implements SessionAware {
 
    
     //campos del formulario
+   private String idPeticionesSalientes;
    
+    private String nss; 
+    private String nombre; 
+    private String apellidoPaterno; 
+    private String apellidoMaterno; 
+    private String unidadMedica; 
+    private String noConsultorio; 
+    private String edad;
+    private String peso;
+    private String altura; 
+    private String noHistorial;
     //fin de campos formularo
     
     private String tituloAlert = "";
@@ -47,6 +61,55 @@ public class PeticionesExternasAction implements SessionAware {
         return "pantallaPeticionesExternasHospital";
     }
 
+     public String recuperarDatosPaciente(){
+        System.out.println("--> recuperarPeticion "+idPeticionesSalientes);
+        PeticionesSalientes peticion;
+        Pacientes paciente;
+        PeticionesSalientesDAO peticionesEntrantesDAO = new PeticionesSalientesDAO();
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        
+        peticion = peticionesEntrantesDAO.findById(s,idPeticionesSalientes);
+        
+        if(peticion==null){
+            tituloAlert="Error al recuperar datos.";
+            textoAlert="No se recuperarón los datos del paciente.";
+            estatusMensaje="error";
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+           return SUCCESS;
+        }
+        
+        paciente = peticion.getPacientes();
+        nss = paciente.getNss();
+        unidadMedica = paciente.getUnidadMedica();
+        nombre = paciente.getNombre();
+        apellidoPaterno = paciente.getApellidoPaterno();
+        apellidoMaterno = paciente.getApellidoMaterno();
+        noConsultorio = paciente.getNoConsultorio();
+        
+        if(paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false){
+            tituloAlert="Error al recuperar datos.";
+            textoAlert="No se recuperarón los datos personales y/o clinicos del paciente.";
+            estatusMensaje="error";
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+            return SUCCESS;
+        }
+        DatosPersonales datosPerPaciente = (DatosPersonales)paciente.getDatosPersonaleses().iterator().next();
+        DatosClinicos datosClinicosPaciente =  (DatosClinicos)paciente.getDatosClinicoses().iterator().next();
+        
+        
+        edad = datosPerPaciente.getEdad();
+        peso = datosPerPaciente.getPeso();
+        altura = datosPerPaciente.getAltura();
+        noHistorial = datosClinicosPaciente.getNoHistorial()+"";
+        s.close();
+        
+        return SUCCESS;
+    }
+
     
 /************************ METODOS PARA SETAR EN FORMULARIOS *********************/
    public String recuperarEstatusPeticionesExternasHospital() {
@@ -63,7 +126,6 @@ public class PeticionesExternasAction implements SessionAware {
 
         session.remove(LLAVE_ESTATUS_ME);
         session.remove("tituloAlert");
-        session.remove(LLAVE_ESTATUS_ME);
         session.put(LLAVE_ESTATUS_ME, null);
 
         return SUCCESS;
@@ -85,6 +147,7 @@ public class PeticionesExternasAction implements SessionAware {
     }
 
     private void obteneTablaPeticionesExternas() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         PeticionesSalientesDAO peticionesSalientesDAO = new PeticionesSalientesDAO();
         ArrayList<PeticionesSalientes> listaTemp = new ArrayList<PeticionesSalientes>();
         ArrayList<PeticionesSalientes> listaTempFinal = new ArrayList<PeticionesSalientes>();
@@ -95,7 +158,7 @@ public class PeticionesExternasAction implements SessionAware {
         }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(codigoHosptail);
+        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s,codigoHosptail);
 
         System.out.println("---> Tam pet Salientes " + listaTemp.size());
 
@@ -123,6 +186,7 @@ public class PeticionesExternasAction implements SessionAware {
             // Calculamos el total de páginas necesarias
             total = (int) Math.ceil((double) records / (double) rows);
         }
+        s.close();
     }
 
     private void recortarTablaPeticionesExternas() {
@@ -175,6 +239,96 @@ public class PeticionesExternasAction implements SessionAware {
     public void setEstatusMensaje(String estatusMensaje) {
         this.estatusMensaje = estatusMensaje;
     }
+
+    public String getIdPeticionesSalientes() {
+        return idPeticionesSalientes;
+    }
+
+    public void setIdPeticionesSalientes(String idPeticionesSalientes) {
+        this.idPeticionesSalientes = idPeticionesSalientes;
+    }
+
+    public String getNss() {
+        return nss;
+    }
+
+    public void setNss(String nss) {
+        this.nss = nss;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getUnidadMedica() {
+        return unidadMedica;
+    }
+
+    public void setUnidadMedica(String unidadMedica) {
+        this.unidadMedica = unidadMedica;
+    }
+
+    public String getNoConsultorio() {
+        return noConsultorio;
+    }
+
+    public void setNoConsultorio(String noConsultorio) {
+        this.noConsultorio = noConsultorio;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
+    }
+
+    public String getPeso() {
+        return peso;
+    }
+
+    public void setPeso(String peso) {
+        this.peso = peso;
+    }
+
+    public String getAltura() {
+        return altura;
+    }
+
+    public void setAltura(String altura) {
+        this.altura = altura;
+    }
+
+    public String getNoHistorial() {
+        return noHistorial;
+    }
+
+    public void setNoHistorial(String noHistorial) {
+        this.noHistorial = noHistorial;
+    }
+    
+    
 
     /**
      * ****************** Lo siguiente está relacionado al jQuery Grid

@@ -55,9 +55,9 @@ public class PeticionesSalientesDAO extends HibernateUtil {
         }
     }
 
-    public PeticionesSalientes findById(String id) {
+    public PeticionesSalientes findById(Session s,String id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
-        Session s = getSession();
+        
         try {
             PeticionesSalientes instance = (PeticionesSalientes) s.get(
                     PeticionesSalientes.class, id);
@@ -66,7 +66,7 @@ public class PeticionesSalientesDAO extends HibernateUtil {
             //log.error("get failed", re);
             throw re;
         } finally {
-            s.close();
+            
         }
     }
 
@@ -83,8 +83,8 @@ public class PeticionesSalientesDAO extends HibernateUtil {
         }
     }
     
-    public List<PeticionesSalientes> findAllByHospital(String codigoHospital) {
-        Session s = getSession();
+    public List<PeticionesSalientes> findAllByHospital(Session s,String codigoHospital) {
+        //Session s = getSession();
         try {
             String queryString = "from PeticionesSalientes where Hospitales_codigo_hospital =:codigoHospital and estatus='PP' order by prioridad";
             Query queryObject = s.createQuery(queryString);
@@ -93,7 +93,7 @@ public class PeticionesSalientesDAO extends HibernateUtil {
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            s.close();
+            
         }
     }
 
