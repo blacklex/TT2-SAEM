@@ -71,7 +71,7 @@
 
                 mostrarFormPeticion : { 
                 title : 'Atender Petición', 
-                icon:'ui-icon-key',  
+                icon:'ui-icon-person',  
                 onclick: function(){ muestraFormPeticionEntrante() }
                 }
                 }"
@@ -106,7 +106,20 @@
             </sjg:grid> 
         </div>
     </div>
+    <div class="box box-primary" id="divMapa" style="display: none;">
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Ubicación del Paciente</label></h3>
+            </div>
+            <div class="form-group">
+                <!-- /google maps -->
+                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+                <!-- /fin google maps -->
+            </div>
+        </div>
 
+    </div>
     <!-- **************************************INICIA DIV  DATOS DEL PACIENTE**********************************************  -->
     <div class="box box-primary" id="divFormDatosPacientePeticion" style="display: none;">
         <div class="box-header">
@@ -115,7 +128,7 @@
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <i class="fa fa-key"></i>
+                <i class="fa fa-user"></i>
                 <h3 class="box-title"><label>Información Clinica</label></h3>
             </div>
 
@@ -159,14 +172,41 @@
                 <label for="altura">Altura</label>
                 <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="altura" name="altura" placeholder="Altura" type="text">
             </div>
-            
+
         </div><!-- /.box-body -->
 
+        <button type="button" onclick="mostrarModalFormContestarPeticion();" class="btn btn-primary btn-sm margin">Atender Petición</button>
         <button type="button" onclick="mostrarDivGrid();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
     <!-- ***********************************INICIA DIV DATOS DEL PACIENTE*****************************************  -->
 
+    <div id="modalFormContestarPeticion" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="cerrarModalFormContestarPeticion()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Contestar Petición Entrante</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divFormContestarPeticionEntrante">
+                        <form id="formPeticionEntrante" method="post" action="responderPeticionEntrante" onsubmit="return validarFormRespuestaPeticionEntrante()">
+                            <div id="divFormComentario" class="form-group">
+                                <input type="hidden" id="idPeticionesEntrantesFormPeticion" name="idPeticionesEntrantesFormPeticion"/>
+                                <input type="hidden" id="tipoDeRespuestaPeticion" name="tipoDeRespuestaPeticion"/>
+                                <textarea class="form-control" id="comentario" name="comentario" placeholder="Ingresa el comentario para el paciente." style="width: 100%; height: 50px;"></textarea>                 
+                            </div>                      
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" onclick="imprimirPeticion()" class="btn btn-primary pull-left">Imprimir Información</button>
+                            <button type="button" onclick="finalizarPeticion()" class="btn btn-primary pull-left" >Finalizar Petición</button>
+                            <button type="button" onclick="cerrarModalFormContestarPeticion()" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
 </section>
 
 
@@ -176,9 +216,9 @@
 <script src="plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 <!--Script creados -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
-<!--<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
+<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
--->
+
 <script src="js/funcionesHospital/funcionesPeticionesEntrantes.js" type="text/javascript"></script>
 
 

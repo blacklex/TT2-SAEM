@@ -12,9 +12,13 @@ import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
@@ -29,22 +33,27 @@ public class PeticionesExternasAction implements SessionAware {
     private static final String LISTA_HOSPITALES = "LISTA_HOSPITALES_ME";
     private static final String LLAVE_ESTATUS_ME = "PETICIONES_EXTERNAS_ESTATUS_LLAVE";
 
-   
     //campos del formulario
-   private String idPeticionesSalientes;
-   
-    private String nss; 
-    private String nombre; 
-    private String apellidoPaterno; 
-    private String apellidoMaterno; 
-    private String unidadMedica; 
-    private String noConsultorio; 
+    private String idPeticionesSalientes;
+
+    private String nss;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String unidadMedica;
+    private String noConsultorio;
     private String edad;
     private String peso;
-    private String altura; 
+    private String altura;
     private String noHistorial;
+
+    private String comentario;
+    private String idPeticionesExternasFormPeticion;
+    private String tipoDeRespuestaPeticion;
+    private String latitudPeticion;
+    private String longitudPeticion;
     //fin de campos formularo
-    
+
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
@@ -61,25 +70,88 @@ public class PeticionesExternasAction implements SessionAware {
         return "pantallaPeticionesExternasHospital";
     }
 
-     public String recuperarDatosPaciente(){
-        System.out.println("--> recuperarPeticion "+idPeticionesSalientes);
+    public String responderPeticionExterna() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        PeticionesSalientesDAO peticionesSalientesDAO = new PeticionesSalientesDAO();
+        System.out.println("---> Responder pet sal " + comentario + "  " + idPeticionesExternasFormPeticion + "  " + tipoDeRespuestaPeticion);
+
+        PeticionesSalientes peticion = peticionesSalientesDAO.findById(s, idPeticionesExternasFormPeticion);
+
+        if (peticion == null) {
+            System.out.println("-->null");
+            tituloAlert = "Error en encontrar la Petición.";
+            textoAlert = "No se ha encontrado la información de la petición.";
+            estatusMensaje = "error";
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+            s.close();
+            return SUCCESS;
+        }
+
+        if (tipoDeRespuestaPeticion.equals("contestarPeticion")) {
+            peticion.setEstatus("PA");
+            peticion.setComentario("PETICION ACEPTADA: " + comentario);
+
+            if (peticionesSalientesDAO.update(peticion)) {
+                System.out.println("-->update");
+                tituloAlert = "Petición Contestada.";
+                textoAlert = "La petición ha sido contestada exitosamente.";
+                estatusMensaje = "success";
+            } else {
+                System.out.println("-->no update");
+                tituloAlert = "Error petición no contestada.";
+                textoAlert = "No se contesto la petición.";
+                estatusMensaje = "error";
+            }
+
+        } else if (tipoDeRespuestaPeticion.equals("rechazarPeticion")) {
+            peticion.setEstatus("PR");
+            peticion.setComentario("PETICION RECHAZADA: " + comentario);
+
+            if (peticionesSalientesDAO.update(peticion)) {
+                System.out.println("-->update");
+                tituloAlert = "Petición Rechazada.";
+                textoAlert = "La petición ha sido rechazada exitosamente.";
+                estatusMensaje = "success";
+            } else {
+                System.out.println("-->no update");
+                tituloAlert = "Error petición no rechazada.";
+                textoAlert = "No se rechazo la petición debido a un error interno.";
+                estatusMensaje = "error";
+            }
+        }
+
+        session.put("tituloAlert", tituloAlert);
+        session.put("textoAlert", textoAlert);
+        session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+
+        s.close();
+        return "pantallaPeticionesExternasHospital";
+    }
+
+    public String recuperarDatosPaciente() {
+        System.out.println("--> recuperarPeticion " + idPeticionesSalientes);
         PeticionesSalientes peticion;
         Pacientes paciente;
         PeticionesSalientesDAO peticionesEntrantesDAO = new PeticionesSalientesDAO();
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
-        
-        peticion = peticionesEntrantesDAO.findById(s,idPeticionesSalientes);
-        
-        if(peticion==null){
-            tituloAlert="Error al recuperar datos.";
-            textoAlert="No se recuperarón los datos del paciente.";
-            estatusMensaje="error";
+
+        peticion = peticionesEntrantesDAO.findById(s, idPeticionesSalientes);
+
+        latitudPeticion = peticion.getLatitudPaciente();
+        longitudPeticion = peticion.getLongitudPaciente();
+
+        if (peticion == null) {
+            tituloAlert = "Error al recuperar datos.";
+            textoAlert = "No se recuperarón los datos del paciente.";
+            estatusMensaje = "error";
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-           return SUCCESS;
+            return SUCCESS;
         }
-        
+
         paciente = peticion.getPacientes();
         nss = paciente.getNss();
         unidadMedica = paciente.getUnidadMedica();
@@ -87,32 +159,34 @@ public class PeticionesExternasAction implements SessionAware {
         apellidoPaterno = paciente.getApellidoPaterno();
         apellidoMaterno = paciente.getApellidoMaterno();
         noConsultorio = paciente.getNoConsultorio();
-        
-        if(paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false){
-            tituloAlert="Error al recuperar datos.";
-            textoAlert="No se recuperarón los datos personales y/o clinicos del paciente.";
-            estatusMensaje="error";
+
+        if (paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false) {
+            tituloAlert = "Error al recuperar datos.";
+            textoAlert = "No se recuperarón los datos personales y/o clinicos del paciente.";
+            estatusMensaje = "error";
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
             return SUCCESS;
         }
-        DatosPersonales datosPerPaciente = (DatosPersonales)paciente.getDatosPersonaleses().iterator().next();
-        DatosClinicos datosClinicosPaciente =  (DatosClinicos)paciente.getDatosClinicoses().iterator().next();
-        
-        
+        DatosPersonales datosPerPaciente = (DatosPersonales) paciente.getDatosPersonaleses().iterator().next();
+        DatosClinicos datosClinicosPaciente = (DatosClinicos) paciente.getDatosClinicoses().iterator().next();
+
         edad = datosPerPaciente.getEdad();
         peso = datosPerPaciente.getPeso();
         altura = datosPerPaciente.getAltura();
-        noHistorial = datosClinicosPaciente.getNoHistorial()+"";
+        noHistorial = datosClinicosPaciente.getNoHistorial() + "";
         s.close();
-        
+
         return SUCCESS;
     }
 
-    
-/************************ METODOS PARA SETAR EN FORMULARIOS *********************/
-   public String recuperarEstatusPeticionesExternasHospital() {
+  
+    /**
+     * ********************** METODOS PARA SETAR EN FORMULARIOS
+     * ********************
+     */
+    public String recuperarEstatusPeticionesExternasHospital() {
         System.out.println("-->Entro a recuperar estatus Consultar");
         tituloAlert = "";
         textoAlert = "";
@@ -130,6 +204,7 @@ public class PeticionesExternasAction implements SessionAware {
 
         return SUCCESS;
     }
+
     /**
      * *************************************** METODOS GRID
      * ********************************
@@ -137,7 +212,7 @@ public class PeticionesExternasAction implements SessionAware {
     public String llenarGridPeticionesExternas() {
 
         System.out.println("\n\n--->Entro a llenar tabla Peticiones Externas");
-        
+
         // Obtenemos la tabla desordenada
         obteneTablaPeticionesExternas();
         // Quitamos los registros que no se desplegarán en el grid
@@ -158,7 +233,7 @@ public class PeticionesExternasAction implements SessionAware {
         }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s,codigoHosptail);
+        listaTemp = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s, codigoHosptail);
 
         System.out.println("---> Tam pet Salientes " + listaTemp.size());
 
@@ -175,9 +250,9 @@ public class PeticionesExternasAction implements SessionAware {
 
             listaTempFinal.add(tempPet);
         }
-        
+
         gridListaPeticionesExternas = listaTempFinal;
-        
+
         if (gridListaPeticionesExternas == null) {
             records = total = 0;
         } else {
@@ -212,7 +287,6 @@ public class PeticionesExternasAction implements SessionAware {
     /**
      * ************************************************************************
      */
-   
     /**
      * ************************************************************************
      */
@@ -327,8 +401,46 @@ public class PeticionesExternasAction implements SessionAware {
     public void setNoHistorial(String noHistorial) {
         this.noHistorial = noHistorial;
     }
-    
-    
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public String getIdPeticionesExternasFormPeticion() {
+        return idPeticionesExternasFormPeticion;
+    }
+
+    public void setIdPeticionesExternasFormPeticion(String idPeticionesExternasFormPeticion) {
+        this.idPeticionesExternasFormPeticion = idPeticionesExternasFormPeticion;
+    }
+
+    public String getTipoDeRespuestaPeticion() {
+        return tipoDeRespuestaPeticion;
+    }
+
+    public void setTipoDeRespuestaPeticion(String tipoDeRespuestaPeticion) {
+        this.tipoDeRespuestaPeticion = tipoDeRespuestaPeticion;
+    }
+
+    public String getLatitudPeticion() {
+        return latitudPeticion;
+    }
+
+    public void setLatitudPeticion(String latitudPeticion) {
+        this.latitudPeticion = latitudPeticion;
+    }
+
+    public String getLongitudPeticion() {
+        return longitudPeticion;
+    }
+
+    public void setLongitudPeticion(String longitudPeticion) {
+        this.longitudPeticion = longitudPeticion;
+    }
 
     /**
      * ****************** Lo siguiente está relacionado al jQuery Grid

@@ -33,7 +33,7 @@
                     }
                     setTimeout(function () {
                         consultarTotalPeticiones();
-                    }, 10000);
+                    }, 90000);
 
                 });
 

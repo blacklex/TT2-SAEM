@@ -543,6 +543,9 @@
             <result name="success" type="json">JSON</result>
         </action>
         
+        <action name="responderPeticionEntrante" method="responderPeticionEntrante" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="pantallaPeticionesEntrantesHospital" type="tiles">pantallaPeticionesEntrantesHospital</result>
+        </action>
         
         <!-- ************************************ FIN HOSPITAL PETICIONES ENTRANTES ****************************************** -->
         
@@ -561,6 +564,10 @@
         
         <action name="ajaxRecuperarPacientePeticionExterna" method="recuperarDatosPaciente" class="com.saem.actions.PeticionesExternasAction">
             <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="responderPeticionExterna" method="responderPeticionExterna" class="com.saem.actions.PeticionesExternasAction">
+            <result name="pantallaPeticionesExternasHospital" type="tiles">pantallaPeticionesExternasHospital</result>
         </action>
         <!-- ************************************ FIN HOSPITAL PETICIONES EXTERNAS ****************************************** -->
         

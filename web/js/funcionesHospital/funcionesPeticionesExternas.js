@@ -50,7 +50,7 @@ function muestraFormPeticionExterna() {
         var s = $("#gridListaPeticionesExternas").jqGrid('getGridParam', 'selrow');
 
         var idPeticion = $("#gridListaPeticionesExternas").jqGrid('getCell', s, 'idPeticionesSalientes');
-
+        $("#idPeticionesExternasFormPeticion").val(idPeticion);
         $("#barraCargar").slideDown(100);
 
         $.ajax({
@@ -61,7 +61,6 @@ function muestraFormPeticionExterna() {
         })
                 .done(function (msg) {
                     $("#barraCargar").slideUp(100);
-
                     $("#nombrePaciente").val(msg.nombre);
                     $("#apellidoPaterno").val(msg.apellidoPaterno);
                     $("#apellidoMaterno").val(msg.apellidoMaterno);
@@ -80,6 +79,9 @@ function muestraFormPeticionExterna() {
                     });
 
                     $.getJSON("recuperarMensajeEstatusPeticionExterna");
+                    $("#divMapa").slideDown('slow');
+                    inicializarMapaConsultar(msg.latitudPeticion,msg.longitudPeticion);
+                    
                 });
     } else {
         alert("Seleccione una peticion de la tabla.");
@@ -88,6 +90,36 @@ function muestraFormPeticionExterna() {
 
 function mostrarDivGrid() {
     $("#divFormDatosPacientePeticion").slideUp('slow');
+    $("#divMapa").slideUp('slow');
     $("#divjGrid").slideDown('slow');
 
+}
+
+function cerrarModalFormContestarPeticion(){
+    $("#modalFormContestarPeticion").fadeOut('slow');
+}
+
+function mostrarModalFormContestarPeticion(){
+    $("#modalFormContestarPeticion").fadeIn('slow');
+}
+
+function validarFormRespuestaPeticionExterna(){
+    //$("#divNombreDirectivo").removeClass("has-error");
+    if ($("#comentario").val().length < 1) {
+        $("#divFormComentario").addClass("has-error");
+        $("#divFormComentario").append("<label class='control-label' for='comentario'><i class='fa fa-times-circle-o'></i>  Ingresa un comnetario para el paciente.</label>");
+        return false;
+
+    }else{return true;}
+    
+}
+
+function contestarPeticion(){
+    $("#tipoDeRespuestaPeticion").val("contestarPeticion");
+    document.forms["formPeticionExterna"].submit();
+}
+
+function rechazarPeticion(){
+    $("#tipoDeRespuestaPeticion").val("rechazarPeticion");
+    document.forms["formPeticionExterna"].submit();
 }

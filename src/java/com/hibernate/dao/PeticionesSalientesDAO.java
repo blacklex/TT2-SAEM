@@ -69,6 +69,26 @@ public class PeticionesSalientesDAO extends HibernateUtil {
             
         }
     }
+    
+        public Boolean update(PeticionesSalientes transientInstance) {
+		Session s = getSession();
+		try {
+			PeticionesSalientes p=findById(s, transientInstance.getIdPeticionesSalientes());
+                        p.setComentario(transientInstance.getComentario());
+                        p.setEstatus(transientInstance.getEstatus());
+                        
+                        s.beginTransaction();
+                        s.update(p);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Peticion sal actualizado");
+                        return true;
+		} catch (RuntimeException re) {
+                    s.close();
+			System.out.println("--->Peticion sal no actualizado");  
+                    return false;
+		}
+	}
 
     public List<PeticionesSalientes> findAll() {
         Session s = getSession();

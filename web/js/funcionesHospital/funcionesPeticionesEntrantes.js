@@ -51,6 +51,8 @@ function muestraFormPeticionEntrante() {
 
         var idPeticion = $("#gridListaPeticionesEntrantes").jqGrid('getCell', s, 'idPeticionesEntrantes');
 
+        $("#idPeticionesEntrantesFormPeticion").val(idPeticion);
+
         $("#barraCargar").slideDown(100);
 
         $.ajax({
@@ -62,6 +64,7 @@ function muestraFormPeticionEntrante() {
                 .done(function (msg) {
                     $("#barraCargar").slideUp(100);
 
+                    
                     $("#nombrePaciente").val(msg.nombre);
                     $("#apellidoPaterno").val(msg.apellidoPaterno);
                     $("#apellidoMaterno").val(msg.apellidoMaterno);
@@ -80,6 +83,9 @@ function muestraFormPeticionEntrante() {
                     });
 
                     $.getJSON("recuperarMensajeEstatusPeticionesEntrantes");
+                    $("#divMapa").slideDown('slow');
+                    inicializarMapaConsultar(msg.latitudPeticion,msg.longitudPeticion);
+
                 });
     } else {
         alert("Seleccione una peticion de la tabla.");
@@ -87,7 +93,41 @@ function muestraFormPeticionEntrante() {
 }
 
 function mostrarDivGrid() {
+    $("#divMapa").slideUp('slow');
     $("#divFormDatosPacientePeticion").slideUp('slow');
     $("#divjGrid").slideDown('slow');
 
+}
+
+function validarFormRespuestaPeticionEntrante() {
+    //$("#divNombreDirectivo").removeClass("has-error");
+    if ($("#comentario").val().length < 1) {
+        $("#divFormComentario").addClass("has-error");
+        $("#divFormComentario").append("<label class='control-label' for='comentario'><i class='fa fa-times-circle-o'></i>  Ingresa un comnetario para el paciente.</label>");
+        return false;
+
+    } else {
+        return true;
+    }
+
+}
+
+function cerrarModalFormContestarPeticion() {
+    $("#modalFormContestarPeticion").fadeOut('slow');
+}
+
+function mostrarModalFormContestarPeticion() {
+    $("#modalFormContestarPeticion").fadeIn('slow');
+}
+
+function finalizarPeticion(){
+    $("#tipoDeRespuestaPeticion").val("finalizarPeticion");
+    document.forms["formPeticionEntrante"].submit();
+    
+}
+
+function imprimirPeticion(){
+    $("tipoDeRespuestaPeticion").val("imprimirPeticion");
+    
+    
 }

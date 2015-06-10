@@ -96,5 +96,25 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             
         }
     }
+    
+    public Boolean update(PeticionesEntrantes transientInstance) {
+		Session s = getSession();
+		try {
+			PeticionesEntrantes p=findById(s, transientInstance.getIdPeticionesEntrantes());
+                        p.setComentario(transientInstance.getComentario());
+                        p.setEstatus(transientInstance.getEstatus());
+                        
+                        s.beginTransaction();
+                        s.update(p);
+                        s.getTransaction().commit();
+                        s.close();
+			System.out.println("--->Peticion actualizado");
+                        return true;
+		} catch (RuntimeException re) {
+                    s.close();
+			System.out.println("--->Peticion no actualizado");  
+                    return false;
+		}
+	}
 
 }

@@ -39,21 +39,33 @@ public class PeticionesEntrantesAction implements SessionAware {
 
     private String totalPeticionesEntrantes;
     private String totalPeticionesSalientes;
-    
-    /*****************CAMPOS DEL FORMULARIO*****************/
+
+    /**
+     * ***************CAMPOS DEL FORMULARIO****************
+     */
     private String idPeticionesEntrantes;
-    
-    private String nss; 
-    private String nombre; 
-    private String apellidoPaterno; 
-    private String apellidoMaterno; 
-    private String unidadMedica; 
-    private String noConsultorio; 
+
+    private String nss;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String unidadMedica;
+    private String noConsultorio;
     private String edad;
     private String peso;
-    private String altura; 
+    private String altura;
     private String noHistorial;
     private String enfermedadesCronicas;
+    private String latitudPeticion;
+    private String longitudPeticion;
+
+    /**
+     * ******************************************************
+     */
+    //Campos del formulario de respuesta peticion
+    private String idPeticionesEntrantesFormPeticion;
+    private String tipoDeRespuestaPeticion;
+    private String comentario;
 
     HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
@@ -65,7 +77,7 @@ public class PeticionesEntrantesAction implements SessionAware {
 
     public String execute() {
         System.out.println("-->Entro a peticones Entatens execute");
-        
+
         return "pantallaPeticionesEntrantesHospital";
     }
 
@@ -87,59 +99,105 @@ public class PeticionesEntrantesAction implements SessionAware {
 
         session.remove(LLAVE_ESTATUS_ME);
         session.remove("tituloAlert");
-        
+
         session.put(LLAVE_ESTATUS_ME, null);
 
         return SUCCESS;
     }
-    
-    public String recuperarDatosPaciente(){
-        System.out.println("--> recuperarPeticion "+idPeticionesEntrantes);
+
+    public String recuperarDatosPaciente() {
+        System.out.println("--> recuperarPeticion " + idPeticionesEntrantes);
         PeticionesEntrantes peticion;
         Pacientes paciente;
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
-        
-        peticion = peticionesEntrantesDAO.findById(s,idPeticionesEntrantes);
-        
-        if(peticion==null){
-            tituloAlert="Error al recuperar datos.";
-            textoAlert="No se recuperarón los datos del paciente.";
-            estatusMensaje="error";
+
+        peticion = peticionesEntrantesDAO.findById(s, idPeticionesEntrantes);
+
+        if (peticion == null) {
+            tituloAlert = "Error al recuperar datos.";
+            textoAlert = "No se recuperarón los datos del paciente.";
+            estatusMensaje = "error";
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-           return SUCCESS;
+            return SUCCESS;
         }
-        
+
         paciente = peticion.getPacientes();
+
+        latitudPeticion = peticion.getLatitudPaciente();
+        longitudPeticion = peticion.getLongitudPaciente();
+
         nss = paciente.getNss();
         unidadMedica = paciente.getUnidadMedica();
         nombre = paciente.getNombre();
         apellidoPaterno = paciente.getApellidoPaterno();
         apellidoMaterno = paciente.getApellidoMaterno();
         noConsultorio = paciente.getNoConsultorio();
-        
-        if(paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false){
-            tituloAlert="Error al recuperar datos.";
-            textoAlert="No se recuperarón los datos personales y/o clinicos del paciente.";
-            estatusMensaje="error";
+
+        if (paciente.getDatosPersonaleses().iterator().hasNext() == false || paciente.getDatosClinicoses().iterator().hasNext() == false) {
+            tituloAlert = "Error al recuperar datos.";
+            textoAlert = "No se recuperarón los datos personales y/o clinicos del paciente.";
+            estatusMensaje = "error";
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_ME, estatusMensaje);
             return SUCCESS;
         }
-        DatosPersonales datosPerPaciente = (DatosPersonales)paciente.getDatosPersonaleses().iterator().next();
-        DatosClinicos datosClinicosPaciente =  (DatosClinicos)paciente.getDatosClinicoses().iterator().next();
-        
-        
+        DatosPersonales datosPerPaciente = (DatosPersonales) paciente.getDatosPersonaleses().iterator().next();
+        DatosClinicos datosClinicosPaciente = (DatosClinicos) paciente.getDatosClinicoses().iterator().next();
+
         edad = datosPerPaciente.getEdad();
         peso = datosPerPaciente.getPeso();
         altura = datosPerPaciente.getAltura();
-        noHistorial = datosClinicosPaciente.getNoHistorial()+"";
+        noHistorial = datosClinicosPaciente.getNoHistorial() + "";
         s.close();
-        
+
         return SUCCESS;
+    }
+
+    public String responderPeticionEntrante() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
+        System.out.println("---> Responder pet ent " + comentario + "  " + idPeticionesEntrantesFormPeticion + "  " + tipoDeRespuestaPeticion);
+
+        if (tipoDeRespuestaPeticion.equals("finalizarPeticion")) {
+            PeticionesEntrantes peticion = peticionesEntrantesDAO.findById(s, idPeticionesEntrantesFormPeticion);
+            peticion.setEstatus("PA");
+            peticion.setComentario(comentario);
+            
+            if (peticion == null) {
+                System.out.println("-->null");
+                tituloAlert = "Error en encontrar la Petición.";
+                textoAlert = "No se ha encontrado la información de la petición.";
+                estatusMensaje = "error";
+                session.put("tituloAlert", tituloAlert);
+                session.put("textoAlert", textoAlert);
+                session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+                s.close();
+                return SUCCESS;
+            }
+
+            if (peticionesEntrantesDAO.update(peticion)) {
+                System.out.println("-->update");
+                tituloAlert = "Petición Finalizada.";
+                textoAlert = "La petición ha sido finalizada.";
+                estatusMensaje = "success";
+            } else {
+                System.out.println("-->no update");
+                tituloAlert = "Error al finalizar la petición.";
+                textoAlert = "No se finalizo la petición correctamente.";
+                estatusMensaje = "error";
+            }
+
+            session.put("tituloAlert", tituloAlert);
+            session.put("textoAlert", textoAlert);
+            session.put(LLAVE_ESTATUS_ME, estatusMensaje);
+        }
+
+        s.close();
+        return "pantallaPeticionesEntrantesHospital";
     }
 
     /**
@@ -170,7 +228,7 @@ public class PeticionesEntrantesAction implements SessionAware {
         }
 
         // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s,codigoHosptail);
+        listaTemp = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s, codigoHosptail);
 
         System.out.println("---> Tam pet Entra " + listaTemp.size());
 
@@ -204,18 +262,18 @@ public class PeticionesEntrantesAction implements SessionAware {
         Session s2 = com.hibernate.cfg.HibernateUtil.getSession();
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
         ArrayList<PeticionesEntrantes> listaTempEnt = new ArrayList<PeticionesEntrantes>();
-        
+
         PeticionesSalientesDAO peticionesSalientesDAO = new PeticionesSalientesDAO();
         ArrayList<PeticionesSalientes> listaTempSal = new ArrayList<PeticionesSalientes>();
-        
+
         String codigoHosptail = (String) session.get("HospitalCodigoHospital");
 
-        listaTempEnt = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s,codigoHosptail);
+        listaTempEnt = (ArrayList<PeticionesEntrantes>) peticionesEntrantesDAO.findAllByHospital(s, codigoHosptail);
         if (listaTempEnt == null) {
             listaTempEnt = new ArrayList<PeticionesEntrantes>();
         }
-        
-        listaTempSal = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s2,codigoHosptail);
+
+        listaTempSal = (ArrayList<PeticionesSalientes>) peticionesSalientesDAO.findAllByHospital(s2, codigoHosptail);
         if (listaTempSal == null) {
             listaTempSal = new ArrayList<PeticionesSalientes>();
         }
@@ -388,9 +446,47 @@ public class PeticionesEntrantesAction implements SessionAware {
     public void setEdad(String edad) {
         this.edad = edad;
     }
-    
-    
-       
+
+    public String getIdPeticionesEntrantesFormPeticion() {
+        return idPeticionesEntrantesFormPeticion;
+    }
+
+    public void setIdPeticionesEntrantesFormPeticion(String idPeticionesEntrantesFormPeticion) {
+        this.idPeticionesEntrantesFormPeticion = idPeticionesEntrantesFormPeticion;
+    }
+
+    public String getTipoDeRespuestaPeticion() {
+        return tipoDeRespuestaPeticion;
+    }
+
+    public void setTipoDeRespuestaPeticion(String tipoDeRespuestaPeticion) {
+        this.tipoDeRespuestaPeticion = tipoDeRespuestaPeticion;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public String getLatitudPeticion() {
+        return latitudPeticion;
+    }
+
+    public void setLatitudPeticion(String latitudPeticion) {
+        this.latitudPeticion = latitudPeticion;
+    }
+
+    public String getLongitudPeticion() {
+        return longitudPeticion;
+    }
+
+    public void setLongitudPeticion(String longitudPeticion) {
+        this.longitudPeticion = longitudPeticion;
+    }
+
     /**
      * ****************** Lo siguiente está relacionado al jQuery Grid
      * *************************
