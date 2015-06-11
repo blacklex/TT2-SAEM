@@ -91,7 +91,7 @@ function inicializarMapaEditar(latitud, longitud) {
 
 
 function inicializarMapaConsultar(latitud, longitud) {
-   
+    
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitud, longitud);
     var mapOptions = {

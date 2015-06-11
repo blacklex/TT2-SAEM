@@ -61,7 +61,7 @@
                 navigator    ="true"                                    viewrecords="true"
                 hidegrid     ="false"                                   multiselect="false"
                 navigatorRefresh ="false"				navigatorSearch ="false"				
-                                                                        autowidth="true"
+                autowidth="true"
                 navigatorAdd ="false"				
                 navigatorEdit="false"	
                 navigatorDelete="false"
@@ -87,16 +87,16 @@
 
                 <sjg:gridColumn id="nombrePaciente" name="nombrePaciente"	title="Nombre del paciente" 		index="nombrePaciente"		sortable="false"
                                 editable="true"	/>
-                
+
                 <sjg:gridColumn id="apellidoPaciente" name="apellidoPaciente"	title="Apellido del paciente" 		index="apellidoPaciente"		sortable="false"
                                 editable="true"	/>
-                
-               <sjg:gridColumn editable="false" name="fechaNacimineto" index="fechaNacimineto" title="Fecha de Nacimiento" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y'}"/>
+
+                <sjg:gridColumn editable="false" name="fechaNacimineto" index="fechaNacimineto" title="Fecha de Nacimiento" sortable="false" formatter="date" formatoptions="{newformat : 'd/m/Y'}"/>
 
 
-               <sjg:gridColumn id="nss" name="nss"	title="NSS" 		index="nss"		sortable="false"
+                <sjg:gridColumn id="nss" name="nss"	title="NSS" 		index="nss"		sortable="false"
                                 editable="true"	/>
-               
+
                 <sjg:gridColumn id="latitudPaciente" hidden="true" name="latitudPaciente"	title="latitudPaciente" 		index="latitudPaciente"		sortable="false"
                                 editable="true"	/>
 
@@ -107,6 +107,20 @@
         </div>
     </div>
 
+    <div class="box box-primary" id="divMapa" style="display: none;">
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Ubicación del Paciente</label></h3>
+            </div>
+            <div class="form-group">
+                <!-- /google maps -->
+                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+                <!-- /fin google maps -->
+            </div>
+        </div>
+
+    </div>
     <!-- **************************************INICIA DIV  DATOS DEL PACIENTE**********************************************  -->
     <div class="box box-primary" id="divFormDatosPacientePeticion" style="display: none;">
         <div class="box-header">
@@ -115,7 +129,7 @@
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <i class="fa fa-key"></i>
+                <i class="fa fa-user"></i>
                 <h3 class="box-title"><label>Información Clinica</label></h3>
             </div>
 
@@ -159,15 +173,48 @@
                 <label for="altura">Altura</label>
                 <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" disabled="true" id="altura" name="altura" placeholder="Altura" type="text">
             </div>
-            
+
         </div><!-- /.box-body -->
 
+        <button type="button" onclick="mostrarModalFormContestarPeticion();" class="btn btn-primary btn-sm margin">Contestar Petición</button>
         <button type="button" onclick="mostrarDivGrid();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
     <!-- ***********************************INICIA DIV DATOS DEL PACIENTE*****************************************  -->
+    <div id="modalFormContestarPeticion" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="cerrarModalFormContestarPeticion()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Contestar Petición Externa</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divFormContestarPeticionExterna">
+                        <form id="formPeticionExterna" method="post" action="responderPeticionExterna" onsubmit="return validarFormRespuestaPeticionExterna()">
+                            <div id="divFormComentario" class="form-group">
+                                <input type="hidden" id="idPeticionesExternasFormPeticion" name="idPeticionesExternasFormPeticion"/>
+                                <input type="hidden" id="tipoDeRespuestaPeticion" name="tipoDeRespuestaPeticion"/>
+                                <textarea class="form-control" id="comentario" name="comentario" placeholder="Ingresa el comentario para el paciente." style="width: 100%; height: 50px;"></textarea>                 
+                            </div>
+                        </form>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="contestarPeticion();" class="btn btn-primary  pull-left">Contestar Petición</button>
+                        <button type="button" onclick="rechazarPeticion();" class="btn btn-primary  pull-left">Rechazar Petición</button>
+                        <button type="button" onclick="cerrarModalFormContestarPeticion()" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
 
 </section>
+
+
 
 
 <!-- InputMask -->
@@ -176,8 +223,8 @@
 <script src="plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 <!--Script creados -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
-<!--<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
-<link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>-->
+<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
 
 <script src="js/funcionesHospital/funcionesPeticionesExternas.js" type="text/javascript"></script>
 
