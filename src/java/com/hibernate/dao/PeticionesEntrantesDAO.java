@@ -97,4 +97,17 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
         }
     }
 
+    public List<PeticionesEntrantes> finByHospitalNss(Session s, String nss) {
+        try {
+            String queryString = "from PeticionesEntrantes where Pacientes_nss =:nss and estatus='PP'";
+            Query queryObject = s.createQuery(queryString);
+            queryObject.setParameter("nss", nss);
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            
+        }
+    }
+
 }

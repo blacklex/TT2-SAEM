@@ -394,8 +394,10 @@ function enviarAlerta() {
 
 function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
     var nombreUsuario = $("#nombreUsuario").val();
-    //alert("El codigo del Hospital es: " + codigoHospital+", nombre de usuario " + $("#nombreUsuario").val());
-    //$("#barraCargarPaciente").slideDown(100);
+    var origen = new google.maps.LatLng(latitudUsuario, longitudUsuario);
+    var destino = new google.maps.LatLng(latitudHospital,longitudHospital);
+    
+    $("#barraCargarPaciente").slideDown(100);
         $.ajax({
             dataType: "json",
             method: "POST",
@@ -419,6 +421,28 @@ function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latit
                 $("#labelMensajeSuccessPaciente").html("El aviso se envio con exito.");
 
                 $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
+                $("#barraCargarPaciente").slideUp(100);
+                
+                var selectedMode = "TRANSIT";
+                var request = {
+                    origin: origen,
+                    destination: destino,
+                    travelMode: google.maps.TravelMode[selectedMode]
+                };
+                
+                directionsService.route(request, function(response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                    }
+                });
+            }
+            else if (msg.estatusMensaje === "peticionEnviada") {
+                $('html, body').animate({scrollTop: 0}, 'fast');
+                $("#barraCargarPaciente").slideUp(100);
+                $("#tituloDivAlertExcepcionPaciente").html("<i class='icon fa fa-ban'></i>Excepción de Aviso");
+                $("#labelMensajeExcepcionPaciente").html("El aviso ya se envio a un Hospital.");
+
+                $("#divAlertExcepcionPaciente").slideDown('slow').delay(2500).slideUp('slow');
                 $("#barraCargarPaciente").slideUp(100);
             }
         });

@@ -26,6 +26,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -40,7 +41,8 @@ public class AcudirHospital implements SessionAware {
     private Map<String, Object> session = null;
     HttpServletRequest request = ServletActionContext.getRequest();
     
-    private List<Usuarios> listUsuarios;    
+    private List<Usuarios> listUsuarios;
+    private List<PeticionesEntrantes> listPeticiones;
     
     Usuarios userPaciente = new Usuarios();
     Pacientes paciente = new Pacientes();
@@ -65,7 +67,7 @@ public class AcudirHospital implements SessionAware {
     private String textoAlert;
     private String estatusMensaje;
     public String execute() throws ParseException {
-        
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos pacientes");
         Boolean envioPeticion = false;
         listUsuarios = usuarioDAO.listarById(nombreUsuario);
@@ -101,14 +103,22 @@ public class AcudirHospital implements SessionAware {
         peticionEntrante.setHospitales(hospital);
         peticionEntrante.setPacientes(paciente);
         
-        if(peticionEntranteDAO.save(peticionEntrante)) {
-            estatusMensaje = "exito";
+        listPeticiones = peticionEntranteDAO.finByHospitalNss(s, nss);
+        
+        if(listPeticiones.isEmpty()) {
+            if(peticionEntranteDAO.save(peticionEntrante)) {
+                estatusMensaje = "exito";
+            }
+            else {
+                estatusMensaje = "error";
+                peticionEntranteDAO.delete(peticionEntrante);
+            }
         }
         else {
-            estatusMensaje = "error";
-            peticionEntranteDAO.delete(peticionEntrante);
+            System.out.println("Hay peticiones echas por el usuario: " + nombreUsuario);
+            estatusMensaje = "peticionEnviada";
         }
-        
+
         return SUCCESS;
     }
       

@@ -20,16 +20,16 @@
     <label id="labelMensajeSuccessPaciente"></label>
 </div>
 
-<div id="divAlertErrorPaciente" style="display: none;"  class="alert alert-warning alert-dismissable">
+<div id="divAlertErrorPaciente" style="display: none;"  class="alert alert-error alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4 id="tituloDivAlertErrorPaciente"></h4>
     <label id="labelMensajeErrorPaciente"></label>
 </div>
 
-<div id="divAlertPaciente" style="display: none;" class="alert alert-warning alert-dismissable">
+<div id="divAlertExcepcionPaciente" style="display: none;"  class="alert alert-warning alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4 id="textoAlertPaciente"><i class="icon fa fa-warning"></i>Campos no validos.</h4>
-    Verifique que los datos que ha ingresado sean correctos.
+    <h4 id="tituloDivAlertExcepcionPaciente"></h4>
+    <label id="labelMensajeExcepcionPaciente"></label>
 </div>
 
 <section class="content">
