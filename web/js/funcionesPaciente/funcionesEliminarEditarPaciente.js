@@ -964,7 +964,7 @@ function buscarPacientePorFiltroUsuario() {
             $("#barraCargarEliminar").slideUp(100);
             if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
                 $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
-                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+                $('#gridPaciente').trigger("reloadGrid", [{page: 1}]);
                
             }
             else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
@@ -980,3 +980,224 @@ function buscarPacientePorFiltroUsuario() {
         });
     
 }
+/****************************************************************************************************/
+$(document).ready(function() {
+    
+var counter = 0;
+    
+    $("#agregarEnfermedad").click(function () {
+        
+	if(counter > 4) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var numDivsEnfermedad = $("#TextBoxesGroupEnfermedadCronica > div").length;
+        
+        if( numDivsEnfermedad !== 0)
+            counter = numDivsEnfermedad;
+        else
+            counter = 0;
+        
+        var newTextBoxDiv = $(document.createElement('div')).attr("id", 'enfermedadesCronicas' + counter);
+        newTextBoxDiv.attr("class", 'row');
+ 
+	newTextBoxDiv.after().html(
+                                    '<div class="col-lg-4">' +
+                                        '<div style="margin-bottom:10px;" class="form-group">' +
+                                            '<label>Nombre enfermedad #'+ (counter + 1)+ ' : </label>' +
+                                            '<input class="form-control" type="text" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '" value="" placeholder="Nombre enfermedad'+(counter+1)+'" />' + 
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="col-lg-4">'+
+                                        '<label>Tipo</label>'+
+                                        '<select name="tipoEnfermedad'+ counter +'" class="form-control">'+
+                                            '<option value="-1">Seleccionar</option>'+
+                                            '<option value="diabetes">Diabetes</option>'+
+                                            '<option value="cardiovascular">Enfermedades cardiovasculares</option>'+
+                                            '<option value="obesidad">Obesidad</option>'+
+                                            '<option value="cancer">Cáncer</option>'+
+                                            '<option value="dislipidemias">Dislipidemias</option>'+
+                                        '</select>'+
+                                    '</div>'+
+                                    '<div class="col-lg-4">'+
+                                        '<div id="divInicioEnfermedadPaciente" class="form-group">'+
+                                            '<label for="inicioEnfermedad">Inicio de enfermedad</label>'+
+                                            '<div class="input-group">'+
+                                                '<div class="input-group-addon">'+
+                                                    '<i class="fa fa-calendar"></i>'+
+                                                '</div>'+
+                                                '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="inicioEnfermedad'+ counter +'" id="inicioEnfermedad'+counter+'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask placeholder="dd/mm/yyyy" type="text">'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>');
+        newTextBoxDiv.appendTo("#TextBoxesGroupEnfermedadCronica");
+        counter++;
+    });
+    
+    $("#eliminarEnfermedad").click(function () {
+        if(counter === 0) {
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+        counter--;
+        $("#enfermedadesCronicas" + counter).remove();
+    });
+//*********************************************************************************************************************************
+    var counterContacto = 0;
+    
+    $("#agregarContacto").click(function () {
+        if(counterContacto > 7) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var numDivsContacto = $("#TextBoxesGroupContacto > div").length;
+        
+        if( numDivsContacto !== 0)
+            counterContacto = numDivsContacto;
+        else
+            counterContacto = 0;
+        
+	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'contactoPaciente' + counterContacto);
+ 
+	newTextBoxDiv.after().html( '<label for="nombreC">Contacto #'+ (counterContacto + 1) +'</label>'+
+                                    '<div id="divNombreCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="nombreC">Nombre</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreContacto'+counterContacto+'" id="nombreContacto'+counterContacto+'" placeholder="Nombre" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divApellidoPaternoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="apellidoPaternoC">Apellido Paterno</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaternoContacto'+counterContacto+'" id="apellidoPaternoContacto'+counterContacto+'" placeholder="Apellido Paterno" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divApellidoMaternoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="apellidoMaternoC">Apellido Materno</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaternoContacto'+counterContacto+'" id="apellidoMaternoContacto'+counterContacto+'" placeholder="Apellido Materno" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divParentescoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="parentesco">Parentesco</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="parentescoContacto'+counterContacto+'" id="parentescoContacto'+counterContacto+'" placeholder="Parentesco" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divCelularCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="celular">Telefono Celular</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" name="celularContacto'+counterContacto+'" id="celularContacto'+counterContacto+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Celular" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divFacebookCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="facebookC">Facebook (www.facebook.com/alguien)</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="facebookContacto'+counterContacto+'" id="facebookContacto'+counterContacto+'" placeholder="Facebook" type="text">'+
+                                    '</div>'+
+
+                                    '<div id="divCorreoCPaciente'+counterContacto+'" class="form-group">'+
+                                        '<label for="correoC">Email</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="correoContacto'+counterContacto+'" id="correoContacto'+counterContacto+'" placeholder="Email" type="text">'+
+                                    '</div>');
+        
+
+	newTextBoxDiv.appendTo("#TextBoxesGroupContacto");
+	counterContacto++;
+     });
+ 
+     $("#eliminarContacto").click(function () {
+         if(counterContacto === 0){
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+         counterContacto--;
+         $("#contactoPaciente" + counterContacto).remove();
+     });
+     
+//*************************************************************************************************************************************************
+    
+    var counterTelefono = 0;
+   
+    $("#agregarTelefono").click(function () {
+        
+        if(counterTelefono > 7) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var numDivsTelefono = $("#TextBoxesGroupTelefonos > div").length;
+        
+        if( numDivsTelefono !== 0)
+            counterTelefono = numDivsTelefono;
+        else
+            counterTelefono = 0;
+        
+	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'telefonoPaciente' + counterTelefono);
+ 
+	newTextBoxDiv.after().html(
+                                    '<div id="divTelefonoFijoPaciente" class="form-group">'+
+                                        '<label for="telefonoPaciente">Teléfono #'+ (counterTelefono + 1) +'</label>'+
+                                        '<input kl_virtual_keyboard_secure_input="on" name="numTelefono'+counterTelefono+'" id="numTelefono'+counterTelefono+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="No. Telefono" type="text">'+
+                                    '</div>');
+        
+
+	newTextBoxDiv.appendTo("#TextBoxesGroupTelefonos");
+	counterTelefono++;
+     });
+ 
+     $("#eliminarTelefono").click(function () {
+         if(counterTelefono === 0){
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+         counterTelefono--;
+         $("#telefonoPaciente" + counterTelefono).remove();
+     });
+//******************************************************************************************************************************************************************
+
+var counterMedicamento = 0;
+    
+    $("#agregarMedicamento").click(function () {
+        
+	if(counterMedicamento > 4) {
+            alert("Limite alcanzado");
+            return false;
+        }
+        
+        var numDivsMedicamento = $("#TextBoxesGroup > div").length;
+        
+        if( numDivsMedicamento !== 0)
+            counterMedicamento = numDivsMedicamento;
+        else
+            counterMedicamento = 0;
+        
+        var newTextBoxDiv = $(document.createElement('div')).attr("id", 'medicamentos' + counterMedicamento);
+        newTextBoxDiv.attr("class", 'row');
+ 
+	newTextBoxDiv.after().html(
+                                    '<div class="col-lg-6">'+
+                                        '<div style="margin-bottom:10px;" class="form-group">'+
+                                            '<label>Nombre del medicamento #'+ (counterMedicamento + 1) +'</label>'+
+                                            '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó'+(counterMedicamento+1)+'"/>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="col-lg-6">'+
+                                        '<div style="margin-bottom:10px;" class="form-group">'+
+                                            '<label>Frecuencia</label>'+
+                                            '<input class="form-control" type="text" value="" name="frecuencia'+counterMedicamento+'" id="frecuencia'+counterMedicamento+'" placeholder="Frecuencia"/>'+
+                                        '</div>'+
+                                    '</div>');
+        newTextBoxDiv.appendTo("#TextBoxesGroup");
+        counterMedicamento++;
+    });
+    
+    $("#eliminarMedicamento").click(function () {
+        if(counterMedicamento === 0) {
+            alert("Se borraron todas las entradas");
+            return false;
+        }
+        
+        counterMedicamento--;
+        $("#medicamentos" + counterMedicamento).remove();
+    });
+});

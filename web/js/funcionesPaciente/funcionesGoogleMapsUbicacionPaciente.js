@@ -159,26 +159,19 @@ function initialize() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        
         var distaciaWidget = new DistaciaWidget(map);
         google.maps.event.addListener(distaciaWidget, 'distance_changed', function() {
             displayInfo(distaciaWidget);
         });
         google.maps.event.addListener(marker, 'dblclick', hospitalesShow);
-        
-//        var populationOptions = {
-//                                    strokeColor: '#FF0000',
-//                                    strokeOpacity: 0.8,
-//                                    strokeWeight: 2,
-//                                    fillColor: '#FF0000',
-//                                    fillOpacity: 0.35,
-//                                    map: map,
-//                                    center: latlon,
-//                                    radius: 5000
-//                                  };
-//
-//        cityCircle = new google.maps.Circle(populationOptions);
+
 
         google.maps.event.addListener(marker, 'mouseout', toggleBounce);
+        
+        var bucarHospitalesDiv = document.createElement('div');
+        var buscarHospitales = new ControlHospitales(bucarHospitalesDiv, map, latlon, lat, lon, distaciaWidget);
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(bucarHospitalesDiv);
     }
     
     function toggleBounce() {
@@ -253,6 +246,36 @@ function displayInfo(widget) {
                      '  </div>' +
                      '</div>' +
                      '<span class="progress-description">Distancia---> Min: 1km - - - Max: 10km</span>';
+}
+
+function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia) {
+  controlDiv.style.padding = '5px';
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = 'skyblue';
+  controlUI.style.border='1px solid';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Buscar Hospitales';
+  controlDiv.appendChild(controlUI);
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily='Arial,sans-serif';
+  controlText.style.fontSize='12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = '<b>Buscar<b>';
+  controlUI.appendChild(controlText);
+
+  // Setup click-event listener: simply set the map to London
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+    $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarHospitales",
+            data: {latitudUsuario: latitud, longitudUsuario:longitud, distancia:Math.round(distancia.get('distance'))}
+        });
+    alert("Centro: " + centro + " su latitud es: " + latitud + "su longitud es: " + longitud + "la distancia es: " + Math.round(distancia.get('distance')));
+    map.setCenter(centro);
+  });
 }
       
 google.maps.event.addDomListener(window, 'load', initialize);

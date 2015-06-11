@@ -580,6 +580,8 @@
         </action>
         <!-- ************************************ FIN HOSPITAL CONSULTAR INFORMACION ****************************************** -->
         
-        
+        <action name="buscarHospitales" class="com.saem.actions.BuscarHospitales">
+            <result name="success" type="json">JSON</result>
+        </action>
     </package>
 </struts>

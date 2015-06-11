@@ -534,9 +534,11 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 int index = 0;
                 for (Iterator iterator3 = telPaciente.iterator(); iterator3.hasNext();) {
                     telefonosPacientes = (TelefonosPacientes) iterator3.next();
-                    html += "<div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
-                          + "   <label for=\"telefonoPaciente\">Teléfono #"+ (index + 1) +"</label>"
-                          + "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+telefonosPacientes.getNumeroTelefono()+"\" name=\"numTelefono"+index+"\" id=\"numTelefono"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
+                    html += "<div id=\"telefonoPaciente"+index+"\">"+
+                            "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
+                          + "       <label for=\"telefonoPaciente\">Teléfono #"+ (index + 1) +"</label>"
+                          + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+telefonosPacientes.getNumeroTelefono()+"\" name=\"numTelefono"+index+"\" id=\"numTelefono"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
+                          + "   </div>"
                           + "</div>";
                     System.out.println(index);
                     System.out.println("Telefono-->" + telefonosPacientes.getNumeroTelefono() +" Id: " +telefonosPacientes.getId()+" NSS:"+ paciente.getNss());
@@ -609,35 +611,37 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 int index = 0;
                 for (Iterator iterator3 = contacPaciente.iterator(); iterator3.hasNext();) {
                     contactos = (Contactos) iterator3.next();
-                    html += "<label for=\"nombreC\">Contacto #"+ (index + 1) +"</label>" + "\n" +
-                            "<div id=\"divNombreCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"nombreC\">Nombre</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getNombre()+"\" class=\"form-control\" name=\"nombreContacto"+index+"\" id=\"nombreContacto"+index+"\" placeholder=\"Nombre\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divApellidoPaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"apellidoPaternoC\">Apellido Paterno</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoPaterno()+"\" class=\"form-control\" name=\"apellidoPaternoContacto"+index+"\" id=\"apellidoPaternoContacto"+index+"\" placeholder=\"Apellido Paterno\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divApellidoMaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"apellidoMaternoC\">Apellido Materno</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoMaterno()+"\" class=\"form-control\" name=\"apellidoMaternoContacto"+index+"\" id=\"apellidoMaternoContacto"+index+"\" placeholder=\"Apellido Materno\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divParentescoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"parentesco\">Parentesco</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getParentesco()+"\" class=\"form-control\" name=\"parentescoContacto"+index+"\" id=\"parentescoContacto"+index+"\" placeholder=\"Parentesco\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divCelularCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"celular\">Telefono Celular</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCelular()+"\" name=\"celularContacto"+index+"\" id=\"celularContacto"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"Celular\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divFacebookCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"facebookC\">Facebook (www.facebook.com/alguien)</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getFacebook()+"\" class=\"form-control\" name=\"facebookContacto"+index+"\" id=\"facebookContacto"+index+"\" placeholder=\"Facebook\" type=\"text\">" + "\n" +
-                            "</div>" + "\n" +
-                            "<div id=\"divCorreoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "   <label for=\"correoC\">Email</label>" + "\n" +
-                            "   <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCorreo()+"\" class=\"form-control\" name=\"correoContacto"+index+"\" id=\"correoContacto"+index+"\" placeholder=\"Email\" type=\"text\">" + "\n" +
-                            "</div>" + "\n";
+                    html += "<div id=\"contactoPaciente"+index+"\">" + "\n" +
+                            "   <label for=\"nombreC\">Contacto #"+ (index + 1) +"</label>" + "\n" +
+                            "   <div id=\"divNombreCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"nombreC\">Nombre</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getNombre()+"\" class=\"form-control\" name=\"nombreContacto"+index+"\" id=\"nombreContacto"+index+"\" placeholder=\"Nombre\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divApellidoPaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"apellidoPaternoC\">Apellido Paterno</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoPaterno()+"\" class=\"form-control\" name=\"apellidoPaternoContacto"+index+"\" id=\"apellidoPaternoContacto"+index+"\" placeholder=\"Apellido Paterno\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divApellidoMaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"apellidoMaternoC\">Apellido Materno</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoMaterno()+"\" class=\"form-control\" name=\"apellidoMaternoContacto"+index+"\" id=\"apellidoMaternoContacto"+index+"\" placeholder=\"Apellido Materno\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divParentescoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"parentesco\">Parentesco</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getParentesco()+"\" class=\"form-control\" name=\"parentescoContacto"+index+"\" id=\"parentescoContacto"+index+"\" placeholder=\"Parentesco\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divCelularCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"celular\">Telefono Celular</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCelular()+"\" name=\"celularContacto"+index+"\" id=\"celularContacto"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"Celular\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divFacebookCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"facebookC\">Facebook (www.facebook.com/alguien)</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getFacebook()+"\" class=\"form-control\" name=\"facebookContacto"+index+"\" id=\"facebookContacto"+index+"\" placeholder=\"Facebook\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "   <div id=\"divCorreoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
+                            "       <label for=\"correoC\">Email</label>" + "\n" +
+                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCorreo()+"\" class=\"form-control\" name=\"correoContacto"+index+"\" id=\"correoContacto"+index+"\" placeholder=\"Email\" type=\"text\">" + "\n" +
+                            "   </div>" + "\n" +
+                            "</div>";
                     System.out.println(index);
                     System.out.println("Id: " + contactos.getId() + "\n" +
                                        "Nombre: " + contactos.getNombre() + "\n" +
@@ -833,7 +837,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                                 "   <div class=\"col-lg-4\">" + "\n" +
                                 "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
                                 "           <label>Nombre enfermedad #"+ (index + 1)+ " : </label>" + "\n" +
-                                "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\""+enfermedadCronica.getNombre()+"\" placeholder=\"Nombre enfermedad"+index+"\" />" + "\n" +
+                                "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\""+enfermedadCronica.getNombre()+"\" placeholder=\"Nombre enfermedad"+(index+1)+"\" />" + "\n" +
                                 "       </div>" + "\n" +
                                 "   </div>" + "\n" +
                                 "   <div class=\"col-lg-4\">" + "\n" +
@@ -901,7 +905,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 
             } else {
                 // Obtenemos la lista de la sesión
-                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(0, 0);
+                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listarPacientes(0, 0);
                 estatusMensajeEliminar = "usuarioEncontrado";
             }
             session.put(com.saem.actions.GridRegistroPaciente.LISTA_GRID_MODEL, listaTemp);
