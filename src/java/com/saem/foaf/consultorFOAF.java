@@ -11,6 +11,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.sparql.vocabulary.FOAF;
 import com.hp.hpl.jena.util.FileManager;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +32,15 @@ public class consultorFOAF {
     }
 
     public ArrayList<PersonaFOAF> consultarAmigos() {
-        FileManager.get().readModel(model, archivoRDF);
+        //FileManager.get().readModel(model, archivoRDF);
+        
+        InputStream in = FileManager.get().open(archivoRDF);
+         if (in == null) {
+             System.out.println("-->ERROR no se pudo abrir el archivo");
+             return new ArrayList<PersonaFOAF>();
+         }
+         model.read(in, "");
+        
         ArrayList<PersonaFOAF> listaPersonas = new ArrayList<PersonaFOAF>();
 
         Resource person = model.getResource(BASE_URI + nombrePersona);
@@ -56,7 +65,15 @@ public class consultorFOAF {
     }
 
     public PersonaFOAF consultarPersona() {
-        FileManager.get().readModel(model, archivoRDF);
+        //FileManager.get().readModel(model, archivoRDF);
+        
+        InputStream in = FileManager.get().open(archivoRDF);
+         if (in == null) {
+             System.out.println("-->ERROR no se pudo abrir el archivo");
+             return new PersonaFOAF();
+         }
+         model.read(in, "");
+         
         PersonaFOAF personaTemp = new PersonaFOAF();
 
         Resource person = model.getResource(BASE_URI + nombrePersona);

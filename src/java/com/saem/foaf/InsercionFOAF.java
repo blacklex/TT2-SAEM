@@ -14,6 +14,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,8 +37,15 @@ public class InsercionFOAF {
     }
 
     public Boolean insertarAmigo(String nombreAmigo, String apellidosAmigo, String telefonoAmigo, String correoAmigo, String facebookAmigo) {
-        FileManager.get().readModel(model, archivoRDF);
+        //FileManager.get().readModel(model, archivoRDF);
 
+        InputStream in = FileManager.get().open(archivoRDF);
+         if (in == null) {
+             System.out.println("-->ERROR no se pudo abrir el archivo");
+             return false;
+         }
+         model.read(in, "");
+         
         Resource r = model.getResource(BASE_URI + persona.getNombreUsuarioPersona());
         Resource r2 = model.createResource(BASE_URI + persona.getNombreUsuarioPersona() + correoAmigo, FOAF.Person);
         r2.addProperty(FOAF.mbox, model.createResource("mailto:" + correoAmigo));
@@ -54,8 +62,15 @@ public class InsercionFOAF {
     }
 
     public Boolean insertarPersona() {
-        FileManager.get().readModel(model, archivoRDF);
+        //FileManager.get().readModel(model, archivoRDF);
 
+        InputStream in = FileManager.get().open(archivoRDF);
+         if (in == null) {
+             System.out.println("-->ERROR no se pudo abrir el archivo");
+             return false;
+         }
+         model.read(in, "");
+        
         Resource r = model.createResource(BASE_URI + persona.getNombreUsuarioPersona());
         r.addProperty(FOAF.nick, persona.getNombreUsuarioPersona());
         r.addProperty(FOAF.phone, model.createResource("tel:" + persona.getTelefonoPersona()));
