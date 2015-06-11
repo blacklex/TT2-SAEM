@@ -58,9 +58,9 @@ import org.apache.struts2.interceptor.SessionAware;
 public class ConsultarPaciente extends ActionSupport implements SessionAware, ServletRequestAware{
 
     private Map<String, Object> session = null;
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final PacienteDAO pacienteDAO = new PacienteDAO();
     private final HospitalDAO hospitalDAO = new HospitalDAO();
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final DomicilioPacienteDAO domicilioPacienteDAO = new DomicilioPacienteDAO();
     private final TelefonoPacienteDAO telefonoPacienteDAO = new TelefonoPacienteDAO();
     private final DatosPersonalesDAO datosPersonalesDAO = new DatosPersonalesDAO();
