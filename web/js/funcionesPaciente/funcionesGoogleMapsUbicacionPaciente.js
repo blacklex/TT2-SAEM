@@ -205,45 +205,37 @@ function initialize() {
     }
 }
 
-function newMarker(markerData, latitud, longitud){
-	var posSitio = new google.maps.LatLng(markerData.lt,markerData.ln);
-
-	var sitio = new google.maps.Marker({
-		map:map,
-		draggable:false,
-                icon: markerHospital,
-		animation: google.maps.Animation.DROP,
-		position: posSitio
-	});
-
-//	var content = '<div id="content">'+
-//                      '   <div id="siteNotice">'+
-//                      '</div>'+
-//                      '<h3 id="secondHeading" class="secondHeading">'+markerData.titulo+'</h3>'+
-//                      '<div id="bodyContent">'+
-//                      '<button type="button" onclick="verRuta('+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Ver ruta</button>'+
-//                      '<button type="button" onclick="acudirAlHospital('+markerData.codigo+');" class="btn btn-primary btn-sm margin">Acudir al Hospital</button>'+
-//                      '<button type="button" onclick="enviarAlerta();" class="btn btn-danger btn-sm margin">Enviar Alerta</button>'+
-//                      '</div>'+
-//                      '</div>';
-var content = '<div id="iw-container">' +
-                    '<div class="iw-title">'+markerData.titulo+'</div>' +
-                    '<div class="iw-content">' +
-                      '<div class="iw-subTitle">Dirección</div>' +
-                      '<p>Dirección del Hospital.</p>' +
-                      '<div class="iw-subTitle">Opciones</div>' +
-                      '<button type="button" onclick="verRuta('+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Ver ruta</button>'+
-                      '<button type="button" onclick="acudirAlHospital('+markerData.codigo+','+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Acudir al Hospital</button>'+
-                      '<button type="button" onclick="enviarAlerta();" class="btn btn-danger btn-sm margin">Enviar Alerta</button>'+
-                    '</div>' +
-                    '<div class="iw-bottom-gradient"></div>' +
-                  '</div>';                                                 
-	var infowindow = new google.maps.InfoWindow({ content: content,maxWidth: 1000 }); 
-	google.maps.event.addListener(sitio, 'click', function(){ 
+function newMarker(markerData, latitud, longitud) {
+    var posSitio = new google.maps.LatLng(markerData.lt,markerData.ln);
+    
+    var sitio = new google.maps.Marker({
+        map:map,
+        draggable:false,
+        icon: markerHospital,
+        animation: google.maps.Animation.DROP,
+        position: posSitio
+    });
+    
+    var content =   '<div id="iw-container">' +
+                    '   <div class="iw-title">'+markerData.titulo+'</div>' +
+                    '   <div class="iw-content">' +
+                    '       <div class="iw-subTitle">Dirección</div>' +
+                    '       <p>Dirección del Hospital.</p>' +
+                    '       <div class="iw-subTitle">Opciones</div>' +
+                    '       <button type="button" onclick="verRuta('+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Ver ruta</button>'+
+                    '       <button type="button" onclick="acudirAlHospital('+markerData.codigo+','+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Acudir al Hospital</button>'+
+                    '       <button type="button" onclick="enviarAlerta();" class="btn btn-danger btn-sm margin">Enviar Alerta</button>'+
+                    '   </div>' +
+                    '   <div class="iw-bottom-gradient"></div>' +
+                    '</div>';                                                 
+            var infowindow = new google.maps.InfoWindow({ content: content,maxWidth: 1000 }); 
             
-            infowindow.open(map,sitio); }); 
-        google.maps.event.addListener(map, 'click', function() {
-    infowindow.close();
+            google.maps.event.addListener(sitio, 'click', function() { 
+                infowindow.open(map,sitio);
+            }); 
+            
+            google.maps.event.addListener(map, 'click', function() {
+                infowindow.close();
   });
     // *
   // START INFOWINDOW CUSTOMIZE.
