@@ -348,6 +348,10 @@
         <action name="mostrarEnfermedadesCronicasPaciente" method="mostrarEnfermedadesCronicasPaciente" class="com.saem.actions.ConsultarPaciente">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="mostrarDatosAccesoPaciente" method="mostrarDatosAccesoPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- _______________________________________________________________________________________________ -->
 
       <!-- ******************************** FIN CONSULTAR PACIENTE ******************************* -->
@@ -581,6 +585,26 @@
         <!-- ************************************ FIN HOSPITAL CONSULTAR INFORMACION ****************************************** -->
         
         <action name="buscarHospitales" class="com.saem.actions.BuscarHospitales">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="enviarAlertaEntrante" class="com.saem.actions.AcudirHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="enviarAlertaSaliente" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarTotalPeticionesPacientes" method="recuperarTotalPeticionesPacientes" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="pantallaConsultarMiInformacion" method="pantallaConsultarMiInformacion" class="com.saem.actions.PacienteAction">
+            <result name="pantallaConsultarMiInformacion" type="tiles">pantallaConsultarMiInformacion</result>
+        </action>
+        
+         <action name="recuperarPaciente" method="recuperarPaciente" class="com.saem.actions.ConsultarPaciente">
             <result name="success" type="json">JSON</result>
         </action>
     </package>
