@@ -7,12 +7,13 @@ package com.saem.actions;
 
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.PacienteDAO;
-import com.hibernate.dao.PeticionesEntrantesDAO;
+import com.hibernate.dao.PeticionesSalientesDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Contactos;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesEntrantes;
+import com.hibernate.model.PeticionesSalientes;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.saem.notificadores.NotificadorSMS;
@@ -35,32 +36,32 @@ import org.hibernate.Session;
  *
  * @author sergio
  */
-public class AcudirHospital implements SessionAware {
+public class EnviarAlertaSaliente implements SessionAware {
     
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final PacienteDAO pacienteDAO = new PacienteDAO();
-    private final PeticionesEntrantesDAO peticionEntranteDAO = new PeticionesEntrantesDAO();
+    private final PeticionesSalientesDAO peticionSalienteDAO = new PeticionesSalientesDAO();
     private final HospitalDAO hospitalDAO = new HospitalDAO();
     private Map<String, Object> session = null;
     HttpServletRequest request = ServletActionContext.getRequest();
-    
+
     private List<Usuarios> listUsuarios;
-    private List<PeticionesEntrantes> listPeticiones;
+    private List<PeticionesSalientes> listPeticiones;
     
     Usuarios userPaciente = new Usuarios();
     Pacientes paciente = new Pacientes();
     Contactos contacto = new Contactos();
-    PeticionesEntrantes peticionEntrante = new PeticionesEntrantes();
+    PeticionesSalientes peticionSaliente = new PeticionesSalientes();
     Hospitales hospital = new Hospitales();
     String codigoHospital;
     String latitudUsuario;
     String longitudUsuario;
     String nombreUsuario;
     String nss;
-
+    
     String mensajeError = "";
     
-    String idPeticionEntrante;
+    String idPeticionSaliente;
     String prioridadAlta = "1";
     String prioridadMedia = "2";
     String prioridadBaja = "3";
@@ -103,11 +104,11 @@ public class AcudirHospital implements SessionAware {
             }
         }
 //        System.out.println(contactosPaciente);
-//        NotificadorSMS sms = new NotificadorSMS("Estoy en este Hospital", contactosPaciente);
+//        NotificadorSMS sms = new NotificadorSMS("Estoy en este este lugar", contactosPaciente);
 //        sms.enviarSMS();
         //Generamos el codigo de Historial Clinico
         Calendar cal = Calendar.getInstance();
-        idPeticionEntrante = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND) + "" + cal.get(Calendar.MILLISECOND);
+        idPeticionSaliente = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND) + "" + cal.get(Calendar.MILLISECOND);
         
         //Buscamos el hospital que se encargara del paciente
         hospital = hospitalDAO.findById(codigoHospital);
@@ -118,25 +119,25 @@ public class AcudirHospital implements SessionAware {
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
         
-        peticionEntrante.setIdPeticionesEntrantes(idPeticionEntrante);
-        peticionEntrante.setFechaRegistro(date);
-        peticionEntrante.setEstatus(statusPP);
-        peticionEntrante.setLatitudPaciente(latitudUsuario);
-        peticionEntrante.setLongitudPaciente(longitudUsuario);
-        peticionEntrante.setPrioridad(prioridadBaja);
+        peticionSaliente.setIdPeticionesSalientes(idPeticionSaliente);
+        peticionSaliente.setFechaRegistro(date);
+        peticionSaliente.setEstatus(statusPP);
+        peticionSaliente.setLatitudPaciente(latitudUsuario);
+        peticionSaliente.setLongitudPaciente(longitudUsuario);
+        peticionSaliente.setPrioridad(prioridadAlta);
         
-        peticionEntrante.setHospitales(hospital);
-        peticionEntrante.setPacientes(paciente);
+        peticionSaliente.setHospitales(hospital);
+        peticionSaliente.setPacientes(paciente);
         
-        listPeticiones = peticionEntranteDAO.finByHospitalNss(s, nss);
+        listPeticiones = peticionSalienteDAO.finByHospitalNss(s, nss);
         
         if(listPeticiones.isEmpty()) {
-            if(peticionEntranteDAO.save(peticionEntrante)) {
+            if(peticionSalienteDAO.save(peticionSaliente)) {
                 estatusMensaje = "exito";
             }
             else {
                 estatusMensaje = "error";
-                peticionEntranteDAO.delete(peticionEntrante);
+                peticionSalienteDAO.delete(peticionSaliente);
             }
         }
         else {
@@ -146,12 +147,58 @@ public class AcudirHospital implements SessionAware {
 
         return SUCCESS;
     }
-      
-    @Override
-    public void setSession(Map<String, Object> map) {
-        this.session = map;
+    
+    public String recuperarTotalPeticionesPacientes() {
+        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
+            userPaciente = (Usuarios) iterator1.next();
+            Set pacientes = userPaciente.getPacienteses();
+            for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
+                paciente = (Pacientes) iterator2.next(); 
+                Set peticionesSalientes = paciente.getPeticionesSalienteses();
+                for(Iterator iterato3 = peticionesSalientes.iterator(); iterato3.hasNext();) {
+                    peticionSaliente = (PeticionesSalientes) iterato3.next();
+                    estatus = peticionSaliente.getEstatus();
+                }
+                
+            }
+        }
+        
+        if(estatus == null) {
+            System.out.println("no hay peticiones");
+        }
+        
+        if(estatus.equals("PA")) {
+            System.out.println("Peticion atendida");
+            recuperarEstatus = estatus;
+        }
+        
+        if(estatus.equals("PR")) {
+            System.out.println("Peticion Rechazada");
+            recuperarEstatus = estatus;
+        }
+        
+        if(estatus.equals("PNA")) {
+            System.out.println("Peticion no atendida");
+            recuperarEstatus = estatus;
+        }
+        
+        if(estatus.equals("PP")) {
+            System.out.println("Peticion pediente");
+            recuperarEstatus = estatus;
+        }
+        return SUCCESS;
     }
 
+    /**
+     *
+     * @param session
+     */
+    @Override
+    public void setSession(Map<String, Object> session) {
+        this.session = session;
+    }
+   
     public String getCodigoHospital() {
         return codigoHospital;
     }
@@ -223,5 +270,4 @@ public class AcudirHospital implements SessionAware {
     public void setRecuperarEstatus(String recuperarEstatus) {
         this.recuperarEstatus = recuperarEstatus;
     }
-
 }

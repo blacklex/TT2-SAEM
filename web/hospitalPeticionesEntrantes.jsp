@@ -207,6 +207,7 @@
                 </div><!-- /.modal-dialog -->
             </div>
         </div>
+    </div>
 </section>
 
 

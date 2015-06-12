@@ -224,7 +224,7 @@ function newMarker(markerData, latitud, longitud) {
                     '       <div class="iw-subTitle">Opciones</div>' +
                     '       <button type="button" onclick="verRuta('+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Ver ruta</button>'+
                     '       <button type="button" onclick="acudirAlHospital('+markerData.codigo+','+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Acudir al Hospital</button>'+
-                    '       <button type="button" onclick="enviarAlerta();" class="btn btn-danger btn-sm margin">Enviar Alerta</button>'+
+                    '       <button type="button" onclick="enviarAlerta('+markerData.codigo+','+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-danger btn-sm margin">Enviar Alerta</button>'+
                     '   </div>' +
                     '   <div class="iw-bottom-gradient"></div>' +
                     '</div>';                                                 
@@ -380,8 +380,47 @@ function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospi
     });
 }
 
-function enviarAlerta() {
-    alert("Entro a Enviar alerta");
+function enviarAlerta(codigoHospital, latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
+    var nombreUsuario = $("#nombreUsuario").val();
+    var origen = new google.maps.LatLng(latitudUsuario, longitudUsuario);
+    var destino = new google.maps.LatLng(latitudHospital,longitudHospital);
+    
+    $("#barraCargarPaciente").slideDown(100);
+    $.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "enviarAlertaSaliente",
+        data: {codigoHospital: codigoHospital,latitudUsuario: latitudUsuario, longitudUsuario:longitudUsuario, nombreUsuario: nombreUsuario}
+    }).done(function (msg) {
+        $("#barraCargarPaciente").slideUp(100);
+        if (msg.estatusMensaje === "error") {
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>Error al enviar Aviso");
+            $("#labelMensajeErrorPaciente").html("El aviso no se pudo realizar con exito.");
+
+            $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+        }
+        else if (msg.estatusMensaje === "exito") {
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertSuccessPaciente").html("<i class='icon fa fa-ban'></i>Aviso enviado");
+            $("#labelMensajeSuccessPaciente").html("El aviso se envio con exito.");
+
+            $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+        }
+        else if (msg.estatusMensaje === "peticionEnviada") {
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertExcepcionPaciente").html("<i class='icon fa fa-ban'></i>Excepción de Aviso");
+            $("#labelMensajeExcepcionPaciente").html("El aviso ya se envio a un Hospital.");
+
+            $("#divAlertExcepcionPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+        }
+    });
 }
 
 function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {

@@ -451,6 +451,16 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
 //
 //        return "success";
 //    }
+    public String mostrarDatosAccesoPaciente() {
+        System.out.println("--->Entro a datos acceso pacientes");
+        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
+            userPaciente = (Usuarios) iterator1.next();
+            nombreUsuario = userPaciente.getNombreUsuario();
+            clave = userPaciente.getClave();
+        }
+        return SUCCESS;
+    }
     
     public String mostrarDatosPaciente() throws IOException {
         System.out.println("--->Entro a datos pacientes");
@@ -889,6 +899,7 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
         return SUCCESS;
     }
     
+    
     public String consultarDatosPacienteMostrarFiltro() throws FileNotFoundException, IOException {
         ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
         
@@ -908,6 +919,12 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
             session.put(com.saem.actions.GridRegistroPaciente.LISTA_GRID_MODEL, listaTemp);
 
         return "success";
+    }
+    
+    public String recuperarPaciente() {
+        String idUsuario = (String)session.get("nombreUsuario");
+        nombreUsuario = idUsuario;
+        return SUCCESS;
     }
 
     @Override

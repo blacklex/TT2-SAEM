@@ -15,4 +15,8 @@ public class PacienteAction {
         return "pantallaMapaPaciente";
     }
     
+    public String pantallaConsultarMiInformacion() {
+        return "pantallaConsultarMiInformacion";
+    }
+    
 }

@@ -5,6 +5,65 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        consultarTotalPeticionesPacientes();
+
+    });
+
+    function consultarTotalPeticionesPacientes() {
+        var nombreUsuario = $("#nombreUsuario").val();
+        $("#barraCargar").slideDown(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "ajaxRecuperarTotalPeticionesPacientes",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            //if(msg.recuperarEstatus === "PP")
+            
+            $("#barraCargar").slideUp(100);
+            $("#smallEnt").remove();
+            if (msg.recuperarEstatus === "PA") {
+                $("#notifiacionPeticionesAtendidas").append("<small id='smallEnt' class='label pull-right bg-green'>1</small>");
+                $("#modalFormPeticionAceptada").fadeIn('slow');
+                
+            }
+            else {
+                $("#notifiacionPeticionesAtendidas").append("<small id='smallEnt' class='label pull-right bg-green'>0</small>");
+            }
+            $("#smallSal").remove();
+            if (msg.recuperarEstatus === "PR") {
+                $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>1</small>");
+                $("#modalFormPeticionRechazada").fadeIn('slow');                
+            }
+            else {
+                $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>0</small>");
+            }
+            $("#smallSal1").remove();
+            if (msg.recuperarEstatus === "PNA") {
+                $("#notifiacionPeticionesNoAtendidas").append("<small id='smallSal1' class='label pull-right bg-green'>1</small>");
+                $("#modalFormPeticionNoAtendida").fadeIn('slow');                
+            }
+            else {
+                $("#notifiacionPeticionesNoAtendidas").append("<small id='smallSal1' class='label pull-right bg-green'>0</small>");
+            }
+            $("#smallSal2").remove();
+            if (msg.recuperarEstatus === "PP") {
+                $("#notifiacionPeticionesPendientes").append("<small id='smallSal2' class='label pull-right bg-green'>1</small>");
+                $("#modalFormPeticionPendiente").fadeIn('slow');
+                setTimeout(function() {
+                    $("#modalFormPeticionPendiente").fadeOut(1500);
+                },5000);
+            }
+            
+            setTimeout(function () {
+                    consultarTotalPeticionesPacientes();
+                }, 60000);
+        });
+    }
+</script> 
       <!-- =============================================== -->
 
       <!-- Left side column. contains the sidebar -->
@@ -18,6 +77,7 @@
             </div>-->
             <div class="pull-left info">
               <p><%out.print(session.getAttribute("nombreUsuario").toString());%></p>
+              <input type="hidden" id="nombreUsuario" value="<%out.print(session.getAttribute("nombreUsuario").toString());%>">
             </div>
           </div>
           <!-- search form -->
@@ -48,7 +108,35 @@
               </ul>
             </li>
              <!--  FIN MENU HOSPITALES CRUD    -->
+             <!--  INCIA MENU PETICIONES ENTRANTES    -->
+            <li>
+                <a id="notifiacionPeticionesAtendidas" href="pantallaPeticionesEntrantesHospital">
+                    <i class="fa fa-check"></i> <span>Peticiones Atendida</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                </a>
+            </li> 
+            <!--  FIN MENU PETICIONES ENTRANTES    -->
 
+            <!--  INCIA MENU RESPONDER PETICIONES     -->
+            <li>
+                <a id="notifiacionPeticionesRechazadas" href="pantallaPeticionesExternasHospital">
+                    <i class="fa fa-times-circle"></i> <span>Peticiones Rechazada</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                </a>
+            </li> 
+            <!--  FIN MENU RESPONDER PETICIONES     -->
+            <!--  INCIA MENU RESPONDER PETICIONES     -->
+            <li>
+                <a id="notifiacionPeticionesNoAtendidas" href="pantallaPeticionesExternasHospital">
+                    <i class="fa fa-stop"></i> <span>Peticiones No Atendida</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                </a>
+            </li> 
+            <!--  FIN MENU RESPONDER PETICIONES     -->
+            <!--  INCIA MENU RESPONDER PETICIONES     -->
+            <li>
+                <a id="notifiacionPeticionesPendientes" href="pantallaPeticionesExternasHospital">
+                    <i class="fa fa-pause"></i> <span>Peticiones Pendiente</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                </a>
+            </li> 
+            <!--  FIN MENU RESPONDER PETICIONES     -->
             <!--  INCIA MENU CONSULTAR HOSPITALES    -->
             <li>
               <a href="pantallaConsultarMiInformacion">
