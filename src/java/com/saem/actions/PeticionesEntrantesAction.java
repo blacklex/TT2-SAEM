@@ -14,7 +14,11 @@ import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.PeticionesSalientes;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -257,7 +261,7 @@ public class PeticionesEntrantesAction implements SessionAware {
         s.close();
     }
 
-    public String recuperarTotalPeticionesEntrantes() {
+    public String recuperarTotalPeticionesEntrantes() throws ParseException {
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Session s2 = com.hibernate.cfg.HibernateUtil.getSession();
         PeticionesEntrantesDAO peticionesEntrantesDAO = new PeticionesEntrantesDAO();
@@ -278,8 +282,40 @@ public class PeticionesEntrantesAction implements SessionAware {
             listaTempSal = new ArrayList<PeticionesSalientes>();
         }
 
+        int contPetExpiradas = 0;
+        for(PeticionesSalientes petSalTemp:listaTempSal){
+            //in milliseconds
+            Date fechaActual = new Date();
+            Date fechaPeticion = petSalTemp.getFechaRegistro();
+            
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fechaTemp = format.format(fechaActual);
+            fechaActual = format.parse(fechaTemp);
+            fechaTemp = format.format(fechaPeticion);
+            fechaPeticion = format.parse(fechaTemp);
+            
+			long diff = fechaActual.getTime() - fechaPeticion.getTime();
+ 
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			long diffDays = diff / (24 * 60 * 60 * 1000);
+ 
+			/*System.out.print(diffDays + " days, ");
+			System.out.print(diffHours + " hours, ");
+			System.out.print(diffMinutes + " minutes, ");
+			System.out.print(diffSeconds + " seconds.");
+            */
+                        if(diffDays>0 || diffHours>0 || (diffMinutes>=5 && diffSeconds>0)){
+                            petSalTemp.setEstatus("PNR");
+                            peticionesSalientesDAO.update(petSalTemp);
+                            contPetExpiradas++;
+                        }
+        }
+        
+        
         totalPeticionesEntrantes = listaTempEnt.size() + "";
-        totalPeticionesSalientes = listaTempSal.size() + "";
+        totalPeticionesSalientes = (listaTempSal.size()-contPetExpiradas) + "";
         s.close();
         s2.close();
         return SUCCESS;
