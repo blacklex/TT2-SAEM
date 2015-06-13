@@ -141,7 +141,9 @@ RadioWidget.prototype.distanceBetweenPoints_ = function(p1, p2) {
  };
 
 function initialize() {
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    alert("initialize");
+     directionsDisplay = new google.maps.DirectionsRenderer();
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
@@ -162,6 +164,7 @@ function initialize() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+                
                 directionsDisplay.setMap(map);
 
         var distaciaWidget = new DistaciaWidget(map);
@@ -363,6 +366,7 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
 google.maps.event.addDomListener(window, 'load', initialize);
 
 function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
+    
     var origen = new google.maps.LatLng(latitudUsuario, longitudUsuario);
     var destino = new google.maps.LatLng(latitudHospital,longitudHospital);
 
@@ -370,14 +374,18 @@ function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospi
     var request = {
         origin: origen,
         destination: destino,
+        
         travelMode: google.maps.TravelMode[selectedMode]
     };
-    
     directionsService.route(request, function(response, status) {
-        if (status === google.maps.DirectionsStatus.OK) {
+        if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
         }
+        else {
+            alert("No se puede trazar la ruta");
+        }
     });
+
 }
 
 function enviarAlerta(codigoHospital, latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
@@ -464,6 +472,9 @@ function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latit
                 directionsService.route(request, function(response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
+                    }
+                    else {
+                        alert("No se puede trazar la ruta");
                     }
                 });
             }

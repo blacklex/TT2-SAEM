@@ -217,6 +217,21 @@ public class UsuarioDAO extends HibernateUtil {
         }
             
 }
+        public List<Usuarios> findPacientesPorHospitalLike(String flitroNombreUsuario, String codigoHospital) {
+             try {
+             String queryString="from Usuarios, Pacientes where tipoUsuario='Paciente'and lower(nombreUsuario) LIKE (:searchKeyword) and Hospitales_codigo_hospital =:codigoHospital";
+             Query queryObject = getSession().createQuery(queryString);
+             queryObject.setParameter("searchKeyword", "%"+flitroNombreUsuario+"%");
+             queryObject.setParameter("codigoHospital", codigoHospital);
+             return queryObject.list();
+        
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            getSession().close();
+        }
+            
+}
         
       public List<Usuarios> listarPacientes(int from, int to) {
         try
@@ -240,5 +255,23 @@ public class UsuarioDAO extends HibernateUtil {
         }
 
 }
-
+      
+      public List<Usuarios> listarPacientesPorHospital(int from, int to, String codigoHospital) {
+        try
+        {
+                      
+           String queryString="Select u from Usuarios u left join fetch c.pacientes p where p.Hospitales_codigo_hospital =:codigoHospital";
+             Query queryObject = getSession().createQuery(queryString);
+             queryObject.setParameter("codigoHospital", codigoHospital);
+             return queryObject.list();
+           
+          
+        } catch (RuntimeException re) {
+            throw re;
+        } finally {
+            getSession().close();
+        }
+            
+}
+      
 }
