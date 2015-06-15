@@ -30,7 +30,11 @@ public class InsercionFOAF {
     private String archivoRDF = "";
     private PersonaFOAF persona;
 
+    public InsercionFOAF(String rutaArchivoRDF) {
+        archivoRDF = rutaArchivoRDF;
+        }
 
+    
     public InsercionFOAF(String nombrePersona, String telefonoPersona, String facebookPersona, String apellidosPersona, String nombreUsuarioPersona, String correoPersona, String rutaArchivoRDF) {
         archivoRDF = rutaArchivoRDF;
         persona = new PersonaFOAF(nombrePersona, apellidosPersona, nombreUsuarioPersona, correoPersona, telefonoPersona, facebookPersona);
@@ -47,7 +51,7 @@ public class InsercionFOAF {
          model.read(in, "");
          
         Resource r = model.getResource(BASE_URI + persona.getNombreUsuarioPersona());
-        Resource r2 = model.createResource(BASE_URI + persona.getNombreUsuarioPersona() + correoAmigo, FOAF.Person);
+        Resource r2 = model.createResource(BASE_URI +correoAmigo, FOAF.Person);
         r2.addProperty(FOAF.mbox, model.createResource("mailto:" + correoAmigo));
         r2.addProperty(FOAF.phone, model.createResource("tel:" + telefonoAmigo));
         r2.addProperty(FOAF.holdsAccount, model.createResource("http://" + facebookAmigo));
@@ -55,10 +59,33 @@ public class InsercionFOAF {
         r2.addProperty(FOAF.family_name, apellidosAmigo);
 
         r.addProperty(FOAF.knows, r2);
-        model.write(System.out);
+        
+        return guardarFOAF();
+        
+    }
+    
+    public Boolean insertarAmigo(PersonaFOAF amigo, String nombrePersona) {
+        //FileManager.get().readModel(model, archivoRDF);
 
-        guardarFOAF();
-        return true;
+        InputStream in = FileManager.get().open(archivoRDF);
+         if (in == null) {
+             System.out.println("-->ERROR no se pudo abrir el archivo");
+             return false;
+         }
+         model.read(in, "");
+         System.out.println("--------> "+nombrePersona+"  "+amigo.getCorreoPersona());
+        Resource r = model.getResource(BASE_URI + nombrePersona);
+        Resource r2 = model.createResource(BASE_URI + amigo.getCorreoPersona(), FOAF.Person);
+        r2.addProperty(FOAF.mbox, model.createResource("mailto:" + amigo.getCorreoPersona()));
+        r2.addProperty(FOAF.phone, model.createResource("tel:" + amigo.getTelefonoPersona()));
+        r2.addProperty(FOAF.holdsAccount, model.createResource("http://" + amigo.getFacebookPersona()));
+        r2.addProperty(FOAF.name, amigo.getNombrePersona());
+        r2.addProperty(FOAF.family_name, amigo.getApellidosPersona());
+
+        r.addProperty(FOAF.knows, r2);
+        
+        return guardarFOAF();
+        
     }
 
     public Boolean insertarPersona() {
@@ -80,8 +107,8 @@ public class InsercionFOAF {
         r.addProperty(FOAF.name, persona.getNombrePersona());
         r.addProperty(FOAF.family_name, persona.getApellidosPersona());
 
-        guardarFOAF();
-        return true;
+        return guardarFOAF();
+        
     }
 
     private Boolean guardarFOAF() {
