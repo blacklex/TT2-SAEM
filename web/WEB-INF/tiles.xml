@@ -25,7 +25,7 @@
    <definition name="pantallaInicioPaciente" extends="baseLayout">
       <put-attribute name="title"  value="Ejemplo"/>
       <put-attribute name="menu"   value="/menuPaciente.jsp"/>
-      <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
+      <put-attribute name="body"   value="/ubicacionPaciente.jsp"/>      
    </definition>
    
    <definition name="pantallaInicioHospital" extends="baseLayout">

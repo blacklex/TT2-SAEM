@@ -58,8 +58,14 @@ public class EnviarAlertaSaliente implements SessionAware {
     String longitudUsuario;
     String nombreUsuario;
     String nss;
+    String nombrePaciente;
+    String numHospital;
+    String lada;
+    String nombreHospital;
+    String idPeticion;
     
     String mensajeError = "";
+    String idPeticionS;
     
     String idPeticionSaliente;
     String prioridadAlta = "1";
@@ -86,6 +92,8 @@ public class EnviarAlertaSaliente implements SessionAware {
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
                 paciente = (Pacientes) iterator2.next(); 
                 nss = paciente.getNss();
+                nombrePaciente = paciente.getNombre();
+                
                 nombreUsuario = userPaciente.getNombreUsuario();
                 Set contactos = paciente.getContactoses();
                 int i = 0;
@@ -103,16 +111,23 @@ public class EnviarAlertaSaliente implements SessionAware {
                 }
             }
         }
-//        System.out.println(contactosPaciente);
-//        NotificadorSMS sms = new NotificadorSMS("Estoy en este este lugar", contactosPaciente);
+
+        System.out.println(contactosPaciente);
+        
+        //Buscamos el hospital que se encargara del paciente
+        hospital = hospitalDAO.findById(codigoHospital);
+        nombreHospital = hospital.getNombre();
+        lada = hospital.getLada();
+        numHospital = hospital.getTelefono();
+        
+        String dirHospital = "SAEM:Estoy en " + nombreHospital + ", tel " + lada + numHospital +". " + nombrePaciente; 
+        System.out.println(dirHospital);        
+//        NotificadorSMS sms = new NotificadorSMS(dirHospital, contactosPaciente);
 //        sms.enviarSMS();
         //Generamos el codigo de Historial Clinico
         Calendar cal = Calendar.getInstance();
         idPeticionSaliente = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND) + "" + cal.get(Calendar.MILLISECOND);
         
-        //Buscamos el hospital que se encargara del paciente
-        hospital = hospitalDAO.findById(codigoHospital);
-    
         //Fecha de Registro
         Date date = new Date();
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -133,6 +148,23 @@ public class EnviarAlertaSaliente implements SessionAware {
         
         if(listPeticiones.isEmpty()) {
             if(peticionSalienteDAO.save(peticionSaliente)) {
+                 listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
+            userPaciente = (Usuarios) iterator1.next();
+            Set pacientes = userPaciente.getPacienteses();
+            for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
+                paciente = (Pacientes) iterator2.next(); 
+                Set peticionesSalientes = paciente.getPeticionesSalienteses();
+                for(Iterator iterato3 = peticionesSalientes.iterator(); iterato3.hasNext();) {
+                    peticionSaliente = (PeticionesSalientes) iterato3.next();
+                    estatus = peticionSaliente.getEstatus();
+                    idPeticion = peticionSaliente.getIdPeticionesSalientes();
+                }
+                
+            }
+        }
+                idPeticionSaliente = idPeticion;
+                System.out.println(idPeticionSaliente);
                 estatusMensaje = "exito";
             }
             else {
@@ -158,11 +190,15 @@ public class EnviarAlertaSaliente implements SessionAware {
                 Set peticionesSalientes = paciente.getPeticionesSalienteses();
                 for(Iterator iterato3 = peticionesSalientes.iterator(); iterato3.hasNext();) {
                     peticionSaliente = (PeticionesSalientes) iterato3.next();
-                    estatus = peticionSaliente.getEstatus();
+                    if(peticionSaliente.getIdPeticionesSalientes().equals(idPeticionS)){
+                        idPeticion = idPeticionS;
+                        estatus = peticionSaliente.getEstatus();
+                    }
                 }
                 
             }
         }
+        
         
         if(estatus == null) {
             System.out.println("no hay peticiones");
@@ -270,4 +306,23 @@ public class EnviarAlertaSaliente implements SessionAware {
     public void setRecuperarEstatus(String recuperarEstatus) {
         this.recuperarEstatus = recuperarEstatus;
     }
+
+    public String getIdPeticionSaliente() {
+        return idPeticionSaliente;
+    }
+
+    public void setIdPeticionSaliente(String idPeticionSaliente) {
+        this.idPeticionSaliente = idPeticionSaliente;
+    }
+
+    public String getIdPeticionS() {
+        return idPeticionS;
+    }
+
+    public void setIdPeticionS(String idPeticionS) {
+        this.idPeticionS = idPeticionS;
+    }
+
+    
+    
 }

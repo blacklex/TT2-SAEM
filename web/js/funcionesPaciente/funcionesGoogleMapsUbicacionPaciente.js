@@ -141,9 +141,7 @@ RadioWidget.prototype.distanceBetweenPoints_ = function(p1, p2) {
  };
 
 function initialize() {
-    alert("initialize");
-     directionsDisplay = new google.maps.DirectionsRenderer();
-
+    directionsDisplay = new google.maps.DirectionsRenderer();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
@@ -164,7 +162,6 @@ function initialize() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-                
                 directionsDisplay.setMap(map);
 
         var distaciaWidget = new DistaciaWidget(map);
@@ -222,8 +219,8 @@ function newMarker(markerData, latitud, longitud) {
     var content =   '<div id="iw-container">' +
                     '   <div class="iw-title">'+markerData.titulo+'</div>' +
                     '   <div class="iw-content">' +
-                    '       <div class="iw-subTitle">Dirección</div>' +
-                    '       <p>Dirección del Hospital.</p>' +
+                    '       <div class="iw-subTitle">Teléfono</div>' +
+                    '       <p>'+markerData.tel+'.</p>' +
                     '       <div class="iw-subTitle">Opciones</div>' +
                     '       <button type="button" onclick="verRuta('+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Ver ruta</button>'+
                     '       <button type="button" onclick="acudirAlHospital('+markerData.codigo+','+latitud+','+longitud+','+markerData.lt+','+markerData.ln+');" class="btn btn-primary btn-sm margin">Acudir al Hospital</button>'+
@@ -366,7 +363,6 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
 google.maps.event.addDomListener(window, 'load', initialize);
 
 function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
-    
     var origen = new google.maps.LatLng(latitudUsuario, longitudUsuario);
     var destino = new google.maps.LatLng(latitudHospital,longitudHospital);
 
@@ -374,18 +370,14 @@ function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospi
     var request = {
         origin: origen,
         destination: destino,
-        
         travelMode: google.maps.TravelMode[selectedMode]
     };
+    
     directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
+        if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
         }
-        else {
-            alert("No se puede trazar la ruta");
-        }
     });
-
 }
 
 function enviarAlerta(codigoHospital, latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
@@ -411,6 +403,8 @@ function enviarAlerta(codigoHospital, latitudUsuario, longitudUsuario, latitudHo
             $("#barraCargarPaciente").slideUp(100);
         }
         else if (msg.estatusMensaje === "exito") {
+            var idPeticion = msg.idPeticionSaliente;
+            localStorage.setItem("idPeticion", idPeticion);
             $('html, body').animate({scrollTop: 0}, 'fast');
             $("#barraCargarPaciente").slideUp(100);
             $("#tituloDivAlertSuccessPaciente").html("<i class='icon fa fa-ban'></i>Aviso enviado");
@@ -418,6 +412,9 @@ function enviarAlerta(codigoHospital, latitudUsuario, longitudUsuario, latitudHo
 
             $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
             $("#barraCargarPaciente").slideUp(100);
+            setTimeout(function () {
+                    consultarTotalPeticionesPacientes();
+                }, 30000);
         }
         else if (msg.estatusMensaje === "peticionEnviada") {
             $('html, body').animate({scrollTop: 0}, 'fast');
@@ -473,9 +470,6 @@ function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latit
                     if (status === google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
                     }
-                    else {
-                        alert("No se puede trazar la ruta");
-                    }
                 });
             }
             else if (msg.estatusMensaje === "peticionEnviada") {
@@ -489,4 +483,3 @@ function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latit
             }
         });
 }
-

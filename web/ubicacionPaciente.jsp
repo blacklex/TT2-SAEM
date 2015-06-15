@@ -54,7 +54,7 @@
         </div><!-- /.box-body -->
     </div>
 
-            <div id="modalFormPeticionAceptada" class="modal modal-success">
+<!--            <div id="modalFormPeticionAceptada" class="modal modal-success">
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
@@ -128,7 +128,7 @@
                   </div>
               </div>
           </div>
-      </div>
+      </div>-->
 </section>
 
             

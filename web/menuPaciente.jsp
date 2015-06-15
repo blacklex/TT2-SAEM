@@ -13,19 +13,24 @@
     });
 
     function consultarTotalPeticionesPacientes() {
+         var idPeticionSaliente = localStorage.getItem("idPeticion");
+        if(idPeticionSaliente === null)
+                return 0;
         var nombreUsuario = $("#nombreUsuario").val();
         $("#barraCargar").slideDown(100);
         $.ajax({
             dataType: "json",
             method: "POST",
             url: "ajaxRecuperarTotalPeticionesPacientes",
-            data: {nombreUsuario: nombreUsuario}
+            data: {nombreUsuario: nombreUsuario, idPeticionS: idPeticionSaliente}
         }).done(function (msg) {
-            //if(msg.recuperarEstatus === "PP")
-            
-            $("#barraCargar").slideUp(100);
+           
+                $("#barraCargar").slideUp(100);
             $("#smallEnt").remove();
             if (msg.recuperarEstatus === "PA") {
+                localStorage.removeItem("idPeticion");
+                localStorage.clear();
+                sessionStorage.clear();
                 $("#notifiacionPeticionesAtendidas").append("<small id='smallEnt' class='label pull-right bg-green'>1</small>");
                 $("#modalFormPeticionAceptada").fadeIn('slow');
                 
@@ -35,16 +40,24 @@
             }
             $("#smallSal").remove();
             if (msg.recuperarEstatus === "PR") {
+                localStorage.removeItem("idPeticion");
+                localStorage.clear();
+                sessionStorage.clear();
                 $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>1</small>");
-                $("#modalFormPeticionRechazada").fadeIn('slow');                
+                $("#modalFormPeticionRechazada").fadeIn('slow');     
+                
             }
             else {
                 $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>0</small>");
             }
             $("#smallSal1").remove();
             if (msg.recuperarEstatus === "PNA") {
+                localStorage.removeItem("idPeticion");
+                localStorage.clear();
+                sessionStorage.clear();
                 $("#notifiacionPeticionesNoAtendidas").append("<small id='smallSal1' class='label pull-right bg-green'>1</small>");
-                $("#modalFormPeticionNoAtendida").fadeIn('slow');                
+                $("#modalFormPeticionNoAtendida").fadeIn('slow');  
+                
             }
             else {
                 $("#notifiacionPeticionesNoAtendidas").append("<small id='smallSal1' class='label pull-right bg-green'>0</small>");
@@ -56,13 +69,13 @@
                 setTimeout(function() {
                     $("#modalFormPeticionPendiente").fadeOut(1500);
                 },5000);
-            }
-            
-            setTimeout(function () {
+                setTimeout(function () {
                     consultarTotalPeticionesPacientes();
                 }, 60000);
+            }
         });
     }
+    
 </script> 
       <!-- =============================================== -->
 
@@ -150,3 +163,78 @@
       </aside>
 
       <!-- =============================================== -->
+      <div id="modalFormPeticionAceptada" class="modal modal-success">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button class="close" aria-label="Close" data-dismiss="modal" onclick="cerrarModalFormPeticionAceptada();" type="button">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title">Petición Atendida</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>Su petición fue atendida... permanece donde estas, pronto llegara ayuda por ti!!!</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-outline" onclick="cerrarModalFormPeticionAceptada();" type="button">Aceptar</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div id="modalFormPeticionRechazada" class="modal modal-danger">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-label="Close" data-dismiss="modal" onclick="cerrarModalFormPeticionRechazada();" type="button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Petición Rechazada</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Su petición fue rechazada... por favor intente en otro hospital!!!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="cerrarModalFormPeticionRechazada();" type="button">Aceptar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+      <div id="modalFormPeticionNoAtendida" class="modal modal-warning">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button class="close" aria-label="Close" data-dismiss="modal" onclick="cerrarModalFormPeticionNoAtendida();" type="button">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title">Petición No Atendida</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>Su petición no fue atendida... intentelo nuevamente!!!</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-outline" onclick="cerrarModalFormPeticionNoAtendida();" type="button">Aceptar</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div id="modalFormPeticionPendiente" class="modal modal-info">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button class="close" aria-label="Close" data-dismiss="modal" onclick="cerrarModalFormPeticionPendiente();" type="button">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title">Petición Pendiente</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>Su petición esta pendiente... en breve se le dara una respuesta!!!</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-outline" onclick="cerrarModalFormPeticionPendiente();" type="button">Aceptar</button>
+                  </div>
+              </div>
+          </div>
+      </div>

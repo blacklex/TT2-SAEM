@@ -155,7 +155,7 @@
             </sjg:grid>
         </div>
         
-        <form name="formEditarAccesoPaciente" action="editarAccesoPaciente" onsubmit="return validarCamposAcceso();" method="post" role="form">
+        <form name="formEditarAccesoPaciente" action="editarAccesoPacientePorHospital" onsubmit="return validarCamposAcceso();" method="post" role="form">
             <div id="datosAccesoPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos de acceso</h3>
@@ -175,7 +175,7 @@
                 </div>
             </div><!-- /.col -->
         </form>
-        <s:form enctype="multipart/form-data" name="formEditarDatosIdentificacionPaciente" action="editarDatosIdentificacionPaciente" onsubmit="return validarCamposDatosIdentificacionPaciente();" method="post" role="form">
+        <s:form enctype="multipart/form-data" name="formEditarDatosIdentificacionPaciente" action="editarDatosIdentificacionPacientePorHospital" onsubmit="return validarCamposDatosIdentificacionPaciente();" method="post" role="form">
             <s:hidden name="nombreUsuario" id="nomUs"/>
             <s:hidden name="codigoHospital" id="codHos"/>
             
@@ -191,17 +191,17 @@
 
                 <div id="divNombre" class="form-group">
                     <label for="nombre">Nombre(s)</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" readonly="true">
+                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" >
                 </div>
                 
                 <div id="divApellidoPaterno" class="form-group">
                     <label for="apellidoPaterno">Apellido Paterno</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text">
                 </div>
                 
                 <div id="divApellidoMaterno" class="form-group">
                     <label for="apellidoMaterno">Apellido Materno</label>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text">
                 </div>
 
                 <div id="divUniMedicaPaciente" class="form-group">
@@ -229,7 +229,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDireccionPaciente" action="editarDireccionPaciente" onsubmit="return validarCamposDireccion();" method="post" role="form">
+        <s:form name="formEditarDireccionPaciente" action="editarDireccionPacientePorHospital" onsubmit="return validarCamposDireccion();" method="post" role="form">
             <div id="datosDireccionPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Dirección</h3>
@@ -296,7 +296,7 @@
                 </div>
             </div>
         </s:form>
-        <s:form name="formEditarDatosPersonalesPaciente" action="editarDatosPersonalesPaciente" onsubmit="return validarCamposDatosPersonalesPaciente();" method="post" role="form">
+        <s:form name="formEditarDatosPersonalesPaciente" action="editarDatosPersonalesPacientePorHospital" onsubmit="return validarCamposDatosPersonalesPaciente();" method="post" role="form">
             <div id="datosPersonalesPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos Personales</h3>
@@ -490,7 +490,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form> 
-        <s:form name="formEditarDatosClinicosPaciente" action="editarDatosClinicosPaciente" method="post" role="form">
+        <s:form name="formEditarDatosClinicosPaciente" action="editarDatosClinicosPacientePorHospital" method="post" role="form">
             <div id="datosClinicosPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Datos Clinicos</h3>

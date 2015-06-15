@@ -166,7 +166,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         return "pantallaModificarEliminarPaciente";
     }
     
-    public String editarAccesoPaciente() throws ParseException {
+    public String editarAccesoPacientePorHospital() throws ParseException {
         Boolean actualizacionCorrecta = false;
         userPaciente = usuarioDAO.findById(nombreUsuario);
         //Obtenemos la fecha de registro por que no se va a modificar y la volvemos a setear dentro de Usuario
@@ -196,10 +196,10 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
 
-        return "pantallaModificarEliminarPaciente";
+        return "pantallaModificarEliminarPacientePorHospital";
     }
     
-    public String editarDatosIdentificacionPaciente() throws IOException {
+    public String editarDatosIdentificacionPacientePorHospital() throws IOException {
         Boolean actualizacionCorrecta = false;
         
         userPaciente = usuarioDAO.findById(nombreUsuario);
@@ -208,7 +208,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         //Establecemos los datos para el Paciente
         paciente.setNss(nss);
         paciente.setApellidoMaterno(apellidoMaterno);
-        paciente.setApellidoPaterno(apellidoMaterno);
+        paciente.setApellidoPaterno(apellidoPaterno);
         paciente.setUnidadMedica(unidadMedica);
         paciente.setNombre(nombre);
         paciente.setNoConsultorio(noConsultorio);
@@ -251,10 +251,10 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
         
-        return "pantallaModificarEliminarPaciente";
+        return "pantallaModificarEliminarPacientePorHospital";
     }
     
-    public String editarDireccionPaciente() throws IOException {
+    public String editarDireccionPacientePorHospital() throws IOException {
         Boolean actualizacionCorrecta = false;
         
         paciente = pacienteDAO.findById(nss); 
@@ -287,7 +287,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
         
-        return "pantallaModificarEliminarPaciente";
+        return "pantallaModificarEliminarPacientePorHospital";
     }
     
     public String editarTelefonosPaciente() throws IOException {
@@ -317,7 +317,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         return "pantallaModificarEliminarPacientes";
     }
     
-    public String editarDatosPersonalesPaciente() throws IOException {
+    public String editarDatosPersonalesPacientePorHospital() throws IOException {
         Boolean actualizacionCorrecta = false;
         
         paciente = pacienteDAO.findById(nss);
@@ -356,7 +356,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
         
-        return "pantallaModificarEliminarPaciente";
+        return "pantallaModificarEliminarPacientePorHospital";
     }
     
     public String editarContactosPaciente() throws IOException {
@@ -386,7 +386,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         return "pantallaModificarEliminarPacientes";
     }
     
-    public String editarDatosClinicosPaciente() throws IOException {
+    public String editarDatosClinicosPacientePorHospital() throws IOException {
         Boolean actualizacionCorrecta = false;
         
         paciente = pacienteDAO.findById(nss);
@@ -430,7 +430,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
         
-        return "pantallaModificarEliminarPaciente";
+        return "pantallaModificarEliminarPacientePorHospital";
     }
 
 //    public String recuperarEstatusEditar() {

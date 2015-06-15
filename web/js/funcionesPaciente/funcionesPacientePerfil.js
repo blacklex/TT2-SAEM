@@ -6,7 +6,7 @@
 
 
 $(document).ready(function () {
-    
+    consultarTotalPeticionesPacientes();
     $.getJSON("recuperarPaciente");
 
     $(document).ajaxSuccess(function (event, request, settings) {
@@ -31,8 +31,8 @@ function verDatosAccesoPaciente(nombreUsuario) {
             url: "mostrarDatosAccesoPaciente",
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
-            alert("fdgfhgh")
-            $("#nombreUsuario").val("msg.nombreUsuario");
+            var nombre = msg.nombreUsuario;
+            $("#nombreU").val(nombre);
             //$("#nombreUsuario").attr('readonly', true);
             $("#clave").val(msg.clave);
             $("#clave").attr('readonly', true);

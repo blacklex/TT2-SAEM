@@ -10,6 +10,7 @@ import com.hibernate.dao.PacienteDAO;
 import com.hibernate.dao.PeticionesEntrantesDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Contactos;
+import com.hibernate.model.DomicilioHospitales;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesEntrantes;
@@ -57,6 +58,19 @@ public class AcudirHospital implements SessionAware {
     String longitudUsuario;
     String nombreUsuario;
     String nss;
+    String nombrePaciente;
+    String apellidoPaterno;
+    String apellidoMaterno;
+    
+    private String calle;
+    private String numero;
+    private String colonia;
+    private String delegacion;
+    private String entidadFederativa;
+    private String codigoPostal;
+    String numHospital;
+    String lada;
+    String nombreHospital;
 
     String mensajeError = "";
     
@@ -85,6 +99,9 @@ public class AcudirHospital implements SessionAware {
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
                 paciente = (Pacientes) iterator2.next(); 
                 nss = paciente.getNss();
+                nombrePaciente = paciente.getNombre();
+                apellidoPaterno = paciente.getApellidoPaterno();
+                apellidoMaterno = paciente.getApellidoMaterno();
                 nombreUsuario = userPaciente.getNombreUsuario();
                 Set contactos = paciente.getContactoses();
                 int i = 0;
@@ -101,18 +118,25 @@ public class AcudirHospital implements SessionAware {
                     }
                 }
             }
+
         }
-//        System.out.println(contactosPaciente);
-//        NotificadorSMS sms = new NotificadorSMS("Estoy en este Hospital", contactosPaciente);
+        System.out.println(contactosPaciente);
+        
+        //Buscamos el hospital que se encargara del paciente
+        hospital = hospitalDAO.findById(codigoHospital);
+        nombreHospital = hospital.getNombre();
+        lada = hospital.getLada();
+        numHospital = hospital.getTelefono();
+        
+        String dirHospital = "SAEM:Estoy en " + nombreHospital + ", tel " + lada + numHospital +". " + nombrePaciente; 
+        System.out.println(dirHospital);        
+//        NotificadorSMS sms = new NotificadorSMS("dirHospital", contactosPaciente);
 //        sms.enviarSMS();
         //Generamos el codigo de Historial Clinico
         Calendar cal = Calendar.getInstance();
         idPeticionEntrante = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND) + "" + cal.get(Calendar.MILLISECOND);
         
-        //Buscamos el hospital que se encargara del paciente
-        hospital = hospitalDAO.findById(codigoHospital);
-    
-        //Fecha de Registro
+        //k2710430693211 3058//Fecha de Registro
         Date date = new Date();
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);

@@ -766,7 +766,7 @@
 </section>
 
 <script src="js/funcionesPaciente/funcionesPacientePerfil.js" type="text/javascript"></script>
-
+<script src="js/funcionesPaciente/funcionesEnviarAlerta.js" type="text/javascript"></script>
 <script src="bootstrap/js/fileinput.min.js" type="text/javascript"></script>
 <link href="bootstrap/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
 

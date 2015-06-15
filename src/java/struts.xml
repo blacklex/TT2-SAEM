@@ -652,5 +652,33 @@
         <action name="buscarDatosPacientePorHospitalMostrarFiltro" method="buscarDatosPacienteMostrarFiltro" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
             <result name="success" type="json">JSON</result>
         </action>
+        <!-- Editar Acceso Paciente -->
+        <action name="editarAccesoPacientePorHospital" method="editarAccesoPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+         <!-- Editar Acceso Paciente -->
+        <action name="editarDatosIdentificacionPacientePorHospital" method="editarDatosIdentificacionPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+         <!-- Editar Acceso Paciente -->
+        <action name="editarDireccionPacientePorHospital" method="editarDireccionPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+                 <!-- Editar Acceso Paciente -->
+        <action name="editarDatosPersonalesPacientePorHospital" method="editarDatosPersonalesPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        <!-- Fin Editar Acceso Paciente -->
+                 <!-- Editar Acceso Paciente -->
+        <action name="editarDatosClinicosPacientePorHospital" method="editarDatosClinicosPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
     </package>
 </struts>

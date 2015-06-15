@@ -18,6 +18,7 @@ import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 
@@ -219,11 +220,13 @@ public class UsuarioDAO extends HibernateUtil {
 }
         public List<Usuarios> findPacientesPorHospitalLike(String flitroNombreUsuario, String codigoHospital) {
              try {
-             String queryString="from Usuarios, Pacientes where tipoUsuario='Paciente'and lower(nombreUsuario) LIKE (:searchKeyword) and Hospitales_codigo_hospital =:codigoHospital";
-             Query queryObject = getSession().createQuery(queryString);
-             queryObject.setParameter("searchKeyword", "%"+flitroNombreUsuario+"%");
-             queryObject.setParameter("codigoHospital", codigoHospital);
-             return queryObject.list();
+             List<Usuarios> usuarioslike = null;
+           String queryString="SELECT {u.*} FROM Usuarios u, Pacientes p where u.nombre_usuario = p.Usuarios_nombre_usuario and u.nombre_usuario LIKE '%"+flitroNombreUsuario+"%' and p.Hospitales_codigo_hospital = '"+codigoHospital+"'";
+           SQLQuery query =  getSession().createSQLQuery(queryString);
+           query.addEntity("u", Usuarios.class);
+             usuarioslike = query.list();
+             
+             return usuarioslike;
         
         } catch (RuntimeException re) {
             throw re;
@@ -259,11 +262,13 @@ public class UsuarioDAO extends HibernateUtil {
       public List<Usuarios> listarPacientesPorHospital(int from, int to, String codigoHospital) {
         try
         {
-                      
-           String queryString="Select u from Usuarios u left join fetch c.pacientes p where p.Hospitales_codigo_hospital =:codigoHospital";
-             Query queryObject = getSession().createQuery(queryString);
-             queryObject.setParameter("codigoHospital", codigoHospital);
-             return queryObject.list();
+                      List<Usuarios> usuarios = null;
+           String queryString="SELECT {u.*} FROM Usuarios u, Pacientes p where u.nombre_usuario = p.Usuarios_nombre_usuario and p.Hospitales_codigo_hospital = '"+codigoHospital+"'";
+           SQLQuery query =  getSession().createSQLQuery(queryString);
+           query.addEntity("u", Usuarios.class);
+             usuarios = query.list();
+             
+             return usuarios;
            
           
         } catch (RuntimeException re) {
