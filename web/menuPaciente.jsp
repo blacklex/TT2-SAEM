@@ -8,14 +8,45 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        consultarTotalPeticionesPacientes();
-
+        consultarPeticionPendienteInicio();
     });
+    
+    function consultarPeticionPendienteInicio() {
+        var nombreUsuario = $("#nombreUsuario").val();
+        var idPetIni = localStorage.getItem("idPeticion");
+        
+        if(idPetIni==="" || idPetIni ===null){
+            
+            $("#barraCargar").slideDown(100);
+            $.ajax({
+                dataType: "json",
+                method: "POST",
+                url: "ajaxObtenerEstatusPeticionInicio",
+                data: {nombreUsuario: nombreUsuario}
+            }).done(function (msg) {
+                var idPeticion = msg.idPeticionSaliente;
+            
+                if(idPeticion==="" || idPeticion===null) {
+                    return;
+                }
+                else {
+                    localStorage.setItem("idPeticion", idPeticion);
+                    consultarTotalPeticionesPacientes();
+                }
+            });
+        }else{
+            consultarTotalPeticionesPacientes();
+        }
+}
 
     function consultarTotalPeticionesPacientes() {
-         var idPeticionSaliente = localStorage.getItem("idPeticion");
-        if(idPeticionSaliente === null)
-                return 0;
+        var idPeticionSaliente = localStorage.getItem("idPeticion");
+       //alert(idPeticionSaliente);
+		if(idPeticionSaliente === null)
+                    return;
+		
+		
+
         var nombreUsuario = $("#nombreUsuario").val();
         $("#barraCargar").slideDown(100);
         $.ajax({
@@ -25,14 +56,21 @@
             data: {nombreUsuario: nombreUsuario, idPeticionS: idPeticionSaliente}
         }).done(function (msg) {
            
-                $("#barraCargar").slideUp(100);
+            //alert(idPeticionSaliente);
+            //if(msg.recuperarEstatus === "PP")
+            
+            
+            $("#barraCargar").slideUp(100);
             $("#smallEnt").remove();
             if (msg.recuperarEstatus === "PA") {
                 localStorage.removeItem("idPeticion");
-                localStorage.clear();
-                sessionStorage.clear();
                 $("#notifiacionPeticionesAtendidas").append("<small id='smallEnt' class='label pull-right bg-green'>1</small>");
-                $("#modalFormPeticionAceptada").fadeIn('slow');
+				if(msg.comentario === ""|| msg.comentario === null)
+					$("#comentarioPeticionAceptada").html("Petición Atendida.");
+				 else
+				    $("#comentarioPeticionAceptada").html("Petición Atendida: "+msg.comentario);
+                
+				$("#modalFormPeticionAceptada").fadeIn('slow');
                 
             }
             else {
@@ -40,22 +78,31 @@
             }
             $("#smallSal").remove();
             if (msg.recuperarEstatus === "PR") {
-                localStorage.removeItem("idPeticion");
-                localStorage.clear();
-                sessionStorage.clear();
+				
+                 localStorage.removeItem("idPeticion");
+                
                 $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>1</small>");
-                $("#modalFormPeticionRechazada").fadeIn('slow');     
+				if(msg.comentario === ""|| msg.comentario === null)
+					$("#comentarioPeticionRechazada").html("Petición Rechazada.");
+				 else
+				    $("#comentarioPeticionRechazada").html("Petición Rechazada: "+msg.comentario);
+                $("#modalFormPeticionRechazada").fadeIn('slow');    
                 
             }
             else {
                 $("#notifiacionPeticionesRechazadas").append("<small id='smallSal' class='label pull-right bg-green'>0</small>");
             }
             $("#smallSal1").remove();
-            if (msg.recuperarEstatus === "PNA") {
-                localStorage.removeItem("idPeticion");
-                localStorage.clear();
-                sessionStorage.clear();
+            if (msg.recuperarEstatus === "PNR") {
+			
+                 localStorage.removeItem("idPeticion");
+                 
+                
                 $("#notifiacionPeticionesNoAtendidas").append("<small id='smallSal1' class='label pull-right bg-green'>1</small>");
+				if(msg.comentario === "" || msg.comentario === null)
+					$("#comentarioPeticionNoAtendida").html("Petición No Respondida.");
+				 else
+				    $("#comentarioPeticionNoAtendida").html("Petición No Respondida: "+msg.comentario);
                 $("#modalFormPeticionNoAtendida").fadeIn('slow');  
                 
             }
@@ -64,6 +111,7 @@
             }
             $("#smallSal2").remove();
             if (msg.recuperarEstatus === "PP") {
+		
                 $("#notifiacionPeticionesPendientes").append("<small id='smallSal2' class='label pull-right bg-green'>1</small>");
                 $("#modalFormPeticionPendiente").fadeIn('slow');
                 setTimeout(function() {
@@ -73,6 +121,7 @@
                     consultarTotalPeticionesPacientes();
                 }, 60000);
             }
+            
         });
     }
     
@@ -172,8 +221,8 @@
                       </button>
                       <h4 class="modal-title">Petición Atendida</h4>
                   </div>
-                  <div class="modal-body">
-                      <p>Su petición fue atendida... permanece donde estas, pronto llegara ayuda por ti!!!</p>
+                  <div  class="modal-body">
+                      <p id="comentarioPeticionAceptada"></p>
                   </div>
                   <div class="modal-footer">
                       <button class="btn btn-outline" onclick="cerrarModalFormPeticionAceptada();" type="button">Aceptar</button>
@@ -192,7 +241,7 @@
                     <h4 class="modal-title">Petición Rechazada</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Su petición fue rechazada... por favor intente en otro hospital!!!</p>
+                    <p id="comentarioPeticionRechazada"></p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline" onclick="cerrarModalFormPeticionRechazada();" type="button">Aceptar</button>
@@ -211,7 +260,7 @@
                       <h4 class="modal-title">Petición No Atendida</h4>
                   </div>
                   <div class="modal-body">
-                      <p>Su petición no fue atendida... intentelo nuevamente!!!</p>
+                      <p id="comentarioPeticionNoAtendida"></p>
                   </div>
                   <div class="modal-footer">
                       <button class="btn btn-outline" onclick="cerrarModalFormPeticionNoAtendida();" type="button">Aceptar</button>
@@ -230,7 +279,7 @@
                       <h4 class="modal-title">Petición Pendiente</h4>
                   </div>
                   <div class="modal-body">
-                      <p>Su petición esta pendiente... en breve se le dara una respuesta!!!</p>
+                      <p>Esperando respuesta del hospital.</p>
                   </div>
                   <div class="modal-footer">
                       <button class="btn btn-outline" onclick="cerrarModalFormPeticionPendiente();" type="button">Aceptar</button>

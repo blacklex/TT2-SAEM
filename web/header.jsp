@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    function cerrarSesion(){
+        localStorage.clear();
+        window.location.assign("LogOut");
+    }
+</script>
 
       <header class="main-header">
         <a href="index2.html" class="logo"><b>SAE</b>M</a>
@@ -22,7 +28,7 @@
              
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
-                  <a href="LogOut" style="padding-left: 20px;">
+                  <a href="#" style="padding-left: 20px;" onclick="cerrarSesion();" >
                  <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>-->
                  <i class="fa fa-power-off"></i>
                 

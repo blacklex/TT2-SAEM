@@ -21,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -63,6 +64,7 @@ public class EnviarAlertaSaliente implements SessionAware {
     String lada;
     String nombreHospital;
     String idPeticion;
+    String comentario;
     
     String mensajeError = "";
     String idPeticionS;
@@ -181,6 +183,7 @@ public class EnviarAlertaSaliente implements SessionAware {
     }
     
     public String recuperarTotalPeticionesPacientes() {
+        System.out.println("id: " + idPeticionS);
         listUsuarios = usuarioDAO.listarById(nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -193,6 +196,7 @@ public class EnviarAlertaSaliente implements SessionAware {
                     if(peticionSaliente.getIdPeticionesSalientes().equals(idPeticionS)){
                         idPeticion = idPeticionS;
                         estatus = peticionSaliente.getEstatus();
+                        comentario = peticionSaliente.getComentario();
                     }
                 }
                 
@@ -201,6 +205,7 @@ public class EnviarAlertaSaliente implements SessionAware {
         
         
         if(estatus == null) {
+            recuperarEstatus = "";
             System.out.println("no hay peticiones");
         }
         
@@ -214,7 +219,7 @@ public class EnviarAlertaSaliente implements SessionAware {
             recuperarEstatus = estatus;
         }
         
-        if(estatus.equals("PNA")) {
+        if(estatus.equals("PNR")) {
             System.out.println("Peticion no atendida");
             recuperarEstatus = estatus;
         }
@@ -222,6 +227,30 @@ public class EnviarAlertaSaliente implements SessionAware {
         if(estatus.equals("PP")) {
             System.out.println("Peticion pediente");
             recuperarEstatus = estatus;
+        }
+        if(comentario==null)
+            comentario = "";
+        
+        return SUCCESS;
+    }
+    
+    public String obtenerEstatusInicio() {
+        System.out.println("Entro con:" + nombreUsuario);
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        String nss1 = ((Pacientes) usuarioDAO.findById(nombreUsuario).getPacienteses().iterator().next()).getNss();
+        
+        if(nss1 == null)
+            nss1 = "";
+        
+        ArrayList<PeticionesSalientes> petSalSaliente = (ArrayList<PeticionesSalientes>) peticionSalienteDAO.finByHospitalNss(s, nss1);
+        
+        if(petSalSaliente == null)
+            petSalSaliente = new ArrayList<PeticionesSalientes>();
+        
+        if(petSalSaliente.size() > 0)
+            idPeticionSaliente = petSalSaliente.get(0).getIdPeticionesSalientes();
+        else {
+            idPeticionSaliente = "";
         }
         return SUCCESS;
     }
@@ -321,6 +350,14 @@ public class EnviarAlertaSaliente implements SessionAware {
 
     public void setIdPeticionS(String idPeticionS) {
         this.idPeticionS = idPeticionS;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     

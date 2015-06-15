@@ -600,6 +600,10 @@
             <result name="success" type="json">JSON</result>
         </action>
         
+        <action name="ajaxObtenerEstatusPeticionInicio" method="obtenerEstatusInicio" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
         <action name="pantallaConsultarMiInformacion" method="pantallaConsultarMiInformacion" class="com.saem.actions.PacienteAction">
             <result name="pantallaConsultarMiInformacion" type="tiles">pantallaConsultarMiInformacion</result>
         </action>
