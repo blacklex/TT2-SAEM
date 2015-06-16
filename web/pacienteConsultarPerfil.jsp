@@ -14,12 +14,12 @@
 
                         <div id="datosAccesoPaciente" class="box-body" style='display:block;'>
 
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Datos de acceso</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -41,12 +41,12 @@
 
                         <div id="datosPaciente" class="box-body" style='display:block;'>
 
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Datos Paciente</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -91,12 +91,12 @@
 
 
                         <div id="datosDireccionPaciente" class="box-body" style='display:block;'>
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Dirección</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -134,13 +134,13 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-body" id="datosTelefonosPaciente" style='display:block;'>
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <i class="fa fa-phone"></i>
                                     <h3 class="box-title"><label>Números Telefónicos</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -154,12 +154,12 @@
                         <div id="datosPersonalesPaciente" class="box-body" style='display:block;'>
 
 
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Datos Personales</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -287,13 +287,13 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-body" id="datosContactosPaciente" style="display: block;">
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <i class="fa fa-book"></i>
                                     <h3 class="box-title"><label>Contactos del Paciente</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -342,12 +342,12 @@
 
                         <div id="datosClinicosPaciente" class="box-body" style='display:block;'>
 
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Datos Clinicos</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -436,12 +436,12 @@
 
 
                             <!--***************************************Alergias***********************************************-->
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Alergias</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -542,12 +542,12 @@
 
 
                             <!--***************************************Cirugias***********************************************-->
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Cirugías</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -676,12 +676,12 @@
 
 
                             <!--***************************************Discapacidades***********************************************-->
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Discapacidades</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -742,13 +742,13 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-body" id="datosMedicamentosPaciente" style='display:block;'>
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <i class="fa fa-phone"></i>
                                     <h3 class="box-title"><label>Medicamentos</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -760,12 +760,12 @@
                         </div>
 
                         <div class="box-body" id="datosEnfermedadesPaciente" style='display:block;'>
-                            <div class="box box-primary box-solid">
+                            <div class="box box-primary collapsed-box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><label>Enfermedades Crónicas</label></h3>
                                     <div class="box-tools pull-right">
                                         <button title="Expandir" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
