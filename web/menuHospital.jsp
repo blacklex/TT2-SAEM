@@ -82,7 +82,7 @@
                 <ul class="treeview-menu">
                     <li><a href="pantallaAltaPacientePorHospital"><i class="fa fa-pencil"></i> Registrar</a></li>
                     <li><a href="pantallaModificarEliminarPacientePorHospital"><i class="fa fa-edit"></i> Modificar / Eliminar</a></li>
-                    <li><a href="pantallaConsultarPacientes"><i class="fa fa-eye"></i> Consultar</a></li>
+                    <li><a href="pantallaConsultarPacientesPorHospital"><i class="fa fa-eye"></i> Consultar</a></li>
 
                 </ul>
             </li>

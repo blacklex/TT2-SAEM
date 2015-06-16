@@ -303,7 +303,36 @@
         <!-- ******************************************* FIN MENU PACIENTE *********************************************** -->
         
         <!-- Fin ListaAdministradores Grid -->
-
+        <action name="mostrarDatosPacientePorHospital" method="mostrarDatosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarDatosDireccionPacientePorHospital" method="mostrarDatosDireccionPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+         <action name="mostrarDatosPersonalesPacientePorHospital" method="mostrarDatosPersonalesPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarTelefonosPacientePorHospital" method="mostrarTelefonosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarContactosPacientePorHospital" method="mostrarContactosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarAlergiasPacientePorHospital" method="mostrarAlergiasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarCirugiasPacientePorHospital" method="mostrarCirugiasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarDiscapacidadesPacientePorHospital" method="mostrarDiscapacidadesPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarMedicamentosPacientePorHospital" method="mostrarMedicamentosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarEnfermedadesCronicasPacientePorHospital" method="mostrarEnfermedadesCronicasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- ************************************ CONSULTAR PACIENTE ****************************************** -->
         <action name="mostrarDatosPaciente" method="mostrarDatosPaciente" class="com.saem.actions.ConsultarPaciente">
             <result name="success" type="json">JSON</result>
@@ -325,7 +354,7 @@
             <result name="success" type="json">JSON</result>
         </action>
         
-        <action name="mostrarDatosClinicosPaciente" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPaciente">
+        <action name="mostrarDatosClinicosPacientePorHospital" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
             <result name="success" type="json">JSON</result>
         </action>
         
@@ -621,9 +650,9 @@
             <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
         </action>
 
-        <!--<action name="pantallaConsultarPacientesPorHospital" method="consultarPacientePorHospital" class="com.saem.actions.MenuHospitalAction">
+        <action name="pantallaConsultarPacientesPorHospital" method="consultarPacientePorHospital" class="com.saem.actions.MenuHospitalAction">
             <result name="pantallaConsultarPacientesPorHospital" type="tiles">pantallaConsultarPacientesPorHospital</result>
-        </action>-->
+        </action>
         <!-- ******************************************* FIN MENU Hospital *********************************************** -->
         
         <!-- Registar Paciente Por Hospital-->
@@ -656,6 +685,9 @@
         <action name="buscarDatosPacientePorHospitalMostrarFiltro" method="buscarDatosPacienteMostrarFiltro" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
             <result name="success" type="json">JSON</result>
         </action>
+        <action name="consultarDatosPacientePorHospitalMostrarFiltro" method="consultarDatosPacienteMostrarFiltro" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- Editar Acceso Paciente -->
         <action name="editarAccesoPacientePorHospital" method="editarAccesoPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
             <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
@@ -684,5 +716,9 @@
             <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
         </action>
         <!-- Fin Editar Acceso Paciente -->
+        
+        <action name="ajaxLlenarListaPacientesPorHospital" class="com.saem.actions.GridRegistroPacientePorHospital">
+            <result name="success"  type="json">JSON</result>
+        </action>
     </package>
 </struts>

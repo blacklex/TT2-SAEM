@@ -86,11 +86,11 @@
         <put-attribute name="body"   value="/pacienteModificarEliminarPorHospital.jsp"/>      
     </definition>
     
-<!--    <definition name="pantallaConsultarPacientesPorHospital" extends="baseLayout">
+    <definition name="pantallaConsultarPacientesPorHospital" extends="baseLayout">
         <put-attribute name="title"  value="Ejemplo"/>
         <put-attribute name="menu"   value="/menuHospital.jsp"/>
         <put-attribute name="body"   value="/pacienteConsultarPorHospital.jsp"/>      
-    </definition>-->
+    </definition>
     
     <!-- INICIO PANTALLAS DEL MENU PACIENTES -->
     <definition name="pantallaMapaPaciente" extends="baseLayout">
