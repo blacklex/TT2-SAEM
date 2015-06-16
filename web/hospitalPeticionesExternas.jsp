@@ -71,7 +71,7 @@
 
                 mostrarPetcionExterna : { 
                 title : 'Atender Petición', 
-                icon:'ui-icon-key',  
+                icon:'ui-icon-person',  
                 onclick: function(){ muestraFormPeticionExterna() }
                 }
                 }"

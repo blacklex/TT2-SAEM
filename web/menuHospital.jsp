@@ -24,13 +24,15 @@
                     $("#smallEnt").remove();
                     if (!(msg.totalPeticionesEntrantes === "0")) {
                         $("#notifiacionPeticionesEnt").append("<small id='smallEnt' class='label pull-right bg-green'>" + msg.totalPeticionesEntrantes + "</small>");
-                        $('#gridListaPeticionesEntrantes').trigger("reloadGrid", [{page: 1}]);
+                        
                     }
+                    $('#gridListaPeticionesEntrantes').trigger("reloadGrid", [{page: 1}]);
                     $("#smallSal").remove();
                     if (!(msg.totalPeticionesSalientes === "0")) {
                         $("#notifiacionPeticionesSal").append("<small id='smallSal' class='label pull-right bg-green'>" + msg.totalPeticionesSalientes + "</small>");
-                        $('#gridListaPeticionesExternas').trigger("reloadGrid", [{page: 1}]);
+                        
                     }
+                    $('#gridListaPeticionesExternas').trigger("reloadGrid", [{page: 1}]);
                     setTimeout(function () {
                         consultarTotalPeticiones();
                     }, 90000);

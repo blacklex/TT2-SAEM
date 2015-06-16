@@ -186,7 +186,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" onclick="cerrarModalFormContestarPeticion()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Contestar Petición Entrante</h4>
+                    <h4 class="modal-title">Peticion Entrante</h4>
                 </div>
                 <div class="modal-body">
                     <div id="divFormContestarPeticionEntrante">
@@ -194,7 +194,7 @@
                             <div id="divFormComentario" class="form-group">
                                 <input type="hidden" id="idPeticionesEntrantesFormPeticion" name="idPeticionesEntrantesFormPeticion"/>
                                 <input type="hidden" id="tipoDeRespuestaPeticion" name="tipoDeRespuestaPeticion"/>
-                                <textarea class="form-control" id="comentario" name="comentario" placeholder="Ingresa el comentario para el paciente." style="width: 100%; height: 50px;"></textarea>                 
+                                <textarea class="form-control" id="comentario" name="comentario" placeholder="Ingresa el comentario sobre la petición." style="width: 100%; height: 50px;"></textarea>                 
                             </div>                      
                         </form>
                         <div class="modal-footer">
