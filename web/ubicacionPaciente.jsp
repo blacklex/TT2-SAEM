@@ -35,7 +35,7 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>¿Dondé me encuentro?</b></h3>
+            <h3 class="box-header"><b>Hospitales Cercanos</b></h3>
         </div><!-- /.box-header -->
         <div class="box-body">
             <div class="info-box bg-aqua">

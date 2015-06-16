@@ -88,7 +88,7 @@ public class BuscarHospitales implements SessionAware {
             
             Map hospitales = new LinkedHashMap();
             
-            if(Math.round(distanciaFinal) >= 0 && Math.round(distanciaFinal) <= distanciaRango) {
+            if(distanciaFinal >= 0 && distanciaFinal <= distanciaRango) {
                 hospitales.put("lt", latitudY);
                 hospitales.put("ln", longitudX);
                 hospitales.put("titulo", nombreHospital);

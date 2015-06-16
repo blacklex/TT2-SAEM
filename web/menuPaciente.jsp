@@ -159,20 +159,20 @@
             
           
             <!--  INICIA MENU HOSPITALES CRUD    -->
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-hospital-o"></i> <span>Hospitales</span> <i class="fa fa-angle-left pull-right"></i>
+            <li>
+              <a href="pantallaMapaPaciente">
+                <i class="fa fa-hospital-o"></i> <span>Hospitales Cercanos</span> <i></i>
               </a>
-              <ul class="treeview-menu">
+<!--              <ul class="treeview-menu">
                   <li><a href="pantallaMapaPaciente"><i class="fa fa-map-marker"></i> Mi ubicación</a></li>
                 <li><a href="pantallaEnviarAlerta"><i class="fa fa-edit"></i> Enviar Alerta</a></li>
                 <li><a href="pantallaHospitalesCercanos"><i class="fa fa-eye"></i> Hospitales Cercanos</a></li>
-              </ul>
+              </ul>-->
             </li>
              <!--  FIN MENU HOSPITALES CRUD    -->
              <!--  INCIA MENU PETICIONES ENTRANTES    -->
             <li>
-                <a id="notifiacionPeticionesAtendidas" href="pantallaPeticionesEntrantesHospital">
+                <a id="notifiacionPeticionesAtendidas" href="#">
                     <i class="fa fa-check"></i> <span>Peticiones Atendida</span> <!--<small class="label pull-right bg-green">Hot</small>-->
                 </a>
             </li> 
@@ -180,21 +180,21 @@
 
             <!--  INCIA MENU RESPONDER PETICIONES     -->
             <li>
-                <a id="notifiacionPeticionesRechazadas" href="pantallaPeticionesExternasHospital">
+                <a id="notifiacionPeticionesRechazadas" href="#">
                     <i class="fa fa-times-circle"></i> <span>Peticiones Rechazada</span> <!--<small class="label pull-right bg-green">Hot</small>-->
                 </a>
             </li> 
             <!--  FIN MENU RESPONDER PETICIONES     -->
             <!--  INCIA MENU RESPONDER PETICIONES     -->
             <li>
-                <a id="notifiacionPeticionesNoAtendidas" href="pantallaPeticionesExternasHospital">
+                <a id="notifiacionPeticionesNoAtendidas" href="#">
                     <i class="fa fa-stop"></i> <span>Peticiones No Atendida</span> <!--<small class="label pull-right bg-green">Hot</small>-->
                 </a>
             </li> 
             <!--  FIN MENU RESPONDER PETICIONES     -->
             <!--  INCIA MENU RESPONDER PETICIONES     -->
             <li>
-                <a id="notifiacionPeticionesPendientes" href="pantallaPeticionesExternasHospital">
+                <a id="notifiacionPeticionesPendientes" href="#">
                     <i class="fa fa-pause"></i> <span>Peticiones Pendiente</span> <!--<small class="label pull-right bg-green">Hot</small>-->
                 </a>
             </li> 
@@ -202,7 +202,7 @@
             <!--  INCIA MENU CONSULTAR HOSPITALES    -->
             <li>
               <a href="pantallaConsultarMiInformacion">
-                <i class="fa fa-info"></i> <span>Mi Informacion</span> <!--<small class="label pull-right bg-green">Hot</small>-->
+                <i class="fa fa-info"></i> <span>Mi Información</span> <!--<small class="label pull-right bg-green">Hot</small>-->
               </a>
             </li> 
              <!--  FIN MENU CONSULTAR HOSPITALES    -->
