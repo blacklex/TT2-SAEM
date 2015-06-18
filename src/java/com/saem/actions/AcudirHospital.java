@@ -10,17 +10,18 @@ import com.hibernate.dao.PacienteDAO;
 import com.hibernate.dao.PeticionesEntrantesDAO;
 import com.hibernate.dao.UsuarioDAO;
 import com.hibernate.model.Contactos;
-import com.hibernate.model.DomicilioHospitales;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Pacientes;
 import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
-import com.saem.notificadores.NotificadorSMS;
+import com.saem.foaf.ConsultorFOAF;
+import com.saem.foaf.PersonaFOAF;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -88,6 +89,7 @@ public class AcudirHospital implements SessionAware {
     private String estatusMensaje;
     
     public String execute() throws ParseException, UnsupportedEncodingException {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos pacientes");
         Boolean envioPeticion = false;
@@ -103,7 +105,28 @@ public class AcudirHospital implements SessionAware {
                 apellidoPaterno = paciente.getApellidoPaterno();
                 apellidoMaterno = paciente.getApellidoMaterno();
                 nombreUsuario = userPaciente.getNombreUsuario();
-                Set contactos = paciente.getContactoses();
+                
+                ConsultorFOAF consultorFOAF = new ConsultorFOAF(nombreUsuario, ONTOLOGIA);
+                ArrayList<PersonaFOAF> amigos = consultorFOAF.consultarAmigos();
+                
+                if(amigos==null)
+                    amigos = new ArrayList<PersonaFOAF>();
+                
+                int i  = 0;
+                for(PersonaFOAF amigo : amigos){
+                     if(amigos.size() == 1)
+                        contactosPaciente += amigo.getTelefonoPersona();
+                    else if(i==0) {
+                        contactosPaciente += amigo.getTelefonoPersona();
+                        i++;
+                    } 
+                    else {
+                        contactosPaciente += ","+amigo.getTelefonoPersona();
+                    }
+                    
+                }
+                
+                /*Set contactos = paciente.getContactoses();
                 int i = 0;
                 for (Iterator iterator3 = contactos.iterator(); iterator3.hasNext();) {
                     contacto = (Contactos) iterator3.next();
@@ -116,7 +139,7 @@ public class AcudirHospital implements SessionAware {
                     else {
                         contactosPaciente += ","+contacto.getCelular();
                     }
-                }
+                }*/
             }
 
         }

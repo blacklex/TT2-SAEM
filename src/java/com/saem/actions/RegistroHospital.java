@@ -286,13 +286,29 @@ public class RegistroHospital implements SessionAware {
         insercionRelaciones.agregarRelacionSeUbicaEn(nombreHospital, "Direccion" + nombreHospital);
         //-----------------------------------------------------------------------
         OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
-
-        consultor.perteneceAClase(nombreHospital);
+        
+        ArrayList<String>enfemedadesEspecialidades = new ArrayList<String>();
+        
+        for (Especialidades especialidadTemp : listaEspec) {
+            ArrayList<String> enfemedadesEspcOnt = (ArrayList<String>) consultor.especialidadEstudiaAEnfermedad(especialidadTemp.getNombreEspecialidad());
+            for(String enfermedadOnt : enfemedadesEspcOnt){
+                enfemedadesEspecialidades.add(enfermedadOnt);
+            }
+        }
+        
+        /*consultor.perteneceAClase(nombreHospital);
         consultor.hospitalseUbicaEnDireccion(nombreHospital);
         consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
         consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
         consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
+*/
+        //------------------------------------CREAR RELACION ENTRE HOSPITAL Y ENFERMEDADES----------------------------------------
+        insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
 
+        for (String enfemedadInsertar : enfemedadesEspecialidades) {
+            insercionRelaciones.agregarRelacionSeAtiende(nombreHospital, enfemedadInsertar);
+        }
+        
         return true;
     }
 

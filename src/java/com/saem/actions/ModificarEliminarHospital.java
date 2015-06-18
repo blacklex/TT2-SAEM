@@ -66,7 +66,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     private String especialidades;
     private String filtroBusquedaHospital;
-    
+
     private String tituloAlert = "";
     private String textoAlert = "";
     private String estatusMensaje = "";
@@ -156,7 +156,7 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String modificarDatosDireccionHospital() {
-        System.out.println("---->Entro a mod Dir "+longitudX+"  "+latitudY);
+        System.out.println("---->Entro a mod Dir " + longitudX + "  " + latitudY);
         DomicilioHospitalDAO domicilioHospitalDAO = new DomicilioHospitalDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         DomicilioHospitales domicilioHospitalTemp = new DomicilioHospitales();
@@ -392,6 +392,25 @@ public class ModificarEliminarHospital implements SessionAware {
             for (Especialidades especialidadTemp : listaEspecialidades) {
                 insercionRelaciones.agregarRelacionSeEspecializaEn(nombreHospitalOnt, especialidadTemp.getNombreEspecialidad());
             }
+
+            //-----------------------------------------------------------------------
+            OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+
+            ArrayList<String> enfemedadesEspecialidades = new ArrayList<String>();
+
+            for (Especialidades especialidadTemp : listaEspecialidades) {
+                ArrayList<String> enfemedadesEspcOnt = (ArrayList<String>) consultor.especialidadEstudiaAEnfermedad(especialidadTemp.getNombreEspecialidad());
+                for (String enfermedadOnt : enfemedadesEspcOnt) {
+                    enfemedadesEspecialidades.add(enfermedadOnt);
+                }
+            }
+
+            //------------------------------------CREAR RELACION ENTRE HOSPITAL Y ENFERMEDADES----------------------------------------
+            insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
+
+            for (String enfemedadInsertar : enfemedadesEspecialidades) {
+                insercionRelaciones.agregarRelacionSeAtiende(nombreHospitalOnt, enfemedadInsertar);
+            }
             return true;
         }
 
@@ -468,7 +487,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
     public String recuperarDatosFormDireccion() {
 
-        String ONTOLOGIA = request.getServletContext().getRealPath("/")+"WEB-INF/serviciomedico.owl";
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
 
         HospitalDAO hospitalDAO = new HospitalDAO();
@@ -800,8 +819,6 @@ public class ModificarEliminarHospital implements SessionAware {
     public void setFiltroBusquedaHospital(String filtroBusquedaHospital) {
         this.filtroBusquedaHospital = filtroBusquedaHospital;
     }
-    
-    
 
     /**
      * ************************************************************************

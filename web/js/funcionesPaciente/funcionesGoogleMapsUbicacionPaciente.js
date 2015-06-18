@@ -329,15 +329,16 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
     controlText.style.paddingRight = '4px';
     controlText.innerHTML = '<b>Buscar<b>';
     controlUI.appendChild(controlText);
-    
+   
     // Setup click-event listener: simply set the map to London
     google.maps.event.addDomListener(controlUI, 'click', function() {
+        var nombreUsuario = $("#nombreUsuario").val();
         $("#barraCargarPaciente").slideDown(100);
         $.ajax({
             dataType: "json",
             method: "POST",
             url: "buscarHospitales",
-            data: {latitudUsuario: latitud, longitudUsuario:longitud, distancia:distancia.get('distance')}
+            data: {latitudUsuario: latitud, longitudUsuario:longitud, distancia:distancia.get('distance'), nombreUsuario: nombreUsuario}
         }).done(function (msg) {
             $("#barraCargarPaciente").slideUp(100);
             if (msg.estatusMensaje === "vacio") {

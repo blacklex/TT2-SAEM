@@ -16,6 +16,8 @@ import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.PeticionesSalientes;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.saem.foaf.ConsultorFOAF;
+import com.saem.foaf.PersonaFOAF;
 import com.saem.notificadores.NotificadorSMS;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
@@ -83,6 +85,7 @@ public class EnviarAlertaSaliente implements SessionAware {
     private String estatusMensaje;
     
     public String execute() throws ParseException, UnsupportedEncodingException {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos pacientes");
         Boolean envioPeticion = false;
@@ -97,7 +100,26 @@ public class EnviarAlertaSaliente implements SessionAware {
                 nombrePaciente = paciente.getNombre();
                 
                 nombreUsuario = userPaciente.getNombreUsuario();
-                Set contactos = paciente.getContactoses();
+                ConsultorFOAF consultorFOAF = new ConsultorFOAF(nombreUsuario, ONTOLOGIA);
+                ArrayList<PersonaFOAF> amigos = consultorFOAF.consultarAmigos();
+                
+                if(amigos==null)
+                    amigos = new ArrayList<PersonaFOAF>();
+                
+                int i  = 0;
+                for(PersonaFOAF amigo : amigos){
+                     if(amigos.size() == 1)
+                        contactosPaciente += amigo.getTelefonoPersona();
+                    else if(i==0) {
+                        contactosPaciente += amigo.getTelefonoPersona();
+                        i++;
+                    } 
+                    else {
+                        contactosPaciente += ","+amigo.getTelefonoPersona();
+                    }
+                    
+                }
+                /*Set contactos = paciente.getContactoses();
                 int i = 0;
                 for (Iterator iterator3 = contactos.iterator(); iterator3.hasNext();) {
                     contacto = (Contactos) iterator3.next();
@@ -110,7 +132,7 @@ public class EnviarAlertaSaliente implements SessionAware {
                     else {
                         contactosPaciente += ","+contacto.getCelular();
                     }
-                }
+                }*/
             }
         }
 
