@@ -354,6 +354,10 @@
             <result name="success" type="json">JSON</result>
         </action>
         
+        <action name="mostrarDatosClinicosPaciente" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
         <action name="mostrarDatosClinicosPacientePorHospital" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
             <result name="success" type="json">JSON</result>
         </action>
