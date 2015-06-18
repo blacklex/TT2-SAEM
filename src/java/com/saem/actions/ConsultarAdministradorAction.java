@@ -73,6 +73,7 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     String mensajeError = "";
 
     public String buscarDatosPersonalesAdministrador() throws IOException {
+        System.out.println("---> BuscarDAtosPersonales");
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
@@ -105,6 +106,7 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     }
 
     public String buscarDatosDireccionAdministrador() {
+        System.out.println("---> BuscarDAtosDireccion");
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
@@ -139,8 +141,10 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     }
 
     public String buscarDatosMostrarFiltro() throws FileNotFoundException, IOException {
+        System.out.println("---> BuscarDAtosFiltro");
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        ArrayList<Usuarios> listaFinal = new ArrayList<Usuarios>();
 
         if (nombreUsuario.length() > 0) {
             listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(s, nombreUsuario);
@@ -156,7 +160,11 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
             listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(s, 0, 0);
             estatusMensajeEliminar = "usuarioEncontrado";
         }
-        session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaTemp);
+        for(Usuarios usuarioTemp : listaTemp){
+            listaFinal.add(new Usuarios(usuarioTemp.getNombreUsuario(), usuarioTemp.getTipoUsuario(), usuarioTemp.getClave(), usuarioTemp.getFechaRegistro()));
+        }
+        
+        session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaFinal);
         s.close();
         return "success";
     }

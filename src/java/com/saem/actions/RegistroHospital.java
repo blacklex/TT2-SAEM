@@ -133,7 +133,7 @@ public class RegistroHospital implements SessionAware {
 
             }
             hospital.setEspecialidadeses(setEspecialidadesHosp);
-            s.close();
+            
             if (hospitalesDAO.save(hospital)) {
                 guardarEnOntologia(listaEspec);
 
@@ -192,7 +192,7 @@ public class RegistroHospital implements SessionAware {
             session.put("estatusMensaje", "error");
 
         }
-
+        s.close();
         return "pantallaRegistroHospital";
     }
 
