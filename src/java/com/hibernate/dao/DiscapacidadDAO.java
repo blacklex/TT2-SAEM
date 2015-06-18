@@ -23,9 +23,10 @@ public class DiscapacidadDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(Discapacidades transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -34,13 +35,14 @@ public class DiscapacidadDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(Discapacidades transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -49,7 +51,7 @@ public class DiscapacidadDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
 	}
         
         public Boolean update(Discapacidades transientInstance) {
@@ -59,21 +61,21 @@ public class DiscapacidadDAO extends HibernateUtil {
                         s.beginTransaction();
                         s.update(transientInstance);
                         s.getTransaction().commit();
-                        s.close();
+                        
 			System.out.println("--->Discapacidades actualizadas");
                         return true;
 		} catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-                    s.close();
+              
 			System.out.println("--->Discapacidades no actualizadas");  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
-        public Discapacidades findById(Long id) {
+        public Discapacidades findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			Discapacidades instance = (Discapacidades) getSession().get(
+			Discapacidades instance = (Discapacidades) s.get(
 					Discapacidades.class, id);
 			return instance;
 		} catch (RuntimeException re) {
@@ -82,15 +84,15 @@ public class DiscapacidadDAO extends HibernateUtil {
 		}
 	}
          
-        public List<Discapacidades> findAll() {
+        public List<Discapacidades> findAll(Session s) {
         try {
             String queryString = "from Discapacidades";
-            Query queryObject = getSession().createQuery(queryString);
+            Query queryObject = s.createQuery(queryString);
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
         

@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -37,8 +38,9 @@ public class Login implements SessionAware{
    
     
     public String execute() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("\n\nEntro al execute"+formNombreUsuario+"  "+formClave+"  "+formCheckRecordarme );
-        Usuarios usuario =  usuarioDAO.findById(formNombreUsuario);
+        Usuarios usuario =  usuarioDAO.findById(s,formNombreUsuario);
         
         if(usuario==null){
             tituloAlert="Error al Iniciar Sesion";

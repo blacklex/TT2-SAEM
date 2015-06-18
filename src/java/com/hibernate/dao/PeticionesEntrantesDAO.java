@@ -56,7 +56,7 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
         }
     }
 
-    public PeticionesEntrantes findById(Session s,String id) {
+    public PeticionesEntrantes findById(Session s, String id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
             PeticionesEntrantes instance = (PeticionesEntrantes) s.get(
@@ -66,24 +66,21 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             //log.error("get failed", re);
             throw re;
         } finally {
-            
+
         }
     }
 
-    public List<PeticionesEntrantes> findAll() {
-        Session s = getSession();
+    public List<PeticionesEntrantes> findAll(Session s) {
         try {
             String queryString = "from PeticionesEntrantes";
             Query queryObject = s.createQuery(queryString);
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
-        } finally {
-            s.close();
         }
     }
 
-    public List<PeticionesEntrantes> findAllByHospital(Session s,String codigoHospital) {
+    public List<PeticionesEntrantes> findAllByHospital(Session s, String codigoHospital) {
         //Session s = getSession();
         try {
             String queryString = "from PeticionesEntrantes where Hospitales_codigo_hospital =:codigoHospital and estatus='PP' order by prioridad";
@@ -92,30 +89,30 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
-        } finally {
-            
         }
     }
-    
+
     public Boolean update(PeticionesEntrantes transientInstance) {
-		Session s = getSession();
-		try {
-			PeticionesEntrantes p=findById(s, transientInstance.getIdPeticionesEntrantes());
-                        p.setComentario(transientInstance.getComentario());
-                        p.setEstatus(transientInstance.getEstatus());
-                        
-                        s.beginTransaction();
-                        s.update(p);
-                        s.getTransaction().commit();
-                        s.close();
-			System.out.println("--->Peticion actualizado");
-                        return true;
-		} catch (RuntimeException re) {
-                    s.close();
-			System.out.println("--->Peticion no actualizado");  
-                    return false;
-		}
-	}
+        Session s = getSession();
+        try {
+            PeticionesEntrantes p = findById(s, transientInstance.getIdPeticionesEntrantes());
+            p.setComentario(transientInstance.getComentario());
+            p.setEstatus(transientInstance.getEstatus());
+
+            s.beginTransaction();
+            s.update(p);
+            s.getTransaction().commit();
+
+            System.out.println("--->Peticion actualizado");
+            return true;
+        } catch (RuntimeException re) {
+
+            System.out.println("--->Peticion no actualizado");
+            return false;
+        } finally {
+            s.clear();
+        }
+    }
 
     public List<PeticionesEntrantes> finByHospitalNss(Session s, String nss) {
         try {
@@ -125,8 +122,6 @@ public class PeticionesEntrantesDAO extends HibernateUtil {
             return queryObject.list();
         } catch (RuntimeException re) {
             throw re;
-        } finally {
-            
         }
     }
 

@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -73,7 +73,7 @@ public class ConsultarHospital implements SessionAware {
     public String execute() {
         return "pantallaConsultarHospitales";
     }
-    
+
     public String pantallaConsultarInformacionHospital() {
         return "pantallaConsultarInformacionHospital";
     }
@@ -103,34 +103,38 @@ public class ConsultarHospital implements SessionAware {
     }
 
     public String recuperarDatosConsultaSesion() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
 
-        nombreUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario();
-        claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
+        nombreUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getNombreUsuario();
+        claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosConsultaHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
 
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
 
         nombreHospital = hospitalTemp.getNombre();
         telefonoHospital = hospitalTemp.getLada() + hospitalTemp.getTelefono();
         emailHospital = hospitalTemp.getEMail();
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosConsultaDireccion() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
 
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
 
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
         String nombreHospitalTemp = hospitalTemp.getNombre();
@@ -151,14 +155,15 @@ public class ConsultarHospital implements SessionAware {
             latitudY = consultor.getCoordenadaYDireccion("Direccion" + nombreHospitalTemp).get(0);
             longitudX = consultor.getCoordenadaXDireccion("Direccion" + nombreHospitalTemp).get(0);
         }
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosConsultaDirectivo() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
 
         Iterator<Directivo> it = hospitalTemp.getDirectivos().iterator();
 
@@ -170,16 +175,17 @@ public class ConsultarHospital implements SessionAware {
             nombreDirectivo = directivoTemp.getNombre();
 
         }
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosEspecialidades() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         System.out.println("--->Entro a recuperarEspecialidades Consulta");
         String html = "";
 
-        Set<Especialidades> especialidadesHospial = hospitalDAO.findById(codigoHospital).getEspecialidadeses();
+        Set<Especialidades> especialidadesHospial = hospitalDAO.findById(s, codigoHospital).getEspecialidadeses();
         if (especialidadesHospial == null) {
             return SUCCESS;
         }
@@ -201,23 +207,26 @@ public class ConsultarHospital implements SessionAware {
 
         }
         especialidades = html;
-
+        s.close();
         return SUCCESS;
     }
 
-    public String recuperarCodigoHospital(){
-        String idUsuario = (String)session.get("nombreUsuario");
-        System.out.println("----> "+idUsuario);
-        Usuarios usuarioTemp = new UsuarioDAO().findById(idUsuario);
+    public String recuperarCodigoHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        String idUsuario = (String) session.get("nombreUsuario");
+        System.out.println("----> " + idUsuario);
+        Usuarios usuarioTemp = new UsuarioDAO().findById(s, idUsuario);
         Iterator<Hospitales> iterHospitales = usuarioTemp.getHospitaleses().iterator();
-        
-        while(iterHospitales.hasNext()){
+
+        while (iterHospitales.hasNext()) {
             Hospitales hospitalTemp = iterHospitales.next();
             codigoHospital = hospitalTemp.getCodigoHospital();
-            System.out.println("--->Cod "+codigoHospital);
+            System.out.println("--->Cod " + codigoHospital);
         }
+        s.close();
         return SUCCESS;
     }
+
     /**
      * *************************************** METODOS GRID
      * ********************************
@@ -234,6 +243,7 @@ public class ConsultarHospital implements SessionAware {
     }
 
     private void obtenerTablaHospitales() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalesDAO = new HospitalDAO();
         ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
         ArrayList<Hospitales> listaTempFinal = new ArrayList<Hospitales>();
@@ -250,12 +260,12 @@ public class ConsultarHospital implements SessionAware {
         } else {
 
             if (filtroBusquedaHospital.length() > 0) {
-                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(filtroBusquedaHospital);
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(s,filtroBusquedaHospital);
 
                 System.out.println("--->Entro a filtro mayor " + listaTemp.size());
             } else {
                 // Obtenemos la lista de la sesión
-                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll(s);
             }
             session.put(LISTA_HOSPITALES, listaTemp);
         }
@@ -263,7 +273,7 @@ public class ConsultarHospital implements SessionAware {
         for (Hospitales tempContHosp : listaTemp) {
             listaTempFinal.add(new Hospitales(tempContHosp.getCodigoHospital(), null, tempContHosp.getNombre(), tempContHosp.getTelefono(), tempContHosp.getLada(), tempContHosp.getEMail()));
         }
-
+        s.close();
         gridListaConsultaHospitales = listaTempFinal;
 
         if (gridListaConsultaHospitales == null) {

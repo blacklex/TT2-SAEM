@@ -94,7 +94,7 @@ public class AcudirHospital implements SessionAware {
         System.out.println("--->Entro a datos pacientes");
         Boolean envioPeticion = false;
         String contactosPaciente = "";
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s,nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
@@ -146,7 +146,7 @@ public class AcudirHospital implements SessionAware {
         System.out.println(contactosPaciente);
         
         //Buscamos el hospital que se encargara del paciente
-        hospital = hospitalDAO.findById(codigoHospital);
+        hospital = hospitalDAO.findById(s,codigoHospital);
         nombreHospital = hospital.getNombre();
         lada = hospital.getLada();
         numHospital = hospital.getTelefono();
@@ -190,7 +190,8 @@ public class AcudirHospital implements SessionAware {
             System.out.println("Hay peticiones echas por el usuario: " + nombreUsuario);
             estatusMensaje = "peticionEnviada";
         }
-
+        
+        s.close();
         return SUCCESS;
     }
       

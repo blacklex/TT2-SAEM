@@ -50,11 +50,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
+
 /**
  *
  * @author gabriela
  */
-public class ModificarEliminarPacientePorHospitalAction extends ActionSupport implements SessionAware, ServletRequestAware{
+public class ModificarEliminarPacientePorHospitalAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
     private Map<String, Object> session = null;
     private final PacienteDAO pacienteDAO = new PacienteDAO();
@@ -70,11 +72,11 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
     private final CirugiaDAO cirugiaDAO = new CirugiaDAO();
     private final MedicacionDAO medicacionDAO = new MedicacionDAO();
     private final EnfermedadCronicaDAO enfermedadCronicaDAO = new EnfermedadCronicaDAO();
-    
+
     private List<Pacientes> listPacientes;
     private List<Usuarios> listUsuarios;
     private List<Hospitales> listHospitales;
-    
+
     Usuarios userPaciente = new Usuarios();
     Pacientes paciente = new Pacientes();
     Hospitales hospital = new Hospitales();
@@ -88,20 +90,20 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
     Discapacidades discapacidad = new Discapacidades();
     Medicacion medicacion = new Medicacion();
     EnfermedadesCronicas enfermedadCronica = new EnfermedadesCronicas();
-    
+
     private HttpServletRequest servletRequest;
-    
+
     private String codigoHospital;
     private Long noHistorial;
     private ArrayList<String> discapacidades = new ArrayList<>();
     private ArrayList<String> alergias = new ArrayList<>();
     private ArrayList<String> cirugias = new ArrayList<>();
-    
+
     private String fechaNacimientoFormato;
     private String contactosDelPaciente;
     private String medicamentos;
     private String enfermedadesCronicas;
-       
+
     String nombreHospital;
     //Acceso
     private String nombreUsuario; //Clave Primaria
@@ -127,7 +129,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
     private String telefonoPaciente;
     private Long idTelefonoPaciente;
     private String telefonosDelPaciente;
-    
+
     //Datos personales
     Long idDatosPersonalesPaciente;
     private String estadoCivil;
@@ -158,17 +160,17 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             estatusMensajeEliminar = "usuarioEncontrado";
             System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarPaciente";
-        }
-        else {
+        } else {
             mensajeError = "Error al eliminar Administrador";
             estatusMensajeEliminar = "usuarioNoEncontrado";
         }
         return "pantallaModificarEliminarPaciente";
     }
-    
+
     public String editarAccesoPacientePorHospital() throws ParseException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        userPaciente = usuarioDAO.findById(nombreUsuario);
+        userPaciente = usuarioDAO.findById(s, nombreUsuario);
         //Obtenemos la fecha de registro por que no se va a modificar y la volvemos a setear dentro de Usuario
         Date fecha = userPaciente.getFechaRegistro();
         Date date = fecha;
@@ -177,14 +179,13 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         date = hourdateFormat.parse(fechaRegistro);
 
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
-        if(usuarioDAO.update(userPaciente)) {
-          actualizacionCorrecta = true;
-         }
-        else {
+        if (usuarioDAO.update(userPaciente)) {
+            actualizacionCorrecta = true;
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -196,15 +197,17 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("estatusMensajeEditar", "error");
         }
 
+        s.close();
         return "pantallaModificarEliminarPacientePorHospital";
     }
-    
+
     public String editarDatosIdentificacionPacientePorHospital() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        userPaciente = usuarioDAO.findById(nombreUsuario);
-        hospital = hospitalDAO.findById(codigoHospital);
-        
+
+        userPaciente = usuarioDAO.findById(s, nombreUsuario);
+        hospital = hospitalDAO.findById(s, codigoHospital);
+
         //Establecemos los datos para el Paciente
         paciente.setNss(nss);
         paciente.setApellidoMaterno(apellidoMaterno);
@@ -213,17 +216,16 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         paciente.setNombre(nombre);
         paciente.setNoConsultorio(noConsultorio);
         //Convertimos la imagen a un arreglo de
-        if(imagen != null) {
-            System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
+        if (imagen != null) {
+            System.out.println("Camino absoluto    " + imagen.getAbsolutePath());
             byte[] bFile = new byte[(int) imagen.length()];
             FileInputStream fileInputStream = new FileInputStream(imagen);
             fileInputStream.read(bFile);
             fileInputStream.close();
             paciente.setImagen(bFile);
-        }
-        else{
+        } else {
             String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-            File fileImg = new File(filePath+"imagenesPerfilPaciente/default/default.jpeg");
+            File fileImg = new File(filePath + "imagenesPerfilPaciente/default/default.jpeg");
             byte[] defaultFile = new byte[(int) fileImg.length()];
             FileInputStream imgDefault = new FileInputStream(fileImg);
             imgDefault.read(defaultFile);
@@ -232,14 +234,13 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         }
         paciente.setUsuarios(userPaciente);
         paciente.setHospitales(hospital);
-        if(pacienteDAO.update(paciente)) {
+        if (pacienteDAO.update(paciente)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -250,15 +251,16 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarPacientePorHospital";
     }
-    
+
     public String editarDireccionPacientePorHospital() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        paciente = pacienteDAO.findById(nss); 
-                
+
+        paciente = pacienteDAO.findById(s, nss);
+
         //Establecemos los datos de dirección para el Paciente
         domicilioPacientes.setId(idDomicilioPaciente);
         domicilioPacientes.setCalle(calle);
@@ -267,15 +269,14 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         domicilioPacientes.setEntidadFederativa(entidadFederativa);
         domicilioPacientes.setCodigoPostal(codigoPostal);
         domicilioPacientes.setPacientes(paciente);
-        
-        if(domicilioPacienteDAO.update(domicilioPacientes)) {
+
+        if (domicilioPacienteDAO.update(domicilioPacientes)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -286,23 +287,23 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarPacientePorHospital";
     }
-    
+
     public String editarTelefonosPaciente() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        userPaciente = usuarioDAO.findById(getNombreUsuario());
-                
-        if(telefonoPacienteDAO.update(telefonosPacientes)) {
+
+        userPaciente = usuarioDAO.findById(s, getNombreUsuario());
+
+        if (telefonoPacienteDAO.update(telefonosPacientes)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -313,15 +314,16 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarPacientes";
     }
-    
+
     public String editarDatosPersonalesPacientePorHospital() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        paciente = pacienteDAO.findById(nss);
-              
+
+        paciente = pacienteDAO.findById(s, nss);
+
         //Establecemos los datos personales para el Paciente
         datosPersonales.setId(idDatosPersonalesPaciente);
         datosPersonales.setEstadoCivil(estadoCivil);
@@ -334,17 +336,16 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         datosPersonales.setTalla(talla);
         datosPersonales.setCorreo(correo);
         datosPersonales.setFacebook(facebook);
-        
+
         datosPersonales.setPacientes(paciente);
-        
-        if(datosPersonalesDAO.update(datosPersonales)) {
+
+        if (datosPersonalesDAO.update(datosPersonales)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -355,23 +356,23 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+
+        s.close();
         return "pantallaModificarEliminarPacientePorHospital";
     }
-    
+
     public String editarContactosPaciente() throws IOException {
         Boolean actualizacionCorrecta = false;
-        
-        userPaciente = usuarioDAO.findById(getNombreUsuario());
-        
-        if(contactoDAO.update(contactos)) {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        userPaciente = usuarioDAO.findById(s, getNombreUsuario());
+
+        if (contactoDAO.update(contactos)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -382,43 +383,46 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarPacientes";
     }
-    
+
     public String editarDatosClinicosPacientePorHospital() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        paciente = pacienteDAO.findById(nss);
-        
+
+        paciente = pacienteDAO.findById(s, nss);
+
         //Establecemos los datos clinicos para el paciente----->Tabla de Datos Clinicos
         datosClinicos.setNoHistorial(noHistorial);
 
-        if(drogas.equals("0"))
+        if (drogas.equals("0")) {
             datosClinicos.setUsoDrogas(false);
-        else
+        } else {
             datosClinicos.setUsoDrogas(true);
+        }
 
-        if(alcohol.equals("0"))
+        if (alcohol.equals("0")) {
             datosClinicos.setUsoAlcohol(false);
-        else
+        } else {
             datosClinicos.setUsoAlcohol(true);
+        }
 
-        if(fuma.equals("0"))
+        if (fuma.equals("0")) {
             datosClinicos.setFumador(false);
-        else
+        } else {
             datosClinicos.setFumador(true);
+        }
 
         datosClinicos.setPacientes(paciente);//----->Llave foranea del Paciente
-        
-        if(datosClinicosDAO.update(datosClinicos)) {
+
+        if (datosClinicosDAO.update(datosClinicos)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Paciente";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -429,7 +433,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarPacientePorHospital";
     }
 
@@ -451,16 +455,16 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
 //
 //        return "success";
 //    }
-    
     public String buscarDatosPaciente() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos pacientes");
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
-            
+
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 nss = paciente.getNss();
                 nombre = paciente.getNombre();
                 apellidoPaterno = paciente.getApellidoPaterno();
@@ -470,9 +474,9 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                 imagenPaciente = paciente.getImagen();
                 String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
                 System.out.println(filePath);
-                FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilPaciente/"+nombreUsuario+".jpeg");
+                FileOutputStream image = new FileOutputStream(filePath + "imagenesPerfilPaciente/" + nombreUsuario + ".jpeg");
                 image.write(imagenPaciente);
-                nombreUsuario = userPaciente.getNombreUsuario();                
+                nombreUsuario = userPaciente.getNombreUsuario();
                 System.out.println(nss);
                 System.out.println(nombre);
                 System.out.println(apellidoPaterno);
@@ -482,21 +486,23 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                 System.out.println(nombreUsuario);
                 codigoHospital = pacienteDAO.obtenerCogigoHospital(nss);
                 System.out.println(codigoHospital);
-                
+
                 image.close();
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosDireccionPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a direccion pacientes");
-        listUsuarios = usuarioDAO.listarById(getNombreUsuario());
+        listUsuarios = usuarioDAO.listarById(s, getNombreUsuario());
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set domPaciente = paciente.getDomicilioPacienteses();
                 for (Iterator iterator3 = domPaciente.iterator(); iterator3.hasNext();) {
                     domicilioPacientes = (DomicilioPacientes) iterator3.next();
@@ -519,48 +525,52 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                 }
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarTelefonosPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a telefonos pacientes");
         String html = "";
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set telPaciente = paciente.getTelefonosPacienteses();
                 int index = 0;
                 for (Iterator iterator3 = telPaciente.iterator(); iterator3.hasNext();) {
                     telefonosPacientes = (TelefonosPacientes) iterator3.next();
-                    html += "<div id=\"telefonoPaciente"+index+"\">"+
-                            "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
-                          + "       <label for=\"telefonoPaciente\">Teléfono #"+ (index + 1) +"</label>"
-                          + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+telefonosPacientes.getNumeroTelefono()+"\" name=\"numTelefono"+index+"\" id=\"numTelefono"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
-                          + "   </div>"
-                          + "</div>";
+                    html += "<div id=\"telefonoPaciente" + index + "\">"
+                            + "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
+                            + "       <label for=\"telefonoPaciente\">Teléfono #" + (index + 1) + "</label>"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + telefonosPacientes.getNumeroTelefono() + "\" name=\"numTelefono" + index + "\" id=\"numTelefono" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
+                            + "   </div>"
+                            + "</div>";
                     System.out.println(index);
-                    System.out.println("Telefono-->" + telefonosPacientes.getNumeroTelefono() +" Id: " +telefonosPacientes.getId()+" NSS:"+ paciente.getNss());
+                    System.out.println("Telefono-->" + telefonosPacientes.getNumeroTelefono() + " Id: " + telefonosPacientes.getId() + " NSS:" + paciente.getNss());
                     index++;
                 }
             }
         }
-        
+
         telefonosDelPaciente = html;
         System.out.println(telefonosDelPaciente);
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosPersonalesPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos personales pacientes");
-        listUsuarios = usuarioDAO.listarById(getNombreUsuario());
+        listUsuarios = usuarioDAO.listarById(s, getNombreUsuario());
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datPerPaciente = paciente.getDatosPersonaleses();
                 for (Iterator iterator3 = datPerPaciente.iterator(); iterator3.hasNext();) {
                     datosPersonales = (DatosPersonales) iterator3.next();
@@ -596,95 +606,102 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                 }
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarContactosPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a contactos pacientes");
         String html = "";
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set contacPaciente = paciente.getContactoses();
                 int index = 0;
                 for (Iterator iterator3 = contacPaciente.iterator(); iterator3.hasNext();) {
                     contactos = (Contactos) iterator3.next();
-                    html += "<div id=\"contactoPaciente"+index+"\">" + "\n" +
-                            "   <label for=\"nombreC\">Contacto #"+ (index + 1) +"</label>" + "\n" +
-                            "   <div id=\"divNombreCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"nombreC\">Nombre</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getNombre()+"\" class=\"form-control\" name=\"nombreContacto"+index+"\" id=\"nombreContacto"+index+"\" placeholder=\"Nombre\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divApellidoPaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"apellidoPaternoC\">Apellido Paterno</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoPaterno()+"\" class=\"form-control\" name=\"apellidoPaternoContacto"+index+"\" id=\"apellidoPaternoContacto"+index+"\" placeholder=\"Apellido Paterno\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divApellidoMaternoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"apellidoMaternoC\">Apellido Materno</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getApellidoMaterno()+"\" class=\"form-control\" name=\"apellidoMaternoContacto"+index+"\" id=\"apellidoMaternoContacto"+index+"\" placeholder=\"Apellido Materno\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divParentescoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"parentesco\">Parentesco</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getParentesco()+"\" class=\"form-control\" name=\"parentescoContacto"+index+"\" id=\"parentescoContacto"+index+"\" placeholder=\"Parentesco\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divCelularCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"celular\">Telefono Celular</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCelular()+"\" name=\"celularContacto"+index+"\" id=\"celularContacto"+index+"\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"Celular\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divFacebookCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"facebookC\">Facebook (www.facebook.com/alguien)</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getFacebook()+"\" class=\"form-control\" name=\"facebookContacto"+index+"\" id=\"facebookContacto"+index+"\" placeholder=\"Facebook\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "   <div id=\"divCorreoCPaciente"+index+"\" class=\"form-group\">" + "\n" +
-                            "       <label for=\"correoC\">Email</label>" + "\n" +
-                            "       <input kl_virtual_keyboard_secure_input=\"on\" value=\""+contactos.getCorreo()+"\" class=\"form-control\" name=\"correoContacto"+index+"\" id=\"correoContacto"+index+"\" placeholder=\"Email\" type=\"text\">" + "\n" +
-                            "   </div>" + "\n" +
-                            "</div>";
+                    html += "<div id=\"contactoPaciente" + index + "\">" + "\n"
+                            + "   <label for=\"nombreC\">Contacto #" + (index + 1) + "</label>" + "\n"
+                            + "   <div id=\"divNombreCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"nombreC\">Nombre</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getNombre() + "\" class=\"form-control\" name=\"nombreContacto" + index + "\" id=\"nombreContacto" + index + "\" placeholder=\"Nombre\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divApellidoPaternoCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"apellidoPaternoC\">Apellido Paterno</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getApellidoPaterno() + "\" class=\"form-control\" name=\"apellidoPaternoContacto" + index + "\" id=\"apellidoPaternoContacto" + index + "\" placeholder=\"Apellido Paterno\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divApellidoMaternoCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"apellidoMaternoC\">Apellido Materno</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getApellidoMaterno() + "\" class=\"form-control\" name=\"apellidoMaternoContacto" + index + "\" id=\"apellidoMaternoContacto" + index + "\" placeholder=\"Apellido Materno\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divParentescoCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"parentesco\">Parentesco</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getParentesco() + "\" class=\"form-control\" name=\"parentescoContacto" + index + "\" id=\"parentescoContacto" + index + "\" placeholder=\"Parentesco\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divCelularCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"celular\">Telefono Celular</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getCelular() + "\" name=\"celularContacto" + index + "\" id=\"celularContacto" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"Celular\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divFacebookCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"facebookC\">Facebook (www.facebook.com/alguien)</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getFacebook() + "\" class=\"form-control\" name=\"facebookContacto" + index + "\" id=\"facebookContacto" + index + "\" placeholder=\"Facebook\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "   <div id=\"divCorreoCPaciente" + index + "\" class=\"form-group\">" + "\n"
+                            + "       <label for=\"correoC\">Email</label>" + "\n"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getCorreo() + "\" class=\"form-control\" name=\"correoContacto" + index + "\" id=\"correoContacto" + index + "\" placeholder=\"Email\" type=\"text\">" + "\n"
+                            + "   </div>" + "\n"
+                            + "</div>";
                     System.out.println(index);
-                    System.out.println("Id: " + contactos.getId() + "\n" +
-                                       "Nombre: " + contactos.getNombre() + "\n" +
-                                       "ApellidoP: " + contactos.getApellidoPaterno() +  "\n" +
-                                       "ApellidoM" + contactos.getApellidoMaterno() +  "\n" +
-                                       "Parentesco: " + contactos.getParentesco() +  "\n" +
-                                       "Celular:" + contactos.getCelular() +  "\n" +
-                                       "Face: "+ contactos.getFacebook() +  "\n" +
-                                       "Correo:" + contactos.getCorreo() +  "\n" +
-                                       "Nss: "+ paciente.getNss());
+                    System.out.println("Id: " + contactos.getId() + "\n"
+                            + "Nombre: " + contactos.getNombre() + "\n"
+                            + "ApellidoP: " + contactos.getApellidoPaterno() + "\n"
+                            + "ApellidoM" + contactos.getApellidoMaterno() + "\n"
+                            + "Parentesco: " + contactos.getParentesco() + "\n"
+                            + "Celular:" + contactos.getCelular() + "\n"
+                            + "Face: " + contactos.getFacebook() + "\n"
+                            + "Correo:" + contactos.getCorreo() + "\n"
+                            + "Nss: " + paciente.getNss());
                     index++;
                 }
             }
         }
         contactosDelPaciente = html;
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosClinicosPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos clinicos pacientes");
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
                     noHistorial = datosClinicos.getNoHistorial();
-                    if(datosClinicos.isUsoDrogas() == true)
+                    if (datosClinicos.isUsoDrogas() == true) {
                         drogas = "1";
-                    else
-                        drogas = "0"; 
-                    if(datosClinicos.isUsoAlcohol() == true)
+                    } else {
+                        drogas = "0";
+                    }
+                    if (datosClinicos.isUsoAlcohol() == true) {
                         alcohol = "1";
-                    else
+                    } else {
                         alcohol = "0";
-                    if(datosClinicos.isFumador() == true)
+                    }
+                    if (datosClinicos.isFumador() == true) {
                         fuma = "1";
-                    else
+                    } else {
                         fuma = "0";
+                    }
                     nombreUsuario = userPaciente.getNombreUsuario();
                     nss = paciente.getNss();
                     System.out.println(noHistorial);
@@ -696,93 +713,101 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                 }
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarAlergiasPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a alergias pacientes");
         ArrayList<String> nombreAlergia = new ArrayList<>();
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
                     Set datClinicosAlergias = datosClinicos.getAlergiases();
                     for (Iterator iterator5 = datClinicosAlergias.iterator(); iterator5.hasNext();) {
                         alergia = (Alergias) iterator5.next();
-                        nombreAlergia.add(alergia.getTipoAlergia()+";"+alergia.getEspecificacion()+";"+alergia.getId());                      
+                        nombreAlergia.add(alergia.getTipoAlergia() + ";" + alergia.getEspecificacion() + ";" + alergia.getId());
                     }
                 }
             }
         }
         alergias = nombreAlergia;
         System.out.println(alergias);
+        s.close();
         return "success";
     }
-    
+
     public String buscarCirugiasPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a cirugias pacientes");
         ArrayList<String> nombreCirugia = new ArrayList<>();
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
                     Set datClinicosCirugias = datosClinicos.getCirugiases();
                     for (Iterator iterator4 = datClinicosCirugias.iterator(); iterator4.hasNext();) {
                         cirugia = (Cirugias) iterator4.next();
-                        nombreCirugia.add(cirugia.getTipoCirugia()+";"+cirugia.getNoCirugia()+";"+cirugia.getId());
+                        nombreCirugia.add(cirugia.getTipoCirugia() + ";" + cirugia.getNoCirugia() + ";" + cirugia.getId());
                     }
                 }
             }
         }
         cirugias = nombreCirugia;
         System.out.println(cirugias);
+        s.close();
         return "success";
     }
-    
+
     public String buscarDiscapacidadesPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a discapacidades pacientes");
         ArrayList<String> nombreDiscapacidad = new ArrayList<>();
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
                     Set datClinicosDiscapacidades = datosClinicos.getDiscapacidadeses();
                     for (Iterator iterator4 = datClinicosDiscapacidades.iterator(); iterator4.hasNext();) {
                         discapacidad = (Discapacidades) iterator4.next();
-                        nombreDiscapacidad.add(discapacidad.getTipo()+";"+discapacidad.getId());
+                        nombreDiscapacidad.add(discapacidad.getTipo() + ";" + discapacidad.getId());
                     }
                 }
             }
         }
         discapacidades = nombreDiscapacidad;
         System.out.println(discapacidades);
+        s.close();
         return "success";
     }
-    
+
     public String buscarMedicamentosPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a medicamentos pacientes");
         String html = "";
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
@@ -790,20 +815,20 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                     int index = 0;
                     for (Iterator iterator4 = datClinicosMedicacion.iterator(); iterator4.hasNext();) {
                         medicacion = (Medicacion) iterator4.next();
-                        html += "<div id=\"medicamentos"+index+"\" class=\"row\">" + "\n" +
-                                "   <div class=\"col-lg-6\">" + "\n" +
-                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "           <label>Nombre del medicamento #"+ (index + 1) +"</label>" + "\n" +
-                                "           <input class=\"form-control\" type=\"text\" value=\""+medicacion.getNombreMedicamento()+"\" name=\"medicamento"+index+"\" id=\"medicamento"+index+"\" placeholder=\"Medicamentó"+(index+1)+"\"/>" + "\n" +
-                                "       </div>" + "\n" +
-                                "   </div>" + "\n" +
-                                "   <div class=\"col-lg-6\">" + "\n" +
-                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "           <label>Frecuencia</label>" + "\n" +
-                                "           <input class=\"form-control\" type=\"text\" value=\""+medicacion.getFrecuencia()+"\" name=\"frecuencia"+index+"\" id=\"frecuencia"+index+"\" placeholder=\"Frecuencia\"/>" + "\n" +
-                                "       </div>" + "\n" +
-                                "   </div>" + "\n" +
-                                "</div>";
+                        html += "<div id=\"medicamentos" + index + "\" class=\"row\">" + "\n"
+                                + "   <div class=\"col-lg-6\">" + "\n"
+                                + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
+                                + "           <label>Nombre del medicamento #" + (index + 1) + "</label>" + "\n"
+                                + "           <input class=\"form-control\" type=\"text\" value=\"" + medicacion.getNombreMedicamento() + "\" name=\"medicamento" + index + "\" id=\"medicamento" + index + "\" placeholder=\"Medicamentó" + (index + 1) + "\"/>" + "\n"
+                                + "       </div>" + "\n"
+                                + "   </div>" + "\n"
+                                + "   <div class=\"col-lg-6\">" + "\n"
+                                + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
+                                + "           <label>Frecuencia</label>" + "\n"
+                                + "           <input class=\"form-control\" type=\"text\" value=\"" + medicacion.getFrecuencia() + "\" name=\"frecuencia" + index + "\" id=\"frecuencia" + index + "\" placeholder=\"Frecuencia\"/>" + "\n"
+                                + "       </div>" + "\n"
+                                + "   </div>" + "\n"
+                                + "</div>";
                         index++;
                     }
                 }
@@ -811,18 +836,20 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         }
         medicamentos = html;
         System.out.println(medicamentos);
+        s.close();
         return "success";
     }
-    
+
     public String buscarEnfermedadesCronicasPaciente() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a enfermedades cronicas pacientes");
         String html = "";
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             Set pacientes = userPaciente.getPacienteses();
             for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                paciente = (Pacientes) iterator2.next(); 
+                paciente = (Pacientes) iterator2.next();
                 Set datCliPaciente = paciente.getDatosClinicoses();
                 for (Iterator iterator3 = datCliPaciente.iterator(); iterator3.hasNext();) {
                     datosClinicos = (DatosClinicos) iterator3.next();
@@ -834,36 +861,36 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
                         DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String inicioEnfermedadFormato = hourdateFormat.format(inicioEnfermedad);
                         String enfermedad = enfermedadCronica.getTipo();
-                        html += "<div id=\"enfermedadesCronicas"+index+"\" class=\"row\">" + "\n" +
-                                "   <div class=\"col-lg-4\">" + "\n" +
-                                "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n" +
-                                "           <label>Nombre enfermedad #"+ (index + 1)+ " : </label>" + "\n" +
-                                "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\""+enfermedadCronica.getNombre()+"\" placeholder=\"Nombre enfermedad"+(index+1)+"\" />" + "\n" +
-                                "       </div>" + "\n" +
-                                "   </div>" + "\n" +
-                                "   <div class=\"col-lg-4\">" + "\n" +
-                                "       <label>Tipo</label>" + "\n" +
-                                "       <select name=\"tipoEnfermedad"+ index +"\" class=\"form-control\">" + "\n" +
-                                "           <option value=\"-1\">Seleccionar</option>" + "\n" +
-                                "           <option value=\"diabetes\" "+((enfermedad.equals("diabetes"))?"selected":"")+">Diabetes</option>" + "\n" +
-                                "           <option value=\"cardiovascular\" "+((enfermedad.equals("cardiovascular"))?"selected":"")+">Enfermedades cardiovasculares</option>" + "\n" +
-                                "           <option value=\"obesidad\" "+((enfermedad.equals("obesidad"))?"selected":"")+">Obesidad</option>" + "\n" +
-                                "           <option value=\"cancer\"  "+((enfermedad.equals("cancer"))?"selected":"")+">Cáncer</option>" + "\n" +
-                                "           <option value=\"dislipidemias\" "+((enfermedad.equals("dislipidemias"))?"selected":"")+">Dislipidemias</option>" + "\n" +
-                                "       </select>" + "\n" +
-                                "   </div>" + "\n" +
-                                "   <div class=\"col-lg-4\">" + "\n" +
-                                "       <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n" +
-                                "           <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n" +
-                                "           <div class=\"input-group\">" + "\n" +
-                                "               <div class=\"input-group-addon\">" + "\n" +
-                                "                   <i class=\"fa fa-calendar\"></i>" + "\n" +
-                                "               </div>" + "\n" +
-                                "               <input kl_virtual_keyboard_secure_input=\"on\" value=\""+inicioEnfermedadFormato+"\" class=\"form-control\" name=\"inicioEnfermedad"+ index +"\" id=\"inicioEnfermedad"+index+"\" data-inputmask=\"\\'alias\\': \\'dd/mm/yyyy\\'\" data-mask placeholder=\"dd/mm/yyyy\" type=\"text\">" + "\n" +
-                                "           </div>" + "\n" +
-                                "       </div>" + "\n" +
-                                "   </div>" + "\n" +
-                                "</div>";
+                        html += "<div id=\"enfermedadesCronicas" + index + "\" class=\"row\">" + "\n"
+                                + "   <div class=\"col-lg-4\">" + "\n"
+                                + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
+                                + "           <label>Nombre enfermedad #" + (index + 1) + " : </label>" + "\n"
+                                + "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\"" + enfermedadCronica.getNombre() + "\" placeholder=\"Nombre enfermedad" + (index + 1) + "\" />" + "\n"
+                                + "       </div>" + "\n"
+                                + "   </div>" + "\n"
+                                + "   <div class=\"col-lg-4\">" + "\n"
+                                + "       <label>Tipo</label>" + "\n"
+                                + "       <select name=\"tipoEnfermedad" + index + "\" class=\"form-control\">" + "\n"
+                                + "           <option value=\"-1\">Seleccionar</option>" + "\n"
+                                + "           <option value=\"diabetes\" " + ((enfermedad.equals("diabetes")) ? "selected" : "") + ">Diabetes</option>" + "\n"
+                                + "           <option value=\"cardiovascular\" " + ((enfermedad.equals("cardiovascular")) ? "selected" : "") + ">Enfermedades cardiovasculares</option>" + "\n"
+                                + "           <option value=\"obesidad\" " + ((enfermedad.equals("obesidad")) ? "selected" : "") + ">Obesidad</option>" + "\n"
+                                + "           <option value=\"cancer\"  " + ((enfermedad.equals("cancer")) ? "selected" : "") + ">Cáncer</option>" + "\n"
+                                + "           <option value=\"dislipidemias\" " + ((enfermedad.equals("dislipidemias")) ? "selected" : "") + ">Dislipidemias</option>" + "\n"
+                                + "       </select>" + "\n"
+                                + "   </div>" + "\n"
+                                + "   <div class=\"col-lg-4\">" + "\n"
+                                + "       <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n"
+                                + "           <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n"
+                                + "           <div class=\"input-group\">" + "\n"
+                                + "               <div class=\"input-group-addon\">" + "\n"
+                                + "                   <i class=\"fa fa-calendar\"></i>" + "\n"
+                                + "               </div>" + "\n"
+                                + "               <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + inicioEnfermedadFormato + "\" class=\"form-control\" name=\"inicioEnfermedad" + index + "\" id=\"inicioEnfermedad" + index + "\" data-inputmask=\"\\'alias\\': \\'dd/mm/yyyy\\'\" data-mask placeholder=\"dd/mm/yyyy\" type=\"text\">" + "\n"
+                                + "           </div>" + "\n"
+                                + "       </div>" + "\n"
+                                + "   </div>" + "\n"
+                                + "</div>";
                         index++;
                     }
                 }
@@ -871,16 +898,19 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
         }
         enfermedadesCronicas = html;
         System.out.println(enfermedadesCronicas);
+        s.close();
         return "success";
     }
-    
+
     public String validarNombreUsuarioEliminar() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios usuarioResultado;
 
-        usuarioResultado = usuarioDAO.findById(getNombreUsuario());
+        usuarioResultado = usuarioDAO.findById(s, getNombreUsuario());
 
         if (usuarioResultado == null) {
             setEstatusMensajeEliminar("usuarioNoEncontrado");
+            s.close();
             return SUCCESS;
         }
 
@@ -890,37 +920,41 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
             setEstatusMensajeEliminar("usuarioNoEncontrado");
         }
 
+        s.close();
         return SUCCESS;
     }
-    
+
     public String buscarDatosPacienteMostrarFiltro() throws FileNotFoundException, IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios userHospital = new Usuarios();
-        listUsuarios = usuarioDAO.listarById(nombreHospital);
+        listUsuarios = usuarioDAO.listarById(s, nombreHospital);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userHospital = (Usuarios) iterator1.next();
             Set hospitales = userHospital.getHospitaleses();
-            for(Iterator iterator2 = hospitales.iterator(); iterator2.hasNext();) {
+            for (Iterator iterator2 = hospitales.iterator(); iterator2.hasNext();) {
                 hospital = (Hospitales) iterator2.next();
                 codigoHospital = hospital.getCodigoHospital();
             }
         }
         ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
-        
-         if (nombreUsuario.length() > 0) {
-                listaTemp = (ArrayList<Usuarios>) usuarioDAO.findPacientesPorHospitalLike(nombreUsuario, codigoHospital);
-                System.out.println("--->Entro a filtro mayor " + listaTemp.size());
-                if(listaTemp==null){
-                     estatusMensajeEliminar = "usuarioNoEncontrado";
-                }else{estatusMensajeEliminar = "usuarioEncontrado";}
-                
-                
+
+        if (nombreUsuario.length() > 0) {
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.findPacientesPorHospitalLike(s, nombreUsuario, codigoHospital);
+            System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+            if (listaTemp == null) {
+                estatusMensajeEliminar = "usuarioNoEncontrado";
             } else {
-                // Obtenemos la lista de la sesión
-                listaTemp = (ArrayList<Usuarios>) usuarioDAO.listarPacientesPorHospital(0, 0, codigoHospital);
                 estatusMensajeEliminar = "usuarioEncontrado";
             }
-            session.put(com.saem.actions.GridRegistroPacientePorHospital.LISTA_GRID_MODEL, listaTemp);
 
+        } else {
+            // Obtenemos la lista de la sesión
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.listarPacientesPorHospital(s, 0, 0, codigoHospital);
+            estatusMensajeEliminar = "usuarioEncontrado";
+        }
+        session.put(com.saem.actions.GridRegistroPacientePorHospital.LISTA_GRID_MODEL, listaTemp);
+
+        s.close();
         return "success";
     }
 
@@ -931,7 +965,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
 
     @Override
     public void setServletRequest(HttpServletRequest hsr) {
-        servletRequest =hsr;
+        servletRequest = hsr;
     }
 
     public String getCodigoHospital() {
@@ -1172,7 +1206,7 @@ public class ModificarEliminarPacientePorHospitalAction extends ActionSupport im
 
     public void setDiscapacidades(ArrayList<String> discapacidades) {
         this.discapacidades = discapacidades;
-    }  
+    }
 
     public ArrayList<String> getAlergias() {
         return alergias;

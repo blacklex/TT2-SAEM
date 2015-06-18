@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Session;
 
 /**
  *
@@ -78,6 +79,7 @@ public class RegistroHospital implements SessionAware {
     }
 
     public String registrarHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Enumeration<String> parametros;
 
         Boolean registroCorrecto = false;
@@ -123,15 +125,15 @@ public class RegistroHospital implements SessionAware {
             while (parametros.hasMoreElements()) {
                 String nombreParametro = parametros.nextElement();
 
-                    if (nombreParametro.startsWith("checkbox")) {
-                    Especialidades espcecTemp = new EspecialidadDAO().findById(Integer.parseInt(request.getParameter(nombreParametro)));
+                if (nombreParametro.startsWith("checkbox")) {
+                    Especialidades espcecTemp = new EspecialidadDAO().findById(s, Integer.parseInt(request.getParameter(nombreParametro)));
                     listaEspec.add(espcecTemp);
                     setEspecialidadesHosp.add(espcecTemp);
                 }
 
             }
             hospital.setEspecialidadeses(setEspecialidadesHosp);
-
+            s.close();
             if (hospitalesDAO.save(hospital)) {
                 guardarEnOntologia(listaEspec);
 
@@ -215,11 +217,12 @@ public class RegistroHospital implements SessionAware {
     }
 
     public String recuperarEspecialidades() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a recuperarEspecialidades");
         String html = "";
         EspecialidadDAO especialidadDAO = new EspecialidadDAO();
-        ArrayList<Especialidades> especialidades = (ArrayList<Especialidades>) especialidadDAO.findAll();
-
+        ArrayList<Especialidades> especialidades = (ArrayList<Especialidades>) especialidadDAO.findAll(s);
+        s.close();
         if (especialidades == null) {
             return SUCCESS;
         }
@@ -240,10 +243,11 @@ public class RegistroHospital implements SessionAware {
     }
 
     public String validarNombreUsuario() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios usuarioResultado;
 
-        usuarioResultado = usuariosDAO.findById(nombreUsuario);
-
+        usuarioResultado = usuariosDAO.findById(s, nombreUsuario);
+        s.close();
         if (usuarioResultado == null) {
             estatusMensaje = "nombreValido";
             return SUCCESS;
@@ -286,29 +290,29 @@ public class RegistroHospital implements SessionAware {
         insercionRelaciones.agregarRelacionSeUbicaEn(nombreHospital, "Direccion" + nombreHospital);
         //-----------------------------------------------------------------------
         OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
-        
-        ArrayList<String>enfemedadesEspecialidades = new ArrayList<String>();
-        
+
+        ArrayList<String> enfemedadesEspecialidades = new ArrayList<String>();
+
         for (Especialidades especialidadTemp : listaEspec) {
             ArrayList<String> enfemedadesEspcOnt = (ArrayList<String>) consultor.especialidadEstudiaAEnfermedad(especialidadTemp.getNombreEspecialidad());
-            for(String enfermedadOnt : enfemedadesEspcOnt){
+            for (String enfermedadOnt : enfemedadesEspcOnt) {
                 enfemedadesEspecialidades.add(enfermedadOnt);
             }
         }
-        
+
         /*consultor.perteneceAClase(nombreHospital);
-        consultor.hospitalseUbicaEnDireccion(nombreHospital);
-        consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
-        consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
-        consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
-*/
+         consultor.hospitalseUbicaEnDireccion(nombreHospital);
+         consultor.direccionSeUbicaUnHospital("Direccion" + nombreHospital);
+         consultor.getCoordenadaXDireccion("Direccion" + nombreHospital);
+         consultor.getCoordenadaYDireccion("Direccion" + nombreHospital);
+         */
         //------------------------------------CREAR RELACION ENTRE HOSPITAL Y ENFERMEDADES----------------------------------------
         insercionRelaciones = new OWLInsercionRelacion(ONTOLOGIA, BASE_URI);
 
         for (String enfemedadInsertar : enfemedadesEspecialidades) {
             insercionRelaciones.agregarRelacionSeAtiende(nombreHospital, enfemedadInsertar);
         }
-        
+
         return true;
     }
 
@@ -481,5 +485,4 @@ public class RegistroHospital implements SessionAware {
         this.htmlEspecialidades = htmlEspecialidades;
     }
 
-    
 }

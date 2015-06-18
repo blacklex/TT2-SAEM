@@ -17,27 +17,29 @@ public class DomicilioHospitalDAO extends HibernateUtil {
 
 	// property constants
     public Boolean save(DomicilioHospitales transientInstance) {
+        Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
         try {
-            Session s = getSession();
+            
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
             //log.debug("save successful");
-            s.close();
+            
             return true;
         } catch (RuntimeException re) {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(DomicilioHospitales transientInstance) {
+        Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
         try {
-            Session s = getSession();
+            
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
@@ -47,7 +49,7 @@ public class DomicilioHospitalDAO extends HibernateUtil {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
@@ -58,30 +60,30 @@ public class DomicilioHospitalDAO extends HibernateUtil {
             s.beginTransaction();
             s.update(transientInstance);
             s.getTransaction().commit();
-            s.close();
+           
             System.out.println("--->Domicikio Hospital actualizado");
             return true;
         } catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-            s.close();
+           
             System.out.println("--->Domicilio Hospital no actualizado");
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
-    public DomicilioHospitales findById(Long id) {
+    public DomicilioHospitales findById(Session s,Long id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
-            DomicilioHospitales instance = (DomicilioHospitales) getSession().get(
+            DomicilioHospitales instance = (DomicilioHospitales)s.get(
                     DomicilioHospitales.class, id);
             return instance;
         } catch (RuntimeException re) {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 

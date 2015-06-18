@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 import org.json.simple.JSONValue;
 
 /**
@@ -59,6 +60,7 @@ public class BuscarHospitales implements SessionAware {
     
     
     public String execute() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
         ArrayList<EnfermedadesCronicas> listaPacienteEnfermedades = new ArrayList<EnfermedadesCronicas>();
         String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
@@ -67,7 +69,7 @@ public class BuscarHospitales implements SessionAware {
         //Boolean hayHospitales = false;
         
         HospitalDAO hospitalDAO = new HospitalDAO();
-        listaTemp = (ArrayList<Hospitales>) hospitalDAO.findAll();        
+        listaTemp = (ArrayList<Hospitales>) hospitalDAO.findAll(s);        
         
         latUsuario = Double.parseDouble(latitudUsuario);
         longUsuario = Double.parseDouble(longitudUsuario);
@@ -75,7 +77,7 @@ public class BuscarHospitales implements SessionAware {
         
         //-----------RECUPERAR ENFERMEDADES DEL PACIENTE --------------------
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        Usuarios pacienteUsuario = usuarioDAO.findById(nombreUsuario);
+        Usuarios pacienteUsuario = usuarioDAO.findById(s,nombreUsuario);
         
         Pacientes paciente = (Pacientes) pacienteUsuario.getPacienteses().iterator().next();
         
@@ -158,7 +160,7 @@ public class BuscarHospitales implements SessionAware {
 //            hayHospitales = false ;
 //            mensajeError = "No hay Hospitales dentro de esta Zona!!!";
 //        }
-       
+       s.close();
         if ( listaHospitalesCercanos.isEmpty()) {
             estatusMensaje = "vacio";
             return SUCCESS;

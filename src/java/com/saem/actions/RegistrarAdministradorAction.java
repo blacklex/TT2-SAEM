@@ -24,20 +24,21 @@ import org.apache.struts2.interceptor.SessionAware;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.hibernate.Session;
 
 /**
  *
  * @author sergio
  */
 public class RegistrarAdministradorAction implements SessionAware, ServletRequestAware {
-    
+
     private Map<String, Object> session = null;
     private final AdministradorDAO administradorDAO = new AdministradorDAO();
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final DomicilioAdministradorDAO domicilioAdminDAO = new DomicilioAdministradorDAO();
 
     private HttpServletRequest servletRequest;
-    
+
     //Acceso
     String nombreUsuario;
     String clave;
@@ -78,10 +79,10 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-        
+
         //Establecemos los datos de acceso para el Aministrador
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
-        
+
         //Establecemos los datos personales para el Aministrador
         administrador.setApellidoMaterno(apellidoPaterno);
         administrador.setApellidoPaterno(apellidoMaterno);
@@ -89,53 +90,52 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
         administrador.setNombre(nombre);
         administrador.setTelParticular(telParticular);
         //Convertimos la imagen a un arreglo de
-        if(imagen != null) {
-            System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
+        if (imagen != null) {
+            System.out.println("Camino absoluto    " + imagen.getAbsolutePath());
             byte[] bFile = new byte[(int) imagen.length()];
             FileInputStream fileInputStream = new FileInputStream(imagen);
             fileInputStream.read(bFile);
             fileInputStream.close();
             administrador.setImagen(bFile);
-        }
-        else{
+        } else {
             String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-            File fileImg = new File(filePath+"imagenesPerfilAdmin/default/default.jpeg");
+            File fileImg = new File(filePath + "imagenesPerfilAdmin/default/default.jpeg");
             byte[] defaultFile = new byte[(int) fileImg.length()];
             FileInputStream imgDefault = new FileInputStream(fileImg);
             imgDefault.read(defaultFile);
             imgDefault.close();
             administrador.setImagen(defaultFile);
         }
-            
+
         //Guardamos los datos de acceso del Aministrador
         r1 = usuarioDAO.save(userAdmin);
-        
+
         //Establecemos la clave foranea del Aministrador
         administrador.setUsuarios(userAdmin);
-        
+
         //Establecemos los datos de dirección para el Aministrador
         domicilioAdmin.setCalle(calle);
         domicilioAdmin.setColonia(colonia);
         domicilioAdmin.setDelegacion(delegacion);
         domicilioAdmin.setEntidadFederativa(entidadFederativa);
         domicilioAdmin.setCodigoPostal(codigoPostal);
-        
+
         //Guardamos los datos personales para el Aministrador
         r2 = administradorDAO.save(administrador);
-        
+
         //Establecemos la clave foranea del domicilio del Aministrador
         domicilioAdmin.setAdministradores(administrador);
-        
+
         //Guardamos los datos del domicilio para el Aministrador
         r3 = domicilioAdminDAO.save(domicilioAdmin);
-        
-        if(r1 && r2 && r3)
+
+        if (r1 && r2 && r3) {
             registroCorrecto = true;
-        else {
+        } else {
             registroCorrecto = false;
             mensajeError = "Error al ingresar Administrador";
         }
-        
+
         if (registroCorrecto) {
             session.put("tituloAlert", "Administrador Registrado");
             session.put("textoAlert", "El Administrador fue registrado exitosamente.");
@@ -149,7 +149,7 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
 
         return "pantallaAltaAdministrador";
     }
-    
+
     public String recuperarEstatusAdmin() {
 
         tituloAlert = "";
@@ -169,11 +169,12 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
 
         return "success";
     }
-    
+
     public String validarNombreUsuarioAdmin() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios usuarioResultado;
 
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        usuarioResultado = usuarioDAO.findById(s, nombreUsuario);
 
         if (usuarioResultado == null) {
             estatusMensaje = "nombreValido";
@@ -185,7 +186,7 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
         } else {
             estatusMensaje = "nombreValido";
         }
-
+        s.close();
         return SUCCESS;
     }
 
@@ -289,7 +290,7 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
     public void setUserImageFileName(String userImageFileName) {
         this.userImageFileName = userImageFileName;
     }
-    
+
     public String getCalle() {
         return calle;
     }
@@ -353,11 +354,10 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
     public void setEstatusMensaje(String estatusMensaje) {
         this.estatusMensaje = estatusMensaje;
     }
-    
+
     @Override
     public void setServletRequest(HttpServletRequest servletRequest) {
-            this.servletRequest = servletRequest;
+        this.servletRequest = servletRequest;
     }
-    
-    
+
 }

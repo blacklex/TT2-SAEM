@@ -21,9 +21,10 @@ public class CirugiaDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(Cirugias transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -32,13 +33,14 @@ public class CirugiaDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(Cirugias transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -47,7 +49,7 @@ public class CirugiaDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
 	}
         
         public Boolean update(Cirugias transientInstance) {
@@ -68,10 +70,10 @@ public class CirugiaDAO extends HibernateUtil {
 		}
 	}
          
-        public Cirugias findById(Long id) {
+        public Cirugias findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			Cirugias instance = (Cirugias) getSession().get(
+			Cirugias instance = (Cirugias) s.get(
 					Cirugias.class, id);
 			return instance;
 		} catch (RuntimeException re) {

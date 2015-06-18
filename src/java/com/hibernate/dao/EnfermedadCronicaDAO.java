@@ -21,9 +21,10 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(EnfermedadesCronicas transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -32,13 +33,14 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(EnfermedadesCronicas transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -47,7 +49,7 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
 	}
         
         public Boolean update(EnfermedadesCronicas transientInstance) {
@@ -57,21 +59,21 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
                         s.beginTransaction();
                         s.update(transientInstance);
                         s.getTransaction().commit();
-                        s.close();
+                        
 			System.out.println("--->Enfermedades actualizadas");
                         return true;
 		} catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-                    s.close();
+                    
 			System.out.println("--->Enfermedades no actualizadas");  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
-        public EnfermedadesCronicas findById(Long id) {
+        public EnfermedadesCronicas findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			EnfermedadesCronicas instance = (EnfermedadesCronicas) getSession().get(
+			EnfermedadesCronicas instance = (EnfermedadesCronicas) s.get(
 					EnfermedadesCronicas.class, id);
 			return instance;
 		} catch (RuntimeException re) {

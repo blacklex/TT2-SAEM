@@ -21,9 +21,10 @@ public class ContactoDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(Contactos transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -32,13 +33,14 @@ public class ContactoDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(Contactos transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -47,7 +49,7 @@ public class ContactoDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
 	}
         
         public Boolean update(Contactos transientInstance) {
@@ -57,21 +59,21 @@ public class ContactoDAO extends HibernateUtil {
                         s.beginTransaction();
                         s.update(transientInstance);
                         s.getTransaction().commit();
-                        s.close();
+                        
 			System.out.println("--->Contacto actualizado");
                         return true;
 		} catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-                    s.close();
+                    
 			System.out.println("--->Contacto no actualizado");  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
-        public Contactos findById(Long id) {
+        public Contactos findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			Contactos instance = (Contactos) getSession().get(
+			Contactos instance = (Contactos) s.get(
 					Contactos.class, id);
 			return instance;
 		} catch (RuntimeException re) {

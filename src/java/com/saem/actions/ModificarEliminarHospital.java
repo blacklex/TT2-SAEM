@@ -30,6 +30,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
@@ -84,7 +85,8 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String modificarDatosSesionHospital() {
-        Usuarios usuarioTemp = new HospitalDAO().findById(codigoHospitalEditar).getUsuarios();
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        Usuarios usuarioTemp = new HospitalDAO().findById(s, codigoHospitalEditar).getUsuarios();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuarios temp = new Usuarios();
 
@@ -113,12 +115,14 @@ public class ModificarEliminarHospital implements SessionAware {
         }
 
         System.out.println("--->Mod sesion " + claveUsuario + " " + codigoHospitalEditar);
+        s.close();
         return "pantallaModifcarEliminarHospital";
     }
 
     public String modificarDatosHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
-        Hospitales hospitalBD = new HospitalDAO().findById(codigoHospitalEditar);
+        Hospitales hospitalBD = new HospitalDAO().findById(s, codigoHospitalEditar);
         Hospitales hospitalTemp = new Hospitales();
 
         String lada;
@@ -130,7 +134,7 @@ public class ModificarEliminarHospital implements SessionAware {
         hospitalTemp.setNombre(nombreHospital);
         hospitalTemp.setLada(lada);
         hospitalTemp.setTelefono(telefonoHospital);
-        hospitalTemp.setUsuarios(new UsuarioDAO().findById(hospitalBD.getUsuarios().getNombreUsuario()));
+        hospitalTemp.setUsuarios(new UsuarioDAO().findById(s, hospitalBD.getUsuarios().getNombreUsuario()));
 
         if (hospitalDAO.update(hospitalTemp)) {
             tituloAlert = "Datos Editados.";
@@ -152,16 +156,18 @@ public class ModificarEliminarHospital implements SessionAware {
         }
 
         System.out.println("--->Mod Hosp " + nombreHospital + "  " + telefonoHospital + "  " + emailHospital + codigoHospitalEditar);
+        s.close();
         return "pantallaModifcarEliminarHospital";
     }
 
     public String modificarDatosDireccionHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("---->Entro a mod Dir " + longitudX + "  " + latitudY);
         DomicilioHospitalDAO domicilioHospitalDAO = new DomicilioHospitalDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         DomicilioHospitales domicilioHospitalTemp = new DomicilioHospitales();
 
-        Iterator<DomicilioHospitales> iteratorDom = hospitalDAO.findById(codigoHospitalEditar).getDomicilioHospitaleses().iterator();
+        Iterator<DomicilioHospitales> iteratorDom = hospitalDAO.findById(s, codigoHospitalEditar).getDomicilioHospitaleses().iterator();
 
         while (iteratorDom.hasNext()) {
             domicilioHospitalTemp.setId(iteratorDom.next().getId());
@@ -173,10 +179,10 @@ public class ModificarEliminarHospital implements SessionAware {
         domicilioHospitalTemp.setDelegacion(delegacion);
         domicilioHospitalTemp.setEntidadFederativa(entidadFederativa);
         domicilioHospitalTemp.setNumero(numero);
-        domicilioHospitalTemp.setHospitales(hospitalDAO.findById(codigoHospitalEditar));
+        domicilioHospitalTemp.setHospitales(hospitalDAO.findById(s, codigoHospitalEditar));
 
         if (domicilioHospitalDAO.update(domicilioHospitalTemp)) {
-            if (modificarHospitalCoordenadasDeOntologia(hospitalDAO.findById(codigoHospitalEditar).getNombre(), longitudX, latitudY)) {
+            if (modificarHospitalCoordenadasDeOntologia(hospitalDAO.findById(s, codigoHospitalEditar).getNombre(), longitudX, latitudY)) {
 
                 tituloAlert = "Domicilio Editado.";
                 textoAlert = "Los datos del Domicilio del Hospital han sido actualizados satisfactoriamente.";
@@ -201,16 +207,18 @@ public class ModificarEliminarHospital implements SessionAware {
         }
 
         System.out.println("--->Mod Dir " + calle + " " + numero + " " + colonia + " " + delegacion + " " + entidadFederativa + " " + codigoPostal);
+        s.close();
         return "pantallaModifcarEliminarHospital";
     }
 
     public String modificarDatosDirectivoHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("-->Entor a mod directivo");
         DirectivoDAO directivoDAO = new DirectivoDAO();
         HospitalDAO hospitalDAO = new HospitalDAO();
         Directivo directivoTemp = new Directivo();
 
-        Iterator<Directivo> iteratorDirectivo = hospitalDAO.findById(codigoHospitalEditar).getDirectivos().iterator();
+        Iterator<Directivo> iteratorDirectivo = hospitalDAO.findById(s, codigoHospitalEditar).getDirectivos().iterator();
 
         while (iteratorDirectivo.hasNext()) {
             directivoTemp.setId(iteratorDirectivo.next().getId());
@@ -224,7 +232,7 @@ public class ModificarEliminarHospital implements SessionAware {
         directivoTemp.setNombre(nombreDirectivo);
         directivoTemp.setTelParticular(textoAlert);
         directivoTemp.setTelParticular(telefonoDirectivo);
-        directivoTemp.setHospitales(hospitalDAO.findById(codigoHospitalEditar));
+        directivoTemp.setHospitales(hospitalDAO.findById(s, codigoHospitalEditar));
 
         if (directivoDAO.update(directivoTemp)) {
             tituloAlert = "Directivo Editado.";
@@ -246,10 +254,12 @@ public class ModificarEliminarHospital implements SessionAware {
         }
 
         System.out.println("--->Mod Directivo " + telefonoDirectivo + " " + nombreDirectivo + " " + emailDirectivo);
+        s.close();
         return "pantallaModifcarEliminarHospital";
     }
 
     public String modificarDatosEspecialidadesHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Mod espec ");
         textoAlert = "";
         Enumeration<String> parametros = request.getParameterNames();
@@ -258,7 +268,7 @@ public class ModificarEliminarHospital implements SessionAware {
         Boolean exitoQuerys = false;
         ArrayList<Especialidades> listaEspFormulario = new ArrayList<Especialidades>();
         Hospitales hospitalSave = new Hospitales();
-        hospitalSave = hospitalDAO.findById(codigoHospitalEditar);
+        hospitalSave = hospitalDAO.findById(s, codigoHospitalEditar);
         String nombreHospitalDeBD = hospitalSave.getNombre();
 
         //------- Se llena una lista con las especialidades del formulario
@@ -268,7 +278,7 @@ public class ModificarEliminarHospital implements SessionAware {
             if (nombreParametro.startsWith("checkbox")) {
                 int codigoEspecialidadBD = Integer.parseInt(request.getParameter(nombreParametro));
                 System.out.println("---> " + nombreParametro + "  " + request.getParameter(nombreParametro));
-                Especialidades temp = especialidadDAO.findById(codigoEspecialidadBD);
+                Especialidades temp = especialidadDAO.findById(s, codigoEspecialidadBD);
                 listaEspFormulario.add(temp);
             }
 
@@ -322,18 +332,19 @@ public class ModificarEliminarHospital implements SessionAware {
         session.put("tituloAlert", tituloAlert);
         session.put("textoAlert", textoAlert);
         session.put(LLAVE_ESTATUS_ME, estatusMensaje);
-
+        s.close();
         return "pantallaModifcarEliminarHospital";
     }
 
     public String eliminarHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         String codigoHospitalTemp = codigoHospital;
-        String nombreHospTemp = hospitalDAO.findById(codigoHospitalTemp).getNombre();
+        String nombreHospTemp = hospitalDAO.findById(s, codigoHospitalTemp).getNombre();
         System.out.println("--->Eliminar hospital " + codigoHospitalTemp + "  " + nombreHospTemp);
 
-        if (usuarioDAO.deleteHospital(hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getNombreUsuario())) {
+        if (usuarioDAO.deleteHospital(hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getNombreUsuario())) {
             if (eliminarHospitalDeOntologia(nombreHospTemp)) {
                 tituloAlert = "Hospital Eliminado";
                 textoAlert = "Hospital eliminado satisfactoriamente.";
@@ -350,7 +361,7 @@ public class ModificarEliminarHospital implements SessionAware {
             textoAlert = "El Hospital no fue eliminado.";
             estatusMensaje = "error";
         }
-
+        s.close();
         return Action.SUCCESS;
     }
 
@@ -465,34 +476,37 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     public String recuperarDatosFormSesion() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
 
-        claveUsuario = hospitalDAO.findById(codigoHospitalTemp).getUsuarios().getClave();
+        claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosFormHospital() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
 
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
 
         nombreHospital = hospitalTemp.getNombre();
         telefonoHospital = hospitalTemp.getLada() + hospitalTemp.getTelefono();
         emailHospital = hospitalTemp.getEMail();
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosFormDireccion() {
-
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
         String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
 
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
         String nombreHospitalTemp = hospitalTemp.getNombre();
 
         Iterator<DomicilioHospitales> it = hospitalTemp.getDomicilioHospitaleses().iterator();
@@ -514,14 +528,15 @@ public class ModificarEliminarHospital implements SessionAware {
             longitudX = consultor.getCoordenadaXDireccion("Direccion" + nombreHospitalTemp).get(0);
 
         }
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosFormDirectivo() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-        Hospitales hospitalTemp = hospitalDAO.findById(codigoHospitalTemp);
+        Hospitales hospitalTemp = hospitalDAO.findById(s, codigoHospitalTemp);
 
         Iterator<Directivo> it = hospitalTemp.getDirectivos().iterator();
 
@@ -533,24 +548,27 @@ public class ModificarEliminarHospital implements SessionAware {
             nombreDirectivo = directivoTemp.getNombre();
 
         }
-
+        s.close();
         return SUCCESS;
     }
 
     public String recuperarDatosFormEspecialidades() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a recuperarEspecialidades modificar");
         String html = "";
         HospitalDAO hospitalDAO = new HospitalDAO();
         EspecialidadDAO especialidadDAO = new EspecialidadDAO();
-        ArrayList<Especialidades> especialidadesList = (ArrayList<Especialidades>) especialidadDAO.findAll();
+        ArrayList<Especialidades> especialidadesList = (ArrayList<Especialidades>) especialidadDAO.findAll(s);
 
         if (especialidadesList == null) {
+            s.close();
             return SUCCESS;
         }
 
-        Set<Especialidades> especHasHosp = hospitalDAO.findById(codigoHospital).getEspecialidadeses();
+        Set<Especialidades> especHasHosp = hospitalDAO.findById(s, codigoHospital).getEspecialidadeses();
 
         if (especHasHosp == null) {
+            s.close();
             return SUCCESS;
         }
 
@@ -586,7 +604,7 @@ public class ModificarEliminarHospital implements SessionAware {
         }
 
         especialidades = html;
-
+        s.close();
         return SUCCESS;
     }
 
@@ -606,6 +624,7 @@ public class ModificarEliminarHospital implements SessionAware {
     }
 
     private void obtenerTablaHospitales() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalesDAO = new HospitalDAO();
         ArrayList<Hospitales> listaTemp = new ArrayList<Hospitales>();
         ArrayList<Hospitales> listaTempFinal = new ArrayList<Hospitales>();
@@ -620,12 +639,12 @@ public class ModificarEliminarHospital implements SessionAware {
         } else {
 
             if (filtroBusquedaHospital.length() > 0) {
-                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(filtroBusquedaHospital);
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findHospitalLike(s, filtroBusquedaHospital);
 
                 System.out.println("--->Entro a filtro mayor " + listaTemp.size());
             } else {
                 // Obtenemos la lista de la sesión
-                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll();
+                listaTemp = (ArrayList<Hospitales>) hospitalesDAO.findAll(s);
             }
             session.put(LISTA_HOSPITALES, listaTemp);
         }
@@ -635,6 +654,7 @@ public class ModificarEliminarHospital implements SessionAware {
             listaTempFinal.add(new Hospitales(tempContHosp.getCodigoHospital(), null, tempContHosp.getNombre(), tempContHosp.getTelefono(), tempContHosp.getLada(), tempContHosp.getEMail()));
         }
         gridListaHospitales = listaTempFinal;
+        s.close();
         if (gridListaHospitales == null) {
             records = total = 0;
         } else {

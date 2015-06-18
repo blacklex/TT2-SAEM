@@ -17,38 +17,40 @@ public class DirectivoDAO extends HibernateUtil {
 
 	// property constants
     public Boolean save(Directivo transientInstance) {
+        Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
         try {
-            Session s = getSession();
+            
             s.beginTransaction();
             s.save(transientInstance);
             s.getTransaction().commit();
             //log.debug("save successful");
-            s.close();
+            
             return true;
         } catch (RuntimeException re) {
             //log.error("save failed", re);  
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
     public Boolean delete(Directivo transientInstance) {
+        Session s = getSession();
         //log.debug("saving TblAbwUsuario instance");
         try {
-            Session s = getSession();
+            
             s.beginTransaction();
             s.delete(transientInstance);
             s.getTransaction().commit();
-            s.close();
+            
             //log.debug("save successful");
             return true;
         } catch (RuntimeException re) {
             //log.error("save failed", re);
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
@@ -59,20 +61,20 @@ public class DirectivoDAO extends HibernateUtil {
             s.beginTransaction();
             s.update(transientInstance);
             s.getTransaction().commit();
-            s.close();
+            
             System.out.println("--->Directivo Hospital actualizado");
             return true;
         } catch (RuntimeException re) {
 //                    System.out.println(re.getCause().getMessage());
-            s.close();
+            
             System.out.println("--->Directivo Hospital no actualizado");
             return false;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
-    public Directivo findById(Long id) {
+    public Directivo findById(Session s,Long id) {
         //log.debug("getting TblAbwUsuario instance with id: " + id);
         try {
             Directivo instance = (Directivo) getSession().get(
@@ -82,7 +84,7 @@ public class DirectivoDAO extends HibernateUtil {
             //log.error("get failed", re);
             throw re;
         } finally {
-            getSession().close();
+            s.close();
         }
     }
 
