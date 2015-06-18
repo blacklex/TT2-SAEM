@@ -170,22 +170,6 @@ public class EnviarAlertaSaliente implements SessionAware {
 
         if (listPeticiones.isEmpty()) {
             if (peticionSalienteDAO.save(peticionSaliente)) {
-                listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
-                for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
-                    userPaciente = (Usuarios) iterator1.next();
-                    Set pacientes = userPaciente.getPacienteses();
-                    for (Iterator iterator2 = pacientes.iterator(); iterator2.hasNext();) {
-                        paciente = (Pacientes) iterator2.next();
-                        Set peticionesSalientes = paciente.getPeticionesSalienteses();
-                        for (Iterator iterato3 = peticionesSalientes.iterator(); iterato3.hasNext();) {
-                            peticionSaliente = (PeticionesSalientes) iterato3.next();
-                            estatus = peticionSaliente.getEstatus();
-                            idPeticion = peticionSaliente.getIdPeticionesSalientes();
-                        }
-
-                    }
-                }
-                idPeticionSaliente = idPeticion;
                 System.out.println(idPeticionSaliente);
                 estatusMensaje = "exito";
             } else {

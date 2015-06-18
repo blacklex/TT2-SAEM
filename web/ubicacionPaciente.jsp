@@ -137,5 +137,5 @@
 <script src="js/funcionesPaciente/funcionesGoogleMapsUbicacionPaciente.js" type="text/javascript"></script>
 <script src="js/funcionesPaciente/funcionesEnviarAlerta.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="css/estiloInfoWindow.css"/>
-<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700|Open+Sans+Condensed:700,300,300italic|Open+Sans:400,300italic,400italic,600,600italic,700,700italic,800,800italic|PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'/>
+<link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700|Open+Sans+Condensed:700,300,300italic|Open+Sans:400,300italic,400italic,600,600italic,700,700italic,800,800italic|PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'/>
