@@ -209,16 +209,24 @@ function initialize() {
 function newMarker(markerData, latitud, longitud) {
     var posSitio = new google.maps.LatLng(markerData.lt,markerData.ln);
     
-    
-       var sitio = new google.maps.Marker({
-        map:map,
-        draggable:false,
-        icon: markerHospital,
-        animation: google.maps.Animation.DROP,
-        position: posSitio
-    }); 
-    
-    
+    if(markerData.atiendeEnfermedad === "0") {
+        var sitio = new google.maps.Marker({
+            map:map,
+            draggable:false,
+            icon: markerHospital,
+            animation: google.maps.Animation.DROP,
+            position: posSitio
+        });
+    }
+    else if (markerData.atiendeEnfermedad === "1") {
+        var sitio = new google.maps.Marker({
+            map:map,
+            draggable:false,
+            icon: markerHospitalAtender,
+            animation: google.maps.Animation.DROP,
+            position: posSitio
+        });        
+    }   
     
     var content =   '<div id="iw-container">' +
                     '   <div class="iw-title">'+markerData.titulo+'</div>' +

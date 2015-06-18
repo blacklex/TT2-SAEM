@@ -19,13 +19,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 /**
  *
  * @author Alejandro
  */
-public class ModificarEliminarFOAF {
-
+public class ModificarEliminarFOAF implements ServletRequestAware{
+    HttpServletRequest servletRequest = ServletActionContext.getRequest();
+    //private HttpServletRequest servletRequest;
     private final Model model = ModelFactory.createDefaultModel();
     private final String BASE_URI = "http://www.saem.com/foaf/pacientes#";
     private String archivoRDF = "";
@@ -120,11 +124,12 @@ public class ModificarEliminarFOAF {
     }
 
     private Boolean guardarFOAF() {
+        String ONTOLOGIA = servletRequest.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
 
         OutputStream out = null;
 
         try {
-            out = new FileOutputStream("C:\\Users\\Alejandro\\Desktop\\ejemplo2.rdf");
+            out = new FileOutputStream(ONTOLOGIA);
             model.write(out, "RDF/XML-ABBREV");
             out.close();
             return true;
@@ -136,6 +141,11 @@ public class ModificarEliminarFOAF {
             return false;
         }
 
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest hsr) {
+        servletRequest = hsr;
     }
 
 }
