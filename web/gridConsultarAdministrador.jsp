@@ -110,12 +110,12 @@
             </div>
             <div id="divNombreUsuario" class="form-group">
                 <label for="nombreUsuario">Nombre de usuario</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text" disabled="true">
             </div>
             <s:hidden name="tipoUsuario" value="Administrador" />
             <div id="divClaveUsuario" class="form-group">
                 <label for="claveUsuario">Clave de Acceso</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="text" autofocus="true" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="text" autofocus="true" disabled="true">
             </div>
             <div class="box-footer">
                 <button type="button" onclick="cancelarEdicionAcceso();" class="btn btn-primary btn-sm margin">Regresar</button>
@@ -131,27 +131,27 @@
 
             <div id="divNombre" class="form-group">
                 <label for="nombre">Nombre(s)</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" disabled="true">
             </div>
 
             <div id="divApellidoPaterno" class="form-group">
                 <label for="apellidoPaterno">Apellido Paterno</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text" disabled="true">
             </div>
 
             <div id="divApellidoMaterno" class="form-group">
                 <label for="apellidoMaterno">Apellido Materno</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text" disabled="true">
             </div>
 
             <div id="divTelParticularAdministrador" class="form-group">
                 <label for="telParticular">Teléfono celular</label>
-                <input kl_virtual_keyboard_secure_input="on" name="telParticular" id="telParticular" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" name="telParticular" id="telParticular" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono" type="text" disabled="true">
             </div>
 
             <div id="divEmailAdministrador" class="form-group">
                 <label for="correo">Email</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text" disabled="true">
             </div>
 
             <div id="divImagenAdministrador" class="form-group">
@@ -173,27 +173,27 @@
             <s:hidden name="nombreUsuario" id="nomUsr"/>
             <div id="divCalleAdministrador" class="form-group">
                 <label for="calle">Calle y No.</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text" disabled="true">
             </div>
 
             <div id="divColoniaAdministrador" class="form-group">
                 <label for="colonia">Colonia</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="colonia" placeholder="Colonia" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="colonia" placeholder="Colonia" type="text" disabled="true">
             </div>
 
             <div id="divDelegacionAdministrador" class="form-group">
                 <label for="delegacion">Delegacón</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacion" placeholder="Delegación" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacion" placeholder="Delegación" type="text" disabled="true">
             </div>
 
             <div id="divEntidadFederativaAdministrador" class="form-group">
                 <label for="entidadFederativa">Entidad Federativa</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativa" placeholder="Entidad Federativa" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativa" placeholder="Entidad Federativa" type="text" disabled="true">
             </div>
 
             <div id="divCodigoPostalAdministrador" class="form-group">
                 <label for="codigoPostal">Codigo Postal</label>
-                <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text" disabled="true">
             </div>
 
             <div class="box-footer">

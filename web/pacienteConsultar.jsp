@@ -152,12 +152,12 @@
             </div>
             <div id="divNombreUsuario" class="form-group">
                 <label for="nombreUsuario">Nombre de usuario</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text" disabled="true"/>
             </div>
             <s:hidden name="tipoUsuario" value="Paciente" />
             <div id="divClaveUsuario" class="form-group">
                 <label for="claveUsuario">Clave de Acceso</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="password" autofocus="true" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="password" autofocus="true" disabled="true"/>
             </div>
             <div class="box-footer">
                 <button type="button" onclick="cancelarEdicionAcceso();" class="btn btn-primary btn-sm margin">Regresar</button>
@@ -174,37 +174,37 @@
 
             <div id="divNss" class="form-group">
                 <label for="nss">NSS</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nss" id="nss" placeholder="NSS" type="text" readonly="true" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nss" id="nss" placeholder="NSS" type="text" disabled="true" disabled="true"/>
             </div>
 
             <div id="divNombre" class="form-group">
                 <label for="nombre">Nombre(s)</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)" type="text" disabled="true">
             </div>
 
             <div id="divApellidoPaterno" class="form-group">
                 <label for="apellidoPaterno">Apellido Paterno</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Apellido Paterno" type="text" disabled="true">
             </div>
 
             <div id="divApellidoMaterno" class="form-group">
                 <label for="apellidoMaterno">Apellido Materno</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text" readonly="true">
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Apellido Paterno" type="text" disabled="true">
             </div>
 
             <div id="divUniMedicaPaciente" class="form-group">
                 <label for="unidadMedica">Unidad Médica</label>
-                <input kl_virtual_keyboard_secure_input="on" name="unidadMedica" id="unidadMedica" class="form-control" placeholder="Unidad Medica" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" name="unidadMedica" id="unidadMedica" class="form-control" placeholder="Unidad Medica" type="text" disabled="true"/>
             </div>
 
             <div id="divNoConsultorioPaciente" class="form-group">
                 <label for="noConsultorio">No Consultorio</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="noConsultorio" id="noConsultorio" placeholder="No. de Consultorio" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="noConsultorio" id="noConsultorio" placeholder="No. de Consultorio" type="text" disabled="true"/>
             </div>
 
             <div id="divImagenPaciente" class="form-group">
                     <label for="imagen">Imagen Actual</label>
-                    <img id="imagen" src="" width="220" height="150" readonly="true"/>
+                    <img id="imagen" src="" width="220" height="150" disabled="true"/>
             </div>
             <div class="box-footer">
                 <button type="button" onclick="cancelarEdicionDatos();" class="btn btn-primary btn-sm margin">Regresar</button>
@@ -221,27 +221,27 @@
             <s:hidden name="nss" id="noSeSo"/>
             <div id="divCallePaciente" class="form-group">
                 <label for="calle">Calle y No.</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text" disabled="true"/>
             </div>
 
             <div id="divColoniaPaciente" class="form-group">
                 <label for="colonia">Colonia</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="colonia" placeholder="Colonia" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="colonia" placeholder="Colonia" type="text" disabled="true"/>
             </div>
 
             <div id="divDelegacionPaciente" class="form-group">
                 <label for="delegacion">Delegación</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacion" placeholder="Delegación" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacion" placeholder="Delegación" type="text" disabled="true"/>
             </div>
 
             <div id="divEntidadFederativaPaciente" class="form-group">
                 <label for="entidadFederativa">Entidad Federativa</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativa" placeholder="Entidad Federativa" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativa" placeholder="Entidad Federativa" type="text" disabled="true"/>
             </div>
 
             <div id="divCodigoPostalPaciente" class="form-group">
                 <label for="codigoPostal">Código Postal</label>
-                <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text" disabled="true"/>
             </div>
 
             <div class="box-footer">
@@ -283,7 +283,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="estadoCivil" id="radioCasado" value="casado" readonly="true"/>
+                                    <input type="radio" name="estadoCivil" id="radioCasado" value="casado" disabled="true"/>
                                     Casado(a)
                                 </label>
                             </div>
@@ -293,7 +293,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="estadoCivil" id="radioUnionLibre" value="union libre" readonly="true"/>
+                                    <input type="radio" name="estadoCivil" id="radioUnionLibre" value="union libre" disabled="true"/>
                                     Unión libre
                                 </label>
                             </div>
@@ -303,7 +303,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="estadoCivil" id="radioSoltero" value="soltero" readonly="true"/>
+                                    <input type="radio" name="estadoCivil" id="radioSoltero" value="soltero" disabled="true"/>
                                     Soltero(a)
                                 </label>
                             </div>
@@ -313,7 +313,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="estadoCivil" id="radioDivorciado" value="divorciado" readonly="true"/>
+                                    <input type="radio" name="estadoCivil" id="radioDivorciado" value="divorciado" disabled="true"/>
                                     Divorsiado(a)
                                 </label>
                             </div>
@@ -323,7 +323,7 @@
             </div>
             <div id="divCurpPaciente" class="form-group">
                 <label for="curp">CURP</label>
-                <input readonly="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="curp" id="curp" placeholder="CURP" type="text" readonly="true"/>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="curp" id="curp" placeholder="CURP" type="text" disabled="true"/>
             </div>
 
             <div id="divSexoPaciente" class="form-group">
@@ -333,7 +333,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="sexo" id="radioMasculino" value="masculino" readonly="true"/>
+                                    <input type="radio" name="sexo" id="radioMasculino" value="masculino" disabled="true"/>
                                     Masculino
                                 </label>
                             </div>
@@ -343,7 +343,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="sexo" id="radioFemenino" value="femenino" readonly="true"/>
+                                    <input type="radio" name="sexo" id="radioFemenino" value="femenino" disabled="true"/>
                                     Femenino
                                 </label>
                             </div>
@@ -358,37 +358,37 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="fechaNacimiento" id="fechaNacimiento" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask type="text" readonly="true"/>
+                    <input kl_virtual_keyboard_secure_input="on" class="form-control" name="fechaNacimiento" id="fechaNacimiento" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask type="text" disabled="true"/>
                 </div>
             </div>
             <div id="divEdadPaciente" class="form-group">
                 <label for="edad">Edad</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="edad" id="edad" placeholder="Edad" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="edad" id="edad" placeholder="Edad" type="text" disabled="true"/>
             </div>
 
             <div id="divPesoPaciente" class="form-group">
                 <label for="peso">Peso (Kg)</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="peso" id="peso" placeholder="Peso" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="peso" id="peso" placeholder="Peso" type="text" disabled="true"/>
             </div>
 
             <div id="divAlturaPaciente" class="form-group">
                 <label for="altura">Altura (metros)</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="altura" id="altura" placeholder="Altura" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="altura" id="altura" placeholder="Altura" type="text" disabled="true"/>
             </div>
 
             <div id="divTallaPaciente" class="form-group">
                 <label for="talla">Talla </label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="talla" id="talla" placeholder="Talla" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="talla" id="talla" placeholder="Talla" type="text" disabled="true"/>
             </div>
 
             <div id="divCorreoPaciente" class="form-group">
                 <label for="correo">Email</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="correo" id="correo" placeholder="Email" type="text" disabled="true"/>
             </div>
 
             <div id="divFacebookPaciente" class="form-group">
                 <label for="facebook">Facebook (www.facebook.com/alguien)</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="facebook" id="facebook" placeholder="Facebook" type="text" readonly="true"/>
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" name="facebook" id="facebook" placeholder="Facebook" type="text" disabled="true"/>
             </div>
 
             <div class="box-footer">
@@ -468,7 +468,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="drogas" id="radioDrogasSi" value="1" readonly="true"/>
+                                    <input type="radio" name="drogas" id="radioDrogasSi" value="1" disabled="true"/>
                                     Si
                                 </label>
                             </div>
@@ -477,7 +477,7 @@
                     <div class="col-lg-2">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="drogas" id="radioDrogasNo" value="0" readonly="true"/>
+                                <input type="radio" name="drogas" id="radioDrogasNo" value="0" disabled="true"/>
                                 No
                             </label>
                         </div>
@@ -491,7 +491,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="alcohol" id="radioAlcoholSi" value="1" readonly="true"/>
+                                    <input type="radio" name="alcohol" id="radioAlcoholSi" value="1" disabled="true"/>
                                     Si
                                 </label>
                             </div>
@@ -501,7 +501,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="alcohol" id="radioAlcoholNo" value="0" readonly="true"/>
+                                    <input type="radio" name="alcohol" id="radioAlcoholNo" value="0" disabled="true"/>
                                     No
                                 </label>
                             </div>
@@ -516,7 +516,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="fuma" id="radioFumaSi" value="1" readonly="true"/>
+                                    <input type="radio" name="fuma" id="radioFumaSi" value="1" disabled="true"/>
                                     Si
                                 </label>
                             </div>
@@ -526,7 +526,7 @@
                         <div class="input-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="fuma" id="radioFumaNo" value="0" readonly="true"/>
+                                    <input type="radio" name="fuma" id="radioFumaNo" value="0" disabled="true"/>
                                     No
                                 </label>
                             </div>
@@ -562,7 +562,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia0" name="checkboxAlergia0" value="polen" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia0" name="checkboxAlergia0" value="polen" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Polen"/>
                             </div><!-- /input-group -->
@@ -576,7 +576,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia1" name="checkboxAlergia1" value="acaros" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia1" name="checkboxAlergia1" value="acaros" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Ácaros del polvo">
                             </div><!-- /input-group -->
@@ -590,7 +590,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia2" name="checkboxAlergia2" value="animales" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia2" name="checkboxAlergia2" value="animales" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Animales">
                             </div><!-- /input-group -->
@@ -604,7 +604,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia3" name="checkboxAlergia3" value="medicamentos" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia3" name="checkboxAlergia3" value="medicamentos" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" disabled="true" class="form-control" type="text" value="Medicamentos">
                             </div><!-- /input-group -->
@@ -618,7 +618,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia4" name="checkboxAlergia4" value="insectos" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia4" name="checkboxAlergia4" value="insectos" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Picadura de insectos">
                             </div><!-- /input-group -->
@@ -632,7 +632,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxAlergia5" name="checkboxAlergia5" value="alimentos" onclick="validarCheckboxAlergias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxAlergia5" name="checkboxAlergia5" value="alimentos" onclick="validarCheckboxAlergias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Alimentos">
                             </div><!-- /input-group -->
@@ -675,7 +675,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxCirugia0" name="checkboxCirugia0" value="interna" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxCirugia0" name="checkboxCirugia0" value="interna" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Interna"/>
                             </div><!-- /input-group -->
@@ -689,7 +689,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxCirugia1" name="checkboxCirugia1" value="externa" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" id="checkboxCirugia1" name="checkboxCirugia1" value="externa" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Externa">
                             </div><!-- /input-group -->
@@ -697,13 +697,13 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
 
-                                <input class="form-control" name="noCirugia1" id="noCirugia1" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" readonly="true"/>
+                                <input class="form-control" name="noCirugia1" id="noCirugia1" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" disabled="true"/>
                             </div><!-- /input-group -->
                         </div>
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia2" id="checkboxCirugia2" value="mayor" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia2" id="checkboxCirugia2" value="mayor" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Mayor">
                             </div><!-- /input-group -->
@@ -711,13 +711,13 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
 
-                                <input class="form-control" name="noCirugia2" id="noCirugia2" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" readonly="true"/>
+                                <input class="form-control" name="noCirugia2" id="noCirugia2" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" disabled="true"/>
                             </div><!-- /input-group -->
                         </div>
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia3" id="checkboxCirugia3" value="menor" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia3" id="checkboxCirugia3" value="menor" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Menor">
                             </div><!-- /input-group -->
@@ -725,13 +725,13 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
 
-                                <input class="form-control" name="noCirugia3" id="noCirugia3" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" readonly="true"/>
+                                <input class="form-control" name="noCirugia3" id="noCirugia3" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" disabled="true"/>
                             </div><!-- /input-group -->
                         </div>
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia4" id="checkboxCirugia4" value="curativa" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia4" id="checkboxCirugia4" value="curativa" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Curativa">
                             </div><!-- /input-group -->
@@ -739,13 +739,13 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
 
-                                <input class="form-control" name="noCirugia4" id="noCirugia4" disabled="true"  type="number" min="0" value="" placeholder="no. de cirugias" readonly="true"/>
+                                <input class="form-control" name="noCirugia4" id="noCirugia4" disabled="true"  type="number" min="0" value="" placeholder="no. de cirugias" disabled="true"/>
                             </div><!-- /input-group -->
                         </div>
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia5" id="checkboxCirugia5" value="reparadora" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia5" id="checkboxCirugia5" value="reparadora" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Reparadora">
                             </div><!-- /input-group -->
@@ -759,7 +759,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia6" id="checkboxCirugia6" value="paliativa" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia6" id="checkboxCirugia6" value="paliativa" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Paliativa">
                             </div><!-- /input-group -->
@@ -773,7 +773,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" name="checkboxCirugia7" id="checkboxCirugia7" value="cosmetica" onclick="validarCheckboxCirugias();" readonly="true"/>
+                                    <input type="checkbox" name="checkboxCirugia7" id="checkboxCirugia7" value="cosmetica" onclick="validarCheckboxCirugias();" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Cosmetica">
                             </div><!-- /input-group -->
@@ -781,7 +781,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
 
-                                <input class="form-control" name="noCirugia7" id="noCirugia7" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" readonly="true"/>
+                                <input class="form-control" name="noCirugia7" id="noCirugia7" disabled="true" type="number" min="0" value="" placeholder="no. de cirugias" disabled="true"/>
                             </div><!-- /input-group -->
                         </div>
                     </div>
@@ -816,7 +816,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad0" name="checkboxDiscapacidad0" value="fisica" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad0" name="checkboxDiscapacidad0" value="fisica" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Fisica"/>
                             </div><!-- /input-group -->
@@ -824,7 +824,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad1" name="checkboxDiscapacidad1" value="intelectual" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad1" name="checkboxDiscapacidad1" value="intelectual" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Intelectual">
                             </div><!-- /input-group -->
@@ -832,7 +832,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad2" name="checkboxDiscapacidad2" value="psiquica" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad2" name="checkboxDiscapacidad2" value="psiquica" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Psíquica">
                             </div><!-- /input-group -->
@@ -840,7 +840,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad3" name="checkboxDiscapacidad3" value="visual" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad3" name="checkboxDiscapacidad3" value="visual" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Visual">
                             </div><!-- /input-group -->
@@ -848,7 +848,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad4" name="checkboxDiscapacidad4" value="auditiva" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad4" name="checkboxDiscapacidad4" value="auditiva" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Auditiva">
                             </div><!-- /input-group -->
@@ -856,7 +856,7 @@
                         <div class="col-lg-6">
                             <div style="margin-bottom:10px;" class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="checkbox" id="checkboxDiscapacidad5" name="checkboxDiscapacidad5" value="habla" readonly="true"/>
+                                    <input type="checkbox" id="checkboxDiscapacidad5" name="checkboxDiscapacidad5" value="habla" disabled="true"/>
                                 </span>
                                 <input disabled="true" class="form-control" type="text" value="Habla">
                             </div><!-- /input-group -->

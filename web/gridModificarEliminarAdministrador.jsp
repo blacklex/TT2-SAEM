@@ -48,7 +48,7 @@
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Buscar Por Nombre De Usuario" name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
                     <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioModificarEliminarPorFiltroUsuario();">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>

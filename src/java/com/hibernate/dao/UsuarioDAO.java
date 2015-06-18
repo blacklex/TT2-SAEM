@@ -154,40 +154,57 @@ public class UsuarioDAO extends HibernateUtil {
     }
 
     public List<Usuarios> listarById(Session s, String id) {
+        
         try {
-            System.err.println("Bandera 1");
+            String queryString = "from Usuarios where nombreUsuario='" + id + "'";
+            Query queryObject = getSession().createQuery(queryString);
 
-            System.err.println("Bandera 2");
-            s.beginTransaction();
-            System.err.println("Bandera 3");
-            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where nombreUsuario='" + id + "'").list();
-            System.err.println("Bandera 4");
-            s.getTransaction().commit();
-            System.err.println("Bandera 5");
-            return listUsuarios;
-
-        } catch (Exception e) {
-            return null;
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
         }
+//        try {
+//            System.err.println("Bandera 1");
+//
+//            System.err.println("Bandera 2");
+//            s.beginTransaction();
+//            System.err.println("Bandera 3");
+//            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where nombreUsuario='" + id + "'").list();
+//            System.err.println("Bandera 4");
+//            s.getTransaction().commit();
+//            System.err.println("Bandera 5");
+//            return listUsuarios;
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
 
     }
 
     public List<Usuarios> listar(Session s, int from, int to) {
         try {
-            System.err.println("Bandera 1");
+            String queryString = "from Usuarios where tipoUsuario='Administrador'";
+            Query queryObject = getSession().createQuery(queryString);
 
-            System.err.println("Bandera 2");
-            s.beginTransaction();
-            System.err.println("Bandera 3");
-            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where tipoUsuario='Administrador'").list();
-            System.err.println("Bandera 4");
-            s.getTransaction().commit();
-            System.err.println("Bandera 5");
-            return listUsuarios;
-
-        } catch (Exception e) {
-            return null;
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
         }
+//        try {
+//            System.err.println("Bandera 1");
+//
+//            System.err.println("Bandera 2");
+//            s.beginTransaction();
+//            System.err.println("Bandera 3");
+//            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where tipoUsuario='Administrador'").list();
+//            System.err.println("Bandera 4");
+//            s.getTransaction().commit();
+//            System.err.println("Bandera 5");
+//            return listUsuarios;
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
 
     }
 
@@ -235,20 +252,28 @@ public class UsuarioDAO extends HibernateUtil {
 
     public List<Usuarios> listarPacientes(Session s, int from, int to) {
         try {
-            System.err.println("Bandera 1");
+            String queryString = "from Usuarios where tipoUsuario='Paciente'";
+            Query queryObject = getSession().createQuery(queryString);
 
-            System.err.println("Bandera 2");
-            s.beginTransaction();
-            System.err.println("Bandera 3");
-            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where tipoUsuario='Paciente'").list();
-            System.err.println("Bandera 4");
-            s.getTransaction().commit();
-            System.err.println("Bandera 5");
-            return listUsuarios;
-
-        } catch (Exception e) {
-            return null;
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            throw re;
         }
+//        try {
+//            System.err.println("Bandera 1");
+//
+//            System.err.println("Bandera 2");
+//            s.beginTransaction();
+//            System.err.println("Bandera 3");
+//            List<Usuarios> listUsuarios = (List<Usuarios>) s.createQuery("from Usuarios where tipoUsuario='Paciente'").list();
+//            System.err.println("Bandera 4");
+//            s.getTransaction().commit();
+//            System.err.println("Bandera 5");
+//            return listUsuarios;
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
 
     }
 

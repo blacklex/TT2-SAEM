@@ -372,3 +372,36 @@ function eliminarAdministradorPorFiltro() {
                 }
          });
 }
+
+function buscarUsuarioModificarEliminarPorFiltroUsuario() {
+    var nombreUsuario = $("#nombreUsuarioPorFiltro").val();
+
+    if(nombreUsuario.length === 0)
+        nombreUsuario="";
+
+        $("#barraCargarEliminar").slideUp(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "buscarDatosMostrarFiltro",
+            data: {nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#barraCargarEliminar").slideUp(100);
+            if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
+                $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+               
+            }
+            else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
+                $('html, body').animate({scrollTop: 0}, 'fast');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#tituloDivAlertErrorEliminar").html("<i class='icon fa fa-ban'></i>El Usuario no existe");
+                $("#labelMensajeErrorEliminar").html("El nombre de usuario no existe.");
+
+                $("#divAlertErrorEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $("#barraCargarEliminar").slideUp(100);
+                $("#nombreUsuarioPorFiltro").focus();
+            }           
+        });
+    
+}
