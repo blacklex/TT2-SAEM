@@ -33,6 +33,9 @@ import com.hibernate.model.Usuarios;
 import com.hibernate.model.Pacientes;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.saem.foaf.InsercionFOAF;
+import com.saem.foaf.ModificarEliminarFOAF;
+import com.saem.foaf.PersonaFOAF;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.Session;
@@ -72,6 +76,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private final CirugiaDAO cirugiaDAO = new CirugiaDAO();
     private final MedicacionDAO medicacionDAO = new MedicacionDAO();
     private final EnfermedadCronicaDAO enfermedadCronicaDAO = new EnfermedadCronicaDAO();
+    
+    HttpServletRequest request = ServletActionContext.getRequest();
 
     private List<Pacientes> listPacientes;
     private List<Usuarios> listUsuarios;
@@ -155,7 +161,15 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String mensajeError = "";
 
     public String eliminarPaciente() {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
+        //InsercionFOAF insercionFoaf = new InsercionFOAF(ONTOLOGIA);
+        
+        ModificarEliminarFOAF eliminarPersona = new ModificarEliminarFOAF(nombreUsuario, ONTOLOGIA);
         if (usuarioDAO.deletePaciente(nombreUsuario)) {
+            if(eliminarPersona.eliminarPersona())
+                System.out.println("Se elimino a la persona");
+            else
+                System.out.println("No se elimino a la persona");
             estatusMensajeEliminar = "usuarioEncontrado";
             System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarPaciente";
@@ -544,6 +558,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     html += "<div id=\"telefonoPaciente" + index + "\">"
                             + "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
                             + "       <label for=\"telefonoPaciente\">Teléfono #" + (index + 1) + "</label>"
+                            + "       <input type=\"checkbox\" id=\"checkbox"+index+"\" name=\"checkbox" + index + "\" value=\"" + telefonosPacientes.getId() + "\">"
                             + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + telefonosPacientes.getNumeroTelefono() + "\" name=\"numTelefono" + index + "\" id=\"numTelefono" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
                             + "   </div>"
                             + "</div>";

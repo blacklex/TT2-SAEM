@@ -42,9 +42,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.struts2.interceptor.SessionAware;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.saem.foaf.InsercionFOAF;
+import com.saem.foaf.PersonaFOAF;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
@@ -73,7 +76,7 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
 
     private final HospitalDAO hospitalDAO = new HospitalDAO();
 
-    private HttpServletRequest servletRequest;
+    HttpServletRequest request = ServletActionContext.getRequest();
 
     //Acceso
     String nombreUsuario;
@@ -158,6 +161,10 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
     String mensajeError = "";
 
     public String registrarPaciente() throws ParseException, FileNotFoundException, IOException {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
+        InsercionFOAF insercionFoaf = new InsercionFOAF(ONTOLOGIA);
+        ArrayList<PersonaFOAF> contactosFOAF = new ArrayList<PersonaFOAF>();
+        
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) ServletActionContext.getRequest();
         Enumeration<String> parametros;
@@ -176,6 +183,13 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         EnfermedadesCronicas enfermedadCronica = new EnfermedadesCronicas();
         Medicacion medicacionPaciente = new Medicacion();
 
+        PersonaFOAF pacienteFOAF = new PersonaFOAF();
+        pacienteFOAF.setNombrePersona(nombre);
+        pacienteFOAF.setNombreUsuarioPersona(nombreUsuario);
+        pacienteFOAF.setApellidosPersona(apellidoPaterno+" "+apellidoMaterno);
+        pacienteFOAF.setFacebookPersona(facebook);
+        pacienteFOAF.setCorreoPersona(correo);
+        
         //Fecha de Registro
         Date date = new Date();
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,7 +227,7 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
                 }
                 paciente.setImagen(bFile);
             } else {
-                String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
+                String filePath = request.getSession().getServletContext().getRealPath("/");
                 File fileImg = new File(filePath + "imagenesPerfilPaciente/default/default.jpeg");
                 byte[] defaultFile = new byte[(int) fileImg.length()];
                 try (FileInputStream imgDefault = new FileInputStream(fileImg)) {
@@ -328,6 +342,7 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
                          * de paciente***************************************************
                          */
                         if (nombreParametro.startsWith("numTelefono")) {
+                            pacienteFOAF.setTelefonoPersona(multiWrapper.getParameter(nombreParametro)+"0");
                             telefonoPaciente.setNumeroTelefono(multiWrapper.getParameter(nombreParametro));
                             telefonoPaciente.setPacientes(paciente);
                             telefonoPacienteDAO.save(telefonoPaciente);
@@ -384,6 +399,7 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
                             contacto.setFacebook(multiWrapper.getParameter("facebookContacto" + parametroContacto));
                             contacto.setCorreo(multiWrapper.getParameter("correoContacto" + parametroContacto));
                             contacto.setPacientes(paciente);
+                            contactosFOAF.add(new PersonaFOAF(multiWrapper.getParameter("nombreContacto" + parametroContacto), (multiWrapper.getParameter("apellidoPaternoContacto" + parametroContacto)+" "+multiWrapper.getParameter("apellidoMaternoContacto" + parametroContacto)), null ,multiWrapper.getParameter("correoContacto" + parametroContacto), multiWrapper.getParameter("celularContacto" + parametroContacto), multiWrapper.getParameter("facebookContacto" + parametroContacto)));
                             if (!contactoDAO.save(contacto)) {
                                 contactoDAO.delete(contacto);
                             }
@@ -417,6 +433,12 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         }
 
         if (registroCorrecto) {
+            //Insertamos una persona en FOAF
+            insercionFoaf.setPersona(pacienteFOAF);
+            insercionFoaf.insertarPersona();
+            for (PersonaFOAF it : contactosFOAF) {
+                insercionFoaf.insertarAmigo(it, pacienteFOAF.getNombreUsuarioPersona());
+            }
             session.put("tituloAlert", "Paciente Registrado");
             session.put("textoAlert", "El Paciente fue registrado exitosamente.");
             session.put("estatusMensaje", "success");
@@ -1049,8 +1071,8 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
     }
 
     @Override
-    public void setServletRequest(HttpServletRequest servletRequest) {
-        this.servletRequest = servletRequest;
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
     }
 
 }
