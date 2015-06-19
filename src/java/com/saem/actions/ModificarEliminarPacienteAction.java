@@ -13,6 +13,7 @@ import com.hibernate.dao.DatosPersonalesDAO;
 import com.hibernate.dao.DiscapacidadDAO;
 import com.hibernate.dao.DomicilioPacienteDAO;
 import com.hibernate.dao.EnfermedadCronicaDAO;
+import com.hibernate.dao.EspecialidadDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.MedicacionDAO;
 import com.hibernate.dao.TelefonoPacienteDAO;
@@ -26,6 +27,7 @@ import com.hibernate.model.DatosPersonales;
 import com.hibernate.model.Discapacidades;
 import com.hibernate.model.DomicilioPacientes;
 import com.hibernate.model.EnfermedadesCronicas;
+import com.hibernate.model.Especialidades;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Medicacion;
 import com.hibernate.model.TelefonosPacientes;
@@ -33,6 +35,7 @@ import com.hibernate.model.Usuarios;
 import com.hibernate.model.Pacientes;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.persistencia.owl.OWLConsultas;
 import com.saem.foaf.InsercionFOAF;
 import com.saem.foaf.ModificarEliminarFOAF;
 import com.saem.foaf.PersonaFOAF;
@@ -76,7 +79,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private final CirugiaDAO cirugiaDAO = new CirugiaDAO();
     private final MedicacionDAO medicacionDAO = new MedicacionDAO();
     private final EnfermedadCronicaDAO enfermedadCronicaDAO = new EnfermedadCronicaDAO();
-    
+
     HttpServletRequest request = ServletActionContext.getRequest();
 
     private List<Pacientes> listPacientes;
@@ -160,16 +163,20 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     private String estatusMensajeEditar;
     private String mensajeError = "";
 
+    private String htmlEnfermedades;
+    private String especialidadCombo;
+
     public String eliminarPaciente() {
         String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
         //InsercionFOAF insercionFoaf = new InsercionFOAF(ONTOLOGIA);
-        
+
         ModificarEliminarFOAF eliminarPersona = new ModificarEliminarFOAF(nombreUsuario, ONTOLOGIA);
         if (usuarioDAO.deletePaciente(nombreUsuario)) {
-            if(eliminarPersona.eliminarPersona())
+            if (eliminarPersona.eliminarPersona()) {
                 System.out.println("Se elimino a la persona");
-            else
+            } else {
                 System.out.println("No se elimino a la persona");
+            }
             estatusMensajeEliminar = "usuarioEncontrado";
             System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarPaciente";
@@ -558,7 +565,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     html += "<div id=\"telefonoPaciente" + index + "\">"
                             + "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
                             + "       <label for=\"telefonoPaciente\">Teléfono #" + (index + 1) + "</label>"
-                            + "       <input type=\"checkbox\" id=\"checkbox"+index+"\" name=\"checkbox" + index + "\" value=\"" + telefonosPacientes.getId() + "\">"
+                            + "       <input type=\"checkbox\" id=\"checkbox" + index + "\" name=\"checkbox" + index + "\" value=\"" + telefonosPacientes.getId() + "\">"
                             + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + telefonosPacientes.getNumeroTelefono() + "\" name=\"numTelefono" + index + "\" id=\"numTelefono" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
                             + "   </div>"
                             + "</div>";
@@ -857,6 +864,14 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a enfermedades cronicas pacientes");
         String html = "";
+        ArrayList<Especialidades> especialidadesBD = new ArrayList<Especialidades>();
+        EspecialidadDAO especialidadesDAO = new EspecialidadDAO();
+        especialidadesBD = (ArrayList<Especialidades>) especialidadesDAO.findAll(s);
+
+        if (especialidadesBD == null) {
+            especialidadesBD = new ArrayList<Especialidades>();
+        }
+
         listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
@@ -878,20 +893,25 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
                                 + "           <label>Nombre enfermedad #" + (index + 1) + " : </label>" + "\n"
-                                + "           <input class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\"" + enfermedadCronica.getNombre() + "\" placeholder=\"Nombre enfermedad" + (index + 1) + "\" />" + "\n"
+                                + "           <select class=\"form-control\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" >" + "\n"
+                                + "           <option value=\""+enfermedadCronica.getNombre()+"\">"+enfermedadCronica.getNombre()+"</option></select>" + "\n"
                                 + "       </div>" + "\n"
                                 + "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <label>Tipo</label>" + "\n"
-                                + "       <select name=\"tipoEnfermedad" + index + "\" class=\"form-control\">" + "\n"
-                                + "           <option value=\"-1\">Seleccionar</option>" + "\n"
-                                + "           <option value=\"diabetes\" " + ((enfermedad.equals("diabetes")) ? "selected" : "") + ">Diabetes</option>" + "\n"
-                                + "           <option value=\"cardiovascular\" " + ((enfermedad.equals("cardiovascular")) ? "selected" : "") + ">Enfermedades cardiovasculares</option>" + "\n"
-                                + "           <option value=\"obesidad\" " + ((enfermedad.equals("obesidad")) ? "selected" : "") + ">Obesidad</option>" + "\n"
-                                + "           <option value=\"cancer\"  " + ((enfermedad.equals("cancer")) ? "selected" : "") + ">Cáncer</option>" + "\n"
-                                + "           <option value=\"dislipidemias\" " + ((enfermedad.equals("dislipidemias")) ? "selected" : "") + ">Dislipidemias</option>" + "\n"
-                                + "       </select>" + "\n"
-                                + "   </div>" + "\n"
+                                + "       <select onchange=\"recuperarEnfermedadesCronicas("+ index +",this);\" name=\"tipoEnfermedad" + index + "\" class=\"form-control\">" + "\n"
+                                + "           <option value=\"-1\">Seleccionar</option>" + "\n";
+
+                        for (Especialidades especTem : especialidadesBD) {
+                            if (enfermedad.equals(especTem.getNombreEspecialidad())) {
+                                html += "<option value=\"" + especTem.getNombreEspecialidad() + "\" " + "selected" + ">" + especTem.getNombreEspecialidad() + "</option>" + "\n";
+                            } else {
+                                html += "<option value=\"" + especTem.getNombreEspecialidad() + "\" >" + especTem.getNombreEspecialidad() + "</option>" + "\n";
+
+                            }
+                        }
+
+                        html += "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n"
                                 + "           <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n"
@@ -913,6 +933,28 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         System.out.println(enfermedadesCronicas);
         s.close();
         return "success";
+    }
+
+    public String recuperarComboEnfermedadesPorEspecialidadModElim() {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+        System.out.println("--->Entro a recuperarComboEnfermedadesPorEspecialidad" + especialidadCombo);
+        OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+        String html = "<option value=\"-1\">Seleccionar</option>\n";
+
+        ArrayList<String> listaEnfermedadesOntologia = (ArrayList<String>) consultor.especialidadEstudiaAEnfermedad(especialidadCombo);
+
+        if (listaEnfermedadesOntologia == null) {
+            listaEnfermedadesOntologia = new ArrayList<String>();
+        }
+
+        for (String efermedadTemp : listaEnfermedadesOntologia) {
+            html += "<option value=\"" + efermedadTemp + "\">" + efermedadTemp + "</option>\n";
+        }
+
+        htmlEnfermedades = html;
+
+        return SUCCESS;
     }
 
     public String validarNombreUsuarioEliminar() {
@@ -1294,6 +1336,22 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
 
     public void setEnfermedadesCronicas(String enfermedadesCronicas) {
         this.enfermedadesCronicas = enfermedadesCronicas;
+    }
+
+    public String getHtmlEnfermedades() {
+        return htmlEnfermedades;
+    }
+
+    public void setHtmlEnfermedades(String htmlEnfermedades) {
+        this.htmlEnfermedades = htmlEnfermedades;
+    }
+
+    public String getEspecialidadCombo() {
+        return especialidadCombo;
+    }
+
+    public void setEspecialidadCombo(String especialidadCombo) {
+        this.especialidadCombo = especialidadCombo;
     }
 
 }

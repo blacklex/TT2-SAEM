@@ -13,6 +13,7 @@ import com.hibernate.dao.DatosPersonalesDAO;
 import com.hibernate.dao.DiscapacidadDAO;
 import com.hibernate.dao.DomicilioPacienteDAO;
 import com.hibernate.dao.EnfermedadCronicaDAO;
+import com.hibernate.dao.EspecialidadDAO;
 import com.hibernate.dao.HospitalDAO;
 import com.hibernate.dao.MedicacionDAO;
 import com.hibernate.dao.TelefonoPacienteDAO;
@@ -26,11 +27,14 @@ import com.hibernate.model.DatosPersonales;
 import com.hibernate.model.Discapacidades;
 import com.hibernate.model.DomicilioPacientes;
 import com.hibernate.model.EnfermedadesCronicas;
+import com.hibernate.model.Especialidades;
 import com.hibernate.model.Hospitales;
 import com.hibernate.model.Medicacion;
 import com.hibernate.model.TelefonosPacientes;
 import com.hibernate.model.Usuarios;
 import com.hibernate.model.Pacientes;
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.persistencia.owl.OWLConsultas;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,7 +45,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.struts2.interceptor.SessionAware;
-import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.saem.foaf.InsercionFOAF;
 import com.saem.foaf.PersonaFOAF;
 import java.util.ArrayList;
@@ -157,6 +160,11 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
     private String tituloAlert;
     private String textoAlert;
     private String estatusMensaje;
+    
+    private String htmlEspecialidades;
+    private String especialidadCombo;
+    private String enfermedadesCombo;
+    private String htmlEnfermedades;
 
     String mensajeError = "";
 
@@ -516,6 +524,50 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         s.close();
         return SUCCESS;
     }
+    
+    public String recuperarComboEspecialidades() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        System.out.println("--->Entro a recuperarComboEspecialidades");
+        String html = "<option value=\"-1\">Seleccionar</option>\n";
+        EspecialidadDAO especialidadDAO = new EspecialidadDAO();
+        ArrayList<Especialidades> especialidades = (ArrayList<Especialidades>) especialidadDAO.findAll(s);
+        s.close();
+        if (especialidades == null) {
+            return SUCCESS;
+        }
+        int contEspec = 0;
+        for (Especialidades especialidadTemp : especialidades) {
+            html += "<option value=\""+especialidadTemp.getNombreEspecialidad()+"\">"+especialidadTemp.getNombreEspecialidad()+"</option>\n";
+            contEspec++;
+        }
+
+        htmlEspecialidades = html;
+
+        return SUCCESS;
+    }
+    
+     public String recuperarComboEnfermedadesPorEspecialidad() {
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+        System.out.println("--->Entro a recuperarComboEnfermedadesPorEspecialidad"+especialidadCombo);
+         OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+        String html = "<option value=\"-1\">Seleccionar</option>\n";
+        
+        ArrayList<String> listaEnfermedadesOntologia = (ArrayList<String>) consultor.especialidadEstudiaAEnfermedad(especialidadCombo);
+        
+        if(listaEnfermedadesOntologia==null)
+            listaEnfermedadesOntologia = new ArrayList<String>();
+        
+        
+        for (String efermedadTemp : listaEnfermedadesOntologia) {
+            html += "<option value=\""+efermedadTemp+"\">"+efermedadTemp+"</option>\n";
+        }
+
+        htmlEnfermedades = html;
+
+        return SUCCESS;
+    }
+
 
     /**
      *
@@ -1069,6 +1121,40 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
     public void setCodigoHospital(String codigoHospital) {
         this.codigoHospital = codigoHospital;
     }
+
+    public String getHtmlEspecialidades() {
+        return htmlEspecialidades;
+    }
+
+    public void setHtmlEspecialidades(String htmlEspecialidades) {
+        this.htmlEspecialidades = htmlEspecialidades;
+    }
+
+    public String getEspecialidadCombo() {
+        return especialidadCombo;
+    }
+
+    public void setEspecialidadCombo(String especialidadCombo) {
+        this.especialidadCombo = especialidadCombo;
+    }
+
+    public String getEnfermedadesCombo() {
+        return enfermedadesCombo;
+    }
+
+    public void setEnfermedadesCombo(String enfermedadesCombo) {
+        this.enfermedadesCombo = enfermedadesCombo;
+    }
+
+    public String getHtmlEnfermedades() {
+        return htmlEnfermedades;
+    }
+
+    public void setHtmlEnfermedades(String htmlEnfermedades) {
+        this.htmlEnfermedades = htmlEnfermedades;
+    }
+    
+    
 
     @Override
     public void setServletRequest(HttpServletRequest request) {

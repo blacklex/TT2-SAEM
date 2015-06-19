@@ -709,8 +709,7 @@
                         </div> -->
                     </div>
                 </div>
-            </div><!-- /.box-body -->
-            <div class="box-body">
+            
                 <div class="box box-primary collapsed-box box-solid">
                     <div class="box-header with-border">
                         <i class="fa fa-book"></i>
@@ -787,5 +786,5 @@
     $(function () {
         //Datemask dd/mm/yyyy
         $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    }
+    });
 </script>

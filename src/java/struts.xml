@@ -407,6 +407,14 @@
             <result name="success" type="json">JSON</result>
         </action>
         
+        <action name="recuperarComboEspecialidades" method="recuperarComboEspecialidades" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarComboEnfermedadesPorEspecialidad" method="recuperarComboEnfermedadesPorEspecialidad" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
         <!-- Validar usuario -->
         <action name="validarNombreUsuarioPaciente" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPaciente">
             <result name="success" type="json">JSON</result>
@@ -474,6 +482,10 @@
         </action>
         
         <action name="buscarEnfermedadesCronicasPaciente" method="buscarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarComboEnfermedadesPorEspecialidadModElim" method="recuperarComboEnfermedadesPorEspecialidadModElim" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ******************************************** FIN BUSCAR DATOS PARA EDITAR PACIENTE ****************************************************************-->
@@ -680,6 +692,14 @@
         
         <!-- Validar usuario -->
         <action name="validarNombreUsuarioPacienteRegistro" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarCombosEspecialidadesHospital" method="recuperarCombosEspecialidadesHospital" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+         <action name="recuperarComboEnfermedadesPorEspecialidadHospital" method="recuperarComboEnfermedadesPorEspecialidadHospital" class="com.saem.actions.RegistrarPacientePorHospital">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Validar usuario -->

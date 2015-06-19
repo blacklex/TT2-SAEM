@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var especialidades="";
+var enfermedadesCombo="";
 $(document).ready(function () {
     $.getJSON("recuperarHospitales");
     $.getJSON("recuperarMensajeEstatusPaciente");
@@ -356,8 +357,50 @@ function validarCheckboxCirugias() {
        
 }
 
+function recuperarEspecialidades(){
+ $("#barraCargarPaciente").slideDown(100);
+    $.ajax({
+            dataType: "json",
+            method: "POST",
+            async: false,
+            url: "recuperarComboEspecialidades",
+            data: {}
+        }).done(function (msg) {
+            especialidades = msg.htmlEspecialidades;
+            $("#barraCargarPaciente").slideUp(100);
+        });
+    
+}
+
+function recuperarEnfermedadesCronicas(numeroCombo,idCombo){
+    var especialidad = idCombo.value;
+    
+    if(especialidad==="-1"){
+        $("#enfermedadCronica"+numeroCombo).html("");
+        return;
+    }else{
+        $("#barraCargarPaciente").slideDown(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            async: false,
+            url: "recuperarComboEnfermedadesPorEspecialidad",
+            data: {especialidadCombo:especialidad}
+        }).done(function (msg) {
+            $("#barraCargarPaciente").slideUp(100);
+            $("#enfermedadCronica"+numeroCombo).html(msg.htmlEnfermedades);
+            
+        });
+        
+    }
+    
+} 
+
 $(document).ready(function() {
+    recuperarEspecialidades();
     var counter = 0;
+    
+    
     
     $("#agregarEnfermedad").click(function () {
         
@@ -373,18 +416,15 @@ $(document).ready(function() {
                                     '<div class="col-lg-4">' +
                                         '<div style="margin-bottom:10px;" class="form-group">' +
                                             '<label>Nombre enfermedad #'+ (counter + 1)+ ' : </label>' +
-                                            '<input class="form-control" type="text" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '" value="" placeholder="Nombre enfermedad'+counter+'" />' + 
+                                            '<select class="form-control" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '">' + 
+                                            
+                                        '</select>'+
                                         '</div>'+
                                     '</div>'+
                                     '<div class="col-lg-4">'+
                                         '<label>Tipo</label>'+
-                                        '<select name="tipoEnfermedad'+ counter +'" class="form-control">'+
-                                            '<option value="-1">Seleccionar</option>'+
-                                            '<option value="diabetes">Diabetes</option>'+
-                                            '<option value="cardiovascular">Enfermedades cardiovasculares</option>'+
-                                            '<option value="obesidad">Obesidad</option>'+
-                                            '<option value="cancer">Cáncer</option>'+
-                                            '<option value="dislipidemias">Dislipidemias</option>'+
+                                        '<select onchange="recuperarEnfermedadesCronicas('+ counter +',this)" id="tipoEnfermedad'+ counter +'" name="tipoEnfermedad'+ counter +'" class="form-control">'+
+                                            especialidades+
                                         '</select>'+
                                     '</div>'+
                                     '<div class="col-lg-4">'+
