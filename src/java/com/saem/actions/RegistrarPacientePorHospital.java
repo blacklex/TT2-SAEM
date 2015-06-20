@@ -502,11 +502,12 @@ public class RegistrarPacientePorHospital implements SessionAware, ServletReques
     public String recuperarCombosEspecialidadesHospital() {
         nombreUsuario= (String)session.get("nombreUsuario");
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        EspecialidadDAO especialidadesDAO = new EspecialidadDAO();
         System.out.println("--->Entro a recuperarComboEspecialidades");
         String html = "<option value=\"-1\">Seleccionar</option>\n";
 
         
-            userHospital = usuarioDAO.findById(s, nombreUsuario);
+            /*userHospital = usuarioDAO.findById(s, nombreUsuario);
             Set hospitales = userHospital.getHospitaleses();
             for (Iterator iterator2 = hospitales.iterator(); iterator2.hasNext();) {
                 Hospitales hospital = (Hospitales) iterator2.next();
@@ -514,10 +515,10 @@ public class RegistrarPacientePorHospital implements SessionAware, ServletReques
             }
         
 
-        Hospitales hospital = hospitalDAO.findById(s, codigoHospital);
+        Hospitales hospital = hospitalDAO.findById(s, codigoHospital);*/
         ArrayList<Especialidades> especialidades = new ArrayList<Especialidades>();
 
-        Iterator especialidadesHosp = hospital.getEspecialidadeses().iterator();
+        Iterator especialidadesHosp =especialidadesDAO.findAll(s).iterator();
 
         while (especialidadesHosp.hasNext()) {
             especialidades.add((Especialidades) especialidadesHosp.next());
