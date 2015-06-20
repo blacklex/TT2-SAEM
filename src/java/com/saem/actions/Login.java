@@ -49,6 +49,7 @@ public class Login implements SessionAware{
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_LOGIN, estatusMensaje);
+            s.close();
             return Action.LOGIN;
         }
         
@@ -63,18 +64,21 @@ public class Login implements SessionAware{
             session.put("tituloAlert", tituloAlert);
             session.put("textoAlert", textoAlert);
             session.put(LLAVE_ESTATUS_LOGIN, estatusMensaje);
+            s.close();
             return Action.LOGIN;
         }
         session.put("nombreUsuario", nombreUsuario);
         session.put("tipoUsuario", tipoUsuario);
         session.put("grantAccess", "grantAccess");
         
-        if(tipoUsuario.toUpperCase().equals("ADMINISTRADOR"))
+        if(tipoUsuario.toUpperCase().equals("ADMINISTRADOR")){
+            s.close();
             return "pantallaInicioAdministrador";
-        
-        if(tipoUsuario.toUpperCase().equals("PACIENTE"))
+        }
+        if(tipoUsuario.toUpperCase().equals("PACIENTE")){
+            s.close();
             return "pantallaInicioPaciente";
-        
+        }
         if(tipoUsuario.toUpperCase().equals("HOSPITAL")){
             String codigoHospital ="";
             Iterator<Hospitales> iterHosp = usuario.getHospitaleses().iterator();
@@ -85,9 +89,10 @@ public class Login implements SessionAware{
             }
             System.out.println("---> Cod hosp "+codigoHospital);
             session.put("HospitalCodigoHospital", codigoHospital);
-            
+            s.close();
             return "pantallaInicioHospital";
         }
+        s.close();
         return Action.LOGIN;
     }
 

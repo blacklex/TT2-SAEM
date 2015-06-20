@@ -32,6 +32,12 @@
             <result name="login" type="dispatcher">login.jsp</result>
         </global-results>
         
+        <global-exception-mappings>
+        <exception-mapping exception="org.hibernate.exception.GenericJDBCException"
+            result="login" />
+        <exception-mapping exception="java.lang.Exception" result="login"/>
+    </global-exception-mappings>
+        
         <action name="Login" method="execute" class="com.saem.actions.Login">
             <result name="pantallaInicioAdministrador" type="tiles">pantallaInicioAdministrador</result>
             <result name="pantallaInicioPaciente" type="tiles">pantallaInicioPaciente</result>

@@ -99,7 +99,7 @@
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Iniciar Sesión</p>
-                <form action="Login" method="post" onsubmit="return validarCampos()">
+                <form action="Login" method="post" onsubmit="return validarCampos()" autocomplete="off">
                     <div id="divAlertError" style="display: none;"  class="alert alert-warning alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h4 id="tituloDivAlertError"></h4>
