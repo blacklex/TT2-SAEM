@@ -67,6 +67,7 @@ public class Login implements SessionAware{
         }
         session.put("nombreUsuario", nombreUsuario);
         session.put("tipoUsuario", tipoUsuario);
+        session.put("grantAccess", "grantAccess");
         
         if(tipoUsuario.toUpperCase().equals("ADMINISTRADOR"))
             return "pantallaInicioAdministrador";
