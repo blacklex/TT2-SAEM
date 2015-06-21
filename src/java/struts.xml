@@ -684,6 +684,10 @@
             <result name="success" type="json">JSON</result>
         </action>
         
+        <action name="alertaRapida" class="com.saem.actions.BuscarMejorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
         <action name="enviarAlertaEntrante" class="com.saem.actions.AcudirHospital">
             <result name="success" type="json">JSON</result>
         </action>
