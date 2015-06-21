@@ -54,7 +54,7 @@ public class InsercionFOAF {
         Resource r2 = model.createResource(BASE_URI +correoAmigo, FOAF.Person);
         r2.addProperty(FOAF.mbox, model.createResource("mailto:" + correoAmigo));
         r2.addProperty(FOAF.phone, model.createResource("tel:" + telefonoAmigo));
-        r2.addProperty(FOAF.holdsAccount, model.createResource("http://" + facebookAmigo));
+        r2.addProperty(FOAF.holdsAccount, model.createResource("https://www.facebook.com/" + facebookAmigo));
         r2.addProperty(FOAF.name, nombreAmigo);
         r2.addProperty(FOAF.family_name, apellidosAmigo);
 
@@ -78,7 +78,7 @@ public class InsercionFOAF {
         Resource r2 = model.createResource(BASE_URI + amigo.getCorreoPersona(), FOAF.Person);
         r2.addProperty(FOAF.mbox, model.createResource("mailto:" + amigo.getCorreoPersona()));
         r2.addProperty(FOAF.phone, model.createResource("tel:" + amigo.getTelefonoPersona()));
-        r2.addProperty(FOAF.holdsAccount, model.createResource("http://" + amigo.getFacebookPersona()));
+        r2.addProperty(FOAF.holdsAccount, model.createResource("https://www.facebook.com/" + amigo.getFacebookPersona()));
         r2.addProperty(FOAF.name, amigo.getNombrePersona());
         r2.addProperty(FOAF.family_name, amigo.getApellidosPersona());
 
@@ -101,7 +101,7 @@ public class InsercionFOAF {
         Resource r = model.createResource(BASE_URI + persona.getNombreUsuarioPersona());
         r.addProperty(FOAF.nick, persona.getNombreUsuarioPersona());
         r.addProperty(FOAF.phone, model.createResource("tel:" + persona.getTelefonoPersona()));
-        r.addProperty(FOAF.holdsAccount, model.createResource("http://" + persona.getFacebookPersona()));
+        r.addProperty(FOAF.holdsAccount, model.createResource("https://www.facebook.com/" + persona.getFacebookPersona()));
         r.addProperty(FOAF.mbox, model.createResource("mailto:" + persona.getCorreoPersona()));
         r.addProperty(RDF.type, FOAF.Person);
         r.addProperty(FOAF.name, persona.getNombrePersona());

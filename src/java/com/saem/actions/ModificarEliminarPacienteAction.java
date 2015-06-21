@@ -166,6 +166,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
 
     private String htmlEnfermedades;
     private String especialidadCombo;
+    
+    private String nombreUsuarioContacto;
 
     public String eliminarPaciente() {
         String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
@@ -433,6 +435,11 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     }
 
     public String editarContactosPaciente() throws IOException {
+        System.out.println(nombreUsuarioContacto);
+        String ONTOLOGIA = request.getServletContext().getRealPath("/") + "WEB-INF/foaf.rdf";
+        //InsercionFOAF insercionFoaf = new InsercionFOAF(ONTOLOGIA);
+        InsercionFOAF insercionFoaf = new InsercionFOAF(ONTOLOGIA);
+        ModificarEliminarFOAF eliminarPersona = new ModificarEliminarFOAF(nombreUsuarioContacto, ONTOLOGIA);
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
         Enumeration<String> parametrosContacto;
@@ -444,9 +451,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
             if(nombreParametro.startsWith("checkboxContactoEliminar")) {
                 //String parametroTelefonoEliminar = nombreParametro.substring(24);
                 Long idContacto = Long.parseLong(request.getParameter(nombreParametro));
-                
+                contactos = contactoDAO.findById(s, idContacto);
                 if(contactoDAO.deleteContactoPaciente(idContacto)){
                     actualizacionCorrecta = true;
+                    eliminarPersona.eliminarAmigo(contactos.getCorreo());
                     System.out.println("Se elimino el contacto con id" + request.getParameter(nombreParametro));
                 }
                 else {
@@ -461,6 +469,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 paciente = pacienteDAO.findById(s, nssEditar);
                 String parametroContactoEditar = nombreParametro.substring(22);
                 Long idContactoEditar = Long.parseLong(request.getParameter("checkboxContactoEditar"+parametroContactoEditar));
+                contactos = contactoDAO.findById(s, idContactoEditar);
+                String correoContactoTemp = contactos.getCorreo();
                 String nombreContacto = request.getParameter("nombreContacto"+parametroContactoEditar);
                 String apellidoPatContacto = request.getParameter("apellidoPaternoContacto"+parametroContactoEditar);
                 String apellidoMatContaco = request.getParameter("apellidoMaternoContacto"+parametroContactoEditar);
@@ -478,8 +488,16 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 contactos.setFacebook(facebookContacto);
                 contactos.setCorreo(correoContacto);
                 contactos.setPacientes(paciente);
-
+                
                 if(contactoDAO.update(contactos)) {
+                    PersonaFOAF contactoFOAF = new PersonaFOAF();
+                    contactoFOAF.setNombrePersona(nombreContacto);
+                    contactoFOAF.setNombreUsuarioPersona(null);
+                    contactoFOAF.setApellidosPersona(apellidoPatContacto+" "+apellidoMatContaco);
+                    contactoFOAF.setFacebookPersona(facebookContacto);
+                    contactoFOAF.setCorreoPersona(correoContacto);
+                
+                    eliminarPersona.modificarAmigo(correoContactoTemp, contactoFOAF);
                     actualizacionCorrecta = true;
                     System.out.println("El contacto del paciente se actualizo correctamente");
                 }
@@ -514,6 +532,14 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 contactos.setPacientes(paciente);
                 
                 if(contactoDAO.save(contactos)) {
+                    PersonaFOAF contactoFOAF = new PersonaFOAF();
+                    contactoFOAF.setNombrePersona(nombreContacto);
+                    contactoFOAF.setNombreUsuarioPersona(null);
+                    contactoFOAF.setApellidosPersona(apellidoPatContacto+" "+apellidoMatContaco);
+                    contactoFOAF.setFacebookPersona(facebookContacto);
+                    contactoFOAF.setCorreoPersona(correoContacto);
+                    insercionFoaf.insertarAmigo(contactoFOAF, nombreUsuarioContacto);
+                    
                     System.out.println("El contacto se agrego correctamente");
                     actualizacionCorrecta = true;
                 }
@@ -962,6 +988,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     contactos = (Contactos) iterator3.next();
                     html += "<div id=\"contactoPaciente" + index + "\">" + "\n"
                             + "   <label for=\"nombreC\">Contacto #" + (index + 1) + "</label><br>" + "\n"
+                            + "<input type=\"hidden\" name=\"nombreUsuario\" id=\"nombreUsuario\" value=\""+userPaciente.getNombreUsuario()+"\">"
                             + "       <input type=\"checkbox\" id=\"checkboxContactoEliminar" + index +"\" name=\"checkboxContactoEliminar" + index +"\" value=\""+contactos.getId()+"\">Eliminar     "
                             + "       <input type=\"checkbox\" id=\"checkboxContactoEditar"+index+"\" name=\"checkboxContactoEditar" + index +"\" value=\""+contactos.getId()+"\">Editar"
                             + "       <input type=\"hidden\" id=\"nss\" name=\"nss\" value=\""+paciente.getNss()+"\">"
@@ -1682,4 +1709,11 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         this.especialidadCombo = especialidadCombo;
     }
 
+    public String getNombreUsuarioContacto() {
+        return nombreUsuarioContacto;
+    }
+
+    public void setNombreUsuarioContacto(String nombreUsuarioContacto) {
+        this.nombreUsuarioContacto = nombreUsuarioContacto;
+    }
 }

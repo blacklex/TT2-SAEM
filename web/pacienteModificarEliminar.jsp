@@ -443,7 +443,10 @@
                             </button>
                         </div>
                     </div>
+                    <input type="hidden" name="nombreUsuarioContacto" id="nombreUsuarioContacto"/>
                     <div class="box-body" id="TextBoxesGroupContacto">
+                        
+                        
 <!--                        <div id="contactoPaciente1">
                             <label for="nombreC">Contacto #1</label>
                             <div id="divNombreCPaciente1" class="form-group">

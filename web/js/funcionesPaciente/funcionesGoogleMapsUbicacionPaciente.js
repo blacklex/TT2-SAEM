@@ -175,8 +175,11 @@ function initialize() {
         google.maps.event.addListener(marker, 'mouseout', toggleBounce);
         
         var bucarHospitalesDiv = document.createElement('div');
+        var bucarHospitalesDivMejorHospital = document.createElement('div');
         var buscarHospitales = new ControlHospitales(bucarHospitalesDiv, map, latlon, lat, lon, distaciaWidget);
+        var buscarMejorHospital = new MejorHospital(bucarHospitalesDivMejorHospital, map, latlon, lat, lon, 10);
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(bucarHospitalesDiv);
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(bucarHospitalesDivMejorHospital);
     }
     
     function toggleBounce() {
@@ -332,7 +335,7 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
     controlDiv.appendChild(controlUI);
     var controlText = document.createElement('div');
     controlText.style.fontFamily='Arial,sans-serif';
-    controlText.style.fontSize='12px';
+    controlText.style.fontSize='18px';
     controlText.style.paddingLeft = '4px';
     controlText.style.paddingRight = '4px';
     controlText.innerHTML = '<b>Buscar<b>';
@@ -370,6 +373,59 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
             }
         });
     map.setCenter(centro);
+  });
+}
+
+function MejorHospital(controlDivMejorHospital, map, centro, latitud, longitud, distanciaMaxima) {
+    controlDivMejorHospital.style.padding = '5px';
+    var controlUIMejorHospital = document.createElement('div');
+    controlUIMejorHospital.style.backgroundColor = 'red';
+    controlUIMejorHospital.style.border='1px solid';
+    controlUIMejorHospital.style.cursor = 'pointer';
+    controlUIMejorHospital.style.textAlign = 'center';
+    controlUIMejorHospital.title = 'Alerta rapida';
+    controlDivMejorHospital.appendChild(controlUIMejorHospital);
+    var controlTextMejorHospital = document.createElement('div');
+    controlTextMejorHospital.style.fontFamily='Arial,sans-serif';
+    controlTextMejorHospital.style.fontSize='18px';
+    controlTextMejorHospital.style.paddingLeft = '12px';
+    controlTextMejorHospital.style.paddingRight = '12px';
+    controlTextMejorHospital.innerHTML = '<b>Emergencia<b>';
+    controlUIMejorHospital.appendChild(controlTextMejorHospital);
+   
+    // Setup click-event listener: simply set the map to London
+    google.maps.event.addDomListener(controlUIMejorHospital, 'dblclick', function() {
+        alert("Entro a alert rapida");
+//        var nombreUsuario = $("#nombreUsuario").val();
+//        $("#barraCargarPaciente").slideDown(100);
+//        $.ajax({
+//            dataType: "json",
+//            method: "POST",
+//            url: "alertaRapida",
+//            data: {latitudUsuario: latitud, longitudUsuario:longitud, distancia:distancia.get('distance'), nombreUsuario: nombreUsuario}
+//        }).done(function (msg) {
+//            $("#barraCargarPaciente").slideUp(100);
+//            if (msg.estatusMensaje === "vacio") {
+//                $('html, body').animate({scrollTop: 0}, 'fast');
+//                $("#barraCargarPaciente").slideUp(100);
+//                $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>Zona sin Hospitales");
+//                $("#labelMensajeErrorPaciente").html("No hay hospitales dentro de tu zona.");
+//
+//                $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
+//                $("#barraCargarPaciente").slideUp(100);
+//            }
+//            else{
+//                var hospCer = msg.hospitalesCercanos;
+//                //console.log(hospCer);
+//            
+//                var hospitalesCercanos = JSON.parse(hospCer);
+//                //console.log(hospitalesCercanos);
+//
+//                hospitalesShow(hospitalesCercanos, latitud, longitud);
+//                $("#barraCargarPaciente").slideUp(100);
+//            }
+//        });
+//    map.setCenter(centro);
   });
 }
       
