@@ -796,5 +796,15 @@
         <action name="ajaxLlenarListaPacientesPorHospital" class="com.saem.actions.GridRegistroPacientePorHospital">
             <result name="success"  type="json">JSON</result>
         </action>
+        <action name="reportePaciente" method="execute" class="com.saem.actionjasper.reporteInformacionPaciente">
+             <result name="success" type="stream">
+                <param name="contentType">application/pdf</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">inline;filename="informePacinete.pdf"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        
+        </action>
+        
     </package>
 </struts>

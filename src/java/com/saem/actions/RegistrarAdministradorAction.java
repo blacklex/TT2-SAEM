@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.struts2.interceptor.SessionAware;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.hibernate.Session;
@@ -79,7 +80,7 @@ public class RegistrarAdministradorAction implements SessionAware, ServletReques
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         //Establecemos los datos de acceso para el Aministrador
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
 

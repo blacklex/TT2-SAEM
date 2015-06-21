@@ -36,6 +36,7 @@ import com.hibernate.model.Pacientes;
 import com.hp.hpl.jena.vocabulary.RDF;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.persistencia.owl.OWLConsultas;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -214,7 +215,7 @@ public class RegistrarPacientePorHospital implements SessionAware, ServletReques
 
         //Buscamos el hospital que se encarga del paciente
         hospital = hospitalDAO.findById(s, codigoHospital);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         //Establecemos los datos de acceso para el Paciente------> Tabla Usuario
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
 

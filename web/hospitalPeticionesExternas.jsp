@@ -202,6 +202,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" onclick="imprimirPeticion()" class="btn btn-primary pull-left">Imprimir Información</button>                       
                         <button type="button" onclick="contestarPeticion();" class="btn btn-primary  pull-left">Contestar Petición</button>
                         <button type="button" onclick="rechazarPeticion();" class="btn btn-primary  pull-left">Rechazar Petición</button>
                         <button type="button" onclick="cerrarModalFormContestarPeticion()" class="btn btn-default" data-dismiss="modal">Cerrar</button>

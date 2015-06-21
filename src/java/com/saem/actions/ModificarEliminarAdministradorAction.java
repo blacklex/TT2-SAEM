@@ -13,6 +13,7 @@ import com.hibernate.model.DomicilioAdministradores;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -115,7 +116,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
         if (usuarioDAO.update(userAdmin)) {
             actualizacionCorrecta = true;
@@ -238,7 +239,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         //Establecemos los datos de acceso para el Aministrador
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
 

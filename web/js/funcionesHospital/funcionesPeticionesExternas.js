@@ -116,10 +116,15 @@ function validarFormRespuestaPeticionExterna(){
 
 function contestarPeticion(){
     $("#tipoDeRespuestaPeticion").val("contestarPeticion");
+    imprimirPeticion();
     document.forms["formPeticionExterna"].submit();
 }
 
 function rechazarPeticion(){
     $("#tipoDeRespuestaPeticion").val("rechazarPeticion");
     document.forms["formPeticionExterna"].submit();
+}
+
+function imprimirPeticion(){
+    window.open("reportePaciente?idPeticion="+$("#idPeticionesExternasFormPeticion").val()+"&tipoPeticion=externa");
 }

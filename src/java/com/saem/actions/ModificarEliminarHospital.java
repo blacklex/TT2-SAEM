@@ -21,6 +21,7 @@ import com.persistencia.owl.OWLConsultas;
 import com.persistencia.owl.OWLEliminarIndividuo;
 import com.persistencia.owl.OWLInsercionIndividuo;
 import com.persistencia.owl.OWLInsercionRelacion;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -89,10 +90,10 @@ public class ModificarEliminarHospital implements SessionAware {
         Usuarios usuarioTemp = new HospitalDAO().findById(s, codigoHospitalEditar).getUsuarios();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuarios temp = new Usuarios();
-
+        
         temp.setNombreUsuario(usuarioTemp.getNombreUsuario());
         temp.setTipoUsuario(usuarioTemp.getTipoUsuario());
-        temp.setClave(claveUsuario);
+        temp.setClave(new EncriptadorSHA256(claveUsuario).encriptarCadena());
         temp.setFechaRegistro(usuarioTemp.getFechaRegistro());
 
         if (usuarioDAO.update(temp)) {
@@ -226,7 +227,7 @@ public class ModificarEliminarHospital implements SessionAware {
 
         String lada;
         lada = telefonoDirectivo.substring(1, 3) + telefonoDirectivo.substring(4, 6);
-        telefonoDirectivo = telefonoDirectivo.substring(7, 12) + telefonoDirectivo.substring(13, telefonoDirectivo.length());
+        telefonoDirectivo =lada+ telefonoDirectivo.substring(7, 12) + telefonoDirectivo.substring(13, telefonoDirectivo.length());
 
         directivoTemp.setCorreo(emailDirectivo);
         directivoTemp.setNombre(nombreDirectivo);
@@ -479,8 +480,8 @@ public class ModificarEliminarHospital implements SessionAware {
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         HospitalDAO hospitalDAO = new HospitalDAO();
         String codigoHospitalTemp = codigoHospital;
-
-        claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
+        claveUsuario="";
+        //claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
         s.close();
         return SUCCESS;
     }

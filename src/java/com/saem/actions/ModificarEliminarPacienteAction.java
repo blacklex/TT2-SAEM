@@ -36,6 +36,7 @@ import com.hibernate.model.Pacientes;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import com.persistencia.owl.OWLConsultas;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import com.saem.foaf.InsercionFOAF;
 import com.saem.foaf.ModificarEliminarFOAF;
 import com.saem.foaf.PersonaFOAF;
@@ -198,7 +199,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
         if (usuarioDAO.update(userPaciente)) {
             actualizacionCorrecta = true;

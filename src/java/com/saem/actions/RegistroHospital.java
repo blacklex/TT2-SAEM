@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import com.persistencia.owl.*;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -45,6 +46,7 @@ public class RegistroHospital implements SessionAware {
     private final UsuarioDAO usuariosDAO = new UsuarioDAO();
     private final DirectivoDAO directivoDAO = new DirectivoDAO();
     private final DomicilioHospitalDAO domiciliosHospitalDAO = new DomicilioHospitalDAO();
+    private EncriptadorSHA256 encriptador=null;
     //campos del formulario
     String nombreUsuario;
     String claveUsuario;
@@ -91,8 +93,9 @@ public class RegistroHospital implements SessionAware {
         String mensajeError = "";
         lada = telefonoHospital.substring(1, 3) + telefonoHospital.substring(4, 6);
         telefonoHospital = telefonoHospital.substring(7, 12) + telefonoHospital.substring(13, telefonoHospital.length());
-        telefonoDirectivo = telefonoDirectivo.substring(7, 12) + telefonoDirectivo.substring(13, telefonoDirectivo.length());
-
+        System.out.println("--->telDir"+telefonoDirectivo);
+        telefonoDirectivo = telefonoDirectivo.substring(1, 3) + telefonoDirectivo.substring(4, 6)+telefonoDirectivo.substring(7, 12) + telefonoDirectivo.substring(13, telefonoDirectivo.length());
+        System.out.println("--->telDir"+telefonoDirectivo);
         Date date = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -106,8 +109,9 @@ public class RegistroHospital implements SessionAware {
 
         /*if(true)
          return "pantallaRegistroHospital";*/
+        encriptador = new EncriptadorSHA256(claveUsuario);
         usuario.setNombreUsuario(nombreUsuario);
-        usuario.setClave(claveUsuario);
+        usuario.setClave(encriptador.encriptarCadena());
         usuario.setFechaRegistro(date);
         usuario.setTipoUsuario("Hospital");
         if (usuariosDAO.save(usuario)) {

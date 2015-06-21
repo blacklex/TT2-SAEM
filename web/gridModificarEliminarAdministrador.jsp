@@ -106,7 +106,7 @@
                  <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
                 <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="Nombre de Usuario" key="true" sortable="true"/>
                 <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Rol del Usuario" sortable="true"/>
-                <sjg:gridColumn editable="true" name="clave" index="clave" title="Clave de Acceso" sortable="false"/>
+                <sjg:gridColumn editable="true" hidden="true" name="clave" index="clave" title="Clave de Acceso" sortable="false"/>
                 <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false"/>
             </sjg:grid>
         </div>

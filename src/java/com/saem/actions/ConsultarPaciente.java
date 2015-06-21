@@ -33,6 +33,7 @@ import com.hibernate.model.TelefonosPacientes;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -176,7 +177,7 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
         if (usuarioDAO.update(userPaciente)) {
             actualizacionCorrecta = true;
@@ -460,7 +461,8 @@ public class ConsultarPaciente extends ActionSupport implements SessionAware, Se
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             nombreUsuario = userPaciente.getNombreUsuario();
-            clave = userPaciente.getClave();
+            clave ="";
+            //clave = userPaciente.getClave();
         }
         s.close();
         return SUCCESS;

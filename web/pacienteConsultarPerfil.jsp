@@ -30,8 +30,8 @@
                                     </div>
                                     <s:hidden name="tipoUsuario" value="Paciente" />
                                     <div id="divClaveUsuario" class="form-group">
-                                        <label for="claveUsuario">Clave de Acceso</label>
-                                        <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="text" autofocus="true" disabled="true"/>
+                                        <!--<label for="claveUsuario">Clave de Acceso</label>-->
+                                        <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="hidden" autofocus="true" disabled="true"/>
                                     </div>
                                 </div>
                             </div>

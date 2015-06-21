@@ -127,7 +127,5 @@ function finalizarPeticion(){
 }
 
 function imprimirPeticion(){
-    $("tipoDeRespuestaPeticion").val("imprimirPeticion");
-    
-    
+    window.open("reportePaciente?idPeticion="+$("#idPeticionesEntrantesFormPeticion").val()+"&tipoPeticion=entrante");
 }

@@ -10,6 +10,7 @@ import com.hibernate.model.Hospitales;
 import com.hibernate.model.Usuarios;
 import com.opensymphony.xwork2.Action;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,7 @@ public class Login implements SessionAware{
         String tipoUsuario = usuario.getTipoUsuario();
         String nombreUsuario = usuario.getNombreUsuario();
         String clave = usuario.getClave();
-        
+        formClave = new EncriptadorSHA256(formClave).encriptarCadena();
         if(!(nombreUsuario.equals(formNombreUsuario) && clave.equals(formClave))){
             tituloAlert="Error al Iniciar Sesion";
             textoAlert="El Usuario o Clave de Acceso no son validos.";
