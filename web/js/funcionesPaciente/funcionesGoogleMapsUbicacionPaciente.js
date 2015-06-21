@@ -1,11 +1,16 @@
-var marker;
-var cityCircle;
 var markerPaciente = 'images/markers/pacienteMarker.png';
 var markerResize = 'images/markers/resizeMarker.png';
 var markerHospital = 'images/markers/hospitalMarker.png';
 var markerHospitalAtender = 'images/markers/hospitalAtenderMarker.png';
+
+var marker;
+var markers = [];
+
+var cityCircle;
+
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
+
 
 function DistaciaWidget(map) {
     //Estblecemos el mapa
@@ -175,8 +180,11 @@ function initialize() {
         google.maps.event.addListener(marker, 'mouseout', toggleBounce);
         
         var bucarHospitalesDiv = document.createElement('div');
+        var bucarHospitalesDivMejorHospital = document.createElement('div');
         var buscarHospitales = new ControlHospitales(bucarHospitalesDiv, map, latlon, lat, lon, distaciaWidget);
+        var buscarMejorHospital = new MejorHospital(bucarHospitalesDivMejorHospital, map, latlon, lat, lon, 10);
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(bucarHospitalesDiv);
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(bucarHospitalesDivMejorHospital);
     }
     
     function toggleBounce() {
@@ -217,6 +225,7 @@ function newMarker(markerData, latitud, longitud) {
             animation: google.maps.Animation.DROP,
             position: posSitio
         });
+        
     }
     else if (markerData.atiendeEnfermedad === "1") {
         var sitio = new google.maps.Marker({
@@ -227,7 +236,7 @@ function newMarker(markerData, latitud, longitud) {
             position: posSitio
         });        
     }   
-    
+    markers.push(sitio);
     var content =   '<div id="iw-container">' +
                     '   <div class="iw-title">'+markerData.titulo+'</div>' +
                     '   <div class="iw-content">' +
@@ -258,13 +267,7 @@ function newMarker(markerData, latitud, longitud) {
   google.maps.event.addListener(infowindow, 'domready', function() {
 
     // Reference to the DIV that wraps the bottom of infowindow
-    var iwOuter = $('.gm-style-iw');
-
-    /* Since this div is in a position prior to .gm-div style-iw.
-     * We use jQuery and create a iwBackground variable,
-     * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-    */
-    var iwBackground = iwOuter.prev();
+     var iwBackground = iwOuter.prev();
 
     // Removes background shadow DIV
     iwBackground.children(':nth-child(2)').css({'display' : 'none'});
@@ -306,7 +309,18 @@ function hospitalesShow(hospitalesCercanos, latitud, longitud) {
     //alert(origen);
     for(x = 0; x < hospitalesCercanos.length; x++) {
         var sitio = hospitalesCercanos[x];
+      
         newMarker(sitio, latitud, longitud);
+    }
+    
+}
+
+function hospitalMejorShow(hospitalMejorCercano, latitud, longitud) {
+    //alert(origen);
+    for(x = 0; x < hospitalMejorCercano.length; x++) {
+        var sitio = hospitalMejorCercano[x];
+        newMarker(sitio, latitud, longitud);
+        enviarAlertaRapida(sitio, latitud, longitud);
     }
 }
 
@@ -332,7 +346,7 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
     controlDiv.appendChild(controlUI);
     var controlText = document.createElement('div');
     controlText.style.fontFamily='Arial,sans-serif';
-    controlText.style.fontSize='12px';
+    controlText.style.fontSize='18px';
     controlText.style.paddingLeft = '4px';
     controlText.style.paddingRight = '4px';
     controlText.innerHTML = '<b>Buscar<b>';
@@ -340,6 +354,7 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
    
     // Setup click-event listener: simply set the map to London
     google.maps.event.addDomListener(controlUI, 'click', function() {
+         clearMarkers();
         var nombreUsuario = $("#nombreUsuario").val();
         $("#barraCargarPaciente").slideDown(100);
         $.ajax({
@@ -364,6 +379,9 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
             
                 var hospitalesCercanos = JSON.parse(hospCer);
                 //console.log(hospitalesCercanos);
+                // setAllMap(null);
+
+
 
                 hospitalesShow(hospitalesCercanos, latitud, longitud);
                 $("#barraCargarPaciente").slideUp(100);
@@ -372,8 +390,117 @@ function ControlHospitales(controlDiv, map, centro, latitud, longitud, distancia
     map.setCenter(centro);
   });
 }
+
+function MejorHospital(controlDivMejorHospital, map, centro, latitud, longitud, distanciaMaxima) {
+    controlDivMejorHospital.style.padding = '5px';
+    var controlUIMejorHospital = document.createElement('div');
+    controlUIMejorHospital.style.backgroundColor = 'red';
+    controlUIMejorHospital.style.border='1px solid';
+    controlUIMejorHospital.style.cursor = 'pointer';
+    controlUIMejorHospital.style.textAlign = 'center';
+    controlUIMejorHospital.title = 'Alerta rapida';
+    controlDivMejorHospital.appendChild(controlUIMejorHospital);
+    var controlTextMejorHospital = document.createElement('div');
+    controlTextMejorHospital.style.fontFamily='Arial,sans-serif';
+    controlTextMejorHospital.style.fontSize='18px';
+    controlTextMejorHospital.style.paddingLeft = '12px';
+    controlTextMejorHospital.style.paddingRight = '12px';
+    controlTextMejorHospital.innerHTML = '<b>Emergencia<b>';
+    controlUIMejorHospital.appendChild(controlTextMejorHospital);
+   
+    // Setup click-event listener: simply set the map to London
+    google.maps.event.addDomListener(controlUIMejorHospital, 'dblclick', function() {
+        alert("Entro a alert rapida");
+        var nombreUsuario = $("#nombreUsuario").val();
+        $("#barraCargarPaciente").slideDown(100);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: "alertaRapida",
+            data: {latitudUsuario: latitud, longitudUsuario:longitud, distancia:distanciaMaxima, nombreUsuario: nombreUsuario}
+        }).done(function (msg) {
+            $("#barraCargarPaciente").slideUp(100);
+            if (msg.estatusMensaje === "vacio") {
+                $('html, body').animate({scrollTop: 0}, 'fast');
+                $("#barraCargarPaciente").slideUp(100);
+                $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>Zona sin Hospitales");
+                $("#labelMensajeErrorPaciente").html("No hay hospitales dentro de tu zona.");
+
+                $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
+                $("#barraCargarPaciente").slideUp(100);
+            }
+            else{
+                alert("success");
+                var hospCer = msg.hospitalesCercanos;
+                //console.log(hospCer);
+            
+                var hospitalesCercanos = JSON.parse(hospCer);
+                //console.log(hospitalesCercanos);
+                //enviarAlertaRapida(hospitalesCercanos);
+
+                hospitalMejorShow(hospitalesCercanos, latitud, longitud);
+                $("#barraCargarPaciente").slideUp(100);
+            }
+        });
+    map.setCenter(centro);
+  });
+}
       
 google.maps.event.addDomListener(window, 'load', initialize);
+
+function enviarAlertaRapida(hospitalCercano, latitudUsuario, longitudUsuario) {
+    alert("Se esta enviando la alerta");
+    var nombreUsuario = $("#nombreUsuario").val();
+    var codigoHospital = hospitalCercano.codigo;
+//    alert(hospitalCercano.lt);
+//    alert(hospitalCercano.ln);
+//    alert(hospitalCercano.titulo);
+    
+//    alert(hospitalCercano.tel);
+//    alert("usuario "+latitudUsuario);
+//    alert("usuario "+longitudUsuario);
+    $("#barraCargarPaciente").slideDown(100);
+    $.ajax({
+        dataType: "json",
+        method: "POST",
+        url: "enviarAlertaSaliente",
+        data: {codigoHospital: codigoHospital,latitudUsuario: latitudUsuario, longitudUsuario:longitudUsuario, nombreUsuario: nombreUsuario}
+    }).done(function (msg) {
+        $("#barraCargarPaciente").slideUp(100);
+        if (msg.estatusMensaje === "error") {
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertErrorPaciente").html("<i class='icon fa fa-ban'></i>Error al enviar Aviso");
+            $("#labelMensajeErrorPaciente").html("El aviso no se pudo realizar con exito.");
+
+            $("#divAlertErrorPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+        }
+        else if (msg.estatusMensaje === "exito") {
+            var idPeticion = msg.idPeticionSaliente;
+            localStorage.setItem("idPeticion", idPeticion);
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertSuccessPaciente").html("<i class='icon fa fa-ban'></i>Aviso enviado");
+            $("#labelMensajeSuccessPaciente").html("El aviso se ha enviado con exito al hospital.");
+
+            $("#divAlertSuccessPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+            setTimeout(function () {
+                    consultarTotalPeticionesPacientes();
+                }, 15000);
+        }
+        else if (msg.estatusMensaje === "peticionEnviada") {
+            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#barraCargarPaciente").slideUp(100);
+            $("#tituloDivAlertExcepcionPaciente").html("<i class='icon fa fa-ban'></i>Error de Aviso");
+            $("#labelMensajeExcepcionPaciente").html("Ya se habia enviado un aviso.");
+
+            $("#divAlertExcepcionPaciente").slideDown('slow').delay(2500).slideUp('slow');
+            $("#barraCargarPaciente").slideUp(100);
+        }
+    });
+}
 
 function verRuta(latitudUsuario, longitudUsuario, latitudHospital, longitudHospital) {
     var origen = new google.maps.LatLng(latitudUsuario, longitudUsuario);
@@ -495,4 +622,10 @@ function acudirAlHospital(codigoHospital, latitudUsuario, longitudUsuario, latit
                 $("#barraCargarPaciente").slideUp(100);
             }
         });
+}
+function clearMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
 }

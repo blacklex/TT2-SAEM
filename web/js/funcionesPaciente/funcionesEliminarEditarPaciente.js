@@ -216,7 +216,7 @@ function editarContactosPaciente() {
             data: {nombreUsuario: nombreUsuario}
         }).done(function (msg) {
             $("#TextBoxesGroupContacto").html(msg.contactosDelPaciente);
-            //$("#nomUs5").val(msg.nombreUsuario);
+            $("#nombreUsuarioContacto").val(nombreUsuario);
         });
 
         $("#datosContactosPaciente").show(1000);
