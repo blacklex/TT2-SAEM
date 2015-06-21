@@ -18,10 +18,25 @@
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
             <result-type name="dispatcher" default="true" class="org.apache.struts2.dispatcher.ServletDispatcherResult" />
         </result-types>
+        
+        <interceptors>
+            <interceptor name="validarAccesoActions" class="com.saem.interceptores.validarAccesoActions" />
+            <interceptor-stack name="validarAcceso">  
+                <interceptor-ref name="validarAccesoActions"/>
+                <interceptor-ref name="defaultStack"/> 
+            </interceptor-stack> 
+        </interceptors>  
+        <default-interceptor-ref name="validarAcceso"></default-interceptor-ref>
       
         <global-results>
             <result name="login" type="dispatcher">login.jsp</result>
         </global-results>
+        
+        <global-exception-mappings>
+        <exception-mapping exception="org.hibernate.exception.GenericJDBCException"
+            result="login" />
+        <exception-mapping exception="java.lang.Exception" result="login"/>
+    </global-exception-mappings>
         
         <action name="Login" method="execute" class="com.saem.actions.Login">
             <result name="pantallaInicioAdministrador" type="tiles">pantallaInicioAdministrador</result>
