@@ -11,6 +11,7 @@ package com.hibernate.dao;
  */
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.TelefonosPacientes;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class TelefonoPacienteDAO extends HibernateUtil {
@@ -66,6 +67,26 @@ public class TelefonoPacienteDAO extends HibernateUtil {
 //                    System.out.println(re.getCause().getMessage());
 
             System.out.println("--->Telefonos no actualizados");
+            return false;
+        } finally {
+            s.close();
+        }
+    }
+    
+    public boolean deleteTelefonoPaciente(Long idTelefonoPaciente) {
+        Session s = getSession();
+        try {
+
+            s.beginTransaction();
+            Query q = s.createQuery("from TelefonosPacientes where id = :id");
+            q.setParameter("id", idTelefonoPaciente);
+            TelefonosPacientes telefonoPaciente = (TelefonosPacientes) q.list().get(0);
+            s.delete(telefonoPaciente);
+            s.getTransaction().commit();
+            //log.debug("save successful");
+            return true;
+        } catch (RuntimeException re) {
+            //log.error("save failed", re);
             return false;
         } finally {
             s.close();

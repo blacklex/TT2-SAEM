@@ -11,6 +11,7 @@ package com.hibernate.dao;
  */
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.Medicacion;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class MedicacionDAO extends HibernateUtil {
@@ -45,6 +46,26 @@ public class MedicacionDAO extends HibernateUtil {
         } catch (RuntimeException re) {
             //log.error("save failed", re);
             return false;
+        }
+    }
+    
+    public boolean deleteMedicamentoPaciente(Long idMedicamentoPaciente) {
+        Session s = getSession();
+        try {
+
+            s.beginTransaction();
+            Query q = s.createQuery("from Medicacion where id = :id");
+            q.setParameter("id", idMedicamentoPaciente);
+            Medicacion medicamentoPaciente = (Medicacion) q.list().get(0);
+            s.delete(medicamentoPaciente);
+            s.getTransaction().commit();
+            //log.debug("save successful");
+            return true;
+        } catch (RuntimeException re) {
+            //log.error("save failed", re);
+            return false;
+        } finally {
+            s.close();
         }
     }
 

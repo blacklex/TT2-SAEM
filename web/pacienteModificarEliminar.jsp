@@ -267,7 +267,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <form id="formEditarTelefonosPaciente" name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" method="post" role="form">
             <div class="box-body" id="datosTelefonosPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -294,7 +294,7 @@
                     <button type="button" onclick="cancelarEdicionNumTel();" class="btn btn-danger btn-sm margin">Cancelar</button>
                 </div>
             </div>
-        </s:form>
+        </form>
         <s:form name="formEditarDatosPersonalesPaciente" action="editarDatosPersonalesPaciente" onsubmit="return validarCamposDatosPersonalesPaciente();" method="post" role="form">
             <div id="datosPersonalesPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
@@ -425,7 +425,7 @@
                 
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarContactosPaciente" action="editarContactosPaciente" onsubmit="return validarCamposContactos();" method="post" role="form">
+        <s:form name="formEditarContactosPaciente" action="editarContactosPaciente" method="post" role="form">
             <div class="box-body" id="datosContactosPaciente" style="display: none;">
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -553,7 +553,7 @@
                             <div class="input-group">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="fuma" id="radioFumaSi" value="1" />
+                                        <input type="radio" name="fuma" id="radioFumaSi" value="1"/>
                                         Si
                                     </label>
                                 </div>
@@ -577,7 +577,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarAlergiasPaciente" method="post" role="form">
+        <s:form name="formEditarAlergiasPaciente" action="editarAlergiasPaciente" method="post" role="form">
             <div id="datosAlergiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Alergias</h3>
@@ -691,7 +691,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarCirugiasPaciente" method="post" role="form">
+        <s:form name="formEditarCirugiasPaciente" action="editarCirugiasPaciente" method="post" role="form">
             <!--***************************************Cirugias***********************************************-->
             <div id="datosCirugiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
@@ -834,7 +834,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="" method="post" role="form">
+        <s:form name="formEditarDiscapacidadesPaciente" action="" method="post" role="form">
             <!--***************************************Discapacidades***********************************************-->
                 <div id="datosDiscapacidadesPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
@@ -913,7 +913,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <s:form name="formEditarMedicamentosPaciente" action="editarMedicamentosPacientes" method="post" role="form">
             <div class="box-body" id="datosMedicamentosPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -941,7 +941,7 @@
                 </div>
             </div>
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <s:form name="formEditarEnfermedadesCronicasPaciente" action="editarEnfermedadesCronicasPaciente" method="post" role="form">
             <div class="box-body" id="datosEnfermedadesPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">

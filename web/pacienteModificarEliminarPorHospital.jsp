@@ -268,7 +268,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <s:form name="formEditarTelefonosPacientePorHospital" action="editarTelefonosPacientePorHospital" onsubmit="return validarCamposTelefonos();" method="post" role="form">
             <div class="box-body" id="datosTelefonosPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -426,7 +426,7 @@
                 
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarContactosPaciente" action="editarContactosPaciente" onsubmit="return validarCamposContactos();" method="post" role="form">
+        <s:form name="formEditarContactosPacientePorHospital" action="editarContactosPacientePorHospital" onsubmit="return validarCamposContactos();" method="post" role="form">
             <div class="box-body" id="datosContactosPaciente" style="display: none;">
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -496,7 +496,7 @@
                     <h3 class="box-title">Editar Datos Clinicos</h3>
                 </div>
                 <s:hidden name="nombreUsuario" id="nomUsrClin"/>
-                <s:hidden name="noHistorial" id="noHisto"/>
+                
                 <s:hidden name="nss" id="nssClinico"/>
                 
                 <div id="divDrograsPaciente" class="form-group">
@@ -578,13 +578,13 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarAlergiasPaciente" method="post" role="form">
+        <s:form name="formEditarDatosClinicosPaciente" action="editarAlergiasPacientePorHospital" method="post" role="form">
             <div id="datosAlergiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Alergias</h3>
                 </div>
                 <s:hidden name="nombreUsuario" id="nomUsrClin"/>
-                <s:hidden name="noHistorial" id="noHisto"/>
+                
                 <s:hidden name="nss" id="nssClinico"/>
 
                 <!--***************************************Alergias***********************************************-->
@@ -692,14 +692,14 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="editarCirugiasPaciente" method="post" role="form">
+        <s:form name="formEditarCirugiasPaciente" action="editarCirugiasPacientePorHospital" method="post" role="form">
             <!--***************************************Cirugias***********************************************-->
             <div id="datosCirugiasPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Cirugias</h3>
                 </div>
                 <s:hidden name="nombreUsuario" id="nomUsrClin"/>
-                <s:hidden name="noHistorial" id="noHisto"/>
+                
                 <s:hidden name="nss" id="nssClinico"/>
 
                 <!--***************************************Cirugias***********************************************-->
@@ -835,14 +835,14 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarDatosClinicosPaciente" action="" method="post" role="form">
+        <s:form name="formEditarDicapacidadesPacientePorHospital" action="editarDiscapacidadesPacientesPorHospital" method="post" role="form">
             <!--***************************************Discapacidades***********************************************-->
                 <div id="datosDiscapacidadesPaciente" class="box-body" style='display:none;'>
                 <div class="box-header">
                     <h3 class="box-title">Editar Discapacidades</h3>
                 </div>
                 <s:hidden name="nombreUsuario" id="nomUsrClin"/>
-                <s:hidden name="noHistorial" id="noHisto"/>
+                
                 <s:hidden name="nss" id="nssClinico"/>
 
                 <!--***************************************Discapacidades***********************************************-->
@@ -914,7 +914,7 @@
                 </div>
             </div><!-- /.box-body -->
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <s:form name="formEditarMedicamentosPacientePorHospital" action="editarMedicamentosPacientePorHospital" onsubmit="return validarCamposTelefonos();" method="post" role="form">
             <div class="box-body" id="datosMedicamentosPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">
@@ -942,7 +942,7 @@
                 </div>
             </div>
         </s:form>
-        <s:form name="formEditarTelefonosPaciente" action="editarTelefonosPaciente" onsubmit="return validarCamposTelefonos();" method="post" role="form">
+        <s:form name="formEditarEnfermedadesPaciente" action="editarEnfermedadesPacientePorHospital" onsubmit="return validarCamposTelefonos();" method="post" role="form">
             <div class="box-body" id="datosEnfermedadesPaciente" style='display:none;'>
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">

@@ -1071,6 +1071,7 @@ var counter = 0;
  
 	newTextBoxDiv.after().html(
                                     '<div class="col-lg-4">' +
+                                    '<input name="newEnfermedadCronica'+counter+'" id="newEnfermedadCronica'+counter+'" type="hidden">'+
                                         '<div style="margin-bottom:10px;" class="form-group">' +
                                             '<label>Nombre enfermedad #'+ (counter + 1)+ ' : </label>' +
                                             '<select class="form-control" name="enfermedadCronica' + counter + '" id="enfermedadCronica' + counter + '">' + 
@@ -1127,6 +1128,7 @@ var counter = 0;
 	var newTextBoxDiv = $(document.createElement('div')).attr("id", 'contactoPaciente' + counterContacto);
  
 	newTextBoxDiv.after().html( '<label for="nombreC">Contacto #'+ (counterContacto + 1) +'</label>'+
+                                    '<input name="newContacto'+counterContacto+'" id="newContacto'+counterContacto+'" type="hidden">'+
                                     '<div id="divNombreCPaciente'+counterContacto+'" class="form-group">'+
                                         '<label for="nombreC">Nombre</label>'+
                                         '<input kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreContacto'+counterContacto+'" id="nombreContacto'+counterContacto+'" placeholder="Nombre" type="text">'+
@@ -1200,6 +1202,7 @@ var counter = 0;
 	newTextBoxDiv.after().html(
                                     '<div id="divTelefonoFijoPaciente" class="form-group">'+
                                         '<label for="telefonoPaciente">Teléfono #'+ (counterTelefono + 1) +'</label>'+
+                                        '<input name="newTelefono'+counterTelefono+'" id="newTelefono'+counterTelefono+'" type="hidden">'+
                                         '<input kl_virtual_keyboard_secure_input="on" name="numTelefono'+counterTelefono+'" id="numTelefono'+counterTelefono+'" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="No. Telefono" type="text">'+
                                     '</div>');
         
@@ -1241,6 +1244,7 @@ var counterMedicamento = 0;
 	newTextBoxDiv.after().html(
                                     '<div class="col-lg-6">'+
                                         '<div style="margin-bottom:10px;" class="form-group">'+
+                                        '<input name="newMedicamento'+counterMedicamento+'" id="newMedicamento'+counterMedicamento+'" type="hidden">'+
                                             '<label>Nombre del medicamento #'+ (counterMedicamento + 1) +'</label>'+
                                             '<input class="form-control" type="text" value="" name="medicamento'+counterMedicamento+'" id="medicamento'+counterMedicamento+'" placeholder="Medicamentó'+(counterMedicamento+1)+'"/>'+
                                         '</div>'+

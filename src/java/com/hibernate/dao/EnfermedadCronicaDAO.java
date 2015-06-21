@@ -13,6 +13,7 @@ package com.hibernate.dao;
 
 import com.hibernate.cfg.HibernateUtil;
 import com.hibernate.model.EnfermedadesCronicas;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 
@@ -81,6 +82,26 @@ public class EnfermedadCronicaDAO extends HibernateUtil {
 			throw re;
 		}
 	}
+
+    public boolean deleteEnfermedadPaciente(Long idEnfermedadPaciente) {
+        Session s = getSession();
+        try {
+
+            s.beginTransaction();
+            Query q = s.createQuery("from EnfermedadesCronicas where id = :id");
+            q.setParameter("id", idEnfermedadPaciente);
+            EnfermedadesCronicas enfermedadPaciente = (EnfermedadesCronicas) q.list().get(0);
+            s.delete(enfermedadPaciente);
+            s.getTransaction().commit();
+            //log.debug("save successful");
+            return true;
+        } catch (RuntimeException re) {
+            //log.error("save failed", re);
+            return false;
+        } finally {
+            s.close();
+        }
+    }
          
         
       

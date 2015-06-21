@@ -49,6 +49,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -313,16 +314,68 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     public String editarTelefonosPaciente() throws IOException {
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
+        Enumeration<String> parametros;
+        parametros = request.getParameterNames();
 
-        userPaciente = usuarioDAO.findById(s, getNombreUsuario());
-
-        if (telefonoPacienteDAO.update(telefonosPacientes)) {
-            actualizacionCorrecta = true;
-        } else {
-            actualizacionCorrecta = false;
-            mensajeError = "Error al actualizar los datos del Paciente";
+        while (parametros.hasMoreElements()) {
+            String nombreParametro = parametros.nextElement();
+            
+            if(nombreParametro.startsWith("checkboxTelefonoEliminar")) {
+                Long idTelefono = Long.parseLong(request.getParameter(nombreParametro));
+                
+                if(telefonoPacienteDAO.deleteTelefonoPaciente(idTelefono)) {
+                    System.out.println("Se elimino el telefono con id" + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    System.out.println("No se elimino el telefono con id: " + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = false;
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                }
+            }
+            
+            if(nombreParametro.startsWith("checkboxTelefonoEditar")) {
+                String nssEditar = request.getParameter("nss");
+                paciente = pacienteDAO.findById(s, nssEditar);
+                String parametroTelefonoEditar = nombreParametro.substring(22);
+                Long idTelefonoEditar = Long.parseLong(request.getParameter("checkboxTelefonoEditar"+parametroTelefonoEditar));
+                String numTelEditar = request.getParameter("numTelefono"+parametroTelefonoEditar);
+                telefonosPacientes.setId(idTelefonoEditar);
+                telefonosPacientes.setNumeroTelefono(numTelEditar);
+                telefonosPacientes.setPacientes(paciente);
+                
+                if(telefonoPacienteDAO.update(telefonosPacientes)) {
+                    System.out.println("El telefono del paciente se actualizo correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    System.out.println("El telefono del paciente se no actualizo correctamente");
+                    actualizacionCorrecta = false;
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                }
+                
+            }
+            
+            if(nombreParametro.startsWith("newTelefono")) {
+                String nssEditar = request.getParameter("nss");
+                paciente = pacienteDAO.findById(s, nssEditar);
+                String parametroTelefonoEditar = nombreParametro.substring(11);
+                String nuevoTelPaciente =request.getParameter("numTelefono"+parametroTelefonoEditar);
+                telefonosPacientes.setNumeroTelefono(nuevoTelPaciente);
+                telefonosPacientes.setPacientes(paciente);
+                
+                if(telefonoPacienteDAO.save(telefonosPacientes)) {
+                    System.out.println("El telefono se agrego correctamente");
+                    actualizacionCorrecta = true;
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                }
+                else {
+                    System.out.println("El telefono no se agrego correctamente");
+                    actualizacionCorrecta = false;
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                }
+            }
         }
-
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -334,7 +387,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
             session.put("estatusMensajeEditar", "error");
         }
         s.close();
-        return "pantallaModificarEliminarPacientes";
+        return "pantallaModificarEliminarPaciente";
     }
 
     public String editarDatosPersonalesPaciente() throws IOException {
@@ -382,16 +435,95 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
     public String editarContactosPaciente() throws IOException {
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
+        Enumeration<String> parametrosContacto;
+        parametrosContacto = request.getParameterNames();
 
-        userPaciente = usuarioDAO.findById(s, getNombreUsuario());
+        while (parametrosContacto.hasMoreElements()) {
+            String nombreParametro = parametrosContacto.nextElement();
+            
+            if(nombreParametro.startsWith("checkboxContactoEliminar")) {
+                //String parametroTelefonoEliminar = nombreParametro.substring(24);
+                Long idContacto = Long.parseLong(request.getParameter(nombreParametro));
+                
+                if(contactoDAO.deleteContactoPaciente(idContacto)){
+                    actualizacionCorrecta = true;
+                    System.out.println("Se elimino el contacto con id" + request.getParameter(nombreParametro));
+                }
+                else {
+                    actualizacionCorrecta = false;
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("No se elimino el contacto con id: " + request.getParameter(nombreParametro));
+                }                
+            }
+            
+            if(nombreParametro.startsWith("checkboxContactoEditar")) {
+                String nssEditar = request.getParameter("nss");
+                paciente = pacienteDAO.findById(s, nssEditar);
+                String parametroContactoEditar = nombreParametro.substring(22);
+                Long idContactoEditar = Long.parseLong(request.getParameter("checkboxContactoEditar"+parametroContactoEditar));
+                String nombreContacto = request.getParameter("nombreContacto"+parametroContactoEditar);
+                String apellidoPatContacto = request.getParameter("apellidoPaternoContacto"+parametroContactoEditar);
+                String apellidoMatContaco = request.getParameter("apellidoMaternoContacto"+parametroContactoEditar);
+                String parentesco = request.getParameter("parentescoContacto"+parametroContactoEditar);
+                String celularContacto = request.getParameter("celularContacto"+parametroContactoEditar);
+                String facebookContacto = request.getParameter("facebookContacto"+parametroContactoEditar);
+                String correoContacto = request.getParameter("correoContacto"+parametroContactoEditar);
+                
+                contactos.setId(idContactoEditar);
+                contactos.setNombre(nombreContacto);
+                contactos.setApellidoPaterno(apellidoPatContacto);
+                contactos.setApellidoMaterno(apellidoMatContaco);
+                contactos.setParentesco(parentesco);
+                contactos.setCelular(celularContacto);
+                contactos.setFacebook(facebookContacto);
+                contactos.setCorreo(correoContacto);
+                contactos.setPacientes(paciente);
 
-        if (contactoDAO.update(contactos)) {
-            actualizacionCorrecta = true;
-        } else {
-            actualizacionCorrecta = false;
-            mensajeError = "Error al actualizar los datos del Paciente";
+                if(contactoDAO.update(contactos)) {
+                    actualizacionCorrecta = true;
+                    System.out.println("El contacto del paciente se actualizo correctamente");
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    actualizacionCorrecta = false;
+                    System.out.println("El contacto del paciente se no actualizo correctamente");
+                }
+                
+            }
+            
+            if(nombreParametro.startsWith("newContacto")) {
+                String nssEditar = request.getParameter("nss");
+                paciente = pacienteDAO.findById(s, nssEditar);
+                String parametroContactoEditar = nombreParametro.substring(11);
+                
+                String nombreContacto = request.getParameter("nombreContacto"+parametroContactoEditar);
+                String apellidoPatContacto = request.getParameter("apellidoPaternoContacto"+parametroContactoEditar);
+                String apellidoMatContaco = request.getParameter("apellidoMaternoContacto"+parametroContactoEditar);
+                String parentesco = request.getParameter("parentescoContacto"+parametroContactoEditar);
+                String celularContacto = request.getParameter("celularContacto"+parametroContactoEditar);
+                String facebookContacto = request.getParameter("facebookContacto"+parametroContactoEditar);
+                String correoContacto = request.getParameter("correoContacto"+parametroContactoEditar);
+
+                contactos.setNombre(nombreContacto);
+                contactos.setApellidoPaterno(apellidoPatContacto);
+                contactos.setApellidoMaterno(apellidoMatContaco);
+                contactos.setParentesco(parentesco);
+                contactos.setCelular(celularContacto);
+                contactos.setFacebook(facebookContacto);
+                contactos.setCorreo(correoContacto);
+                contactos.setPacientes(paciente);
+                
+                if(contactoDAO.save(contactos)) {
+                    System.out.println("El contacto se agrego correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("El contacto no se agrego correctamente");
+                    actualizacionCorrecta = false;
+                }
+            }
         }
-
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Paciente Editado");
             session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
@@ -403,7 +535,207 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
             session.put("estatusMensajeEditar", "error");
         }
         s.close();
-        return "pantallaModificarEliminarPacientes";
+        return "pantallaModificarEliminarPaciente";
+    }
+    
+    public String editarMedicamentosPaciente() {
+        System.out.println("Entro a Editar Medicamentos");
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        Boolean actualizacionCorrecta = false;
+        Enumeration<String> parametrosMedicamentos;
+        parametrosMedicamentos = request.getParameterNames();
+
+        while (parametrosMedicamentos.hasMoreElements()) {
+            String nombreParametro = parametrosMedicamentos.nextElement();
+            System.out.println(request.getParameter(nombreParametro));
+            if(nombreParametro.startsWith("checkboxMedicamentoEliminar")) {
+                //String parametroTelefonoEliminar = nombreParametro.substring(24);
+                Long idMedicamento = Long.parseLong(request.getParameter(nombreParametro));
+                System.out.println(idMedicamento);
+                
+                if(medicacionDAO.deleteMedicamentoPaciente(idMedicamento)) {
+                    System.out.println("Se elimino el medicamento con id" + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    System.out.println("No se elimino el medicamento con id: " + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = false;
+                }
+            }
+            
+            if(nombreParametro.startsWith("checkboxMedicamentoEditar")) {
+                Long noHistorialMedicacion = Long.parseLong(request.getParameter("noHisto"));
+                datosClinicos = datosClinicosDAO.findById(s, noHistorialMedicacion);
+                String parametroMedicamentoEditar = nombreParametro.substring(25);
+                Long idMedicamentoEditar = Long.parseLong(request.getParameter("checkboxMedicamentoEditar"+parametroMedicamentoEditar));
+                String nombreMedicamento = request.getParameter("medicamento"+parametroMedicamentoEditar);
+                String frecuenciaMedicamentos = request.getParameter("frecuencia"+parametroMedicamentoEditar);
+                System.out.println(idMedicamentoEditar);
+                System.out.println(nombreMedicamento);
+                System.out.println(frecuenciaMedicamentos);
+                
+                medicacion.setId(idMedicamentoEditar);
+                medicacion.setNombreMedicamento(nombreMedicamento);
+                medicacion.setFrecuencia(frecuenciaMedicamentos);
+                medicacion.setDatosClinicos(datosClinicos);
+
+                if(medicacionDAO.update(medicacion)) {
+                    System.out.println("El medicamento del paciente se actualizo correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("El medicamento del paciente se no actualizo correctamente");
+                    actualizacionCorrecta = false;
+                }                
+                
+
+            }
+            
+            if(nombreParametro.startsWith("newMedicamento")) {
+                System.out.println(request.getParameter("noHisto").toString());
+                Long noHistorialMedicacion = Long.parseLong(request.getParameter("noHisto"));
+                System.out.println(noHistorialMedicacion);
+                datosClinicos = datosClinicosDAO.findById(s, noHistorialMedicacion);
+                String parametroMedicamentoNuevo = nombreParametro.substring(14);
+                
+                String nombreMedicamento = request.getParameter("medicamento"+parametroMedicamentoNuevo);
+                String frecuenciaMedicamentos = request.getParameter("frecuencia"+parametroMedicamentoNuevo);
+                
+                System.out.println(nombreMedicamento);
+                System.out.println(frecuenciaMedicamentos);
+                System.out.println(datosClinicos.getNoHistorial());
+                medicacion.setNombreMedicamento(nombreMedicamento);
+                medicacion.setFrecuencia(frecuenciaMedicamentos);
+                medicacion.setDatosClinicos(datosClinicos);
+                
+                if(medicacionDAO.save(medicacion)) {
+                    System.out.println("El medicamento se agrego correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("El medicamento no se agrego correctamente");
+                    actualizacionCorrecta = false;
+                }                
+            }
+        }
+        if (actualizacionCorrecta) {
+            session.put("tituloAlertEditar", "Paciente Editado");
+            session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
+            session.put("estatusMensajeEditar", "success");
+
+        } else if (!actualizacionCorrecta) {
+            session.put("tituloAlertEditar", "Error al actualizar Paciente.");
+            session.put("textoAlertEditar", mensajeError);
+            session.put("estatusMensajeEditar", "error");
+        }
+        s.close();
+        return "pantallaModificarEliminarPaciente";
+    }
+    
+    public String editarEnfermedadesCronicasPaciente() throws ParseException {
+        System.out.println("Entro a enfermedades");
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        Boolean actualizacionCorrecta = false;
+        Enumeration<String> parametrosEnfermedades;
+        parametrosEnfermedades = request.getParameterNames();
+
+        while (parametrosEnfermedades.hasMoreElements()) {
+            String nombreParametro = parametrosEnfermedades.nextElement();
+
+            if(nombreParametro.startsWith("checkboxEnfermedadEliminar")) {
+                //String parametroTelefonoEliminar = nombreParametro.substring(24);
+                Long idEnfermedad = Long.parseLong(request.getParameter(nombreParametro));
+                System.out.println(idEnfermedad);
+                
+                if(enfermedadCronicaDAO.deleteEnfermedadPaciente(idEnfermedad)) {
+                    System.out.println("Se elimino la enfermedad con id" + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    System.out.println("No se elimino la enfermedad con id: " + request.getParameter(nombreParametro));
+                    actualizacionCorrecta = false;
+                }
+            }
+            
+            if(nombreParametro.startsWith("checkboxEnfermedadEditar")) {
+                Long noHistorialEnfermedad = Long.parseLong(request.getParameter("noHistorialEnfermedad"));
+                datosClinicos = datosClinicosDAO.findById(s, noHistorialEnfermedad);
+                String parametroEnfermedadEditar = nombreParametro.substring(24);                
+
+                Long idEnfermedadNueva = Long.parseLong(request.getParameter("checkboxEnfermedadEditar"+parametroEnfermedadEditar));
+                String nombreEnfermedad = request.getParameter("enfermedadCronica"+parametroEnfermedadEditar);
+                String tipoEnfermedad = request.getParameter("tipoEnfermedad"+parametroEnfermedadEditar);
+                String inicioEnfermedad = request.getParameter("inicioEnfermedad"+parametroEnfermedadEditar);
+                SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateInicioEnfermedad = null;
+                dateInicioEnfermedad = formatoDeFecha.parse(inicioEnfermedad);
+                System.out.println(idEnfermedadNueva);
+                System.out.println(nombreEnfermedad);
+                System.out.println(tipoEnfermedad);
+                System.out.println(inicioEnfermedad);
+                
+                enfermedadCronica.setId(idEnfermedadNueva);
+                enfermedadCronica.setNombre(nombreEnfermedad);
+                enfermedadCronica.setTipo(tipoEnfermedad);
+                enfermedadCronica.setIncioEnfermedad(dateInicioEnfermedad);
+                enfermedadCronica.setDatosClinicos(datosClinicos);
+
+                if(enfermedadCronicaDAO.update(enfermedadCronica)) {
+                    System.out.println("La enfermedad del paciente se actualizo correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("La enfermedad del paciente no se actualizo correctamente");
+                    actualizacionCorrecta = false;
+                }                
+            }
+            
+            if(nombreParametro.startsWith("newEnfermedadCronica")) {
+                Long noHistorialEnfermedad = Long.parseLong(request.getParameter("noHistorialEnfermedad"));
+                datosClinicos = datosClinicosDAO.findById(s, noHistorialEnfermedad);
+                String parametroEnfermedadNueva = nombreParametro.substring(20);
+                
+                String nombreEnfermedad = request.getParameter("enfermedadCronica"+parametroEnfermedadNueva);
+                String tipoEnfermedad = request.getParameter("tipoEnfermedad"+parametroEnfermedadNueva);
+                String inicioEnfermedad = request.getParameter("inicioEnfermedad"+parametroEnfermedadNueva);
+                SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateInicioEnfermedad = null;
+                dateInicioEnfermedad = formatoDeFecha.parse(inicioEnfermedad);
+                System.out.println(nombreEnfermedad);
+                System.out.println(tipoEnfermedad);
+                System.out.println(inicioEnfermedad);
+                
+                enfermedadCronica.setNombre(nombreEnfermedad);
+                enfermedadCronica.setTipo(tipoEnfermedad);
+                enfermedadCronica.setIncioEnfermedad(dateInicioEnfermedad);
+                enfermedadCronica.setDatosClinicos(datosClinicos);
+                
+                if(enfermedadCronicaDAO.save(enfermedadCronica)) {
+                    System.out.println("La enfermedad se agrego correctamente");
+                    actualizacionCorrecta = true;
+                }
+                else {
+                    mensajeError = "Error al actualizar los datos del Paciente";
+                    System.out.println("La enfermedad no se agrego correctamente");
+                    actualizacionCorrecta = false;
+                }                
+            }
+        }
+        if (actualizacionCorrecta) {
+            session.put("tituloAlertEditar", "Paciente Editado");
+            session.put("textoAlertEditar", "Los datos del Paciente fueron actualizados correctamente.");
+            session.put("estatusMensajeEditar", "success");
+
+        } else if (!actualizacionCorrecta) {
+            session.put("tituloAlertEditar", "Error al actualizar Paciente.");
+            session.put("textoAlertEditar", mensajeError);
+            session.put("estatusMensajeEditar", "error");
+        }
+        s.close();
+        return "pantallaModificarEliminarPaciente";
     }
 
     public String editarDatosClinicosPaciente() throws IOException {
@@ -456,24 +788,6 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         return "pantallaModificarEliminarPaciente";
     }
 
-//    public String recuperarEstatusEditar() {
-//        setTituloAlertEditar("");
-//        setTextoAlertEditar("");
-//        setEstatusMensajeEditar("");
-//        
-//        if (session.get("estatusMensajeEditar") != null) {
-//            setTituloAlertEditar(session.get("tituloAlertEditar").toString());
-//            setTextoAlertEditar(session.get("textoAlertEditar").toString());
-//            setEstatusMensajeEditar(session.get("estatusMensajeEditar").toString());
-//        }
-//
-//        session.remove("estatusMensajeEditar");
-//        session.remove("tituloAlertEditar");
-//        session.remove("estatusMensajeEditar");
-//        session.put("estatusMensajeEditar", null);
-//
-//        return "success";
-//    }
     public String buscarDatosPaciente() throws IOException {
         Session s = com.hibernate.cfg.HibernateUtil.getSession();
         System.out.println("--->Entro a datos pacientes");
@@ -564,9 +878,11 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     telefonosPacientes = (TelefonosPacientes) iterator3.next();
                     html += "<div id=\"telefonoPaciente" + index + "\">"
                             + "   <div id=\"divTelefonoFijoPaciente\" class=\"form-group\">"
-                            + "       <label for=\"telefonoPaciente\">Teléfono #" + (index + 1) + "</label>"
-                            + "       <input type=\"checkbox\" id=\"checkbox" + index + "\" name=\"checkbox" + index + "\" value=\"" + telefonosPacientes.getId() + "\">"
-                            + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + telefonosPacientes.getNumeroTelefono() + "\" name=\"numTelefono" + index + "\" id=\"numTelefono" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
+                            + "       <label for=\"telefonoPaciente\">Teléfono #" + (index + 1) + "</label><br>"
+                            + "       <input type=\"checkbox\" id=\"checkboxTelefonoEliminar" + index +"\" name=\"checkboxTelefonoEliminar" + index +"\" value=\""+telefonosPacientes.getId()+"\">Eliminar     "
+                            + "       <input type=\"checkbox\" id=\"checkboxTelefonoEditar"+index+"\" name=\"checkboxTelefonoEditar" + index +"\" value=\""+telefonosPacientes.getId()+"\">Editar"
+                            + "       <input type=\"hidden\" id=\"nss\" name=\"nss\" value=\""+paciente.getNss()+"\">"
+                            + "       <input kl_virtual_keyboard_secure_input=\"on\" disabled=\"true\" value=\"" + telefonosPacientes.getNumeroTelefono() + "\" name=\"numTelefono" + index + "\" id=\"numTelefono" + index + "\" class=\"form-control\" data-inputmask=\"&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;\" data-mask=\"\" placeholder=\"No. Telefono\" type=\"text\">"
                             + "   </div>"
                             + "</div>";
                     System.out.println(index);
@@ -645,7 +961,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                 for (Iterator iterator3 = contacPaciente.iterator(); iterator3.hasNext();) {
                     contactos = (Contactos) iterator3.next();
                     html += "<div id=\"contactoPaciente" + index + "\">" + "\n"
-                            + "   <label for=\"nombreC\">Contacto #" + (index + 1) + "</label>" + "\n"
+                            + "   <label for=\"nombreC\">Contacto #" + (index + 1) + "</label><br>" + "\n"
+                            + "       <input type=\"checkbox\" id=\"checkboxContactoEliminar" + index +"\" name=\"checkboxContactoEliminar" + index +"\" value=\""+contactos.getId()+"\">Eliminar     "
+                            + "       <input type=\"checkbox\" id=\"checkboxContactoEditar"+index+"\" name=\"checkboxContactoEditar" + index +"\" value=\""+contactos.getId()+"\">Editar"
+                            + "       <input type=\"hidden\" id=\"nss\" name=\"nss\" value=\""+paciente.getNss()+"\">"
                             + "   <div id=\"divNombreCPaciente" + index + "\" class=\"form-group\">" + "\n"
                             + "       <label for=\"nombreC\">Nombre</label>" + "\n"
                             + "       <input kl_virtual_keyboard_secure_input=\"on\" value=\"" + contactos.getNombre() + "\" class=\"form-control\" name=\"nombreContacto" + index + "\" id=\"nombreContacto" + index + "\" placeholder=\"Nombre\" type=\"text\">" + "\n"
@@ -835,7 +1154,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                     int index = 0;
                     for (Iterator iterator4 = datClinicosMedicacion.iterator(); iterator4.hasNext();) {
                         medicacion = (Medicacion) iterator4.next();
-                        html += "<div id=\"medicamentos" + index + "\" class=\"row\">" + "\n"
+                        html += "  <input type=\"checkbox\" id=\"checkboxMedicamentoEliminar" + index +"\" name=\"checkboxMedicamentoEliminar" + index +"\" value=\""+medicacion.getId()+"\">Eliminar     "
+                                + "<input type=\"checkbox\" id=\"checkboxMedicamentoEditar"+index+"\" name=\"checkboxMedicamentoEditar" + index +"\" value=\""+medicacion.getId()+"\">Editar<br>"
+                                + "       <input type=\"hidden\" id=\"noHisto\" name=\"noHisto\" value=\""+datosClinicos.getNoHistorial()+"\">"
+                                + "<div id=\"medicamentos" + index + "\" class=\"row\">" + "\n"
                                 + "   <div class=\"col-lg-6\">" + "\n"
                                 + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
                                 + "           <label>Nombre del medicamento #" + (index + 1) + "</label>" + "\n"
@@ -889,7 +1211,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                         DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String inicioEnfermedadFormato = hourdateFormat.format(inicioEnfermedad);
                         String enfermedad = enfermedadCronica.getTipo();
-                        html += "<div id=\"enfermedadesCronicas" + index + "\" class=\"row\">" + "\n"
+                        html += "  <input type=\"checkbox\" id=\"checkboxEnfermedadEliminar" + index +"\" name=\"checkboxEnfermedadEliminar" + index +"\" value=\""+enfermedadCronica.getId()+"\">Eliminar     "
+                                + "<input type=\"checkbox\" id=\"checkboxEnfermedadEditar"+index+"\" name=\"checkboxEnfermedadEditar" + index +"\" value=\""+enfermedadCronica.getId()+"\">Editar"
+                                + "<input type=\"hidden\" id=\"noHistorialEnfermedad\" name=\"noHistorialEnfermedad\" value=\""+datosClinicos.getNoHistorial()+"\"><br>"
+                                + "<div id=\"enfermedadesCronicas" + index + "\" class=\"row\">" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
                                 + "           <label>Nombre enfermedad #" + (index + 1) + " : </label>" + "\n"
@@ -898,8 +1223,9 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                                 + "       </div>" + "\n"
                                 + "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
-                                + "       <label>Tipo</label>" + "\n"
-                                + "       <select onchange=\"recuperarEnfermedadesCronicas("+ index +",this);\" name=\"tipoEnfermedad" + index + "\" class=\"form-control\">" + "\n"
+                                + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
+                                + "           <label>Tipo</label>" + "\n"
+                                + "           <select onchange=\"recuperarEnfermedadesCronicas("+ index +",this);\" name=\"tipoEnfermedad" + index + "\" class=\"form-control\">" + "\n"
                                 + "           <option value=\"-1\">Seleccionar</option>" + "\n";
 
                         for (Especialidades especTem : especialidadesBD) {
@@ -911,7 +1237,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                             }
                         }
 
-                        html += "   </div>" + "\n"
+                        html +=  "     </select>  </div>" + "\n"
+                                + "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <div id=\"divInicioEnfermedadPaciente\" class=\"form-group\">" + "\n"
                                 + "           <label for=\"inicioEnfermedad\">Inicio de enfermedad</label>" + "\n"
@@ -924,6 +1251,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                                 + "       </div>" + "\n"
                                 + "   </div>" + "\n"
                                 + "</div>";
+
                         index++;
                     }
                 }
