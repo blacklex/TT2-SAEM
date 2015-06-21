@@ -525,12 +525,22 @@
         </action>
         <!-- Fin Editar Datos Paciente -->
         <!-- Editar Direccion Paciente -->
+        <action name="editarMedicamentosPacientes" method="editarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar Direccion Paciente -->
+        <!-- Editar Direccion Paciente -->
         <action name="editarDireccionPaciente" method="editarDireccionPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
         </action>
         <!-- Fin Editar Direccion Paciente -->
         <!-- Editar telefonos Paciente -->
         <action name="editarTelefonosPaciente" method="editarTelefonosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar telefonos Paciente -->
+        <!-- Editar telefonos Paciente -->
+        <action name="editarEnfermedadesCronicasPaciente" method="editarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
         </action>
         <!-- Fin Editar telefonos Paciente -->
@@ -560,6 +570,32 @@
             <interceptor-ref name="defaultStack"></interceptor-ref>
             <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
         </action>
+        
+        <action name="editarTelefonosPacientePorHospital" method="editarTelefonosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarContactosPacientePorHospital" method="editarContactosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarMedicamentosPacientePorHospital" method="editarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarEnfermedadesPacientePorHospital" method="editarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <action name="buscarDatosPacienteMostrarFiltro" method="buscarDatosPacienteMostrarFiltro" class="com.saem.actions.ModificarEliminarPacienteAction">
             <result name="success" type="json">JSON</result>
         </action>
