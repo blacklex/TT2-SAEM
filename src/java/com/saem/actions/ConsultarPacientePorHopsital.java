@@ -33,6 +33,8 @@ import com.hibernate.model.TelefonosPacientes;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.persistencia.owl.OWLConsultas;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -177,7 +179,7 @@ public class ConsultarPacientePorHopsital extends ActionSupport implements Sessi
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
         if (usuarioDAO.update(userPaciente)) {
             actualizacionCorrecta = true;
@@ -443,7 +445,8 @@ public class ConsultarPacientePorHopsital extends ActionSupport implements Sessi
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userPaciente = (Usuarios) iterator1.next();
             nombreUsuario = userPaciente.getNombreUsuario();
-            clave = userPaciente.getClave();
+            //clave = userPaciente.getClave();
+            clave="";
         }
         s.close();
         return SUCCESS;
@@ -851,11 +854,15 @@ public class ConsultarPacientePorHopsital extends ActionSupport implements Sessi
                         DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String inicioEnfermedadFormato = hourdateFormat.format(inicioEnfermedad);
                         String tipoEspecialidad = enfermedadCronica.getTipo();
+                         String ONTOLOGIA = servletRequest.getSession().getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+                        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+                        OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+                        String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(enfermedadCronica.getNombre());
                         html += "<div id=\"enfermedadesCronicas" + index + "\" class=\"row\">" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
                                 + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
                                 + "           <label>Enfermedad</label>" + "\n"
-                                + "           <input disabled class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\"" + enfermedadCronica.getNombre() + "\" placeholder=\"Nombre enfermedad" + index + "\" />" + "\n"
+                                + "           <input disabled class=\"form-control\" type=\"text\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" value=\"" + nombreCompletoEnfermedad + "\" placeholder=\"Nombre enfermedad" + index + "\" />" + "\n"
                                 + "       </div>" + "\n"
                                 + "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"

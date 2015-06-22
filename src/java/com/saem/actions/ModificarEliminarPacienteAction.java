@@ -36,6 +36,7 @@ import com.hibernate.model.Pacientes;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import com.persistencia.owl.OWLConsultas;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import com.saem.foaf.InsercionFOAF;
 import com.saem.foaf.ModificarEliminarFOAF;
 import com.saem.foaf.PersonaFOAF;
@@ -200,7 +201,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userPaciente = new Usuarios(nombreUsuario, "Paciente", clave, date);
         if (usuarioDAO.update(userPaciente)) {
             actualizacionCorrecta = true;
@@ -1238,6 +1239,10 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                         DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String inicioEnfermedadFormato = hourdateFormat.format(inicioEnfermedad);
                         String enfermedad = enfermedadCronica.getTipo();
+                         String ONTOLOGIA = servletRequest.getSession().getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+                        String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+                        OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+                        String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(enfermedadCronica.getNombre());
                         html += "  <input type=\"checkbox\" id=\"checkboxEnfermedadEliminar" + index +"\" name=\"checkboxEnfermedadEliminar" + index +"\" value=\""+enfermedadCronica.getId()+"\">Eliminar     "
                                 + "<input type=\"checkbox\" id=\"checkboxEnfermedadEditar"+index+"\" name=\"checkboxEnfermedadEditar" + index +"\" value=\""+enfermedadCronica.getId()+"\">Editar"
                                 + "<input type=\"hidden\" id=\"noHistorialEnfermedad\" name=\"noHistorialEnfermedad\" value=\""+datosClinicos.getNoHistorial()+"\"><br>"
@@ -1246,7 +1251,7 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
                                 + "       <div style=\"margin-bottom:10px;\" class=\"form-group\">" + "\n"
                                 + "           <label>Nombre enfermedad #" + (index + 1) + " : </label>" + "\n"
                                 + "           <select class=\"form-control\" name=\"enfermedadCronica" + index + "\" id=\"enfermedadCronica" + index + "\" >" + "\n"
-                                + "           <option value=\""+enfermedadCronica.getNombre()+"\">"+enfermedadCronica.getNombre()+"</option></select>" + "\n"
+                                + "           <option value=\""+enfermedadCronica.getNombre()+"\">"+nombreCompletoEnfermedad+"</option></select>" + "\n"
                                 + "       </div>" + "\n"
                                 + "   </div>" + "\n"
                                 + "   <div class=\"col-lg-4\">" + "\n"
@@ -1304,7 +1309,8 @@ public class ModificarEliminarPacienteAction extends ActionSupport implements Se
         }
 
         for (String efermedadTemp : listaEnfermedadesOntologia) {
-            html += "<option value=\"" + efermedadTemp + "\">" + efermedadTemp + "</option>\n";
+            String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(efermedadTemp);
+            html += "<option value=\"" + efermedadTemp + "\">" + nombreCompletoEnfermedad + "</option>\n";
         }
 
         htmlEnfermedades = html;

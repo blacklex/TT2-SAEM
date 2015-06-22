@@ -161,7 +161,7 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
             estatusMensajeEliminar = "usuarioEncontrado";
         }
         for(Usuarios usuarioTemp : listaTemp){
-            listaFinal.add(new Usuarios(usuarioTemp.getNombreUsuario(), usuarioTemp.getTipoUsuario(), usuarioTemp.getClave(), usuarioTemp.getFechaRegistro()));
+            listaFinal.add(new Usuarios(usuarioTemp.getNombreUsuario(), usuarioTemp.getTipoUsuario(), "", usuarioTemp.getFechaRegistro()));
         }
         
         session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaFinal);

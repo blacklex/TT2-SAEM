@@ -11,7 +11,7 @@
       <column length="15" name="tipo_usuario" not-null="true"/>
     </property>
     <property name="clave" type="string">
-      <column length="45" name="clave" not-null="true"/>
+      <column length="128" name="clave" not-null="true"/>
     </property>
     <property name="fechaRegistro" type="timestamp">
       <column length="19" name="fecha_registro" not-null="true"/>

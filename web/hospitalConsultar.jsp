@@ -146,8 +146,8 @@
                 <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
             </div>
             <div id="divClaveUsuario" class="form-group">
-                <label for="claveUsuario">Clave de Acceso</label>
-                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="text">
+                <!--<label for="claveUsuario">Clave de Acceso</label>-->
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="hidden">
             </div>
         </div><!-- /.box-body -->
 

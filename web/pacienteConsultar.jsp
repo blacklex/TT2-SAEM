@@ -141,7 +141,7 @@
                  <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
                 <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="ID" key="true" sortable="true"/>
                 <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Tipo" sortable="true"/>
-                <sjg:gridColumn editable="true" name="clave" index="clave" title="Password" sortable="false"/>
+                <sjg:gridColumn editable="true" hidden="true" name="clave" index="clave" title="Password" sortable="false"/>
                 <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false"/>
             </sjg:grid>
         </div>
@@ -156,8 +156,8 @@
             </div>
             <s:hidden name="tipoUsuario" value="Paciente" />
             <div id="divClaveUsuario" class="form-group">
-                <label for="claveUsuario">Clave de Acceso</label>
-                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="password" autofocus="true" disabled="true"/>
+                <!--<label for="claveUsuario">Clave de Acceso</label>-->
+                <input kl_virtual_keyboard_secure_input="on" class="form-control" id="clave" name="clave" placeholder="Clave de Acceso" type="hidden" autofocus="true" disabled="true"/>
             </div>
             <div class="box-footer">
                 <button type="button" onclick="cancelarEdicionAcceso();" class="btn btn-primary btn-sm margin">Regresar</button>

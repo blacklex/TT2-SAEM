@@ -29,7 +29,7 @@
       <column length="6" name="prioridad" not-null="true"/>
     </property>
     <property name="comentario" type="string">
-      <column length="45" name="comentario"/>
+      <column length="100" name="comentario"/>
     </property>
   </class>
 </hibernate-mapping>

@@ -91,7 +91,7 @@ public class PeticionesExternasAction implements SessionAware {
 
         if (tipoDeRespuestaPeticion.equals("contestarPeticion")) {
             peticion.setEstatus("PA");
-            peticion.setComentario("PETICION ACEPTADA: " + comentario);
+            peticion.setComentario(comentario);
 
             if (peticionesSalientesDAO.update(peticion)) {
                 System.out.println("-->update");
@@ -107,7 +107,7 @@ public class PeticionesExternasAction implements SessionAware {
 
         } else if (tipoDeRespuestaPeticion.equals("rechazarPeticion")) {
             peticion.setEstatus("PR");
-            peticion.setComentario("PETICION RECHAZADA: " + comentario);
+            peticion.setComentario(comentario);
 
             if (peticionesSalientesDAO.update(peticion)) {
                 System.out.println("-->update");

@@ -108,7 +108,8 @@ public class ConsultarHospital implements SessionAware {
         String codigoHospitalTemp = codigoHospital;
 
         nombreUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getNombreUsuario();
-        claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
+        //claveUsuario = hospitalDAO.findById(s, codigoHospitalTemp).getUsuarios().getClave();
+        claveUsuario="";
         s.close();
         return SUCCESS;
     }

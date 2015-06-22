@@ -94,7 +94,7 @@ public class GridRegistroAdministradoresAction implements SessionAware{
 
         for (Usuarios tempContUsuario : listaTemp) {
 
-            listaTempFinal.add(new Usuarios(tempContUsuario.getNombreUsuario(), tempContUsuario.getTipoUsuario(), tempContUsuario.getClave(), tempContUsuario.getFechaRegistro()));
+            listaTempFinal.add(new Usuarios(tempContUsuario.getNombreUsuario(), tempContUsuario.getTipoUsuario(), "", tempContUsuario.getFechaRegistro()));
         }
         gridModel = listaTempFinal;
         if (gridModel == null) {

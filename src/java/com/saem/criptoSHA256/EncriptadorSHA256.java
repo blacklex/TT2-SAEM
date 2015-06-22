@@ -38,7 +38,7 @@ public class EncriptadorSHA256 {
             }
             
             setCadenaEncriptada(sb.toString());
-            System.out.println("Hex format : " + sb.toString());
+            //System.out.println("Hex format : " + sb.toString());
             
             return sb.toString();
         } catch (NoSuchAlgorithmException ex) {
