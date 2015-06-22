@@ -100,7 +100,31 @@
         <NamedIndividual IRI="#Cardiologia"/>
     </Declaration>
     <Declaration>
+        <NamedIndividual IRI="#DiabetesTipo1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#DiabetesTipo2"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#DislipidemiaPrimaria"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#DislipidemiaSecundaria"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Endocrinologia"/>
+    </Declaration>
+    <Declaration>
         <NamedIndividual IRI="#Hipertension"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Nutriologia"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ObesidadEndogena"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ObesidadExogena"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="#Direccion"/>
@@ -182,7 +206,39 @@
     </ClassAssertion>
     <ClassAssertion>
         <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#DiabetesTipo1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#DiabetesTipo2"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#DislipidemiaPrimaria"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#DislipidemiaSecundaria"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Especialidad"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
         <NamedIndividual IRI="#Hipertension"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Especialidad"/>
+        <NamedIndividual IRI="#Nutriologia"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#ObesidadEndogena"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EnfermedadCronica"/>
+        <NamedIndividual IRI="#ObesidadExogena"/>
     </ClassAssertion>
     <ClassAssertion>
         <Class IRI="#Especialidad"/>
@@ -192,6 +248,46 @@
         <ObjectProperty IRI="#estudiaA"/>
         <NamedIndividual IRI="#Cardiologia"/>
         <NamedIndividual IRI="#Hipertension"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+        <NamedIndividual IRI="#ObesidadEndogena"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Cardiologia"/>
+        <NamedIndividual IRI="#ObesidadExogena"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <NamedIndividual IRI="#DiabetesTipo2"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <NamedIndividual IRI="#DislipidemiaSecundaria"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <NamedIndividual IRI="#DiabetesTipo1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <NamedIndividual IRI="#DislipidemiaPrimaria"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <NamedIndividual IRI="#ObesidadEndogena"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#estudiaA"/>
+        <NamedIndividual IRI="#Nutriologia"/>
+        <NamedIndividual IRI="#ObesidadExogena"/>
     </ObjectPropertyAssertion>
     <ObjectPropertyAssertion>
         <ObjectProperty IRI="#estudiaA"/>
@@ -210,8 +306,48 @@
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#DiabetesTipo1"/>
+        <Literal datatypeIRI="&xsd;string">Diabetes Tipo 1</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#DiabetesTipo2"/>
+        <Literal datatypeIRI="&xsd;string">Diabetes Tipo 2</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#DislipidemiaPrimaria"/>
+        <Literal datatypeIRI="&xsd;string">Dislipidemia Primaria</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#DislipidemiaSecundaria"/>
+        <Literal datatypeIRI="&xsd;string">Dislipidemia Secundaria</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <NamedIndividual IRI="#Endocrinologia"/>
+        <Literal datatypeIRI="&xsd;string">Endocrinologia</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
         <NamedIndividual IRI="#Hipertension"/>
         <Literal datatypeIRI="&xsd;string">Hipertension</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEspecialidad"/>
+        <NamedIndividual IRI="#Nutriologia"/>
+        <Literal datatypeIRI="&xsd;string">Nutriologia</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#ObesidadEndogena"/>
+        <Literal datatypeIRI="&xsd;string">Obesidad Endogena</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#nombreEnfermedad"/>
+        <NamedIndividual IRI="#ObesidadExogena"/>
+        <Literal datatypeIRI="&xsd;string">Obesidad Exogena</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#nombreEspecialidad"/>
@@ -377,3 +513,4 @@
 
 
 <!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
