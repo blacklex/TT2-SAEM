@@ -19,6 +19,7 @@ import com.hibernate.model.PeticionesEntrantes;
 import com.hibernate.model.PeticionesSalientes;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.persistencia.owl.OWLConsultas;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -139,10 +140,17 @@ public class reporteInformacionPaciente extends ActionSupport implements Session
                 usoDrogas = "No";
             }
 
+            
             Iterator iterEnfermedades = datosClinicos.getEnfermedadesCronicases().iterator();
             if (iterEnfermedades != null) {
                 while (iterEnfermedades.hasNext()) {
-                    enfermedades.add((EnfermedadesCronicas) iterEnfermedades.next());
+                    EnfermedadesCronicas enferObj = (EnfermedadesCronicas) iterEnfermedades.next();
+                    String ONTOLOGIA = request.getSession().getServletContext().getRealPath("/") + "WEB-INF/serviciomedico.owl";
+                    String BASE_URI = "http://www.serviciomedico.org/ontologies/2014/serviciomedico";
+                    OWLConsultas consultor = new OWLConsultas(ONTOLOGIA, BASE_URI);
+                    String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(enferObj.getNombre());
+            
+                    enfermedades.add(new EnfermedadesCronicas(null, nombreCompletoEnfermedad, enferObj.getTipo(),enferObj.getIncioEnfermedad()));
                 }
             }
             Iterator iterAlergias = datosClinicos.getAlergiases().iterator();

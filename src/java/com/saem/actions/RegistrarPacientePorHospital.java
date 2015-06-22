@@ -555,7 +555,8 @@ public class RegistrarPacientePorHospital implements SessionAware, ServletReques
         }
 
         for (String efermedadTemp : listaEnfermedadesOntologia) {
-            html += "<option value=\"" + efermedadTemp + "\">" + efermedadTemp + "</option>\n";
+            String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(efermedadTemp);
+            html += "<option value=\"" + efermedadTemp + "\">" + nombreCompletoEnfermedad + "</option>\n";
         }
 
         htmlEnfermedadesHospital = html;

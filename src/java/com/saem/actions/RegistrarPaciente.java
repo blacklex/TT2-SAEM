@@ -561,7 +561,8 @@ public class RegistrarPaciente implements SessionAware, ServletRequestAware {
         
         
         for (String efermedadTemp : listaEnfermedadesOntologia) {
-            html += "<option value=\""+efermedadTemp+"\">"+efermedadTemp+"</option>\n";
+            String nombreCompletoEnfermedad = consultor.getNombreEnfermedad(efermedadTemp);
+            html += "<option value=\""+efermedadTemp+"\">"+nombreCompletoEnfermedad+"</option>\n";
         }
 
         htmlEnfermedades = html;
