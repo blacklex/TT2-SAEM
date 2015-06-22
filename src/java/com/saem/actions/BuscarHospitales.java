@@ -133,6 +133,7 @@ public class BuscarHospitales implements SessionAware {
                     listaEnfermedadesHospital = new ArrayList<String>();
                 
                 for(String enfermedadHospTemp : listaEnfermedadesHospital){
+                    System.out.println("Ontologia "+enfermedadHospTemp);
                     for(EnfermedadesCronicas enfermedadPaacienteTemp : listaPacienteEnfermedades){
                         if(enfermedadHospTemp.equals(enfermedadPaacienteTemp.getNombre())){
                             hospitales.remove("atiendeEnfermedad");
