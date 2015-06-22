@@ -14,7 +14,7 @@
       <column length="20" name="tipo_alergia" not-null="true"/>
     </property>
     <property name="especificacion" type="string">
-      <column length="45" name="especificacion"/>
+      <column length="80" name="especificacion"/>
     </property>
   </class>
 </hibernate-mapping>
