@@ -17,6 +17,7 @@ import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.saem.foaf.ConsultorFOAF;
 import com.saem.foaf.PersonaFOAF;
+import com.saem.notificadores.NotificadorSMS;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -144,8 +145,8 @@ public class EnviarAlertaSaliente implements SessionAware {
 
         String dirHospital = "SAEM:Estoy en " + nombreHospital + ", tel " + lada + numHospital + ". " + nombrePaciente;
         System.out.println(dirHospital);
-//        NotificadorSMS sms = new NotificadorSMS(dirHospital, contactosPaciente);
-//        sms.enviarSMS();
+        NotificadorSMS sms = new NotificadorSMS(dirHospital, contactosPaciente);
+        sms.enviarSMS();
         //Generamos el codigo de Historial Clinico
         Calendar cal = Calendar.getInstance();
         idPeticionSaliente = cal.get(Calendar.YEAR) + "" + (cal.get(Calendar.MONTH) + 1) + "" + cal.get(Calendar.DAY_OF_MONTH) + "" + cal.get(Calendar.HOUR) + "" + cal.get(Calendar.MINUTE) + "" + cal.get(Calendar.SECOND) + "" + cal.get(Calendar.MILLISECOND);
