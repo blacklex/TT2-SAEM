@@ -13,6 +13,7 @@ import com.hibernate.model.DomicilioAdministradores;
 import com.hibernate.model.Usuarios;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.saem.criptoSHA256.EncriptadorSHA256;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,13 +31,14 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
  * @author sergio
  */
-public class ModificarEliminarAdministradorAction extends ActionSupport implements SessionAware, ServletRequestAware{
-    
+public class ModificarEliminarAdministradorAction extends ActionSupport implements SessionAware, ServletRequestAware {
+
     private Map<String, Object> session = null;
     private final AdministradorDAO administradorDAO = new AdministradorDAO();
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -45,9 +48,9 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
     Administradores administrador = new Administradores();
     DomicilioAdministradores domicilioAdmin = new DomicilioAdministradores();
     Usuarios userAdmin = new Usuarios();
-    
+
     private HttpServletRequest servletRequest;
-    
+
     //Acceso
     String nombreUsuario; //Clave Primaria
     String clave;
@@ -84,46 +87,44 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             estatusMensajeEliminar = "usuarioEncontrado";
             System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarAdministrador";
-        }
-        else {
+        } else {
             mensajeError = "Error al eliminar Administrador";
             estatusMensajeEliminar = "usuarioNoEncontrado";
         }
         return "pantallaModificarEliminarAdministrador";
     }
-    
+
     public String eliminarAdministradorPorFiltro() {
         if (usuarioDAO.deleteAdmin(nombreUsuario)) {
             estatusMensajeEliminar = "usuarioEncontrado";
             System.err.println("Usuario eliminado--->" + nombreUsuario);
             return "pantallaModificarEliminarAdministrador";
-        }
-        else {
+        } else {
             mensajeError = "Error al eliminar Administrador";
             estatusMensajeEliminar = "usuarioNoEncontrado";
         }
         return "pantallaModificarEliminarAdministrador";
     }
-    
+
     public String editarAccesoAdministrador() throws ParseException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        userAdmin = usuarioDAO.findById(nombreUsuario);
+        userAdmin = usuarioDAO.findById(s, nombreUsuario);
         //Obtenemos la fecha de registro por que no se va a modificar y la volvemos a setear dentro de Usuario
         Date fecha = userAdmin.getFechaRegistro();
         Date date = fecha;
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
-        if(usuarioDAO.update(userAdmin)) {
-          actualizacionCorrecta = true;
-         }
-        else {
+        if (usuarioDAO.update(userAdmin)) {
+            actualizacionCorrecta = true;
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Administrador";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Administrador Editado");
             session.put("textoAlertEditar", "Los datos del Administrador fueron actualizados correctamente.");
@@ -134,14 +135,16 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
+        s.close();
         return "pantallaModificarEliminarAdministrador";
     }
-    
+
     public String editarDatosPersonalesAdministrador() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        userAdmin = usuarioDAO.findById(nombreUsuario);
-        
+
+        userAdmin = usuarioDAO.findById(s, nombreUsuario);
+
         //Establecemos los datos personales para el Aministrador
         administrador.setApellidoMaterno(apellidoPaterno);
         administrador.setApellidoPaterno(apellidoMaterno);
@@ -149,17 +152,16 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         administrador.setNombre(nombre);
         administrador.setTelParticular(telParticular);
         //Convertimos la imagen a un arreglo de
-        if(imagen != null) {
-            System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
+        if (imagen != null) {
+            System.out.println("Camino absoluto    " + imagen.getAbsolutePath());
             byte[] bFile = new byte[(int) imagen.length()];
             FileInputStream fileInputStream = new FileInputStream(imagen);
             fileInputStream.read(bFile);
             fileInputStream.close();
             administrador.setImagen(bFile);
-        }
-        else{
+        } else {
             String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-            File fileImg = new File(filePath+"imagenesPerfilAdmin/default/default.jpeg");
+            File fileImg = new File(filePath + "imagenesPerfilAdmin/default/default.jpeg");
             byte[] defaultFile = new byte[(int) fileImg.length()];
             FileInputStream imgDefault = new FileInputStream(fileImg);
             imgDefault.read(defaultFile);
@@ -167,14 +169,13 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             administrador.setImagen(defaultFile);
         }
         administrador.setUsuarios(userAdmin);
-        if(administradorDAO.update(administrador)) {
+        if (administradorDAO.update(administrador)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Administrador";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Administrador Editado");
             session.put("textoAlertEditar", "Los datos del Administrador fueron actualizados correctamente.");
@@ -185,17 +186,18 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarAdministrador";
     }
-    
+
     public String editarDireccionAdministrador() throws IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        
-        userAdmin = usuarioDAO.findById(nombreUsuario);
-        
-        administrador = administradorDAO.findById(telParticular);
-                
+
+        userAdmin = usuarioDAO.findById(s, nombreUsuario);
+
+        administrador = administradorDAO.findById(s, telParticular);
+
         //Establecemos los datos de dirección para el Aministrador
         domicilioAdmin.setId(id);
         domicilioAdmin.setCalle(calle);
@@ -204,15 +206,14 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         domicilioAdmin.setEntidadFederativa(entidadFederativa);
         domicilioAdmin.setCodigoPostal(codigoPostal);
         domicilioAdmin.setAdministradores(administrador);
-        
-        if(domicilioAdminDAO.update(domicilioAdmin)) {
+
+        if (domicilioAdminDAO.update(domicilioAdmin)) {
             actualizacionCorrecta = true;
-        }
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar los datos del Administrador";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Administrador Editado");
             session.put("textoAlertEditar", "Los datos del Administrador fueron actualizados correctamente.");
@@ -223,24 +224,25 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-        
+        s.close();
         return "pantallaModificarEliminarAdministrador";
     }
-    
+
     public String editarAdminPorFiltro() throws ParseException, FileNotFoundException, IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Boolean actualizacionCorrecta = false;
-        userAdmin = usuarioDAO.findById(nombreUsuario);
-        
+        userAdmin = usuarioDAO.findById(s, nombreUsuario);
+
         //Obtenemos la fecha de registro por que no se va a modificar y la volvemos a setear dentro de Usuario
         Date fecha = userAdmin.getFechaRegistro();
         Date date = fecha;
         DateFormat hourdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaRegistro = hourdateFormat.format(date);
         date = hourdateFormat.parse(fechaRegistro);
-        
+        clave = new EncriptadorSHA256(clave).encriptarCadena();
         //Establecemos los datos de acceso para el Aministrador
         userAdmin = new Usuarios(nombreUsuario, tipoUsuario, clave, date);
-        
+
         //Establecemos los datos personales para el Aministrador
         administrador.setApellidoMaterno(apellidoPaterno);
         administrador.setApellidoPaterno(apellidoMaterno);
@@ -248,17 +250,16 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         administrador.setNombre(nombre);
         administrador.setTelParticular(telParticular);
         //Convertimos la imagen a un arreglo de
-        if(imagen != null) {
-            System.out.println("Camino absoluto    "+imagen.getAbsolutePath());
+        if (imagen != null) {
+            System.out.println("Camino absoluto    " + imagen.getAbsolutePath());
             byte[] bFile = new byte[(int) imagen.length()];
             FileInputStream fileInputStream = new FileInputStream(imagen);
             fileInputStream.read(bFile);
             fileInputStream.close();
             administrador.setImagen(bFile);
-        }
-        else{
+        } else {
             String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-            File fileImg = new File(filePath+"imagenesPerfilAdmin/default/default.jpeg");
+            File fileImg = new File(filePath + "imagenesPerfilAdmin/default/default.jpeg");
             byte[] defaultFile = new byte[(int) fileImg.length()];
             FileInputStream imgDefault = new FileInputStream(fileImg);
             imgDefault.read(defaultFile);
@@ -267,10 +268,10 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         }
         //Guardamos los datos de acceso del Aministrador
         r1 = usuarioDAO.update(userAdmin);
-        
+
         //Establecemos la clave foranea del Aministrador
         administrador.setUsuarios(userAdmin);
-        
+
         //Establecemos los datos de dirección para el Aministrador
         domicilioAdmin.setId(id);
         domicilioAdmin.setCalle(calle);
@@ -278,23 +279,23 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         domicilioAdmin.setDelegacion(delegacion);
         domicilioAdmin.setEntidadFederativa(entidadFederativa);
         domicilioAdmin.setCodigoPostal(codigoPostal);
-        
+
         //Guardamos los datos personales para el Aministrador
         r2 = administradorDAO.update(administrador);
-        
+
         //Establecemos la clave foranea del domicilio del Aministrador
         domicilioAdmin.setAdministradores(administrador);
-        
+
         //Guardamos los datos del domicilio para el Aministrador
         r3 = domicilioAdminDAO.update(domicilioAdmin);
-        
-        if(r1 && r2 && r3)
+
+        if (r1 && r2 && r3) {
             actualizacionCorrecta = true;
-        else {
+        } else {
             actualizacionCorrecta = false;
             mensajeError = "Error al actualizar Administrador";
         }
-        
+
         if (actualizacionCorrecta) {
             session.put("tituloAlertEditar", "Administrador Editado");
             session.put("textoAlertEditar", "Los datos del Administrador fueron actualizados correctamente.");
@@ -305,7 +306,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
             session.put("textoAlertEditar", mensajeError);
             session.put("estatusMensajeEditar", "error");
         }
-
+        s.close();
         return "pantallaModificarEliminarAdministrador";
     }
 
@@ -313,7 +314,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         tituloAlertEditar = "";
         textoAlertEditar = "";
         estatusMensajeEditar = "";
-        
+
         if (session.get("estatusMensajeEditar") != null) {
             tituloAlertEditar = session.get("tituloAlertEditar").toString();
             textoAlertEditar = session.get("textoAlertEditar").toString();
@@ -327,14 +328,15 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
 
         return "success";
     }
-    
+
     public String buscarDatosPersonalesAdministrador() throws IOException {
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userAdmin = (Usuarios) iterator1.next();
             Set administradores = userAdmin.getAdministradoreses();
             for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                administrador = (Administradores) iterator2.next(); 
+                administrador = (Administradores) iterator2.next();
                 nombre = administrador.getNombre();
                 apellidoPaterno = administrador.getApellidoPaterno();
                 apellidoMaterno = administrador.getApellidoMaterno();
@@ -343,7 +345,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
                 imagenAdmin = administrador.getImagen();
                 String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
                 System.out.println(filePath);
-                FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
+                FileOutputStream image = new FileOutputStream(filePath + "imagenesPerfilAdmin/" + nombreUsuario + ".jpeg");
                 image.write(imagenAdmin);
                 nombreUsuario = userAdmin.getNombreUsuario();
                 System.out.println(nombre);
@@ -355,16 +357,18 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
                 image.close();
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosDireccionAdministrador() {
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userAdmin = (Usuarios) iterator1.next();
             Set administradores = userAdmin.getAdministradoreses();
             for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                administrador = (Administradores) iterator2.next(); 
+                administrador = (Administradores) iterator2.next();
                 Set domAdmin = administrador.getDomicilioAdministradoreses();
                 for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
                     domicilioAdmin = (DomicilioAdministradores) iterator3.next();
@@ -387,63 +391,83 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
                 }
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosPorFiltro() throws FileNotFoundException, IOException {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios usuarioResultado;
-
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
-        
-        if (usuarioResultado == null) {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
-            return SUCCESS;
-        }
-
-        if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
-            estatusMensajeEliminar = "usuarioEncontrado";
-            listUsuarios = usuarioDAO.listarById(nombreUsuario);
-            for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
-                userAdmin = (Usuarios) iterator1.next();
-                Set administradores = userAdmin.getAdministradoreses();
-                for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                    administrador = (Administradores) iterator2.next(); 
-                    Set domAdmin = administrador.getDomicilioAdministradoreses();
-                    for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
-                        domicilioAdmin = (DomicilioAdministradores) iterator3.next();
-                        nombreUsuario = userAdmin.getNombreUsuario();
-                        clave = userAdmin.getClave();
-                        nombre = administrador.getNombre();
-                        apellidoPaterno = administrador.getApellidoPaterno();
-                        apellidoMaterno = administrador.getApellidoMaterno();
-                        telParticular = administrador.getTelParticular();
-                        correo = administrador.getCorreo();
-                        imagenAdmin = administrador.getImagen();
-                        String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-                        System.out.println(filePath);
-                        FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
-                        image.write(imagenAdmin);
-                        calle = domicilioAdmin.getCalle();
-                        colonia = domicilioAdmin.getColonia();
-                        delegacion = domicilioAdmin.getDelegacion();
-                        entidadFederativa = domicilioAdmin.getEntidadFederativa();
-                        codigoPostal = domicilioAdmin.getCodigoPostal();
-                        id = domicilioAdmin.getId();
-                        image.close();
-                    }
-                }
+        ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        if (nombreUsuario.length() > 0) {
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(s, nombreUsuario);
+            System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+            if (listaTemp == null) {
+                estatusMensajeEliminar = "usuarioNoEncontrado";
+            } else {
+                estatusMensajeEliminar = "usuarioEncontrado";
             }
-        } 
-        else {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
+
+        } else {
+            // Obtenemos la lista de la sesión
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(s, 0, 0);
+            estatusMensajeEliminar = "usuarioEncontrado";
         }
+        session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaTemp);
+
+        /*usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        
+         if (usuarioResultado == null) {
+         estatusMensajeEliminar = "usuarioNoEncontrado";
+         return SUCCESS;
+         }
+
+         if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
+         estatusMensajeEliminar = "usuarioEncontrado";
+         listUsuarios = usuarioDAO.listarById(nombreUsuario);
+         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
+         userAdmin = (Usuarios) iterator1.next();
+         Set administradores = userAdmin.getAdministradoreses();
+         for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
+         administrador = (Administradores) iterator2.next(); 
+         Set domAdmin = administrador.getDomicilioAdministradoreses();
+         for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
+         domicilioAdmin = (DomicilioAdministradores) iterator3.next();
+         nombreUsuario = userAdmin.getNombreUsuario();
+         clave = userAdmin.getClave();
+         nombre = administrador.getNombre();
+         apellidoPaterno = administrador.getApellidoPaterno();
+         apellidoMaterno = administrador.getApellidoMaterno();
+         telParticular = administrador.getTelParticular();
+         correo = administrador.getCorreo();
+         imagenAdmin = administrador.getImagen();
+         String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
+         System.out.println(filePath);
+         FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
+         image.write(imagenAdmin);
+         calle = domicilioAdmin.getCalle();
+         colonia = domicilioAdmin.getColonia();
+         delegacion = domicilioAdmin.getDelegacion();
+         entidadFederativa = domicilioAdmin.getEntidadFederativa();
+         codigoPostal = domicilioAdmin.getCodigoPostal();
+         id = domicilioAdmin.getId();
+         image.close();
+         }
+         }
+         }
+         } 
+         else {
+         estatusMensajeEliminar = "usuarioNoEncontrado";
+         }*/
+        s.close();
         return "success";
     }
 
     public String validarNombreUsuarioEliminar() {
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
         Usuarios usuarioResultado;
 
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
+        usuarioResultado = usuarioDAO.findById(s, nombreUsuario);
 
         if (usuarioResultado == null) {
             estatusMensajeEliminar = "usuarioNoEncontrado";
@@ -455,7 +479,7 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
         } else {
             estatusMensajeEliminar = "usuarioNoEncontrado";
         }
-
+        s.close();
         return SUCCESS;
     }
 
@@ -658,9 +682,9 @@ public class ModificarEliminarAdministradorAction extends ActionSupport implemen
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     @Override
     public void setServletRequest(HttpServletRequest servletRequest) {
-            this.servletRequest = servletRequest;
+        this.servletRequest = servletRequest;
     }
 }

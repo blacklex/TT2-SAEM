@@ -25,7 +25,7 @@
    <definition name="pantallaInicioPaciente" extends="baseLayout">
       <put-attribute name="title"  value="Ejemplo"/>
       <put-attribute name="menu"   value="/menuPaciente.jsp"/>
-      <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
+      <put-attribute name="body"   value="/ubicacionPaciente.jsp"/>      
    </definition>
    
    <definition name="pantallaInicioHospital" extends="baseLayout">
@@ -34,7 +34,8 @@
       <put-attribute name="body"   value="/grid-llamada-action.jsp"/>      
    </definition>
     <!-- FIN PANTALLAS DE INICIO PARA CADA TIPO DE USUARIO -->
-   
+    
+    <!-- INICIA PANTALLAS DE MENU ADMIN GESTION HOSPITALES -->
     <definition name="pantallaRegistroHospital" extends="baseLayout">
       <put-attribute name="title"  value="Alta Hospital"/>
       <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
@@ -53,7 +54,7 @@
       <put-attribute name="body"   value="/hospitalConsultar.jsp"/>      
    </definition>
    
-   <!-- INICIO PANTALLAS DE MENU PARA CADA TIPO DE USUARIO -->
+   <!-- INICIA PANTALLAS DE MENU ADMIN GESTION ADMINS -->
     <definition name="pantallaAltaAdministrador" extends="baseLayout">
         <put-attribute name="title"  value="Ejemplo"/>
         <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
@@ -71,5 +72,76 @@
         <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
         <put-attribute name="body"   value="/gridConsultarAdministrador.jsp"/>      
     </definition>
-    <!-- FIN PANTALLAS DE MENU PARA CADA TIPO DE USUARIO --> 
+    <!-- INICIA PANTALLAS DE MENU ADMIN GESTION PACIENTES -->
+    <definition name="pantallaAltaPaciente" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteRegistro.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaModificarEliminarPaciente" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteModificarEliminar.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaConsultarPacientes" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuAdministrador.jsp"/>
+        <put-attribute name="body"   value="/pacienteConsultar.jsp"/>      
+    </definition>
+    
+    <!-- INICIO PANTALLAS DEL MENU PACIENTES -->
+    <!-- INICIA PANTALLAS DE MENU ADMIN GESTION PACIENTES -->
+    <definition name="pantallaAltaPacientePorHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/pacienteRegistroPorHospital.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaModificarEliminarPacientePorHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/pacienteModificarEliminarPorHospital.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaConsultarPacientesPorHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/pacienteConsultarPorHospital.jsp"/>      
+    </definition>
+    
+    <!-- INICIO PANTALLAS DEL MENU PACIENTES -->
+    <definition name="pantallaMapaPaciente" extends="baseLayout">
+        <put-attribute name="title"  value="Ejemplo"/>
+        <put-attribute name="menu"   value="/menuPaciente.jsp"/>
+        <put-attribute name="body"   value="/ubicacionPaciente.jsp"/>      
+    </definition>
+    <!-- FIN PANTALLAS DEL MENU PACIENTES -->
+    
+     <!-- INICIO PANTALLAS DEL MENU HOSPITAL -->
+    <definition name="pantallaPeticionesEntrantesHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Peticiones Entrantes"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/hospitalPeticionesEntrantes.jsp"/>      
+    </definition>
+    
+     <definition name="pantallaPeticionesExternasHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Peticiones Externas"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/hospitalPeticionesExternas.jsp"/>      
+    </definition>
+    
+    <definition name="pantallaConsultarInformacionHospital" extends="baseLayout">
+        <put-attribute name="title"  value="Informacion Personal"/>
+        <put-attribute name="menu"   value="/menuHospital.jsp"/>
+        <put-attribute name="body"   value="/hospitalConsultarPerfil.jsp"/>      
+    </definition>
+    <!-- FIN PANTALLAS DEL MENU HOSPITAL -->
+    
+    <definition name="pantallaConsultarMiInformacion" extends="baseLayout">
+        <put-attribute name="title"  value="Informacion Personal"/>
+        <put-attribute name="menu"   value="/menuPaciente.jsp"/>
+        <put-attribute name="body"   value="/pacienteConsultarPerfil.jsp"/>      
+    </definition>
 </tiles-definitions>

@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 2/06/2015 02:02:20 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,11 +16,11 @@ public class DatosClinicos  implements java.io.Serializable {
      private boolean usoDrogas;
      private boolean usoAlcohol;
      private boolean fumador;
+     private Set cirugiases = new HashSet(0);
      private Set enfermedadesCronicases = new HashSet(0);
+     private Set alergiases = new HashSet(0);
      private Set medicacions = new HashSet(0);
      private Set discapacidadeses = new HashSet(0);
-     private Set alergiases = new HashSet(0);
-     private Set cirujiases = new HashSet(0);
 
     public DatosClinicos() {
     }
@@ -33,17 +33,17 @@ public class DatosClinicos  implements java.io.Serializable {
         this.usoAlcohol = usoAlcohol;
         this.fumador = fumador;
     }
-    public DatosClinicos(long noHistorial, Pacientes pacientes, boolean usoDrogas, boolean usoAlcohol, boolean fumador, Set enfermedadesCronicases, Set medicacions, Set discapacidadeses, Set alergiases, Set cirujiases) {
+    public DatosClinicos(long noHistorial, Pacientes pacientes, boolean usoDrogas, boolean usoAlcohol, boolean fumador, Set cirugiases, Set enfermedadesCronicases, Set alergiases, Set medicacions, Set discapacidadeses) {
        this.noHistorial = noHistorial;
        this.pacientes = pacientes;
        this.usoDrogas = usoDrogas;
        this.usoAlcohol = usoAlcohol;
        this.fumador = fumador;
+       this.cirugiases = cirugiases;
        this.enfermedadesCronicases = enfermedadesCronicases;
+       this.alergiases = alergiases;
        this.medicacions = medicacions;
        this.discapacidadeses = discapacidadeses;
-       this.alergiases = alergiases;
-       this.cirujiases = cirujiases;
     }
    
     public long getNoHistorial() {
@@ -81,12 +81,26 @@ public class DatosClinicos  implements java.io.Serializable {
     public void setFumador(boolean fumador) {
         this.fumador = fumador;
     }
+    public Set getCirugiases() {
+        return this.cirugiases;
+    }
+    
+    public void setCirugiases(Set cirugiases) {
+        this.cirugiases = cirugiases;
+    }
     public Set getEnfermedadesCronicases() {
         return this.enfermedadesCronicases;
     }
     
     public void setEnfermedadesCronicases(Set enfermedadesCronicases) {
         this.enfermedadesCronicases = enfermedadesCronicases;
+    }
+    public Set getAlergiases() {
+        return this.alergiases;
+    }
+    
+    public void setAlergiases(Set alergiases) {
+        this.alergiases = alergiases;
     }
     public Set getMedicacions() {
         return this.medicacions;
@@ -101,20 +115,6 @@ public class DatosClinicos  implements java.io.Serializable {
     
     public void setDiscapacidadeses(Set discapacidadeses) {
         this.discapacidadeses = discapacidadeses;
-    }
-    public Set getAlergiases() {
-        return this.alergiases;
-    }
-    
-    public void setAlergiases(Set alergiases) {
-        this.alergiases = alergiases;
-    }
-    public Set getCirujiases() {
-        return this.cirujiases;
-    }
-    
-    public void setCirujiases(Set cirujiases) {
-        this.cirujiases = cirujiases;
     }
 
 

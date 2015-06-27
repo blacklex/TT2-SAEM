@@ -21,9 +21,10 @@ public class DatosClinicosDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(DatosClinicos transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -32,13 +33,14 @@ public class DatosClinicosDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(DatosClinicos transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -47,13 +49,31 @@ public class DatosClinicosDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
+	}
+        
+        public Boolean update(DatosClinicos transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        
+			System.out.println("--->Datos clinicos actualizados");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    
+			System.out.println("--->Datos clinicos no actualizados");  
+                    return false;
+		}finally{s.close();}
 	}
          
-        public DatosClinicos findById(Long id) {
+        public DatosClinicos findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			DatosClinicos instance = (DatosClinicos) getSession().get(
+			DatosClinicos instance = (DatosClinicos) s.get(
 					DatosClinicos.class, id);
 			return instance;
 		} catch (RuntimeException re) {

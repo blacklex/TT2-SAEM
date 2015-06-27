@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/04/2015 03:18:35 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 2/06/2015 02:02:23 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="Pacientes" name="com.hibernate.model.DatosPersonales" optimistic-lock="version" table="Datos_Personales">
+  <class catalog="SAEMBD" name="com.hibernate.model.DatosPersonales" optimistic-lock="version" table="Datos_Personales">
     <id name="id" type="java.lang.Long">
       <column name="id"/>
       <generator class="identity"/>
@@ -11,7 +11,7 @@
       <column length="15" name="Pacientes_nss" not-null="true"/>
     </many-to-one>
     <property name="estadoCivil" type="string">
-      <column length="10" name="estado_civil" not-null="true"/>
+      <column length="15" name="estado_civil" not-null="true"/>
     </property>
     <property name="curp" type="string">
       <column length="20" name="curp" not-null="true"/>
@@ -29,22 +29,16 @@
       <column length="4" name="peso"/>
     </property>
     <property name="altura" type="string">
-      <column length="3" name="altura"/>
+      <column length="5" name="altura"/>
     </property>
     <property name="talla" type="string">
-      <column length="3" name="talla"/>
-    </property>
-    <property name="telCasa" type="string">
-      <column length="15" name="tel_casa"/>
-    </property>
-    <property name="telCel" type="string">
-      <column length="15" name="tel_cel"/>
+      <column length="4" name="talla"/>
     </property>
     <property name="correo" type="string">
       <column length="45" name="correo"/>
     </property>
     <property name="facebook" type="string">
-      <column length="45" name="facebook"/>
+      <column length="100" name="facebook"/>
     </property>
   </class>
 </hibernate-mapping>

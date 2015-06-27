@@ -11,17 +11,33 @@
     <constant name="struts.convention.default.parent.package" value="basicstruts2"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="false" />
-    
+    <constant name="struts.custom.i18n.resources" value="global" />
     <!-- Configuration for the default package. -->
     <package name="basicstruts2" namespace="/" extends="struts-default,json-default">
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
             <result-type name="dispatcher" default="true" class="org.apache.struts2.dispatcher.ServletDispatcherResult" />
         </result-types>
+        
+        <interceptors>
+            <interceptor name="validarAccesoActions" class="com.saem.interceptores.validarAccesoActions" />
+            <interceptor-stack name="validarAcceso">  
+                <interceptor-ref name="validarAccesoActions"/>
+                <interceptor-ref name="defaultStack"/> 
+            </interceptor-stack> 
+        </interceptors>  
+        <default-interceptor-ref name="validarAcceso"></default-interceptor-ref>
       
         <global-results>
             <result name="login" type="dispatcher">login.jsp</result>
         </global-results>
+        
+        <global-exception-mappings>
+        <exception-mapping exception="org.hibernate.exception.GenericJDBCException"
+            result="login" />
+        <exception-mapping exception="java.lang.Exception" result="login"/>
+    </global-exception-mappings>
         
         <action name="Login" method="execute" class="com.saem.actions.Login">
             <result name="pantallaInicioAdministrador" type="tiles">pantallaInicioAdministrador</result>
@@ -29,6 +45,13 @@
             <result name="pantallaInicioHospital" type="tiles">pantallaInicioHospital</result>
         </action>
         
+         <action name="LogOut" method="execute" class="com.saem.actions.LogOut">
+            <result name="success">login.jsp</result>
+        </action>
+        
+         <action name="recuperarMensajeEstatusLogin" method="recuperarEstatusLogin" class="com.saem.actions.Login">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- ****************************** REGISTRAR HOSPITAL ********************************************* -->
         <action name="pantallaRegistroHospital" method="execute" class="com.saem.actions.RegistroHospital">
             <result name="pantallaRegistroHospital" type="tiles">pantallaRegistroHospital</result>
@@ -80,6 +103,10 @@
         <action name="ajaxRecuperarDatosFormDirectivo" method="recuperarDatosFormDirectivo" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="ajaxRecuperarFormEspecialidades" method="recuperarDatosFormEspecialidades" class="com.saem.actions.ModificarEliminarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- _______________________________________________________________________________________________ -->
         <action name="ajaxEliminarHospital" method="eliminarHospital" class="com.saem.actions.ModificarEliminarHospital">
             <result name="success" type="json">JSON</result>
@@ -120,7 +147,7 @@
             <result name="success" type="json">JSON</result>
         </action>
         
-        <action name="ajaxRecuperarDatosConsultaSesion" method="recuperarDatosConsultaSesion" class="com.saem.actions.ConsultarHospital">
+        <action name="ajaxRecuperarDatosConsultaSesionHospital" method="recuperarDatosConsultaSesion" class="com.saem.actions.ConsultarHospital">
             <result name="success" type="json">JSON</result>
         </action>
         
@@ -128,16 +155,20 @@
             <result name="success" type="json">JSON</result>
         </action>
         
-        <action name="ajaxRecuperarDatosConsultaDireccion" method="recuperarDatosConsultaDireccion" class="com.saem.actions.ConsultarHospital">
+        <action name="ajaxRecuperarDatosConsultaDireccionHospital" method="recuperarDatosConsultaDireccion" class="com.saem.actions.ConsultarHospital">
             <result name="success" type="json">JSON</result>
         </action>
         
         <action name="ajaxRecuperarDatosConsultaDirectivo" method="recuperarDatosConsultaDirectivo" class="com.saem.actions.ConsultarHospital">
             <result name="success" type="json">JSON</result>
         </action>
+        
+        <action name="ajaxRecuperarDatosEspecialidades" method="recuperarDatosEspecialidades" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
         <!-- _______________________________________________________________________________________________ -->
         
-      <!-- ******************************** FIN MODIFICAR ELIMINIAR HOSPITAL ******************************* -->
+      <!-- ******************************** FIN MODIFICAR CONSULTAR HOSPITAL ******************************* -->
         
         <!-- ********************************************* MENU ADMINISTRADOR********************************************************-->
         <action name="pantallaAltaAdministrador" method="altaAdministrador" class="com.saem.actions.MenuAdministradorAction">
@@ -257,25 +288,527 @@
             <result name="success" type="json">JSON</result>
         </action>
         <!-- ******************************************** FIN BUSCAR DATOS PARA CONSULTAR ADMINISTRADOR ****************************************************************-->
-        
+        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
+            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
+        </action>
         <!-- ******************************************** RECUPERAR MSJ ADMINISTRADOR ****************************************************************-->                
         <!-- Recuperar Msjs de Edicion-->
         <action name="recuperarMensajeEstatusEditar" method="recuperarEstatusEditar" class="com.saem.actions.ModificarEliminarAdministradorAction">
             <result name="success" type="json">JSON</result>
         </action>
         <!-- Fin Recuperar Msjs -->
-<!--         ******************************************** FIN RECUPERAR MSJ ADMINISTRADOR ****************************************************************                
-        <action name="pantallaMapaPaciente" class="com.saem.actions.PacienteAction">
-            <result name="pantallaMapaPaciente" type="tiles">pantallaMapaPaciente</result>
-        </action>
-         ******************************************** OPERACIONES SOBRE PACIENTE ****************************************************************                -->
         
         <!-- ListaAdministradores Grid -->
-        <action name="Listado" class="com.saem.actions.GridRegistroAdministradoresAction">
+        <action name="ajaxLlenarListaAdministradores" class="com.saem.actions.GridRegistroAdministradoresAction">
             <result name="success"  type="json">
                 
             </result>
         </action>
+        <!-- ******************************************* MENU PACIENTE *********************************************** -->
+        <action name="pantallaAltaPaciente" method="altaPaciente" class="com.saem.actions.MenuPacienteAction">
+            <result name="pantallaAltaPaciente" type="tiles">pantallaAltaPaciente</result>
+        </action>
+
+        <action name="pantallaModificarEliminarPaciente" method="modElmPaciente" class="com.saem.actions.MenuPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+
+        <action name="pantallaConsultarPacientes" method="consultarPaciente" class="com.saem.actions.MenuPacienteAction">
+            <result name="pantallaConsultarPacientes" type="tiles">pantallaConsultarPacientes</result>
+        </action>
+        <!-- ******************************************* FIN MENU PACIENTE *********************************************** -->
+        
         <!-- Fin ListaAdministradores Grid -->
+        <action name="mostrarDatosPacientePorHospital" method="mostrarDatosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarDatosDireccionPacientePorHospital" method="mostrarDatosDireccionPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+         <action name="mostrarDatosPersonalesPacientePorHospital" method="mostrarDatosPersonalesPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarTelefonosPacientePorHospital" method="mostrarTelefonosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarContactosPacientePorHospital" method="mostrarContactosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarAlergiasPacientePorHospital" method="mostrarAlergiasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarCirugiasPacientePorHospital" method="mostrarCirugiasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarDiscapacidadesPacientePorHospital" method="mostrarDiscapacidadesPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarMedicamentosPacientePorHospital" method="mostrarMedicamentosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="mostrarEnfermedadesCronicasPacientePorHospital" method="mostrarEnfermedadesCronicasPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ************************************ CONSULTAR PACIENTE ****************************************** -->
+        <action name="mostrarDatosPaciente" method="mostrarDatosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDatosDireccionPaciente" method="mostrarDatosDireccionPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDatosPersonalesPaciente" method="mostrarDatosPersonalesPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarTelefonosPaciente" method="mostrarTelefonosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarContactosPaciente" method="mostrarContactosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDatosClinicosPaciente" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDatosClinicosPacientePorHospital" method="mostrarDatosClinicosPaciente" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarAlergiasPaciente" method="mostrarAlergiasPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarCirugiasPaciente" method="mostrarCirugiasPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDiscapacidadesPaciente" method="mostrarDiscapacidadesPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarMedicamentosPaciente" method="mostrarMedicamentosPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarEnfermedadesCronicasPaciente" method="mostrarEnfermedadesCronicasPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="mostrarDatosAccesoPaciente" method="mostrarDatosAccesoPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- _______________________________________________________________________________________________ -->
+
+      <!-- ******************************** FIN CONSULTAR PACIENTE ******************************* -->
+      
+        <!-- ******************************************** REGISTRAR PACIENTE **************************************-->
+        <!-- Registar Paciente -->
+        <action name="registrarPaciente" method="registrarPaciente" class="com.saem.actions.RegistrarPaciente">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaAltaPaciente" type="tiles">pantallaAltaPaciente</result>
+        </action>
+        <!-- Fin Registar Paciente -->
+        
+        <action name="recuperarHospitales" method="recuperarHospitales" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarComboEspecialidades" method="recuperarComboEspecialidades" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarComboEnfermedadesPorEspecialidad" method="recuperarComboEnfermedadesPorEspecialidad" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <!-- Validar usuario -->
+        <action name="validarNombreUsuarioPaciente" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Validar usuario -->
+
+        <!-- Recuperar Msjs de Registro-->
+        <action name="recuperarMensajeEstatusPaciente" method="recuperarEstatusPaciente" class="com.saem.actions.RegistrarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Recuperar Msjs -->
+        <!-- ******************************************** FIN REGISTRAR PACIENTE **********************************-->
+        <!-- ******************************************** ELIMINAR PACIENTE *******************************************************************-->
+        <!-- Eliminar Paciente -->
+        <action name="eliminarPaciente" method="eliminarPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="json">JSON</result>
+        </action>
+        
+        <!-- Fin Eliminar Paciente -->
+        <!-- ******************************************** FIN ELIMINAR PACIENTE ****************************************************************-->
+        
+        <!-- ******************************************** BUSCAR DATOS PARA EDITAR PACIENTE ****************************************************************-->
+        <action name="buscarDatosPaciente" method="buscarDatosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+
+        <action name="buscarDatosDireccionPaciente" method="buscarDatosDireccionPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarTelefonosPaciente" method="buscarTelefonosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDatosPersonalesPaciente" method="buscarDatosPersonalesPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarContactosPaciente" method="buscarContactosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDatosClinicosPaciente" method="buscarDatosClinicosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarAlergiasPaciente" method="buscarAlergiasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarCirugiasPaciente" method="buscarCirugiasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarDiscapacidadesPaciente" method="buscarDiscapacidadesPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarMedicamentosPaciente" method="buscarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarMedicamentosPaciente" method="buscarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="buscarEnfermedadesCronicasPaciente" method="buscarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarComboEnfermedadesPorEspecialidadModElim" method="recuperarComboEnfermedadesPorEspecialidadModElim" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ******************************************** FIN BUSCAR DATOS PARA EDITAR PACIENTE ****************************************************************-->
+
+        <!-- ******************************************** EDITAR PACIENTE ****************************************************************-->
+        <!-- Editar Acceso Paciente -->
+        <action name="editarAccesoPaciente" method="editarAccesoPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+        <!-- Editar Datos Paciente -->
+        <action name="editarDatosIdentificacionPaciente" method="editarDatosIdentificacionPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar Datos Paciente -->
+        <!-- Editar Direccion Paciente -->
+        <action name="editarMedicamentosPacientes" method="editarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar Direccion Paciente -->
+        <!-- Editar Direccion Paciente -->
+        <action name="editarDireccionPaciente" method="editarDireccionPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar Direccion Paciente -->
+        <!-- Editar telefonos Paciente -->
+        <action name="editarTelefonosPaciente" method="editarTelefonosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar telefonos Paciente -->
+        <!-- Editar telefonos Paciente -->
+        <action name="editarEnfermedadesCronicasPaciente" method="editarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar telefonos Paciente -->
+        <!-- Editar datos personales Paciente -->
+        <action name="editarDatosPersonalesPaciente" method="editarDatosPersonalesPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar datos personales Paciente -->
+        <!-- Editar contactos Paciente -->
+        <action name="editarContactosPaciente" method="editarContactosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar contactos Paciente -->
+        <!-- Editar datos clinicos Paciente -->
+        <action name="editarDatosClinicosPaciente" method="editarDatosClinicosPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        <!-- Fin Editar datos clinicos Paciente -->
+        <!-- Editar Paciente por filtro -->
+        <action name="editarPacientePorFiltro" method="editarPacientePorFiltro" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaModificarEliminarPaciente" type="tiles">pantallaModificarEliminarPaciente</result>
+        </action>
+        
+        <action name="editarTelefonosPacientePorHospital" method="editarTelefonosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarContactosPacientePorHospital" method="editarContactosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarMedicamentosPacientePorHospital" method="editarMedicamentosPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        <action name="editarEnfermedadesPacientePorHospital" method="editarEnfermedadesCronicasPaciente" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <action name="buscarDatosPacienteMostrarFiltro" method="buscarDatosPacienteMostrarFiltro" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="consultarDatosPacienteMostrarFiltro" method="consultarDatosPacienteMostrarFiltro" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ******************************************** FIN EDITAR PACIENTE ****************************************************************-->
+        
+        <!-- ******************************************** BUSCAR DATOS PARA CONSULTAR PACIENTE ****************************************************************-->
+        
+        <!-- ******************************************** FIN BUSCAR DATOS PARA CONSULTAR PACIENTE ****************************************************************-->
+        
+        <!-- ******************************************** RECUPERAR MSJ PACIENTE ****************************************************************-->                
+        <!-- Recuperar Msjs de Edicion-->
+        <action name="recuperarMensajeEstatusEditarPaciente" method="recuperarEstatusEditarPaciente" class="com.saem.actions.ModificarEliminarPacienteAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Recuperar Msjs -->
+        <!-- ListaAdministradores Grid -->
+        <action name="ajaxLlenarListaPacientes" class="com.saem.actions.GridRegistroPaciente">
+            <result name="success"  type="json">JSON</result>
+        </action>
+
+<!--         ******************************************** FIN RECUPERAR MSJ PACIENTE ****************************************************************  -->              
+ 
+        <!-- ************************************ HOSPITAL PETICIONES ENTRANTES ****************************************** -->
+        <action name="pantallaPeticionesEntrantesHospital" method="execute" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="pantallaPeticionesEntrantesHospital" type="tiles">pantallaPeticionesEntrantesHospital</result>
+        </action>
+        
+        <action name="recuperarMensajeEstatusPeticionesEntrantes" method="recuperarEstatusPeticionesEntrantesHospital" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxLlenarListaPetionesEntrantes" method="llenarGridPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarTotalPeticiones" method="recuperarTotalPeticionesEntrantes" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarPacientePeticionEntrante" method="recuperarDatosPaciente" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="responderPeticionEntrante" method="responderPeticionEntrante" class="com.saem.actions.PeticionesEntrantesAction">
+            <result name="pantallaPeticionesEntrantesHospital" type="tiles">pantallaPeticionesEntrantesHospital</result>
+        </action>
+        
+        <!-- ************************************ FIN HOSPITAL PETICIONES ENTRANTES ****************************************** -->
+        
+         <!-- ************************************ HOSPITAL PETICIONES EXTERNAS ****************************************** -->
+        <action name="pantallaPeticionesExternasHospital" method="execute" class="com.saem.actions.PeticionesExternasAction">
+            <result name="pantallaPeticionesExternasHospital" type="tiles">pantallaPeticionesExternasHospital</result>
+        </action>
+        
+        <action name="recuperarMensajeEstatusPeticionExterna" method="recuperarEstatusPeticionesExternasHospital" class="com.saem.actions.PeticionesExternasAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxLlenarListaPetionesExternas" method="llenarGridPeticionesExternas" class="com.saem.actions.PeticionesExternasAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarPacientePeticionExterna" method="recuperarDatosPaciente" class="com.saem.actions.PeticionesExternasAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="responderPeticionExterna" method="responderPeticionExterna" class="com.saem.actions.PeticionesExternasAction">
+            <result name="pantallaPeticionesExternasHospital" type="tiles">pantallaPeticionesExternasHospital</result>
+        </action>
+        <!-- ************************************ FIN HOSPITAL PETICIONES EXTERNAS ****************************************** -->
+        
+         <!-- ************************************ HOSPITAL CONSULTAR INFORMACION ****************************************** -->
+        <action name="pantallaConsultarInformacionHospital" method="pantallaConsultarInformacionHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="pantallaConsultarInformacionHospital" type="tiles">pantallaConsultarInformacionHospital</result>
+        </action>
+         <action name="recuperarCodigoHospital" method="recuperarCodigoHospital" class="com.saem.actions.ConsultarHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- ************************************ FIN HOSPITAL CONSULTAR INFORMACION ****************************************** -->
+        
+        <action name="buscarHospitales" class="com.saem.actions.BuscarHospitales">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="alertaRapida" class="com.saem.actions.BuscarMejorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="enviarAlertaEntrante" class="com.saem.actions.AcudirHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="enviarAlertaSaliente" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxRecuperarTotalPeticionesPacientes" method="recuperarTotalPeticionesPacientes" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="ajaxObtenerEstatusPeticionInicio" method="obtenerEstatusInicio" class="com.saem.actions.EnviarAlertaSaliente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="pantallaConsultarMiInformacion" method="pantallaConsultarMiInformacion" class="com.saem.actions.PacienteAction">
+            <result name="pantallaConsultarMiInformacion" type="tiles">pantallaConsultarMiInformacion</result>
+        </action>
+        
+         <action name="recuperarPaciente" method="recuperarPaciente" class="com.saem.actions.ConsultarPaciente">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <!-- ******************************************* MENU Hospital *********************************************** -->
+        <action name="pantallaAltaPacientePorHospital" method="altaPacientePorHospital" class="com.saem.actions.MenuHospitalAction">
+            <result name="pantallaAltaPacientePorHospital" type="tiles">pantallaAltaPacientePorHospital</result>
+        </action>
+
+        <action name="pantallaModificarEliminarPacientePorHospital" method="modElmPacientePorHospital" class="com.saem.actions.MenuHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+
+        <action name="pantallaConsultarPacientesPorHospital" method="consultarPacientePorHospital" class="com.saem.actions.MenuHospitalAction">
+            <result name="pantallaConsultarPacientesPorHospital" type="tiles">pantallaConsultarPacientesPorHospital</result>
+        </action>
+        <!-- ******************************************* FIN MENU Hospital *********************************************** -->
+        
+        <!-- Registar Paciente Por Hospital-->
+        <action name="registrarPacientePorHospital" method="registrarPacientePorHospital" class="com.saem.actions.RegistrarPacientePorHospital">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="pantallaAltaPacientePorHospital" type="tiles">pantallaAltaPacientePorHospital</result>
+        </action>
+        <!-- Fin Registar Paciente -->
+        
+        <!-- Recuperar Msjs de Registro-->
+        <action name="recuperarMensajeEstatusPacienteRegistro" method="recuperarEstatusPaciente" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Recuperar Msjs -->
+        
+        <!-- Validar usuario -->
+        <action name="validarNombreUsuarioPacienteRegistro" method="validarNombreUsuarioPaciente" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+        <action name="recuperarCombosEspecialidadesHospital" method="recuperarCombosEspecialidadesHospital" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        
+         <action name="recuperarComboEnfermedadesPorEspecialidadHospital" method="recuperarComboEnfermedadesPorEspecialidadHospital" class="com.saem.actions.RegistrarPacientePorHospital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Fin Validar usuario -->
+        <action name="ajaxLlenarListaPacientesPorPaciente" class="com.saem.actions.GridRegistroPacientePorHospital">
+            <result name="success"  type="json">JSON</result>
+        </action>
+        <action name="buscarDatosPacientePorHospitalMostrarFiltro" method="buscarDatosPacienteMostrarFiltro" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <action name="consultarDatosPacientePorHospitalMostrarFiltro" method="consultarDatosPacienteMostrarFiltro" class="com.saem.actions.ConsultarPacientePorHopsital">
+            <result name="success" type="json">JSON</result>
+        </action>
+        <!-- Editar Acceso Paciente -->
+        <action name="editarAccesoPacientePorHospital" method="editarAccesoPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+         <!-- Editar Acceso Paciente -->
+        <action name="editarDatosIdentificacionPacientePorHospital" method="editarDatosIdentificacionPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+         <!-- Editar Acceso Paciente -->
+        <action name="editarDireccionPacientePorHospital" method="editarDireccionPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+                 <!-- Editar Acceso Paciente -->
+        <action name="editarDatosPersonalesPacientePorHospital" method="editarDatosPersonalesPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        <!-- Fin Editar Acceso Paciente -->
+                 <!-- Editar Acceso Paciente -->
+        <action name="editarDatosClinicosPacientePorHospital" method="editarDatosClinicosPacientePorHospital" class="com.saem.actions.ModificarEliminarPacientePorHospitalAction">
+            <result name="pantallaModificarEliminarPacientePorHospital" type="tiles">pantallaModificarEliminarPacientePorHospital</result>
+        </action>
+        <!-- Fin Editar Acceso Paciente -->
+        
+        <action name="ajaxLlenarListaPacientesPorHospital" class="com.saem.actions.GridRegistroPacientePorHospital">
+            <result name="success"  type="json">JSON</result>
+        </action>
+        <action name="reportePaciente" method="execute" class="com.saem.actionjasper.reporteInformacionPaciente">
+             <result name="success" type="stream">
+                <param name="contentType">application/pdf</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">inline;filename="informePacinete.pdf"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        
+        </action>
+        
     </package>
 </struts>

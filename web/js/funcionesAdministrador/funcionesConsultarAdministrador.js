@@ -9,6 +9,11 @@
 
 function verDatosAccesoAdministrador() {
     var s = $("#gridAdmin").jqGrid('getGridParam','selrow');
+    if(s === null) {
+        alert("Seleccione un usuario");
+        return;
+    }
+
     var nombreUsuario = $("#gridAdmin").jqGrid('getCell',s,'nombreUsuario');
        
     var clave = $("#gridAdmin").jqGrid('getCell',s,'clave');
@@ -22,6 +27,10 @@ function verDatosAccesoAdministrador() {
 
 function verDatosPersonalesAdministrador() {
     var s = $("#gridAdmin").jqGrid('getGridParam','selrow');
+     if(s === null) {
+        alert("Seleccione un usuario");
+        return;
+    }
     var nombreUsuario = $("#gridAdmin").jqGrid('getCell',s,'nombreUsuario');
     
     $.ajax({
@@ -46,6 +55,10 @@ function verDatosPersonalesAdministrador() {
 
 function verDireccionAdministrador() {
     var s = $("#gridAdmin").jqGrid('getGridParam','selrow');
+     if(s === null) {
+        alert("Seleccione un usuario");
+        return;
+    }
     var nombreUsuario = $("#gridAdmin").jqGrid('getCell',s,'nombreUsuario');
     
     $.ajax({
@@ -72,8 +85,8 @@ function buscarUsuarioPorFiltroUsuario() {
     var nombreUsuario = $("#nombreUsuarioPorFiltro").val();
 
     if(nombreUsuario.length === 0)
-        alert("Ingrese un usuario");
-    else {
+        nombreUsuario="";
+
         $("#barraCargarEliminar").slideUp(100);
         $.ajax({
             dataType: "json",
@@ -83,37 +96,9 @@ function buscarUsuarioPorFiltroUsuario() {
         }).done(function (msg) {
             $("#barraCargarEliminar").slideUp(100);
             if(msg.estatusMensajeEliminar === "usuarioEncontrado"){
-                $("#barraCargarEliminar").slideDown('slow').delay(2500).slideUp('slow');
-                var urlImg = 'imagenesPerfilAdmin/'+msg.nombreUsuario+'.jpeg';
-                $("#nombreUsuarioFiltro").val(msg.nombreUsuario);
-                $("#nombreUsuarioFiltro").attr('readonly', true);
-                $("#claveFiltro").val(msg.clave);
-                $("#claveFiltro").attr('readonly', true);
-                $("#nombreFiltro").val(msg.nombre);
-                $("#nombreFiltro").attr('readonly', true);
-                $("#apellidoPaternoFiltro").val(msg.apellidoPaterno);
-                $("#apellidoPaternoFiltro").attr('readonly', true);
-                $("#apellidoMaternoFiltro").val(msg.apellidoMaterno);
-                $("#apellidoMaternoFiltro").attr('readonly', true);
-                $("#telParticularFiltro").val(msg.telParticular);
-                $("#telParticularFiltro").attr('readonly', true);
-                $("#correoFiltro").val(msg.correo);
-                $("#correoFiltro").attr('readonly', true);
-                $("#calleFiltro").val(msg.calle);
-                $("#calleFiltro").attr('readonly', true);
-                $("#coloniaFiltro").val(msg.colonia);
-                $("#coloniaFiltro").attr('readonly', true);
-                $("#delegacionFiltro").val(msg.delegacion);
-                $("#delegacionFiltro").attr('readonly', true);
-                $("#entidadFederativaFiltro").val(msg.entidadFederativa);
-                $("#entidadFederativaFiltro").attr('readonly', true);
-                $("#codigoPostalFiltro").val(msg.codigoPostal);
-                $("#codigoPostalFiltro").attr('readonly', true);
-                $("#idDomAdminFiltro").val(msg.id);
-                $("#idDomAdminFiltro").attr('readonly', true);
-                $("#imagenFiltro").attr('src', urlImg);
-                $("#datosAdministradorPorFiltro").show(1000);
-                $("#gridAdministradores").slideUp(1000);
+                $("#barraCargarEliminar").slideDown('slow').delay(100).slideUp('slow');
+                $('#gridAdmin').trigger("reloadGrid", [{page: 1}]);
+               
             }
             else if (msg.estatusMensajeEliminar === "usuarioNoEncontrado") {
                 $('html, body').animate({scrollTop: 0}, 'fast');
@@ -121,12 +106,12 @@ function buscarUsuarioPorFiltroUsuario() {
                 $("#tituloDivAlertErrorEliminar").html("<i class='icon fa fa-ban'></i>El Usuario no existe");
                 $("#labelMensajeErrorEliminar").html("El nombre de usuario no existe.");
 
-                $("#divAlertErrorEliminar").slideDown('slow').delay(2500).slideUp('slow');
+                $("#divAlertErrorEliminar").slideDown('slow').delay(100).slideUp('slow');
                 $("#barraCargarEliminar").slideUp(100);
                 $("#nombreUsuarioPorFiltro").focus();
             }           
         });
-    }
+    
 }
 
 /*******************************************************************************/

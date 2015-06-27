@@ -37,10 +37,26 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar/Eliminar Administrador</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Administrador</label></h3>
         </div>
+        
         <div id="gridAdministradores" class="box-body">
-           <s:url var="remoteurl" action="Listado"/>
+           
+            <!--Busqueda por Filtro-->
+            <div class="sidebar-form">
+                
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Por Nombre De Usuario" name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioModificarEliminarPorFiltroUsuario();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        <!--Fin Busqueda por Filtro-->
+        
+           <s:url var="remoteurl" action="ajaxLlenarListaAdministradores"/>
 
             <sjg:grid
                 id="gridAdmin"
@@ -52,8 +68,8 @@
                 rowList="10,15,20"
                 rowNum="15"
                 rownumbers="true"
-                navigatorSearch="true"
-                navigatorRefresh="true"
+                navigatorSearch="false"
+                navigatorRefresh="false"
                 navigator="true"
                 navigatorAdd="false"
                 navigatorEdit="false"
@@ -62,9 +78,6 @@
                 navigatorAddOptions="{closeAfterAdd:true,reloadAfterSubmit:true}"
                 navigatorEditOptions="{closeAfterEdit:true,reloadAfterSubmit:true }"
                 navigatorExtraButtons="{
-                                        seperator: {
-                                                    title : 'seperator'
-                                                   },
                                         editarAcceso : {
                                                     title : 'Editar Acceso',
                                                     icon: 'ui-icon-key', 
@@ -80,6 +93,9 @@
                                                     icon: 'ui-icon-home', 
                                                     onclick: function(){ editarDireccionAdministrador(); }
                                                  },
+                                        seperator: {
+                                                    title : 'seperator'
+                                                   },
                                         eliminar : { 
                                                     title : 'Eliminar Registro', 
                                                     icon: 'ui-icon-trash',
@@ -88,47 +104,18 @@
                                        }"
                 autowidth="true">
                  <!-- Se coloca key=true para tener una columna id (solo puede existir una columna llave) la cual nos dira que registro se va a elimnar o a editar -->
-                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="ID" key="true" sortable="true"/>
-                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Tipo" sortable="true"/>
-                <sjg:gridColumn editable="true" name="clave" index="clave" title="Password" sortable="false"/>
-                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha Registro" sortable="false"/>
+                <sjg:gridColumn name="nombreUsuario" editable="true" index="nombreUsuario" title="Nombre de Usuario" key="true" sortable="true"/>
+                <sjg:gridColumn editable="true"   name="tipoUsuario" index="tipoUsuario" title="Rol del Usuario" sortable="true"/>
+                <sjg:gridColumn editable="true" hidden="true" name="clave" index="clave" title="Clave de Acceso" sortable="false"/>
+                <sjg:gridColumn editable="false" name="fechaRegistro" index="fechaRegistro" title="Fecha de Registro" sortable="false"/>
             </sjg:grid>
         </div>
-        <div class="box-body">
-            <!--Busqueda por Filtro-->
-            <form class="sidebar-form" method="get" action="">
-                <div class="box-header">
-                    <h3 class="box-title">Filtrar por usuario:</h3>
-                </div>
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search..." name="nombreUsuario" id="nombreUsuarioPorFiltro"/>
-                    <span class="input-group-btn">
-                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarUsuarioPorFiltroUsuario();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </form>
-            <div class="form-group">
-                <div class="radio">
-                    <label>
-                        <input id="radioEditar" type="radio" checked="" value="option1" name="optionsRadios"/>
-                        Editar
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input id="radioEliminar" type="radio" value="option2" name="optionsRadios"/>
-                        Eliminar
-                    </label>
-                </div>
-            </div>
-        <!--Fin Busqueda por Filtro-->
-        </div>
+
            <form name="formEditarAccesoAdministrador" action="editarAccesoAdministrador" onsubmit="return validarCamposAcceso();" method="post" role="form">
             <div id="datosAccesoAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Datos de acceso</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Editar Datos de acceso</label></h3>
                 </div>
                 <div id="divNombreUsuario" class="form-group">
                     <label for="nombreUsuario">Nombre de usuario</label>
@@ -149,7 +136,8 @@
             <s:hidden name="nombreUsuario" id="nomUs"/>
             <div id="datosPersonalesAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Datos Personales</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Editar Datos Personales</label></h3>
                 </div>
 
                 <div id="divNombre" class="form-group">
@@ -195,7 +183,8 @@
         <s:form name="formEditarDireccionAdministrador" action="editarDireccionAdministrador" onsubmit="return validarCamposDireccion();" method="post" role="form">
             <div id="datosDireccionAdministrador" class="box-body" style='display:none;'>
                 <div class="box-header">
-                    <h3 class="box-title">Editar Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Editar Dirección</label></h3>
                 </div>
                 <s:hidden name="id" id="idDomAdmin"/>
                 <s:hidden name="telParticular" id="telPart"/>
@@ -237,13 +226,14 @@
     <s:form enctype="multipart/form-data" name="formNuevoAdministrador" action="editarAdminPorFiltro"  method="post" role="form">
         <div id="datosAdministradorPorFiltro" class="box box-primary" style='display:none;'>
             <div class="box-header">
-                <h3 class="box-header"><b>Los siguientes datos del Administrador seran eliminados/editados</b></h3>
+                <h3 class="box-header"><label>Los siguientes datos del Administrador seran eliminados/editados</label></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Datos de acceso</label></h3>
                 </div>
 
                 <div id="divNombreUsuario" class="form-group">
@@ -260,7 +250,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos Personales</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Datos Personales</label></h3>
                 </div>
 
                 <div id="divNombre" class="form-group">
@@ -301,7 +292,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Dirección</label></h3>
                 </div>
 
                 <div id="divCalleAdministrador" class="form-group">

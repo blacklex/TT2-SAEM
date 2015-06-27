@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 2/06/2015 02:02:20 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -20,8 +20,6 @@ public class DatosPersonales  implements java.io.Serializable {
      private String peso;
      private String altura;
      private String talla;
-     private String telCasa;
-     private String telCel;
      private String correo;
      private String facebook;
 
@@ -37,7 +35,7 @@ public class DatosPersonales  implements java.io.Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
     }
-    public DatosPersonales(Pacientes pacientes, String estadoCivil, String curp, String sexo, Date fechaNacimiento, String edad, String peso, String altura, String talla, String telCasa, String telCel, String correo, String facebook) {
+    public DatosPersonales(Pacientes pacientes, String estadoCivil, String curp, String sexo, Date fechaNacimiento, String edad, String peso, String altura, String talla, String correo, String facebook) {
        this.pacientes = pacientes;
        this.estadoCivil = estadoCivil;
        this.curp = curp;
@@ -47,8 +45,6 @@ public class DatosPersonales  implements java.io.Serializable {
        this.peso = peso;
        this.altura = altura;
        this.talla = talla;
-       this.telCasa = telCasa;
-       this.telCel = telCel;
        this.correo = correo;
        this.facebook = facebook;
     }
@@ -122,20 +118,6 @@ public class DatosPersonales  implements java.io.Serializable {
     
     public void setTalla(String talla) {
         this.talla = talla;
-    }
-    public String getTelCasa() {
-        return this.telCasa;
-    }
-    
-    public void setTelCasa(String telCasa) {
-        this.telCasa = telCasa;
-    }
-    public String getTelCel() {
-        return this.telCel;
-    }
-    
-    public void setTelCel(String telCel) {
-        this.telCel = telCel;
     }
     public String getCorreo() {
         return this.correo;

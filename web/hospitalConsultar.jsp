@@ -46,11 +46,23 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Hospitales Registrados</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
-        <div  class="box-body" style="width: 82%">
+        
+         
+        <div class="sidebar-form">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Hospital" name="filtroBusquedaHospital" id="filtroBusquedaHospital"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarHospitalPorFiltro();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+        </div>
+        <div  class="box-body">
             <sjg:grid
                 id		     ="gridListaConsultaHospitales"		gridModel	="gridListaConsultaHospitales"
                 href	     ="ajaxLlenarListaConsultarHospitales"     dataType	="json"        
@@ -61,7 +73,7 @@
                 navigator	     ="true"				viewrecords	="true"
                 hidegrid	     ="false"                           multiselect	="false"
                 navigatorRefresh ="false"				navigatorSearch ="false"				
-                resizable	     ="true"				autowidth="true"
+                                        				autowidth="true"
                 navigatorAdd     ="false"				
                 navigatorEdit    ="false"	
                 navigatorDelete  ="false"
@@ -107,10 +119,10 @@
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
 
-                <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono"		sortable="false"
+                <sjg:gridColumn id="telefono" name="telefono"	title="Telefono" 		index="telefono"		sortable="false"
                                 editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
-                <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"
+                <sjg:gridColumn  name="EMail"			title="Email" 		index="EMail"		sortable="false"
                                  editable="true"		editrules="{required:true}" editoptions="{size: 25, maxlength:15}" />
 
             </sjg:grid> 
@@ -120,37 +132,39 @@
     <!-- **************************************INICIA DIV FORM SESION**********************************************  -->
     <div class="box box-primary" id="divFormInicioSesion" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Hospital</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Datos de inicio de sesión</h3>
+                <i class="fa fa-key"></i>
+                <h3 class="box-title"><label>Datos de acceso</label></h3>
             </div>
 
             <div id="divNombreUsuario" class="form-group">
-                    <label for="nombreUsuario">Nombre de usuario</label>
-                    <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
-                </div>
+                <label for="nombreUsuario">Nombre de usuario</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
+            </div>
             <div id="divClaveUsuario" class="form-group">
-                <label for="claveUsuario">Clave de Acceso</label>
-                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="text">
+                <!--<label for="claveUsuario">Clave de Acceso</label>-->
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="hidden">
             </div>
         </div><!-- /.box-body -->
 
-<button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
 
     </div>
 
     <!-- ***********************************INICIA DIV FORM DATOS HOSPITAL*****************************************  -->
     <div class="box box-primary" id="divFormDatosHospital" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Hospital</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Datos del Hospital</h3>
+                <i class="fa fa-info-circle"></i>
+                <h3 class="box-title"><label>Datos del Hospital</label></h3>
             </div>
 
             <div id="divNombreHospital" class="form-group">
@@ -176,18 +190,19 @@
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
     <div class="box box-primary" id="divFormDireccionHospital" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Hospital</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Dirección</h3>
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Dirección</label></h3>
             </div>
 
             <!-- /google maps -->
             <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="hidden"></input>
-                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
-                <!-- /fin google maps -->
+            <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+            <!-- /fin google maps -->
             <div id="divCalleHospital" class="form-group">
                 <label for="calle">Calle</label>
                 <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -225,12 +240,13 @@
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
     <div class="box box-primary" id="divFormDirectivo" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Hospital</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Directivo</h3>
+                <i class="fa fa-user"></i>
+                <h3 class="box-title"><label>Directivo</label></h3>
             </div>
 
             <div id="divNombreDirectivo" class="form-group">
@@ -255,16 +271,22 @@
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
     <div class="box box-primary" id="divFormEspecialidades" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Consultar Hospital</b></h3>
+            <h3 class="box-header"><label>Consultar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
             <div class="box-header">
-                <h3 class="box-title">Especialidades</h3>
+                <i class="fa fa-medkit"></i>
+                <h3 class="box-title"><label>Especialidades</label></h3>
             </div>
-
+            <div id="divContEspecialidades"></div>
+            
         </div><!-- /.box-body -->
-        <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        
+            
+         <div class="box-footer">
+            <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>
+        </div>
     </div>
 </section>
 

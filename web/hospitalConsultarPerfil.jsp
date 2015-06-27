@@ -1,0 +1,212 @@
+<%-- 
+    Document   : hospitalConsultarPerfil
+    Created on : 02-jun-2015, 23:33:50
+    Author     : Alejandro
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
+<sj:head jqueryui="true" jquerytheme="redmond" />
+
+
+<!-- **************************************INICIA DIV BARRA CARGA**********************************************  -->
+
+<div style="position: fixed; z-index: 1; width: 100%; display: none;"  id="barraCargar" class="progress progress-sm active">
+    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span class="sr-only">100% Complete (success)</span>
+    </div>
+</div>
+
+<!-- ****************************************FIN DIV BARRA CARGA***********************************************  -->
+
+
+<!-- *****************************************INCIA DIVS ALERT*************************************************  -->
+
+<div id="divAlertSuccess" style="display: none;"  class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4 id="tituloDivAlertSuccess"></h4>
+    <label id="labelMensajeSuccess"></label>
+</div>
+
+<div id="divAlertError" style="display: none;"  class="alert alert-error alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4 id="tituloDivAlertError"></h4>
+    <label id="labelMensajeError"></label>
+</div>
+
+<div id="divAlert" style="display: none;" class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4 id="textoAlert"><i class="icon fa fa-warning"></i>Campos no validos.</h4>
+    Verifique que los datos que ha ingresado sean correctos.
+</div>
+
+<!-- ****************************************FIN DIVS ALERT****************************************************  -->
+
+<section class="content">
+    <!-- ****************************************INICIA DIV JGRID**************************************************  -->
+    <div id="divjGrid" class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-header"><label>Informacion del Hospital</label></h3>
+        </div><!-- /.box-header -->
+
+    </div>
+
+    <!-- **************************************INICIA DIV FORM SESION**********************************************  -->
+    <div class="box box-primary" id="divFormInicioSesion" style="display: none;">
+
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-key"></i>
+                <h3 class="box-title"><label>Datos de acceso</label></h3>
+            </div>
+
+            <div id="divNombreUsuario" class="form-group">
+                <label for="nombreUsuario">Nombre de usuario</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Nombre de usuario" type="text">
+            </div>
+            <div id="divClaveUsuario" class="form-group">
+                <!--<label for="claveUsuario">Clave de Acceso</label>-->
+                <input kl_virtual_keyboard_secure_input="on" disabled="true" class="form-control" id="claveUsuario" name="claveUsuario" placeholder="Clave de Acceso" type="hidden">
+            </div>
+        </div><!-- /.box-body -->
+
+    </div>
+
+    <!-- ***********************************INICIA DIV FORM DATOS HOSPITAL*****************************************  -->
+    <div class="box box-primary" id="divFormDatosHospital" style="display: none;">
+
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-info-circle"></i>
+                <h3 class="box-title"><label>Datos del Hospital</label></h3>
+            </div>
+
+            <div id="divNombreHospital" class="form-group">
+                <label for="nombreHospital">Nombre del Hospital</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreHospital" id="nombreHospital" placeholder="Nombre del Hospital" type="text">
+            </div>
+
+            <div id="divTelefonoHospital" class="form-group">
+                <label for="telefonoHospital">Telefono</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoHospital" id="telefonoHospital" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono" type="text">
+            </div>
+
+            <div id="divEmailHospital" class="form-group">
+                <label for="emailHospital">Email</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="emailHospital" id="emailHospital" placeholder="Email" type="text">
+            </div>
+
+        </div><!-- /.box-body -->
+    </div>
+
+    <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
+    <div class="box box-primary" id="divFormDireccionHospital" style="display: none;">
+
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-map-marker"></i>
+                <h3 class="box-title"><label>Dirección</label></h3>
+            </div>
+
+            <!-- /google maps -->
+            <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="hidden"></input>
+            <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+            <!-- /fin google maps -->
+            <div id="divCalleHospital" class="form-group">
+                <label for="calle">Calle</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
+            </div>
+
+            <div id="divNumeroHospital" class="form-group">
+                <label for="numero">Numero</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="numero" id="numero" placeholder="Numero" type="text">
+            </div>
+
+            <div id="divColoniaHospital" class="form-group">
+                <label for="colonia">Colonia</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="colonia" id="colonia" placeholder="Colonia" type="text">
+            </div>
+
+            <div id="divDelegacionHospital" class="form-group">
+                <label for="delegacion">Delegacón</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="delegacion" id="delegacion" placeholder="Delegación" type="text">
+            </div>
+
+            <div id="divEntidadFederativaHospital" class="form-group">
+                <label for="entidadFederativa">Entidad Federativa</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="entidadFederativa" id="entidadFederativa" placeholder="Entidad Federativa" type="text">
+            </div>
+
+            <div id="divCodigoPostalHospital" class="form-group">
+                <label for="codigoPostal">Codigo Postal</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" name="codigoPostal" id="codigoPostal" class="form-control" data-inputmask="&quot;mask&quot;: &quot;99999&quot;" data-mask="" placeholder="Codigo Postal" type="text">
+            </div>
+
+        </div><!-- /.box-body -->
+    </div>
+
+    <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
+    <div class="box box-primary" id="divFormDirectivo" style="display: none;">
+
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-user"></i>
+                <h3 class="box-title"><label>Directivo</label></h3>
+            </div>
+
+            <div id="divNombreDirectivo" class="form-group">
+                <label for="nombreDirectivo">Nombre</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="nombreDirectivo" id="nombreDirectivo" placeholder="Nombre" type="text">
+            </div>
+
+            <div id="divTelefonoDirectivo" class="form-group">
+                <label for="telefonoDirectivo">Telefono</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" name="telefonoDirectivo" id="telefonoDirectivo" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(99-99) 9999-9999&quot;" data-mask="" placeholder="Telefono" type="text">
+            </div>
+
+            <div id="divEmailDirectivo" class="form-group">
+                <label for="emailDirectivo">Email</label>
+                <input disabled="true" kl_virtual_keyboard_secure_input="on" class="form-control" name="emailDirectivo" id="emailDirectivo" placeholder="Email" type="text">
+            </div>
+
+        </div><!-- /.box-body -->
+    </div>
+
+    <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
+    <div class="box box-primary" id="divFormEspecialidades" style="display: none;">
+
+        <!-- form start -->
+        <div class="box-body">
+            <div class="box-header">
+                <i class="fa fa-medkit"></i>
+                <h3 class="box-title"><label>Especialidades</label></h3>
+            </div>
+            <div id="divContEspecialidades"></div>
+
+        </div><!-- /.box-body -->
+
+    </div>
+</section>
+
+
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+<!--Script creados -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDZqR4-rCjdcnt_0aIR_C4CB7B5BNmeLI&v=3.exp&signed_in=true&libraries=places"></script>
+<script src="js/funcionesHospital/funcionesGoogleMapsDirecciones.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="css/estiloMapaAutoCompletado.css"/>
+
+<script src="js/funcionesHospital/funcionesHospitalPerfil.js" type="text/javascript"></script>
+
+
+
+
+

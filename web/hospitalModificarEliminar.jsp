@@ -46,11 +46,23 @@
 
 <section class="content">
     <!-- ****************************************INICIA DIV JGRID**************************************************  -->
-    <div id="divjGrid" class="box box-primary" style="padding: 5px;">
+    <div id="divjGrid" class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Hospitales Registrados</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></label></h3>
         </div><!-- /.box-header -->
-        <div class="box-body" style="width: 82%">
+        
+        <div class="sidebar-form">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar Hospital" name="filtroBusquedaHospital" id="filtroBusquedaHospital"/>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-flat" name="search" type="button" onclick="buscarHospitalPorFiltroME();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+        </div>
+        
+        <div class="box-body">
         <sjg:grid
             id		     ="gridListaHospitales"		gridModel	="gridListaHospitales"
             href	     ="ajaxLlenarListaHospitalesME"     dataType	="json"        
@@ -61,7 +73,7 @@
             navigator	     ="true"				viewrecords	="true"
             hidegrid	     ="false"                           multiselect	="false"
             navigatorRefresh ="false"				navigatorSearch ="false"				
-            resizable	     ="true"				autowidth="true"
+                                        			autowidth="true"
             navigatorAdd     ="false"				
             navigatorEdit    ="false"	
             navigatorDelete  ="false"
@@ -80,20 +92,23 @@
         onclick: function(){ muestraFormDatosHospital() }
         },
         mostrarFormDireccionHospital : { 
-        title : 'Modificacr Direccion del Hospital', 
+        title : 'Modificar Direccion del Hospital', 
         icon:'ui-icon-home', 
         onclick: function(){ muestraDireccionHospital() }
         },
         mostrarFormDirectivo : { 
-        title : 'Modificacr Datos del Directivo', 
+        title : 'Modificar Datos del Directivo', 
         icon:'ui-icon-person', 
         onclick: function(){ muestraFormDirectivo() }
         },
         mostrarFormEspecialidades : { 
-        title : 'Modificacr Especialidades', 
+        title : 'Modificar Especialidades', 
         icon:'ui-icon-circle-plus', 
         onclick: function(){ muestraFormEspecialidades() }
         },
+        seperator: {
+                    title : 'seperator'
+                   },
         eliminarHospital : { 
         title : 'Eliminar Hospital', 
         icon:'ui-icon-trash', 
@@ -106,12 +121,12 @@
 
             <sjg:gridColumn id="nombre"  name="nombre"	title="Nombre" 		index="nombre"		sortable="false" />
 
-            <sjg:gridColumn id="lada" name="lada"	title="lada" 		index="lada"		sortable="false"/>
+            <sjg:gridColumn id="lada" name="lada"	title="Lada" 		index="lada"		sortable="false"/>
 
             
-            <sjg:gridColumn id="telefono" name="telefono"	title="telefono" 		index="telefono" />
+            <sjg:gridColumn id="telefono" name="telefono"	title="Telefono" 		index="telefono" />
  
-            <sjg:gridColumn  name="EMail"			title="EMail" 		index="EMail"		sortable="false"/>
+            <sjg:gridColumn  name="EMail"			title="Email" 		index="EMail"		sortable="false"/>
 
            </sjg:grid> 
             </div>
@@ -120,14 +135,15 @@
     <!-- **************************************INICIA DIV FORM SESION**********************************************  -->
     <div class="box box-primary" id="divFormInicioSesion" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar Hospital</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formDatosSesionHospital" action="modificarDatosSesionHospital" onsubmit="return validarCamposFormSesion();"  method="post" role="form">
             <input type="hidden" name="codigoHospitalEditar" id="codigoHSesion">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Datos de acesso</label></h3>
                 </div>
 
                 <div id="divClaveUsuario" class="form-group">
@@ -146,14 +162,15 @@
     <!-- ***********************************INICIA DIV FORM DATOS HOSPITAL*****************************************  -->
     <div class="box box-primary" id="divFormDatosHospital" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar Hospital</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formDatosHospital" action="modificarDatosHospital" onsubmit="return validarCamposFormDatosHospital();"  method="post" role="form">
             <input type="hidden" name="codigoHospitalEditar" id="codigoHDatos">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos del Hospital</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Datos del Hospital</label></h3>
                 </div>
 
                 <div id="divNombreHospital" class="form-group">
@@ -184,24 +201,26 @@
     <!-- ************************************INICIA DIV FORM DIRECCION*********************************************  -->
     <div class="box box-primary" id="divFormDireccionHospital" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar Hospital</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formDireccionHospital" action="modificarDatosDireccionHospital" onsubmit="return validarCamposFormDireccionHospital();"  method="post" role="form">
             <input type="hidden" name="latitudY" id="latitudY">
             <input type="hidden" name="longitudX" id="longitudX">
             
-            <!-- /google maps -->
-                <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="textbox"></input>
-                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
-                <!-- /fin google maps -->
             
             <input type="hidden" name="codigoHospitalEditar" id="codigoHDireccion">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Dirección</label></h3>
                 </div>
 
+                <!-- /google maps -->
+                <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="textbox"></input>
+                <div id="map_canvas" style="height: 300px; margin-bottom: 20px;"></div>
+                <!-- /fin google maps -->
+                
                 <div id="divCalleHospital" class="form-group">
                     <label for="calle">Calle</label>
                     <input kl_virtual_keyboard_secure_input="on" class="form-control" name="calle" id="calle" placeholder="Calle" type="text">
@@ -246,14 +265,15 @@
     <!-- **************************************INICIA DIV FORM DIRECTIVO*******************************************  -->
     <div class="box box-primary" id="divFormDirectivo" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar Hospital</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formDirectivoHospital" action="modificarDatosDirectivoHospital" onsubmit="return validarFormDirectivo();"  method="post" role="form">
             <input type="hidden" name="codigoHospitalEditar" id="codigoHDirectivo">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Directivo</h3>
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title"><label>Directivo</label></h3>
                 </div>
 
                 <div id="divNombreDirectivo" class="form-group">
@@ -284,18 +304,19 @@
     <!-- ***********************************INICIA DIV FORM ESPECIALIDADES*****************************************  -->
     <div class="box box-primary" id="divFormEspecialidades" style="display: none;">
         <div class="box-header">
-            <h3 class="box-header"><b>Modificar Hospital</b></h3>
+            <h3 class="box-header"><label>Modificar/Eliminar Hospitales</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formEspecialidadesHospital" action="modificarDatosEspecialidadesHospital" onsubmit="return validarCampos();"  method="post" role="form">
             <input type="hidden" name="codigoHospitalEditar" id="codigoHEspecialidades">
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Especialidades</h3>
+                    <i class="fa fa-medkit"></i>
+                    <h3 class="box-title"><label>Especialidades</label></h3>
                 </div>
-
+                <div id="divContEspecialidades"></div>
             </div><!-- /.box-body -->
-
+            
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" onclick="ocultarForms();" class="btn btn-primary btn-sm margin">Regresar</button>

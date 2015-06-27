@@ -19,7 +19,7 @@ import org.apache.struts2.interceptor.SessionAware;
  * @author Alejandro
  */
 public class GridRegistroAdministradoresAction implements SessionAware{
-    private static final String LISTA_GRID_MODEL = "listaGridModel";
+    protected static final String LISTA_GRID_MODEL = "listaGridModel_ADMIN_ACTION";
     //HttpServletRequest request = ServletActionContext.getRequest();
     private Map<String, Object> session = null;
      //Your result List
@@ -78,12 +78,23 @@ public class GridRegistroAdministradoresAction implements SessionAware{
          ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
         ArrayList<Usuarios> listaTempFinal = new ArrayList<Usuarios>();
 
-        // Obtenemos la lista de la sesión
-        listaTemp = (ArrayList<Usuarios>) usuarios.listar(0, 0);
+        gridModel = new ArrayList<Usuarios>();
+
+        
+            if (session.get(LISTA_GRID_MODEL) != null) {
+                listaTemp = (ArrayList<Usuarios>) session.get(LISTA_GRID_MODEL);
+                System.out.println("----> "+listaTemp.size());
+                session.remove(LISTA_GRID_MODEL);
+            } else {
+                return;
+                // Obtenemos la lista de la sesión
+                //listaTemp = (ArrayList<Usuarios>) usuarios.listar(0, 0);
+            }
+        
 
         for (Usuarios tempContUsuario : listaTemp) {
 
-            listaTempFinal.add(new Usuarios(tempContUsuario.getNombreUsuario(), tempContUsuario.getTipoUsuario(), tempContUsuario.getClave(), tempContUsuario.getFechaRegistro()));
+            listaTempFinal.add(new Usuarios(tempContUsuario.getNombreUsuario(), tempContUsuario.getTipoUsuario(), "", tempContUsuario.getFechaRegistro()));
         }
         gridModel = listaTempFinal;
         if (gridModel == null) {
@@ -94,7 +105,7 @@ public class GridRegistroAdministradoresAction implements SessionAware{
             // Calculamos el total de páginas necesarias
             total = (int) Math.ceil((double) records / (double) rows);
         }
-                session.put(LISTA_GRID_MODEL, gridModel);
+               // session.put(LISTA_GRID_MODEL, gridModel);
     }
     
     public String execute() {

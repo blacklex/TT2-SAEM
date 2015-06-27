@@ -21,9 +21,10 @@ public class DatosPersonalesDAO extends HibernateUtil {
 	// property constants
 
          public Boolean save(DatosPersonales transientInstance) {
+             Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.save(transientInstance);
                         s.getTransaction().commit();
@@ -32,13 +33,14 @@ public class DatosPersonalesDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);  
                     return false;
-		}
+		}finally{s.close();}
 	}
          
         public Boolean delete(DatosPersonales transientInstance) {
+            Session s = getSession();
 		//log.debug("saving TblAbwUsuario instance");
 		try {
-			Session s = getSession();
+			
                         s.beginTransaction();
                         s.delete(transientInstance);
                         s.getTransaction().commit();
@@ -47,13 +49,31 @@ public class DatosPersonalesDAO extends HibernateUtil {
 		} catch (RuntimeException re) {
 			//log.error("save failed", re);
                     return false;
-		}
+		}finally{s.close();}
+	}
+        
+        public Boolean update(DatosPersonales transientInstance) {
+		Session s = getSession();
+		try {
+			
+                        s.beginTransaction();
+                        s.update(transientInstance);
+                        s.getTransaction().commit();
+                        
+			System.out.println("--->Datos personales actualizados");
+                        return true;
+		} catch (RuntimeException re) {
+//                    System.out.println(re.getCause().getMessage());
+                    
+			System.out.println("--->Datos personales no actualizados");  
+                    return false;
+		}finally{s.close();}
 	}
          
-        public DatosPersonales findById(Long id) {
+        public DatosPersonales findById(Session s,Long id) {
 		//log.debug("getting TblAbwUsuario instance with id: " + id);
 		try {
-			DatosPersonales instance = (DatosPersonales) getSession().get(
+			DatosPersonales instance = (DatosPersonales) s.get(
 					DatosPersonales.class, id);
 			return instance;
 		} catch (RuntimeException re) {

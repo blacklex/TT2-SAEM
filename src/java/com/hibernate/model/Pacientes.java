@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 2/06/2015 02:02:20 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,9 +21,11 @@ public class Pacientes  implements java.io.Serializable {
      private String noConsultorio;
      private byte[] imagen;
      private Set domicilioPacienteses = new HashSet(0);
+     private Set peticionesEntranteses = new HashSet(0);
+     private Set peticionesSalienteses = new HashSet(0);
      private Set telefonosPacienteses = new HashSet(0);
-     private Set datosPersonaleses = new HashSet(0);
      private Set datosClinicoses = new HashSet(0);
+     private Set datosPersonaleses = new HashSet(0);
      private Set contactoses = new HashSet(0);
 
     public Pacientes() {
@@ -38,7 +40,7 @@ public class Pacientes  implements java.io.Serializable {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
     }
-    public Pacientes(String nss, Hospitales hospitales, Usuarios usuarios, String nombre, String apellidoPaterno, String apellidoMaterno, String unidadMedica, String noConsultorio, byte[] imagen, Set domicilioPacienteses, Set telefonosPacienteses, Set datosPersonaleses, Set datosClinicoses, Set contactoses) {
+    public Pacientes(String nss, Hospitales hospitales, Usuarios usuarios, String nombre, String apellidoPaterno, String apellidoMaterno, String unidadMedica, String noConsultorio, byte[] imagen, Set domicilioPacienteses, Set peticionesEntranteses, Set peticionesSalienteses, Set telefonosPacienteses, Set datosClinicoses, Set datosPersonaleses, Set contactoses) {
        this.nss = nss;
        this.hospitales = hospitales;
        this.usuarios = usuarios;
@@ -49,9 +51,11 @@ public class Pacientes  implements java.io.Serializable {
        this.noConsultorio = noConsultorio;
        this.imagen = imagen;
        this.domicilioPacienteses = domicilioPacienteses;
+       this.peticionesEntranteses = peticionesEntranteses;
+       this.peticionesSalienteses = peticionesSalienteses;
        this.telefonosPacienteses = telefonosPacienteses;
-       this.datosPersonaleses = datosPersonaleses;
        this.datosClinicoses = datosClinicoses;
+       this.datosPersonaleses = datosPersonaleses;
        this.contactoses = contactoses;
     }
    
@@ -125,6 +129,20 @@ public class Pacientes  implements java.io.Serializable {
     public void setDomicilioPacienteses(Set domicilioPacienteses) {
         this.domicilioPacienteses = domicilioPacienteses;
     }
+    public Set getPeticionesEntranteses() {
+        return this.peticionesEntranteses;
+    }
+    
+    public void setPeticionesEntranteses(Set peticionesEntranteses) {
+        this.peticionesEntranteses = peticionesEntranteses;
+    }
+    public Set getPeticionesSalienteses() {
+        return this.peticionesSalienteses;
+    }
+    
+    public void setPeticionesSalienteses(Set peticionesSalienteses) {
+        this.peticionesSalienteses = peticionesSalienteses;
+    }
     public Set getTelefonosPacienteses() {
         return this.telefonosPacienteses;
     }
@@ -132,19 +150,19 @@ public class Pacientes  implements java.io.Serializable {
     public void setTelefonosPacienteses(Set telefonosPacienteses) {
         this.telefonosPacienteses = telefonosPacienteses;
     }
-    public Set getDatosPersonaleses() {
-        return this.datosPersonaleses;
-    }
-    
-    public void setDatosPersonaleses(Set datosPersonaleses) {
-        this.datosPersonaleses = datosPersonaleses;
-    }
     public Set getDatosClinicoses() {
         return this.datosClinicoses;
     }
     
     public void setDatosClinicoses(Set datosClinicoses) {
         this.datosClinicoses = datosClinicoses;
+    }
+    public Set getDatosPersonaleses() {
+        return this.datosPersonaleses;
+    }
+    
+    public void setDatosPersonaleses(Set datosPersonaleses) {
+        this.datosPersonaleses = datosPersonaleses;
     }
     public Set getContactoses() {
         return this.contactoses;

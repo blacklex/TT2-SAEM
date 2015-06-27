@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +24,14 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.Session;
 
 /**
  *
  * @author sergio
  */
-public class ConsultarAdministradorAction extends ActionSupport implements SessionAware, ServletRequestAware{
-    
+public class ConsultarAdministradorAction extends ActionSupport implements SessionAware, ServletRequestAware {
+
     private Map<String, Object> session = null;
     private final AdministradorDAO administradorDAO = new AdministradorDAO();
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -39,9 +41,9 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     Administradores administrador = new Administradores();
     DomicilioAdministradores domicilioAdmin = new DomicilioAdministradores();
     Usuarios userAdmin = new Usuarios();
-    
+
     private HttpServletRequest servletRequest;
-    
+
     //Acceso
     String nombreUsuario; //Clave Primaria
     String clave;
@@ -69,23 +71,25 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     String estatusMensajeEliminar;
     String estatusMensajeEditar;
     String mensajeError = "";
-      
+
     public String buscarDatosPersonalesAdministrador() throws IOException {
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        System.out.println("---> BuscarDAtosPersonales");
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userAdmin = (Usuarios) iterator1.next();
             Set administradores = userAdmin.getAdministradoreses();
             for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                administrador = (Administradores) iterator2.next(); 
+                administrador = (Administradores) iterator2.next();
                 nombre = administrador.getNombre();
                 apellidoPaterno = administrador.getApellidoPaterno();
                 apellidoMaterno = administrador.getApellidoMaterno();
                 telParticular = administrador.getTelParticular();
-                correo = administrador.getCorreo(); 
+                correo = administrador.getCorreo();
                 imagenAdmin = administrador.getImagen();
                 String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
                 System.out.println(filePath);
-                FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
+                FileOutputStream image = new FileOutputStream(filePath + "imagenesPerfilAdmin/" + nombreUsuario + ".jpeg");
                 image.write(imagenAdmin);
                 nombreUsuario = userAdmin.getNombreUsuario();
                 System.out.println(nombre);
@@ -97,16 +101,19 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
                 image.close();
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosDireccionAdministrador() {
-        listUsuarios = usuarioDAO.listarById(nombreUsuario);
+        System.out.println("---> BuscarDAtosDireccion");
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        listUsuarios = usuarioDAO.listarById(s, nombreUsuario);
         for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
             userAdmin = (Usuarios) iterator1.next();
             Set administradores = userAdmin.getAdministradoreses();
             for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                administrador = (Administradores) iterator2.next(); 
+                administrador = (Administradores) iterator2.next();
                 Set domAdmin = administrador.getDomicilioAdministradoreses();
                 for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
                     domicilioAdmin = (DomicilioAdministradores) iterator3.next();
@@ -129,56 +136,36 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
                 }
             }
         }
+        s.close();
         return "success";
     }
-    
+
     public String buscarDatosMostrarFiltro() throws FileNotFoundException, IOException {
-        Usuarios usuarioResultado;
+        System.out.println("---> BuscarDAtosFiltro");
+        Session s = com.hibernate.cfg.HibernateUtil.getSession();
+        ArrayList<Usuarios> listaTemp = new ArrayList<Usuarios>();
+        ArrayList<Usuarios> listaFinal = new ArrayList<Usuarios>();
 
-        usuarioResultado = usuarioDAO.findById(nombreUsuario);
-        
-        if (usuarioResultado == null) {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
-            return SUCCESS;
-        }
-        if (usuarioResultado.getNombreUsuario().equals(nombreUsuario)) {
-            estatusMensajeEliminar = "usuarioEncontrado";
-            listUsuarios = usuarioDAO.listarById(nombreUsuario);
-            for (Iterator iterator1 = listUsuarios.iterator(); iterator1.hasNext();) {
-                userAdmin = (Usuarios) iterator1.next();
-                Set administradores = userAdmin.getAdministradoreses();
-                for (Iterator iterator2 = administradores.iterator(); iterator2.hasNext();) {
-                    administrador = (Administradores) iterator2.next(); 
-                    Set domAdmin = administrador.getDomicilioAdministradoreses();
-                    for (Iterator iterator3 = domAdmin.iterator(); iterator3.hasNext();) {
-                        domicilioAdmin = (DomicilioAdministradores) iterator3.next();
-                        nombreUsuario = userAdmin.getNombreUsuario();
-                        clave = userAdmin.getClave();
-                        nombre = administrador.getNombre();
-                        apellidoPaterno = administrador.getApellidoPaterno();
-                        apellidoMaterno = administrador.getApellidoMaterno();
-                        telParticular = administrador.getTelParticular();
-                        correo = administrador.getCorreo();
-                        imagenAdmin = administrador.getImagen();
-                        String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-                        System.out.println(filePath);
-                        FileOutputStream image = new FileOutputStream(filePath+"imagenesPerfilAdmin/"+nombreUsuario+".jpeg");
-                        image.write(imagenAdmin);
-                        calle = domicilioAdmin.getCalle();
-                        colonia = domicilioAdmin.getColonia();
-                        delegacion = domicilioAdmin.getDelegacion();
-                        entidadFederativa = domicilioAdmin.getEntidadFederativa();
-                        codigoPostal = domicilioAdmin.getCodigoPostal();
-                        id = domicilioAdmin.getId();
-                        image.close();
-                    }
-                }
+        if (nombreUsuario.length() > 0) {
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.findUsuariosLike(s, nombreUsuario);
+            System.out.println("--->Entro a filtro mayor " + listaTemp.size());
+            if (listaTemp == null) {
+                estatusMensajeEliminar = "usuarioNoEncontrado";
+            } else {
+                estatusMensajeEliminar = "usuarioEncontrado";
             }
-        }
-        else {
-            estatusMensajeEliminar = "usuarioNoEncontrado";
-        }
 
+        } else {
+            // Obtenemos la lista de la sesión
+            listaTemp = (ArrayList<Usuarios>) usuarioDAO.listar(s, 0, 0);
+            estatusMensajeEliminar = "usuarioEncontrado";
+        }
+        for(Usuarios usuarioTemp : listaTemp){
+            listaFinal.add(new Usuarios(usuarioTemp.getNombreUsuario(), usuarioTemp.getTipoUsuario(), "", usuarioTemp.getFechaRegistro()));
+        }
+        
+        session.put(com.saem.actions.GridRegistroAdministradoresAction.LISTA_GRID_MODEL, listaFinal);
+        s.close();
         return "success";
     }
 
@@ -394,9 +381,9 @@ public class ConsultarAdministradorAction extends ActionSupport implements Sessi
     public void setImagenAdmin(byte[] imagenAdmin) {
         this.imagenAdmin = imagenAdmin;
     }
-    
+
     @Override
     public void setServletRequest(HttpServletRequest servletRequest) {
-            this.servletRequest = servletRequest;
+        this.servletRequest = servletRequest;
     }
 }

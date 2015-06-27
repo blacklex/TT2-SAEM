@@ -17,9 +17,7 @@
               <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>-->
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
-
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p><%out.print(session.getAttribute("nombreUsuario").toString());%></p>
             </div>
           </div>
           <!-- search form -->
@@ -43,9 +41,9 @@
                         <i class="fa fa-adn"></i> <span>Administradores</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pantallaAltaAdministrador"><i class="fa fa-circle-o"></i> Registrar</a></li>
-                        <li><a href="pantallaModificarEliminarAdministrador"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
-                        <li><a href="pantallaConsultarAdministrador"><i class="fa fa-circle-o"></i> Consultar</a></li>
+                        <li><a href="pantallaAltaAdministrador"><i class="fa fa-pencil"></i> Registrar</a></li>
+                        <li><a href="pantallaModificarEliminarAdministrador"><i class="fa fa-edit"></i> Modificar / Eliminar</a></li>
+                        <li><a href="pantallaConsultarAdministrador"><i class="fa fa-eye"></i> Consultar</a></li>
                     </ul>
                 </li>
             <!--  FIN MENU ADMINISTRADORES CRUD    -->
@@ -56,9 +54,9 @@
                 <i class="fa fa-hospital-o"></i> <span>Hospitales</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pantallaRegistroHospital"><i class="fa fa-circle-o"></i> Registrar</a></li>
-                <li><a href="pantallaModificarEliminarHospital"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
-                <li><a href="pantallaConsultarHospitales"><i class="fa fa-circle-o"></i> Consultar</a></li>
+                <li><a href="pantallaRegistroHospital"><i class="fa fa-pencil"></i> Registrar</a></li>
+                <li><a href="pantallaModificarEliminarHospital"><i class="fa fa-edit"></i> Modificar / Eliminar</a></li>
+                <li><a href="pantallaConsultarHospitales"><i class="fa fa-eye"></i> Consultar</a></li>
                 
               </ul>
             </li>
@@ -70,9 +68,9 @@
                 <i class="fa fa-users"></i> <span>Pacientes</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pantallaAltaPaciente"><i class="fa fa-circle-o"></i> Registrar</a></li>
-                <li><a href="pantallaModificarPaciente"><i class="fa fa-circle-o"></i> Modificar / Eliminar</a></li>
-                <li><a href="pantallaConsultarPacientes"><i class="fa fa-circle-o"></i> Consultar</a></li>
+                <li><a href="pantallaAltaPaciente"><i class="fa fa-pencil"></i> Registrar</a></li>
+                <li><a href="pantallaModificarEliminarPaciente"><i class="fa fa-edit"></i> Modificar / Eliminar</a></li>
+                <li><a href="pantallaConsultarPacientes"><i class="fa fa-eye"></i> Consultar</a></li>
                 
               </ul>
             </li>

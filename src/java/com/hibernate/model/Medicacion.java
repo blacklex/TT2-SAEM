@@ -1,5 +1,8 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 2/06/2015 02:02:20 AM by Hibernate Tools 4.3.1
+
+import com.hibernate.model.DatosClinicos;
+
 
 
 

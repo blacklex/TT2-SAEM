@@ -47,7 +47,7 @@
 
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-header"><b>Registro de Hospital</b></h3>
+            <h3 class="box-header"><label>Registro de Hospital</label></h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form name="formNuevoHospital" action="registrarHospital" onsubmit="return validarCampos();"  method="post" role="form">
@@ -56,7 +56,8 @@
             
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos de inicio de sesión</h3>
+                    <i class="fa fa-key"></i>
+                    <h3 class="box-title"><label>Datos de aceeso</label></h3>
                 </div>
 
                 <div id="divNombreUsuario" class="form-group">
@@ -75,7 +76,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Datos del Hospital</h3>
+                    <i class="fa fa-info-circle"></i>
+                    <h3 class="box-title"><label>Datos del Hospital</label></h3>
                 </div>
 
                 <div id="divNombreHospital" class="form-group">
@@ -97,7 +99,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Dirección</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title"><label>Dirección</label></h3>
                 </div>
                 <!-- /google maps -->
                 <input id="autocomplete" class="form-control" placeholder="Ingresa la Dirección" type="textbox"></input>
@@ -139,7 +142,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Directivo</h3>
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title"><label>Directivo</label></h3>
                 </div>
 
                 <div id="divNombreDirectivo" class="form-group">
@@ -161,7 +165,8 @@
 
             <div class="box-body">
                 <div class="box-header">
-                    <h3 class="box-title">Especialidades</h3>
+                    <i class="fa fa-medkit"></i>
+                    <h3 class="box-title"><label>Especialidades</label></h3>
                     <div class="form">
                         <div id="divEspecialidades" class="col-md-6">
                         

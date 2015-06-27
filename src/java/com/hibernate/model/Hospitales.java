@@ -1,5 +1,5 @@
 package com.hibernate.model;
-// Generated 15-mar-2015 22:58:34 by Hibernate Tools 4.3.1
+// Generated 2/06/2015 02:02:20 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,22 +11,24 @@ import java.util.Set;
 public class Hospitales  implements java.io.Serializable {
 
 
-     private int codigoHospital;
+     private String codigoHospital;
      private Usuarios usuarios;
      private String nombre;
      private String telefono;
      private String lada;
      private String EMail;
      private Set domicilioHospitaleses = new HashSet(0);
-     private Set pacienteses = new HashSet(0);
-     private Set especialidadesHasHospitaleses = new HashSet(0);
+     private Set peticionesSalienteses = new HashSet(0);
      private Set directivos = new HashSet(0);
+     private Set especialidadeses = new HashSet(0);
+     private Set peticionesEntranteses = new HashSet(0);
+     private Set pacienteses = new HashSet(0);
 
     public Hospitales() {
     }
 
 	
-    public Hospitales(int codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail) {
         this.codigoHospital = codigoHospital;
         this.usuarios = usuarios;
         this.nombre = nombre;
@@ -34,7 +36,7 @@ public class Hospitales  implements java.io.Serializable {
         this.lada = lada;
         this.EMail = EMail;
     }
-    public Hospitales(int codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set pacienteses, Set especialidadesHasHospitaleses, Set directivos) {
+    public Hospitales(String codigoHospital, Usuarios usuarios, String nombre, String telefono, String lada, String EMail, Set domicilioHospitaleses, Set peticionesSalienteses, Set directivos, Set especialidadeses, Set peticionesEntranteses, Set pacienteses) {
        this.codigoHospital = codigoHospital;
        this.usuarios = usuarios;
        this.nombre = nombre;
@@ -42,16 +44,18 @@ public class Hospitales  implements java.io.Serializable {
        this.lada = lada;
        this.EMail = EMail;
        this.domicilioHospitaleses = domicilioHospitaleses;
-       this.pacienteses = pacienteses;
-       this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+       this.peticionesSalienteses = peticionesSalienteses;
        this.directivos = directivos;
+       this.especialidadeses = especialidadeses;
+       this.peticionesEntranteses = peticionesEntranteses;
+       this.pacienteses = pacienteses;
     }
    
-    public int getCodigoHospital() {
+    public String getCodigoHospital() {
         return this.codigoHospital;
     }
     
-    public void setCodigoHospital(int codigoHospital) {
+    public void setCodigoHospital(String codigoHospital) {
         this.codigoHospital = codigoHospital;
     }
     public Usuarios getUsuarios() {
@@ -96,19 +100,12 @@ public class Hospitales  implements java.io.Serializable {
     public void setDomicilioHospitaleses(Set domicilioHospitaleses) {
         this.domicilioHospitaleses = domicilioHospitaleses;
     }
-    public Set getPacienteses() {
-        return this.pacienteses;
+    public Set getPeticionesSalienteses() {
+        return this.peticionesSalienteses;
     }
     
-    public void setPacienteses(Set pacienteses) {
-        this.pacienteses = pacienteses;
-    }
-    public Set getEspecialidadesHasHospitaleses() {
-        return this.especialidadesHasHospitaleses;
-    }
-    
-    public void setEspecialidadesHasHospitaleses(Set especialidadesHasHospitaleses) {
-        this.especialidadesHasHospitaleses = especialidadesHasHospitaleses;
+    public void setPeticionesSalienteses(Set peticionesSalienteses) {
+        this.peticionesSalienteses = peticionesSalienteses;
     }
     public Set getDirectivos() {
         return this.directivos;
@@ -116,6 +113,27 @@ public class Hospitales  implements java.io.Serializable {
     
     public void setDirectivos(Set directivos) {
         this.directivos = directivos;
+    }
+    public Set getEspecialidadeses() {
+        return this.especialidadeses;
+    }
+    
+    public void setEspecialidadeses(Set especialidadeses) {
+        this.especialidadeses = especialidadeses;
+    }
+    public Set getPeticionesEntranteses() {
+        return this.peticionesEntranteses;
+    }
+    
+    public void setPeticionesEntranteses(Set peticionesEntranteses) {
+        this.peticionesEntranteses = peticionesEntranteses;
+    }
+    public Set getPacienteses() {
+        return this.pacienteses;
+    }
+    
+    public void setPacienteses(Set pacienteses) {
+        this.pacienteses = pacienteses;
     }
 
 
