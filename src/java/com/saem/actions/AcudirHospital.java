@@ -144,7 +144,7 @@ public class AcudirHospital implements SessionAware {
             }
 
         }
-        System.out.println(contactosPaciente);
+        System.out.println("Contactos del Paciente:" + contactosPaciente);
         
         //Buscamos el hospital que se encargara del paciente
         hospital = hospitalDAO.findById(s,codigoHospital);
